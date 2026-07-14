@@ -1,0 +1,7 @@
+{
+  "name": "Welcome to LRC Artisan Flow",
+  "description": "A luxurious, AI-enhanced ERP for wellness and artisanal businesses featuring high-precision inventory tracking, production scheduling, and automated marketing strategies.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

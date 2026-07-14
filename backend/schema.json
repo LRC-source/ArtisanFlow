@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "entities": {
+    "BusinessProfile": {
+      "fields": {
+        "name": { "type": "string", "required": true },
+        "tier": { "type": "enum", "values": ["FLOW_STARTER", "FLOW_BUILDER", "FLOW_ARCHITECT", "MARGIN_PROTECTION_MASTER"] },
+        "currency": { "type": "string", "default": "USD" },
+        "timezone": { "type": "string" },
+        "settings": { "type": "json" }
+      },
+      "rls": {
+        "read": "auth.uid == created_by || role == 'admin'",
+        "write": "auth.uid == created_by || role == 'admin'"
+      }
+    },
+    "InventoryItem": {
+      "fields": {
+        "name": { "type": "string", "required": true, "index": true },
+        "sku": { "type": "string", "unique": true },
+        "type": { "type": "enum", "values": ["RAW_MATERIAL", "PRODUCT", "COMPONENT", "PACKAGING"] },
+        "quantityOnHand": { "type": "number", "default": 0 },
+        "reorderPoint": { "type": "number", "default": 10 },
+        "unitCost": { "type": "number" },
+        "supplierId": { "type": "relation", "target": "Supplier" }
+      },
+      "rls": {
+        "read": "auth.business_id == resource.business_id",
+        "write": "auth.business_id == resource.business_id && auth.role != 'viewer'"
+      }
+    },
+    "ProductionOrder": {
+      "fields": {
+        "recipeId": { "type": "relation", "target": "Recipe" },
+        "status": { "type": "enum", "values": ["PLANNED", "IN_PROGRESS", "QUALITY_CHECK", "COMPLETED", "CANCELLED"] },
+        "dueDate": { "type": "date" }
+      },
+      "rls": {
+        "read": "auth.business_id == resource.business_id",
+        "write": "auth.business_id == resource.business_id"
+      }
+    },
+    "IntegrationConfig": {
+      "fields": {
+        "platform": { "type": "string" },
+        "apiKey": { "type": "encrypted_string" },
+        "apiSecret": { "type": "encrypted_string" },
+        "lastSync": { "type": "datetime" }
+      },
+      "rls": {
+        "read": "auth.business_id == resource.business_id",
+        "write": "auth.business_id == resource.business_id && role == 'admin'"
+      }
+    }
+  },
+  "auth": {
+    "provider": "google",
+    "mfa": "optional"
+  }
+}
