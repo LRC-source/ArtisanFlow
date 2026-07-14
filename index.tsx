@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import { runProductionAudit } from './utils/productionChecklist';
+
+// Execute environmental check for production readiness
+runProductionAudit();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

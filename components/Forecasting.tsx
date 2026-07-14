@@ -38,8 +38,11 @@ export const Forecasting = () => {
                  </button>
                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                      <div>
-                         <h1 className="text-4xl font-serif text-white font-bold tracking-tight">Forecasting & Strategy</h1>
-                         <p className="text-stone-500 font-sans font-light mt-2 text-lg">Establish predictive demand nodes and optimize manufacturing flow.</p>
+                          <div className="flex items-center gap-3">
+                              <h1 className="text-4xl font-serif text-white font-bold tracking-tight">Forecasting & Strategy</h1>
+                              <Badge color="gold">Beta</Badge>
+                          </div>
+                          <p className="text-stone-500 font-sans font-light mt-2 text-lg">Establish predictive demand nodes and optimize manufacturing flow.</p>
                      </div>
                      <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white h-14 rounded-full px-8 shadow-md transition-all font-sans font-medium text-sm tracking-wide" onClick={() => navigate('/forecasting')}>
                         <Plus size={18} className="mr-2" /> Initialize New Forecast

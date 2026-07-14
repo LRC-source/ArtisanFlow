@@ -808,7 +808,7 @@ export const AIAvatarStudio = () => {
         try {
             const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
             const response = await ai.models.generateContent({
-                model: 'gemini-2.5-flash-image',
+                model: 'imagen-3.0-generate-002',
                 contents: {
                     parts: [{ text: `High-end, luxury brand avatar: ${prompt}. Cinematic lighting, professional studio photography, elegant and sophisticated aesthetic, high-fidelity details, photorealistic.` }],
                 },

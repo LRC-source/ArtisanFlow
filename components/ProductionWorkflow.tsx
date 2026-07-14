@@ -14,7 +14,10 @@ export const ProductionWorkflow = () => {
           <button onClick={() => navigate('/operations')} className="flex items-center gap-2 text-gray-400 hover:text-[#6A2C91] mb-4 font-black text-xs uppercase tracking-widest transition-colors">
             <ArrowLeft size={18} /> Back to Operations
           </button>
-          <h1 className="text-3xl font-bold text-white">Production Workflow</h1>
+          <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-white">Production Workflow</h1>
+              <Badge color="gold">Beta</Badge>
+          </div>
           <p className="text-gray-500">Manage production stages, assignments, and approvals</p>
       </div>
 

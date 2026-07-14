@@ -64,7 +64,10 @@ export const SupplierCommunication = () => {
 
       <div className="flex justify-between items-center">
         <div>
-            <h1 className="text-3xl font-bold text-white">Supplier Communication</h1>
+            <div className="flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-white">Supplier Communication</h1>
+                <Badge color="gold">Beta</Badge>
+            </div>
             <p className="text-gray-500">Manage all supplier interactions and correspondence</p>
         </div>
         <Button className="bg-[#6A2C91] text-white" onClick={() => setShowAdd(true)}>

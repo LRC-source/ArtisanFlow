@@ -172,6 +172,11 @@ export const SubscriptionManagement = () => {
                     <div className="p-8 bg-stone-50 rounded-3xl mb-6 border border-stone-100">
                         <p className="text-[10px] font-sans text-stone-400 uppercase tracking-widest mb-2">Authorize Tier Upgrade</p>
                         <h4 className="text-3xl font-serif text-white font-bold tracking-tight">{selectedUpgrade}</h4>
+                        {process.env.SQUARE_LOCATION_ID && (
+                            <p className="text-[9px] text-[#C5A059] font-sans uppercase tracking-widest mt-3">
+                                Square Location Node: {process.env.SQUARE_LOCATION_ID}
+                            </p>
+                        )}
                     </div>
                     <div className="space-y-6">
                         <Input placeholder="Card Number" defaultValue="4242 4242 4242 4242" className="h-14 rounded-2xl bg-stone-50 border-stone-100 focus:bg-white transition-colors" />

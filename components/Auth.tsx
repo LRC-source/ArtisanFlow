@@ -21,8 +21,38 @@ export const AuthGateway = () => {
   };
 
   const handleGoogleAuth = async () => {
-    await googleLogin();
-    if (isNewUser) setView('tiers');
+    /* 
+     * PRODUCTION OAUTH INTEGRATION TEMPLATE:
+     * To transition away from mock authentication, swap the code below with your provider:
+     *
+     * 1. Firebase Auth:
+     *    import { auth, googleProvider } from '../services/firebase';
+     *    import { signInWithPopup } from 'firebase/auth';
+     *    const result = await signInWithPopup(auth, googleProvider);
+     *    const user = result.user;
+     *
+     * 2. Supabase Auth:
+     *    import { supabase } from '../services/supabase';
+     *    await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
+     *
+     * 3. Native OAuth 2.0 Redirect:
+     *    const CLIENT_ID = process.env.GOOGLE_CLIENT_ID || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID;
+     *    const REDIRECT_URI = window.location.origin + '/oauth/callback';
+     *    const OAUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?` +
+     *      `client_id=${CLIENT_ID}&` +
+     *      `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+     *      `response_type=token&` +
+     *      `scope=openid%20email%20profile`;
+     *    window.location.href = OAUTH_URL;
+     *    return;
+     */
+
+    try {
+      await googleLogin();
+      if (isNewUser) setView('tiers');
+    } catch (error) {
+      console.error("Google OAuth handshake failed:", error);
+    }
   };
 
   return (

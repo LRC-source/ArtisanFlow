@@ -86,8 +86,18 @@ if (typeof window !== 'undefined') {
   initializeStore();
 }
 
-// Generic Data Service Class
-class DataService {
+// Data Service Interface definition for swappable backends
+export interface DataService {
+  list<T extends BaseEntity>(collection: string): Promise<T[]>;
+  get<T extends BaseEntity>(collection: string, id: string): Promise<T | undefined>;
+  getFirst<T extends BaseEntity>(collection: string): Promise<T | undefined>;
+  create<T extends BaseEntity>(collection: string, item: Omit<T, keyof BaseEntity>): Promise<T>;
+  update<T extends BaseEntity>(collection: string, id: string, updates: Partial<T>): Promise<T>;
+  delete(collection: string, id: string): Promise<void>;
+}
+
+// LocalStorage-based Implementation of DataService
+class LocalStorageDataService implements DataService {
   private getCollection<T>(key: string): T[] {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : [];
@@ -146,5 +156,5 @@ class DataService {
   }
 }
 
-export const db = new DataService();
+export const db: DataService = new LocalStorageDataService();
 export const Collections = COLLECTIONS;

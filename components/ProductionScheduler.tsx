@@ -19,7 +19,10 @@ export const ProductionScheduler: React.FC = () => {
             </button>
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold text-white">Production Scheduler</h1>
+                    <div className="flex items-center gap-3">
+                        <h1 className="text-3xl font-bold text-white">Production Scheduler</h1>
+                        <Badge color="gold">Beta</Badge>
+                    </div>
                     <p className="text-gray-500">AI-powered production scheduling and optimization</p>
                 </div>
                 <Button className="bg-[#A78BFA] hover:bg-[#8B5CF6] text-white border-0" onClick={generateSchedule}>

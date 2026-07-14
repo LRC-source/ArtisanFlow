@@ -21,6 +21,7 @@ export const WarehouseView = () => {
                 </button>
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3">
                     <MapPin className="text-[#C5A059]" size={32} /> Warehouse Command Center
+                    <Badge color="gold">Beta</Badge>
                 </h1>
                 <p className="text-gray-500">Real-time visualization of inventory flow and zones.</p>
             </div>
