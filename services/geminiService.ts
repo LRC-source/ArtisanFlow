@@ -122,7 +122,7 @@ export const generateLolaImage = async (prompt: string, config: { size: '1K' | '
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-image-preview',
+      model: 'imagen-3.0-generate-002',
       contents: { parts: [{ text: prompt }] },
       config: { 
         imageConfig: { 

@@ -484,3 +484,12 @@ body::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
+
+/* Global Dropdown/Select Options styling for dark theme alignment */
+select option {
+  background-color: #1A1A1A !important;
+  color: #FFFFFF !important;
+}
+select {
+  color-scheme: dark !important;
+}

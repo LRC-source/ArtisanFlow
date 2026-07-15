@@ -792,14 +792,15 @@ export const AIAvatarStudio = () => {
         if (!prompt) return toast.error("Please define your brand persona.");
         
         const aiStudio = (window as any).aistudio;
-        if (!aiStudio) {
-            toast.error("AI Studio environment not detected.");
-            return;
-        }
-
-        const hasKey = await aiStudio.hasSelectedApiKey();
-        if (!hasKey) {
-            await aiStudio.openSelectKey();
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey && aiStudio) {
+            const hasKey = await aiStudio.hasSelectedApiKey();
+            if (!hasKey) {
+                await aiStudio.openSelectKey();
+                return;
+            }
+        } else if (!apiKey) {
+            toast.error("Please add VITE_GEMINI_API_KEY in your .env.local file to initialize the visual synthesis nodes.");
             return;
         }
 

@@ -4,25 +4,56 @@ import { Card, Button, Badge, Input, Select } from './UI';
 import { TrendingUp, ArrowUpRight, DollarSign, Lock, RefreshCw, BarChart3, Upload, Plus, Trash2, AlertCircle, ArrowLeft, Crown, Sparkles, ChevronRight, History as HistoryIcon } from 'lucide-react';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line, BarChart, Bar } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useArtisanData } from './DataContext';
 
-// Mock Data
+// Fallback Mock Data if no operations exist
 const ANALYTICS_DATA = [
     { name: 'Nov 17', val: 0 }, { name: 'Nov 21', val: 0 }, { name: 'Nov 25', val: 0 },
     { name: 'Nov 29', val: 0 }, { name: 'Dec 3', val: 0 }, { name: 'Dec 9', val: 0 },
     { name: 'Dec 14', val: 0 }
 ];
 
-const FORECAST_DATA = [
-  { name: 'Oct 1', sold: 98, cost: 1400 },
-  { name: 'Oct 15', sold: 112, cost: 1600 },
-  { name: 'Nov 1', sold: 95, cost: 1350 },
-  { name: 'Nov 15', sold: 135, cost: 2100 },
-  { name: 'Dec 1', sold: 102, cost: 1500 },
-  { name: 'Dec 15', sold: 90, cost: 1200 },
-];
-
 export const Forecasting = () => {
     const navigate = useNavigate();
+    const { orders, inventory } = useArtisanData();
+
+    // 1. Calculate historical sales volume velocity
+    let totalUnits = 0;
+    orders.forEach(o => {
+        if (o.items) {
+            o.items.forEach(i => {
+                totalUnits += i.qty || 0;
+            });
+        }
+    });
+
+    // Provide default fallback values if orders list is empty
+    const activeUnits = totalUnits > 0 ? totalUnits : 640;
+    const averageUnitsPerInterval = Math.round(activeUnits / 4);
+
+    // 2. Calculate average raw material cost
+    const averageMaterialCost = inventory.length > 0
+        ? inventory.reduce((sum, item) => sum + (item.unitCost || 0), 0) / inventory.length
+        : 14.50;
+
+    // 3. Generate dynamic 90-day forecast based on real data
+    const forecastData = Array.from({ length: 6 }).map((_, index) => {
+        const date = new Date();
+        // Spaced at 15-day intervals
+        date.setDate(date.getDate() + (index * 15));
+        const name = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        // Add 5% growth projection factor per interval
+        const growthFactor = 1 + (index * 0.05);
+        const projectedSold = Math.round(averageUnitsPerInterval * growthFactor);
+        const projectedCost = Math.round(projectedSold * averageMaterialCost * 2.2); // markup factor
+
+        return {
+            name,
+            sold: projectedSold,
+            cost: projectedCost
+        };
+    });
 
     return (
         <motion.div 
@@ -67,7 +98,7 @@ export const Forecasting = () => {
                          </div>
                          <div className="h-72">
                              <ResponsiveContainer width="100%" height="100%">
-                                 <AreaChart data={FORECAST_DATA}>
+                                 <AreaChart data={forecastData}>
                                      <defs>
                                          <linearGradient id="colorSold" x1="0" y1="0" x2="0" y2="1">
                                              <stop offset="5%" stopColor="#6A2C91" stopOpacity={0.2}/><stop offset="95%" stopColor="#6A2C91" stopOpacity={0}/>
@@ -100,7 +131,7 @@ export const Forecasting = () => {
                          </div>
                          <div className="h-72">
                              <ResponsiveContainer width="100%" height="100%">
-                                 <AreaChart data={FORECAST_DATA}>
+                                 <AreaChart data={forecastData}>
                                      <defs>
                                          <linearGradient id="colorCost" x1="0" y1="0" x2="0" y2="1">
                                              <stop offset="5%" stopColor="#C5A059" stopOpacity={0.2}/><stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
@@ -130,7 +161,7 @@ export const Forecasting = () => {
                      <h3 className="text-2xl font-serif text-white font-bold mb-8">Synaptic Alignment Matrix</h3>
                      <div className="h-96 mt-6">
                           <ResponsiveContainer width="100%" height="100%">
-                             <LineChart data={FORECAST_DATA}>
+                             <LineChart data={forecastData}>
                                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E5E5"/>
                                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 11, fill: '#78716C', fontWeight: 500}} dy={10}/>
                                  <Tooltip 
