@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Package, TrendingUp, Settings, ShoppingBag, Activity, 
