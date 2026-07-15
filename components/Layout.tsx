@@ -75,16 +75,17 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       </AnimatePresence>
       
       {/* Sidebar - Artisan Flow Synaptic Redesign */}
+      {/* Sidebar - Artisan Flow Glassmorphic Floating Panel Redesign */}
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} ${isSidebarCollapsed ? 'md:-translate-x-full' : ''}`}>
           <div className="sidebar-brand-block flex items-center justify-between">
               <div className="flex items-center">
-                  <LRCLogo size={32} className="sidebar-logo text-white" />
+                  <LRCLogo size={32} className="sidebar-logo text-[#C5A059]" />
                   <div className="brand-meta ml-3">
                       <span className="brand-title text-base line-clamp-1">Artisan Flow</span>
                       <span className="version-tag">V2.5 Stable</span>
                   </div>
               </div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden ml-auto text-white/50 hover:text-red-500 transition-colors">
+              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden ml-auto text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />
               </button>
               <button onClick={() => setIsSidebarCollapsed(true)} className="hidden md:block ml-auto text-white/50 hover:text-[#C5A059] transition-colors">
@@ -96,46 +97,66 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <div className="nav-section-group">
                   <span className="nav-section-title">Terminal Control</span>
                   <button onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">📊</span> Overview Terminal
+                      <span className="nav-icon text-lg">📊</span>
+                      <span className="flex-1 text-left">Overview Terminal</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/settings/account'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/account' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">💎</span> Subscription Status
+                      <span className="nav-icon text-lg">💎</span>
+                      <span className="flex-1 text-left">Subscription Status</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
               </div>
 
               <div className="nav-section-group">
                   <span className="nav-section-title">Supply Logistics</span>
                   <button onClick={() => { navigate('/inventory'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/inventory' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">📦</span> Materials Matrix
+                      <span className="nav-icon text-lg">📦</span>
+                      <span className="flex-1 text-left">Materials Matrix</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/finance/projections'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance/projections' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">⏳</span> Inventory Forecasting
+                      <span className="nav-icon text-lg">⏳</span>
+                      <span className="flex-1 text-left">Inventory Forecasting</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
                   </button>
                   <button onClick={() => { navigate('/qc'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/qc' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">💸</span> Trapped Cash Audit
+                      <span className="nav-icon text-lg">💸</span>
+                      <span className="flex-1 text-left">Trapped Cash Audit</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
                   </button>
               </div>
 
               <div className="nav-section-group">
                   <span className="nav-section-title">Formulation Vault</span>
                   <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">🏺</span> Golden Ratio Ledger
+                      <span className="nav-icon text-lg">🏺</span>
+                      <span className="flex-1 text-left">Golden Ratio Ledger</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">🧮</span> COGS Confidence Matrix
+                      <span className="nav-icon text-lg">🧮</span>
+                      <span className="flex-1 text-left">COGS Confidence Matrix</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
               </div>
 
               <div className="nav-section-group">
                   <span className="nav-section-title">Secure Extensions</span>
                   <button onClick={() => { navigate('/settings/integrations'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/integrations' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">💳</span> Integrations
+                      <span className="nav-icon text-lg">💳</span>
+                      <span className="flex-1 text-left">Integrations</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/marketing/brand-voice'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing/brand-voice' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">✉️</span> Brand Voice Profile
+                      <span className="nav-icon text-lg">✉️</span>
+                      <span className="flex-1 text-left">Brand Voice Profile</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">✨</span> Marketing Studio
+                      <span className="nav-icon text-lg">✨</span>
+                      <span className="flex-1 text-left">Marketing Studio</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
               </div>
           </nav>
