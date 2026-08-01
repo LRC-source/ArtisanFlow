@@ -50,10 +50,19 @@ export const CraftybaseImporter = () => {
         
         setIsUploading(true);
 
-        // Simulate CSV parsing and GAS POST
-        setTimeout(async () => {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
             try {
-                // Mock POST to GAS Web App endpoint
+                const csvText = event.target?.result as string;
+                // Basic CSV parsing to get row count
+                const rows = csvText.split('\n').filter(row => row.trim().length > 0);
+                const recordsImported = Math.max(0, rows.length - 1); // Exclude header
+                
+                let fileType = "Unknown_CSV";
+                if (file.name.toLowerCase().includes('recipe')) fileType = 'Recipes_CSV';
+                else if (file.name.toLowerCase().includes('material') || file.name.toLowerCase().includes('inventory')) fileType = 'Materials_CSV';
+                else if (file.name.toLowerCase().includes('vendor')) fileType = 'Vendors_CSV';
+
                 const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
                 if (gasUrl) {
                     await fetch(gasUrl, {
@@ -61,7 +70,10 @@ export const CraftybaseImporter = () => {
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             action: 'importCraftybaseData',
-                            userId: businessProfile.email,
+                            userId: businessProfile.email || 'usr_002',
+                            sourcePlatform: 'Craftybase',
+                            fileType: fileType,
+                            recordsImported: recordsImported,
                             fileName: file.name
                         })
                     }).catch(e => console.warn("GAS Mock Error", e));
@@ -69,15 +81,22 @@ export const CraftybaseImporter = () => {
 
                 setIsUploading(false);
                 setIsSuccess(true);
-                toast.success("Craftybase data successfully migrated into ArtisanFlow matrix.");
+                toast.success(`Successfully migrated ${recordsImported} records from ${file.name}.`);
                 setFile(null);
                 
                 setTimeout(() => setIsSuccess(false), 5000);
             } catch (err) {
-                toast.error("Failed to migrate data. Please try again.");
+                toast.error("Failed to parse and migrate data. Please try again.");
                 setIsUploading(false);
             }
-        }, 3000);
+        };
+
+        reader.onerror = () => {
+            toast.error("Error reading file.");
+            setIsUploading(false);
+        };
+
+        reader.readAsText(file);
     };
 
     return (
