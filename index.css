@@ -65,13 +65,13 @@ button:hover > svg.lucide,
 }
 
 /* Gemstone Containers for Icons in Hubs */
-.w-8\.h-8:has\(> svg\.lucide\),
-.w-10\.h-10:has\(> svg\.lucide\),
-.w-12\.h-12:has\(> svg\.lucide\),
-.w-14\.h-14:has\(> svg\.lucide\),
-.w-16\.h-16:has\(> svg\.lucide\),
-.w-20\.h-20:has\(> svg\.lucide\),
-.w-24\.h-24:has\(> svg\.lucide\) {
+.w-8\.h-8:has(> svg.lucide),
+.w-10\.h-10:has(> svg.lucide),
+.w-12\.h-12:has(> svg.lucide),
+.w-14\.h-14:has(> svg.lucide),
+.w-16\.h-16:has(> svg.lucide),
+.w-20\.h-20:has(> svg.lucide),
+.w-24\.h-24:has(> svg.lucide) {
     position: relative;
     border: 1px solid var(--glass-border) !important;
     background: radial-gradient(120% 120% at 0% 0%, rgba(192, 132, 252, 0.1) 0%, rgba(0,0,0,0.4) 100%) !important;
@@ -81,20 +81,20 @@ button:hover > svg.lucide,
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.group:hover .w-8\.h-8:has\(> svg\.lucide\),
-.group:hover .w-10\.h-10:has\(> svg\.lucide\),
-.group:hover .w-12\.h-12:has\(> svg\.lucide\),
-.group:hover .w-14\.h-14:has\(> svg\.lucide\),
-.group:hover .w-16\.h-16:has\(> svg\.lucide\),
-.group:hover .w-20\.h-20:has\(> svg\.lucide\),
-.group:hover .w-24\.h-24:has\(> svg\.lucide\),
-.w-8\.h-8:has\(> svg\.lucide\):hover,
-.w-10\.h-10:has\(> svg\.lucide\):hover,
-.w-12\.h-12:has\(> svg\.lucide\):hover,
-.w-14\.h-14:has\(> svg\.lucide\):hover,
-.w-16\.h-16:has\(> svg\.lucide\):hover,
-.w-20\.h-20:has\(> svg\.lucide\):hover,
-.w-24\.h-24:has\(> svg\.lucide\):hover {
+.group:hover .w-8\.h-8:has(> svg.lucide),
+.group:hover .w-10\.h-10:has(> svg.lucide),
+.group:hover .w-12\.h-12:has(> svg.lucide),
+.group:hover .w-14\.h-14:has(> svg.lucide),
+.group:hover .w-16\.h-16:has(> svg.lucide),
+.group:hover .w-20\.h-20:has(> svg.lucide),
+.group:hover .w-24\.h-24:has(> svg.lucide),
+.w-8\.h-8:has(> svg.lucide):hover,
+.w-10\.h-10:has(> svg.lucide):hover,
+.w-12\.h-12:has(> svg.lucide):hover,
+.w-14\.h-14:has(> svg.lucide):hover,
+.w-16\.h-16:has(> svg.lucide):hover,
+.w-20\.h-20:has(> svg.lucide):hover,
+.w-24\.h-24:has(> svg.lucide):hover {
     background: radial-gradient(120% 120% at 0% 0%, rgba(197, 160, 89, 0.15) 0%, rgba(0,0,0,0.6) 100%) !important;
     border-color: rgba(197, 160, 89, 0.4) !important;
     box-shadow: inset 0px 1px 1px rgba(255,255,255,0.2), inset 0px -10px 30px rgba(197, 160, 89, 0.1), 0 12px 32px rgba(197, 160, 89, 0.15) !important;
