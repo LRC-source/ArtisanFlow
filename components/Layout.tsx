@@ -76,7 +76,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       
       {/* Sidebar - Artisan Flow Synaptic Redesign */}
       {/* Sidebar - Artisan Flow Glassmorphic Floating Panel Redesign */}
-      <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} ${isSidebarCollapsed ? 'md:-translate-x-full' : ''}`}>
+      <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
           <div className="sidebar-brand-block flex items-center justify-between">
               <div className="flex items-center">
                   <LRCLogo size={32} className="sidebar-logo text-[#C5A059]" />
@@ -137,6 +137,15 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
                       <span className="nav-icon text-lg">🧮</span>
                       <span className="flex-1 text-left">COGS Confidence Matrix</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+              </div>
+
+              <div className="nav-section-group">
+                  <span className="nav-section-title">Client Logistics</span>
+                  <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg">🤝</span>
+                      <span className="flex-1 text-left">CRM Hub</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
               </div>

@@ -202,8 +202,8 @@ export const CRM = () => {
         <div className="flex flex-col gap-8">
           <SubPageHeader 
             title="CRM Hub"
-            parentTitle="Command Center"
-            onBack={() => navigate('/command-center')}
+            parentTitle="Operations Hub"
+            onBack={() => navigate('/operations')}
             description="Synaptic client management and lifetime value analytics."
           />
           
