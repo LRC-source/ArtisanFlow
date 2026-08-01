@@ -135,12 +135,8 @@ export const LandingPage = () => {
             
             {/* Nav */}
             <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-sm sticky top-0">
-                <div className="flex items-center gap-3">
-                    {/* Logo Placeholder - replace this div with an <img src="/your-logo.png" className="h-8 w-auto" /> when ready */}
-                    <div className="h-8 w-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/40 shadow-inner">
-                        <span className="text-[10px] font-black text-white">LOGO</span>
-                    </div>
-                    <span className="text-lg font-black text-white tracking-tight uppercase italic">Artisan Flow</span>
+                <div className="flex items-center">
+                    <img src="/ArtisanFlowLogo.png" alt="ArtisanFlow Logo" className="h-12 w-auto object-contain" />
                 </div>
                 <div>
                     <Button variant="primary" onClick={() => setView('login')} className="h-10 px-8 font-black bg-[#6A2C91] text-white hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(106,44,145,0.8)] transition-all duration-300 rounded-full tracking-widest text-xs uppercase">
