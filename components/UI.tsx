@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Upload, FileText, X, CheckCircle, AlertCircle, Lock, Crown, ShieldCheck } from 'lucide-react';
+import { Upload, FileText, X, CheckCircle, AlertCircle, Lock, Crown, ShieldCheck, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
+import { useArtisanData } from './DataContext';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'premium' | 'danger';
@@ -339,4 +341,49 @@ export const FileUploader: React.FC<{
         )}
     </div>
   );
+};
+
+export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: boolean; onClose: () => void; platform: string }) => {
+    const { toggleChannelConnection } = useArtisanData();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isConnecting, setIsConnecting] = useState(false);
+
+    return (
+        <Modal isOpen={isOpen} onClose={onClose} title={`Authenticate ${platform}`}>
+            <div className="space-y-6">
+                <p className="text-white/60 font-sans font-light text-sm">
+                    Enter your {platform} credentials to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
+                </p>
+                <Input 
+                    placeholder="Email Address" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    className="w-full"
+                />
+                <Input 
+                    placeholder="Password" 
+                    type="password"
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    className="w-full"
+                />
+                <Button 
+                    onClick={() => {
+                        setIsConnecting(true);
+                        setTimeout(() => {
+                            setIsConnecting(false);
+                            toggleChannelConnection(platform);
+                            onClose();
+                            toast.success(`${platform} authenticated successfully.`);
+                        }, 1500);
+                    }} 
+                    disabled={isConnecting}
+                    className="w-full h-12 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl font-sans font-bold tracking-widest text-[10px] uppercase"
+                >
+                    {isConnecting ? <Loader2 size={16} className="animate-spin mx-auto" /> : `Connect ${platform} Account`}
+                </Button>
+            </div>
+        </Modal>
+    );
 };

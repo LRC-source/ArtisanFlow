@@ -254,6 +254,8 @@ interface DataContextType {
   updateSystemUser: (id: string, updates: Partial<SystemUser>) => void;
   deleteSystemUser: (id: string) => void;
   inviteSystemUser: (email: string, tier: string) => void;
+  connectedChannels: Record<string, boolean>;
+  toggleChannelConnection: (platform: string) => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -273,6 +275,21 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   
   const [isTutorialActive, setIsTutorialActive] = useState(false);
   const [tutorialStep, setTutorialStepState] = useState(0);
+
+  const [connectedChannels, setConnectedChannels] = useState<Record<string, boolean>>({
+      'Instagram': false,
+      'Facebook': false,
+      'LinkedIn': false,
+      'Twitter': false,
+      'Email': false,
+      'Pinterest': false,
+      'TikTok': false,
+      'YouTube': false
+  });
+
+  const toggleChannelConnection = (platform: string) => {
+      setConnectedChannels(prev => ({ ...prev, [platform]: !prev[platform] }));
+  };
 
   const [businessProfile, setBusinessProfile] = useState<BusinessProfile>({
     name: 'Artisan Flow Demo', 
@@ -657,7 +674,9 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       importData, addInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
       generateSchedule, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
-      systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser
+      systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,
+      connectedChannels,
+      toggleChannelConnection
     }}>
       {children}
     </DataContext.Provider>

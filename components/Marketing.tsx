@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner } from './UI';
+import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner, SocialMediaAuthModal } from './UI';
 import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData, MarketingPost } from './DataContext';
@@ -10,49 +10,6 @@ import { GoogleGenAI } from "@google/genai";
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
 
-// --- AUTH MODAL ---
-export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: boolean; onClose: () => void; platform: string }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isConnecting, setIsConnecting] = useState(false);
-
-    return (
-        <Modal isOpen={isOpen} onClose={onClose} title={`Authenticate ${platform}`}>
-            <div className="space-y-6">
-                <p className="text-white/60 font-sans font-light text-sm">
-                    Enter your {platform} credentials to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
-                </p>
-                <Input 
-                    placeholder="Email Address" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                    className="w-full"
-                />
-                <Input 
-                    placeholder="Password" 
-                    type="password"
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    className="w-full"
-                />
-                <Button 
-                    onClick={() => {
-                        setIsConnecting(true);
-                        setTimeout(() => {
-                            setIsConnecting(false);
-                            onClose();
-                            toast.success(`${platform} authenticated successfully.`);
-                        }, 1500);
-                    }} 
-                    disabled={isConnecting}
-                    className="w-full h-12 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl font-sans font-bold tracking-widest text-[10px] uppercase"
-                >
-                    {isConnecting ? <Loader2 size={16} className="animate-spin mx-auto" /> : `Connect ${platform} Account`}
-                </Button>
-            </div>
-        </Modal>
-    );
-};
 
 // --- REUSABLE MARKETING GRID ---
 const MarketingGrid = () => {
@@ -685,20 +642,36 @@ export const SocialMediaCreator = () => {
 export const ContentCalendar = () => {
     const navigate = useNavigate();
     const { marketingPosts, updateMarketingPost } = useArtisanData();
-    const [filterPlatform, setFilterPlatform] = useState<string>('All');
-    const [filterStatus, setFilterStatus] = useState<string>('All');
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
+    const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+
+    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+    const monthName = currentDate.toLocaleString('default', { month: 'long' });
+    const year = currentDate.getFullYear();
+    
     const getPlatformIcon = (platform: string) => {
         switch (platform) {
-            case 'Instagram': return <Instagram size={20} />;
-            case 'Facebook': return <Facebook size={20} />;
-            case 'LinkedIn': return <Linkedin size={20} />;
-            case 'Twitter': return <Twitter size={20} />;
-            case 'YouTube': return <Youtube size={20} />;
-            case 'Blog': return <FileText size={20} />;
-            case 'Email': return <Globe size={20} />;
-            default: return <Share2 size={20} />;
+            case 'Instagram': return <Instagram size={14} />;
+            case 'Facebook': return <Facebook size={14} />;
+            case 'LinkedIn': return <Linkedin size={14} />;
+            case 'Twitter': return <Twitter size={14} />;
+            case 'YouTube': return <Youtube size={14} />;
+            case 'Blog': return <FileText size={14} />;
+            case 'Email': return <Globe size={14} />;
+            default: return <Share2 size={14} />;
         }
+    };
+
+    const getPostsForDay = (day: number) => {
+        const yyyy = currentDate.getFullYear();
+        const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(day).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+        return marketingPosts.filter(p => p.scheduledDate === dateStr);
     };
 
     const getStatusColor = (status: string) => {
@@ -711,19 +684,13 @@ export const ContentCalendar = () => {
         }
     };
 
-    const filteredPosts = marketingPosts.filter(post => {
-        const platformMatch = filterPlatform === 'All' || post.platform === filterPlatform;
-        const statusMatch = filterStatus === 'All' || post.status === filterStatus;
-        return platformMatch && statusMatch;
-    });
-
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-32"
+            className="p-10 md:p-16 space-y-12 max-w-[1600px] mx-auto pb-32"
         >
             <div className="flex flex-col gap-8">
                 <SubPageHeader 
@@ -732,104 +699,78 @@ export const ContentCalendar = () => {
                   onBack={() => navigate('/marketing')}
                   description="Omnichannel publication schedule and governance."
                 />
-                
-                <VaultBanner 
-                  title="Content Calendar"
-                  subtitle="Omnichannel publication schedule and governance. Scheduling and managing your brand's digital narrative."
-                  badge="Calendar Protocol Active"
-                >
-                  <div className="flex gap-4">
-                    <Button 
-                        variant="primary"
-                        className="bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-black/10 transition-all"
-                        onClick={() => navigate('/marketing/creator')}
-                    >
-                        <Plus size={16} className="mr-3"/> SCHEDULE POST
-                    </Button>
-                  </div>
-                </VaultBanner>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-8 items-center justify-between border-b border-white/10 pb-12">
-                <div className="flex flex-wrap gap-4">
-                    {['All', 'Instagram', 'Blog', 'YouTube', 'LinkedIn', 'Email'].map(p => (
-                        <button 
-                            key={p}
-                            onClick={() => setFilterPlatform(p)}
-                            className={`px-6 py-2 rounded-full font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all duration-500 ${filterPlatform === p ? 'bg-[#6A2C91] text-white shadow-lg shadow-purple-500/20' : 'bg-white/5 text-gray-500 border border-white/10 hover:border-[#6A2C91]/30'}`}
-                        >
-                            {p}
-                        </button>
+            <Card className="luxury-card border-transparent rounded-[2.5rem] p-10 bg-black/40 backdrop-blur-xl">
+                <div className="flex items-center justify-between mb-10">
+                    <h2 className="text-3xl font-serif text-white tracking-tight">{monthName} {year}</h2>
+                    <div className="flex gap-4">
+                        <Button variant="outline" onClick={prevMonth} className="h-12 w-12 p-0 rounded-full border-white/10 text-white hover:bg-white/5 flex justify-center items-center"><ArrowLeft size={18} /></Button>
+                        <Button variant="outline" onClick={nextMonth} className="h-12 w-12 p-0 rounded-full border-white/10 text-white hover:bg-white/5 flex justify-center items-center"><ArrowLeft size={18} className="rotate-180" /></Button>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-7 gap-4 mb-4">
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                        <div key={day} className="text-center text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest">{day}</div>
                     ))}
                 </div>
-                <div className="flex gap-4">
-                    <Select 
-                        value={filterStatus} 
-                        onChange={(e) => setFilterStatus(e.target.value)}
-                        className="h-12 w-48 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-[0.2em] font-medium px-6 text-white"
-                    >
-                        <option value="All" className="bg-black">All Status</option>
-                        <option value="Draft" className="bg-black">Draft</option>
-                        <option value="Pending Approval" className="bg-black">Pending</option>
-                        <option value="Scheduled" className="bg-black">Scheduled</option>
-                        <option value="Published" className="bg-black">Published</option>
-                    </Select>
-                </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <AnimatePresence mode="popLayout">
-                    {filteredPosts.length > 0 ? filteredPosts.map((post, idx) => (
-                        <motion.div
-                            key={post.id}
-                            layout
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.5, delay: idx * 0.05 }}
-                        >
-                            <Card className="luxury-card h-full flex flex-col p-10 group relative overflow-hidden bg-black/40 backdrop-blur-xl border-white/10">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full -mr-16 -mt-16 opacity-50 group-hover:bg-[#6A2C91]/5 transition-colors duration-700"></div>
-                                
-                                <div className="flex justify-between items-start mb-10 relative z-10">
-                                    <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-400 group-hover:bg-white/10 group-hover:text-[#C5A059] group-hover:shadow-xl group-hover:shadow-black/5 transition-all duration-700">
-                                        {getPlatformIcon(post.platform)}
-                                    </div>
-                                    <Badge color={getStatusColor(post.status) as any}>
-                                        {post.status}
-                                    </Badge>
+                <div className="grid grid-cols-7 gap-4">
+                    {Array.from({ length: firstDay }).map((_, i) => (
+                        <div key={`blank-${i}`} className="h-32 rounded-3xl bg-white/5 opacity-30"></div>
+                    ))}
+                    {Array.from({ length: daysInMonth }).map((_, i) => {
+                        const day = i + 1;
+                        const dayPosts = getPostsForDay(day);
+                        return (
+                            <div 
+                                key={day} 
+                                onClick={() => setSelectedDay(day)}
+                                className="h-32 rounded-3xl bg-white/5 border border-white/10 hover:border-[#6A2C91] hover:bg-white/10 p-3 transition-all cursor-pointer relative overflow-hidden group flex flex-col"
+                            >
+                                <span className="text-xs font-sans font-medium text-gray-400 group-hover:text-white transition-colors">{day}</span>
+                                <div className="mt-auto space-y-1 overflow-y-auto hidden-scrollbar">
+                                    {dayPosts.map((post, idx) => (
+                                        <div key={idx} className="bg-black/60 rounded p-1.5 flex items-center gap-1.5 overflow-hidden">
+                                            <div className="text-[#6A2C91] shrink-0">{getPlatformIcon(post.platform)}</div>
+                                            <span className="text-[9px] text-white truncate font-sans font-medium">{post.topic}</span>
+                                        </div>
+                                    ))}
                                 </div>
-
-                                <div className="space-y-4 mb-10 relative z-10 flex-grow">
-                                    <p className="text-[10px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em]">{new Date(post.scheduledDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-                                    <h3 className="text-2xl font-serif text-white tracking-tight leading-snug group-hover:text-[#6A2C91] transition-colors duration-500">{post.topic}</h3>
-                                    <p className="text-gray-400 font-sans font-light text-sm line-clamp-3 leading-relaxed">
-                                        {post.content}
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center justify-between pt-8 border-t border-white/5 relative z-10">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-[#C5A059]"></div>
-                                        <span className="text-[10px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em]">{post.type}</span>
-                                    </div>
-                                    <button className="text-gray-600 hover:text-[#6A2C91] transition-all duration-500 flex items-center gap-2 group/btn">
-                                        <span className="text-[10px] font-sans font-medium uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity duration-500">View Details</span>
-                                        <Eye size={18} className="group-hover/btn:scale-110 transition-transform" />
-                                    </button>
-                                </div>
-                            </Card>
-                        </motion.div>
-                    )) : (
-                        <div className="col-span-full py-40 text-center">
-                            <div className="flex flex-col items-center opacity-20">
-                                <Calendar size={80} strokeWidth={0.8} className="text-white mb-8" />
-                                <p className="text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]">No synchronization nodes found</p>
                             </div>
+                        );
+                    })}
+                </div>
+            </Card>
+
+            <Modal isOpen={selectedDay !== null} onClose={() => setSelectedDay(null)} title={`Schedule for ${monthName} ${selectedDay}, ${year}`}>
+                <div className="space-y-6">
+                    {selectedDay && getPostsForDay(selectedDay).length > 0 ? (
+                        <div className="space-y-4">
+                            {getPostsForDay(selectedDay).map(post => (
+                                <div key={post.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-black/40 rounded-xl flex items-center justify-center text-[#6A2C91]">
+                                            {getPlatformIcon(post.platform)}
+                                        </div>
+                                        <div>
+                                            <p className="text-white font-sans font-medium text-sm">{post.topic}</p>
+                                            <p className="text-gray-500 font-sans text-[10px] uppercase tracking-widest">{post.status}</p>
+                                        </div>
+                                    </div>
+                                    <Badge color={getStatusColor(post.status) as any}>{post.status}</Badge>
+                                </div>
+                            ))}
                         </div>
+                    ) : (
+                        <p className="text-gray-500 text-sm font-sans text-center py-8">No nodes scheduled for this date.</p>
                     )}
-                </AnimatePresence>
-            </div>
+                    <Button onClick={() => navigate('/marketing/creator')} className="w-full bg-[#C5A059] hover:bg-[#b08d4f] text-white h-12 rounded-xl font-sans font-medium text-[10px] uppercase tracking-widest shadow-lg">
+                        <Plus size={14} className="mr-2" /> Pre-schedule Strategy
+                    </Button>
+                </div>
+            </Modal>
         </motion.div>
     );
 };

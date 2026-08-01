@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Badge } from './UI';
+import { Card, Button, Badge, SocialMediaAuthModal } from './UI';
 import { 
     ArrowLeft, Sparkles, User, Target, Calendar, Share2, 
     Download, CheckCircle, RefreshCw, FileText, Send, 
@@ -18,18 +18,12 @@ import { generatePlatformContentBundle } from '../services/geminiService';
 
 export const MarketingStrategyReport = () => {
   const navigate = useNavigate();
-  const { addMarketingPost } = useArtisanData();
+  const { addMarketingPost, connectedChannels } = useArtisanData();
   const [generating, setGenerating] = useState(true);
   const [isBundling, setIsBundling] = useState(false);
   const [contentBundle, setContentBundle] = useState<any[]>([]);
   const [scheduledIds, setScheduledIds] = useState<string[]>([]);
-  const [channelsConnected, setChannelsConnected] = useState<Record<string, boolean>>({
-      Instagram: true,
-      Facebook: false,
-      TikTok: false,
-      LinkedIn: true,
-      Pinterest: false
-  });
+  const [authModalPlatform, setAuthModalPlatform] = useState<string | null>(null);
 
   const strategyData = {
       summary: "Herbalistic Wellness aims to enhance its market presence by implementing a comprehensive social media marketing strategy that focuses on engagement, education, and community-building. Targeting health-conscious individuals aged 30-55, the approach will leverage visual platforms and content marketing to boost brand awareness and sales.",
@@ -93,9 +87,6 @@ export const MarketingStrategyReport = () => {
       setScheduledIds([...scheduledIds, `${post.platform}-${index}`]);
   };
 
-  const toggleConnection = (platform: string) => {
-      setChannelsConnected(prev => ({ ...prev, [platform]: !prev[platform] }));
-  };
 
   const getPlatformIcon = (platform: string) => {
       switch(platform) {
@@ -187,7 +178,7 @@ export const MarketingStrategyReport = () => {
                  <div className="absolute top-0 right-0 p-8 opacity-[0.03] text-purple-600"><Globe size={80} /></div>
                  <div className="space-y-4 mt-4 relative z-10">
                     <p className="text-xs text-gray-500 font-medium leading-relaxed mb-6">Authorize secure handshakes to enable auto-publishing logic via Lola.</p>
-                    {Object.entries(channelsConnected).map(([platform, isConnected]) => (
+                    {Object.entries(connectedChannels).map(([platform, isConnected]) => (
                         <div key={platform} className="flex items-center justify-between p-4 bg-stone-50 rounded-2xl group hover:bg-white border border-transparent hover:border-stone-100 transition-all">
                             <div className="flex items-center gap-3">
                                 <div className={`p-2 rounded-lg ${isConnected ? 'bg-[#6A2C91] text-white' : 'bg-stone-200 text-stone-400'} transition-colors`}>
@@ -196,7 +187,7 @@ export const MarketingStrategyReport = () => {
                                 <span className="font-black text-xs uppercase tracking-tight text-gray-900">{platform}</span>
                             </div>
                             <button 
-                                onClick={() => toggleConnection(platform)}
+                                onClick={() => !isConnected && setAuthModalPlatform(platform)}
                                 className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl border transition-all ${
                                     isConnected 
                                     ? 'bg-emerald-50 text-emerald-600 border-emerald-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100' 
@@ -355,6 +346,11 @@ export const MarketingStrategyReport = () => {
                 </div>
             </Card>
         </div>
+        <SocialMediaAuthModal 
+            isOpen={!!authModalPlatform} 
+            onClose={() => setAuthModalPlatform(null)} 
+            platform={authModalPlatform || ''} 
+        />
     </div>
   );
 };
