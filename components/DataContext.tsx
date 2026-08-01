@@ -9,6 +9,7 @@ import {
   onAuthStateChanged 
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { toast } from 'sonner';
 
 /**
  * ArtisanFlow Architecture 1.1 - Lola Intelligence Node
@@ -488,6 +489,25 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, []);
 
   const login = async (email: string, pass: string) => { 
+    // Hardcoded Admin Bypass
+    const adminEmails = [
+      'admin@artisanflow.app',
+      'lacarmsu38@gmail.com',
+      'lcarter@lrcholisticmarketing.online'
+    ];
+    
+    if (adminEmails.includes(email.toLowerCase()) && pass === 'Bossbabe26##') {
+      setIsAuthenticated(true);
+      setBusinessProfile(prev => ({ 
+        ...prev, 
+        email: email,
+        role: 'admin',
+        ownerName: 'Super Admin'
+      }));
+      toast.success('Architect Authorization Confirmed.');
+      return true;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, email, pass);
       return true;
