@@ -141,8 +141,12 @@ export const LandingPage = () => {
             </nav>
 
             {/* Hero */}
-            <main className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24">
-                <div className="max-w-4xl text-center space-y-8">
+            <main 
+                className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24 bg-cover bg-center bg-no-repeat relative"
+                style={{ backgroundImage: 'url(/artisan_flow_hero.png)' }}
+            >
+                <div className="absolute inset-0 bg-stone-50/80 backdrop-blur-sm z-0"></div>
+                <div className="max-w-4xl text-center space-y-8 relative z-10">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 border border-purple-100 text-[#6A2C91] text-xs font-bold uppercase tracking-widest">
                         <Sparkles size={14} /> AI-Powered Operations
                     </div>
@@ -155,48 +159,103 @@ export const LandingPage = () => {
                 </div>
 
                 {/* Tiers */}
-                <div className="mt-24 w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+                <div className="mt-24 w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8 px-4 relative z-10">
                     <TierCard 
                         title="Free Audit" 
                         price="$0" 
-                        icon={ShieldCheck} 
-                        color="bg-slate-500"
-                        features={['Public Resources', 'Initial Strategy Session', 'Manual Batch Entry', 'Basic Inventory List']}
+                        tierNumber="1"
+                        color="bg-slate-700"
+                        features={[
+                            'Basic CRM: Client Tracking', 
+                            'Basic Inventory: Spreadsheet Sync', 
+                            'Basic Manufacturing: Manual Batch Entry', 
+                            'Public Resources & Strategy Session'
+                        ]}
                         onSelect={() => handlePurchase('Free Audit')}
                     />
                     <TierCard 
                         title="Artisan Flow Basic" 
                         price="$49" 
                         isPopular 
-                        icon={Zap}
+                        tierNumber="2"
                         color="bg-[#6A2C91]"
-                        features={['Omnichannel Sync', 'Automated Inventory', 'Lola AI Basic Access', 'Production Scheduler']}
+                        features={[
+                            'Advanced CRM: Automated Follow-ups', 
+                            'Advanced Inventory: Omnichannel Sync', 
+                            'Advanced Manufacturing: Production Scheduler', 
+                            'Lola AI Basic Access'
+                        ]}
                         onSelect={() => handlePurchase('Artisan Flow Basic')}
                     />
                     <TierCard 
                         title="Margin Protection Pro" 
                         price="$149" 
-                        icon={Crown}
+                        tierNumber="3"
                         color="bg-[#C5A059]"
-                        features={['Everything in Basic', 'Margin Anomaly Detection', 'AI Competitive Intelligence', 'Advanced Forecast Generator']}
+                        features={[
+                            'Pro CRM: Sentiment Analysis', 
+                            'Pro Inventory: Predictive Reordering', 
+                            'Pro Manufacturing: Margin Anomaly Detection', 
+                            'AI Competitive Intelligence'
+                        ]}
                         onSelect={() => handlePurchase('Margin Protection Pro')}
                     />
+                </div>
+
+                {/* Contact Form Section */}
+                <div className="mt-32 w-full max-w-3xl relative z-10">
+                    <Card className="shadow-2xl border-stone-200 bg-white/80 backdrop-blur-lg">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl font-black text-gray-900 tracking-tight uppercase italic mb-2">Need a Custom Solution?</h2>
+                            <p className="text-gray-500">Reach out for tier selection assistance or to inquire about a custom app built specifically for your business.</p>
+                        </div>
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            alert("Message sent to Admins (lacarmsu38@gmail.com & lcarter@lrcholisticmarketing.online). We will be in touch shortly!");
+                        }} className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Name</label>
+                                    <Input type="text" placeholder="Your Name" required />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Email</label>
+                                    <Input type="email" placeholder="you@company.com" required />
+                                </div>
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Inquiry Type</label>
+                                <select className="w-full bg-stone-50 border border-stone-200 text-stone-900 rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm" required>
+                                    <option value="tier_help">Help selecting a tier</option>
+                                    <option value="custom_app">Inquire about a custom app build</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Message</label>
+                                <textarea className="w-full bg-stone-50 border border-stone-200 text-stone-900 rounded-xl px-4 py-3 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm h-32 resize-none" placeholder="Tell us about your business needs..." required></textarea>
+                            </div>
+                            <Button variant="primary" type="submit" className="w-full h-14 font-black tracking-widest bg-[#6A2C91] hover:bg-purple-900 shadow-xl shadow-purple-900/20">
+                                SEND MESSAGE <ArrowRight size={18} className="ml-2" />
+                            </Button>
+                        </form>
+                    </Card>
                 </div>
             </main>
         </div>
     );
 };
 
-const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSelect }: any) => (
-    <Card className={`relative flex flex-col h-full border-2 transition-all hover:scale-[1.02] hover:shadow-2xl ${isPopular ? 'border-[#6A2C91] shadow-xl' : 'border-gray-100 shadow-sm'}`}>
+const TierCard = ({ title, price, features, tierNumber, color, isPopular, onSelect }: any) => (
+    <Card className={`relative flex flex-col h-full border-2 transition-all hover:-translate-y-2 hover:shadow-2xl duration-500 ${isPopular ? 'border-[#6A2C91] shadow-xl bg-gradient-to-b from-white to-purple-50/30' : 'border-gray-200 shadow-md bg-white hover:border-[#C5A059]/50'}`}>
         {isPopular && (
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#6A2C91] text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#6A2C91] to-purple-800 text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg border border-purple-400/30">
                 Recommended for Growth
             </div>
         )}
         <div className="mb-8">
-            <div className={`w-12 h-12 ${color} text-white rounded-xl flex items-center justify-center mb-4 shadow-lg`}>
-                <Icon size={24} />
+            <div className={`w-14 h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic`}>
+                {tierNumber}
             </div>
             <h3 className="text-2xl font-black text-gray-900 tracking-tight">{title}</h3>
             <div className="flex items-baseline mt-2">
