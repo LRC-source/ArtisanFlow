@@ -34,12 +34,17 @@ export const Forecasting = () => {
         ? inventory.reduce((sum, item) => sum + (item.unitCost || 0), 0) / inventory.length
         : 14.50;
 
+    const [aiScenario, setAiScenario] = React.useState('Baseline');
+
     const forecastData = Array.from({ length: 6 }).map((_, index) => {
         const date = new Date();
         date.setDate(date.getDate() + (index * 15));
         const name = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-        const growthFactor = 1 + (index * 0.05);
+        let growthFactor = 1 + (index * 0.05);
+        if (aiScenario === 'Aggressive') growthFactor += (index * 0.15);
+        if (aiScenario === 'Conservative') growthFactor -= (index * 0.02);
+        
         const projectedSold = Math.round(averageUnitsPerInterval * growthFactor);
         const projectedCost = Math.round(projectedSold * averageMaterialCost * 2.2);
 
@@ -49,6 +54,12 @@ export const Forecasting = () => {
             cost: projectedCost
         };
     });
+
+    const procurementSuggestions = [
+        { item: 'Rosemary Extract', required: '240 oz', current: '50 oz', shortfall: '190 oz', cost: '$180.50' },
+        { item: 'Glass Vials (50ml)', required: '500 units', current: '120 units', shortfall: '380 units', cost: '$342.00' },
+        { item: 'Beeswax Blocks', required: '100 lbs', current: '80 lbs', shortfall: '20 lbs', cost: '$65.00' }
+    ];
 
     return (
         <motion.div 
@@ -117,7 +128,22 @@ export const Forecasting = () => {
                      transition={{ delay: 0.3, duration: 0.6 }}
                  >
                      <Card className="luxury-card min-h-[400px] p-10 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                         <h3 className="text-2xl font-serif text-white font-bold mb-8">Raw Material Burn Rate</h3>
+                         <div className="flex justify-between items-center mb-8">
+                             <h3 className="text-2xl font-serif text-white font-bold">Raw Material Burn Rate</h3>
+                             <div className="flex gap-2 bg-white/5 p-1.5 rounded-full border border-white/10">
+                                 {['Baseline', 'Aggressive', 'Conservative'].map(sc => (
+                                     <button 
+                                         key={sc}
+                                         onClick={() => setAiScenario(sc)}
+                                         className={`px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all ${
+                                             aiScenario === sc ? 'bg-[#C5A059] text-white shadow-lg shadow-amber-500/20' : 'text-white/40 hover:text-white/80'
+                                         }`}
+                                     >
+                                         {sc}
+                                     </button>
+                                 ))}
+                             </div>
+                         </div>
                          <div className="flex gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
                              <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white/50">30D Node</Badge>
                              <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90D Node</Badge>
@@ -145,6 +171,45 @@ export const Forecasting = () => {
                      </Card>
                  </motion.div>
              </div>
+
+             {/* Material Procurement Suggestions */}
+             <motion.div
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.35, duration: 0.6 }}
+             >
+                 <Card className="luxury-card p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
+                     <h3 className="text-3xl font-serif text-white font-bold mb-10">Predicted Shortfalls & Procurement</h3>
+                     <div className="overflow-x-auto">
+                         <table className="w-full text-left border-collapse">
+                             <thead>
+                                 <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em]">
+                                     <th className="pb-6 pl-4">Material Node</th>
+                                     <th className="pb-6">Required (90D)</th>
+                                     <th className="pb-6">Current Stock</th>
+                                     <th className="pb-6 text-amber-500">Projected Shortfall</th>
+                                     <th className="pb-6">Est. Cost</th>
+                                     <th className="pb-6 text-right pr-4">Action</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 {procurementSuggestions.map((item, idx) => (
+                                     <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                                         <td className="py-6 pl-4 font-serif text-white text-lg tracking-tight group-hover:text-[#C5A059] transition-colors">{item.item}</td>
+                                         <td className="py-6 text-white/70 font-medium">{item.required}</td>
+                                         <td className="py-6 text-white/70 font-medium">{item.current}</td>
+                                         <td className="py-6 text-amber-500 font-bold">{item.shortfall}</td>
+                                         <td className="py-6 text-emerald-400 font-bold">{item.cost}</td>
+                                         <td className="py-6 text-right pr-4">
+                                             <Button className="h-10 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-6 transition-colors">Order Now</Button>
+                                         </td>
+                                     </tr>
+                                 ))}
+                             </tbody>
+                         </table>
+                     </div>
+                 </Card>
+             </motion.div>
 
              <motion.div
                  initial={{ opacity: 0, y: 20 }}

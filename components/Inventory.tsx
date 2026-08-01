@@ -199,7 +199,7 @@ export const Inventory = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
+            <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                 <div className="flex items-center gap-8 relative z-10 mb-12">
                     <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
@@ -215,7 +215,7 @@ export const Inventory = () => {
                 </div>
             </div>
 
-            <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
+            <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                 <div className="flex items-center gap-8 relative z-10 mb-12">
                     <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#C5A059] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
