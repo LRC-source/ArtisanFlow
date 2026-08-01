@@ -128,13 +128,13 @@ export const LandingPage = () => {
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
             
             {/* Nav */}
-            <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-white/80 backdrop-blur-lg border-b border-stone-200/50 shadow-sm sticky top-0">
+            <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-black/80 backdrop-blur-lg border-b border-stone-200/20 shadow-sm sticky top-0">
                 <div className="flex items-center gap-3">
                     <Hexagon size={28} className="text-[#C5A059]" />
-                    <span className="text-lg font-black text-gray-900 tracking-tight uppercase italic">Artisan Flow</span>
+                    <span className="text-lg font-black text-white tracking-tight uppercase italic">Artisan Flow</span>
                 </div>
                 <div>
-                    <Button variant="primary" onClick={() => setView('login')} className="h-10 px-8 font-black bg-[#6A2C91] text-white hover:bg-purple-900 shadow-xl shadow-purple-900/20 rounded-full tracking-widest text-xs uppercase">
+                    <Button variant="primary" onClick={() => setView('login')} className="h-10 px-8 font-black bg-[#6A2C91] text-white hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(106,44,145,0.8)] transition-all duration-300 rounded-full tracking-widest text-xs uppercase">
                         Sign In
                     </Button>
                 </div>
@@ -149,7 +149,7 @@ export const LandingPage = () => {
                 <div className="absolute inset-0 bg-black/20 z-0"></div>
                 <div className="max-w-4xl text-center space-y-8 relative z-10">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50/90 backdrop-blur-sm border border-purple-200/50 text-[#6A2C91] text-xs font-bold uppercase tracking-widest shadow-lg">
-                        <Sparkles size={14} /> AI-Powered Operations
+                        <Sparkles size={14} /> Built-in AI-Supported Operations
                     </div>
                     <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase italic leading-[0.9] drop-shadow-xl">
                         Precision Manufacturing <br/> <span className="text-[#C5A059]">For Artisanal Brands</span>
@@ -248,7 +248,7 @@ export const LandingPage = () => {
 };
 
 const TierCard = ({ title, price, features, tierNumber, color, isPopular, onSelect }: any) => (
-    <div className={`relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 hover:shadow-2xl duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] shadow-xl shadow-[#6A2C91]/20' : 'border-white/10 shadow-md hover:border-[#C5A059]/50'}`}>
+    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 hover:shadow-2xl duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] shadow-xl shadow-[#6A2C91]/20' : 'border-white/10 shadow-md hover:border-[#C5A059]/50'}`}>
         {isPopular && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#6A2C91] to-purple-800 text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg border border-purple-400/30">
                 Recommended for Growth
@@ -275,7 +275,7 @@ const TierCard = ({ title, price, features, tierNumber, color, isPopular, onSele
         <Button 
             variant={isPopular ? 'primary' : 'outline'} 
             onClick={onSelect}
-            className={`w-full h-14 font-black tracking-widest text-xs uppercase rounded-xl ${isPopular ? 'bg-[#6A2C91] hover:bg-purple-900 border-none' : 'border-white/20 text-white hover:bg-white/5'}`}
+            className={`w-full h-14 font-black tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ${isPopular ? 'bg-[#6A2C91] hover:bg-purple-800 group-hover:shadow-[0_0_25px_rgba(106,44,145,0.8)] border-none' : 'border-white/20 text-white hover:bg-white/5 group-hover:shadow-[0_0_20px_rgba(197,160,89,0.4)]'}`}
         >
             Initialize {title}
         </Button>
