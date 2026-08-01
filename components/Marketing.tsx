@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner } from './UI';
-import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save } from 'lucide-react';
+import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData, MarketingPost } from './DataContext';
 import { generateLolaImage, analyzeLolaImage, chatWithLola } from '../services/geminiService';
@@ -9,6 +9,50 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenAI } from "@google/genai";
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
+
+// --- AUTH MODAL ---
+export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: boolean; onClose: () => void; platform: string }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isConnecting, setIsConnecting] = useState(false);
+
+    return (
+        <Modal isOpen={isOpen} onClose={onClose} title={`Authenticate ${platform}`}>
+            <div className="space-y-6">
+                <p className="text-white/60 font-sans font-light text-sm">
+                    Enter your {platform} credentials to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
+                </p>
+                <Input 
+                    placeholder="Email Address" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    className="w-full"
+                />
+                <Input 
+                    placeholder="Password" 
+                    type="password"
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    className="w-full"
+                />
+                <Button 
+                    onClick={() => {
+                        setIsConnecting(true);
+                        setTimeout(() => {
+                            setIsConnecting(false);
+                            onClose();
+                            toast.success(`${platform} authenticated successfully.`);
+                        }, 1500);
+                    }} 
+                    disabled={isConnecting}
+                    className="w-full h-12 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl font-sans font-bold tracking-widest text-[10px] uppercase"
+                >
+                    {isConnecting ? <Loader2 size={16} className="animate-spin mx-auto" /> : `Connect ${platform} Account`}
+                </Button>
+            </div>
+        </Modal>
+    );
+};
 
 // --- REUSABLE MARKETING GRID ---
 const MarketingGrid = () => {
@@ -387,7 +431,7 @@ export const BlogGenerator = () => {
                                 className="w-full bg-white border border-stone-100 rounded-[2rem] p-8 text-base font-sans font-light text-stone-600 h-[32rem] resize-none shadow-sm focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 transition-all duration-500 outline-none leading-relaxed"
                             />
                             <Button onClick={handleSave} className="w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500">
-                                Save to Calendar
+                                Approve & Schedule
                             </Button>
                         </motion.div>
                     ) : (
@@ -499,7 +543,7 @@ export const VideoCreator = () => {
                                 className="w-full bg-black/40 border border-white/10 rounded-[2rem] p-8 text-base font-mono font-light text-gray-300 h-[24rem] resize-none shadow-sm focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 transition-all duration-500 outline-none leading-relaxed"
                             />
                             <Button onClick={handleSave} className="w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500">
-                                Save to Calendar
+                                Approve & Schedule
                             </Button>
                         </motion.div>
                     ) : (
@@ -522,6 +566,7 @@ export const SocialMediaCreator = () => {
     const [platform, setPlatform] = useState('Instagram');
     const [topic, setTopic] = useState('');
     const [generatedContent, setGeneratedContent] = useState('');
+    const [showAuthModal, setShowAuthModal] = useState(false);
 
     const handleGenerate = async () => {
         if (!topic) return toast.error("Please enter a topic.");
@@ -582,6 +627,13 @@ export const SocialMediaCreator = () => {
                                 <option className="bg-black">Twitter</option>
                                 <option className="bg-black">Facebook</option>
                             </Select>
+                            <Button 
+                                variant="outline" 
+                                onClick={() => setShowAuthModal(true)}
+                                className="w-full mt-2 h-12 rounded-xl border-white/10 text-white/50 hover:bg-white/5 font-sans text-[10px] tracking-widest uppercase"
+                            >
+                                <Lock size={14} className="mr-2"/> Authenticate Platform
+                            </Button>
                         </div>
                         <div className="space-y-4">
                             <label className="block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1">Topic / Objective</label>
@@ -612,7 +664,7 @@ export const SocialMediaCreator = () => {
                                 className="w-full bg-black/40 border border-white/10 rounded-[2rem] p-8 text-base font-sans font-light text-gray-300 h-[24rem] resize-none shadow-sm focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 transition-all duration-500 outline-none leading-relaxed"
                             />
                             <Button onClick={handleSave} className="w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500">
-                                Save to Calendar
+                                Approve & Schedule
                             </Button>
                         </motion.div>
                     ) : (
@@ -623,6 +675,8 @@ export const SocialMediaCreator = () => {
                     )}
                 </Card>
             </div>
+        
+            <SocialMediaAuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} platform={platform} />
         </motion.div>
     );
 };
@@ -1642,7 +1696,7 @@ export const MarketingCreator = () => {
                                     </div>
                                     <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto">
                                         <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 h-14 rounded-full text-xs font-sans font-medium text-gray-400 border-white/10 hover:bg-white/5 transition-colors">Discard Node</Button>
-                                        <Button onClick={handleSave} className="flex-[2] bg-[#C5A059] hover:bg-[#b08d4f] text-white h-14 rounded-full font-sans font-medium text-xs tracking-wide shadow-md transition-all">Commit to Vault</Button>
+                                        <Button onClick={handleSave} className="flex-[2] bg-[#C5A059] hover:bg-[#b08d4f] text-white h-14 rounded-full font-sans font-medium text-xs tracking-wide shadow-md transition-all">Approve & Schedule</Button>
                                     </div>
                                 </motion.div>
                             ) : (

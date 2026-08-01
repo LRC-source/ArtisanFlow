@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2 } from 'lucide-react';
+import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
 import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from './UI';
 import { useArtisanData, Integration, UserTier } from './DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -276,6 +276,11 @@ export const Integrations = () => {
     const { integrations, toggleIntegrationStatus } = useArtisanData();
     const [activeTab, setActiveTab] = useState('All');
     const [isDiagnosticRunning, setIsDiagnosticRunning] = useState<string | null>(null);
+    const [activeModalIntegration, setActiveModalIntegration] = useState<Integration | null>(null);
+    const [integrationEmail, setIntegrationEmail] = useState('');
+    const [integrationPassword, setIntegrationPassword] = useState('');
+    const [integrationKey, setIntegrationKey] = useState('');
+    const [isConnecting, setIsConnecting] = useState(false);
 
     const categories = ['All', 'E-commerce', 'Marketplace', 'Wholesale', 'POS', 'System'];
     
@@ -422,7 +427,13 @@ export const Integrations = () => {
                                 </Button>
                             )}
                             <Button 
-                                onClick={() => toggleIntegrationStatus(int.id)}
+                                onClick={() => {
+                                    if (int.status === 'Connected') {
+                                        toggleIntegrationStatus(int.id);
+                                    } else {
+                                        setActiveModalIntegration(int);
+                                    }
+                                }}
                                 className={`w-full h-12 text-[10px] font-sans font-bold tracking-widest uppercase transition-all duration-500 rounded-full ${
                                     int.status === 'Connected' 
                                         ? 'bg-white/10 text-white hover:bg-white/20 border border-white/10' 
@@ -446,6 +457,64 @@ export const Integrations = () => {
                     </motion.div>
                 ))}
             </div>
+        
+            <Modal isOpen={!!activeModalIntegration} onClose={() => setActiveModalIntegration(null)} title={`Initialize ${activeModalIntegration?.name} Link`}>
+                <div className="space-y-6">
+                    <p className="text-white/60 font-sans font-light text-sm">
+                        Please provide your credentials to securely link {activeModalIntegration?.name} into the Artisan Flow network.
+                    </p>
+                    
+                    {activeModalIntegration?.category === 'System' ? (
+                        <>
+                            <Input 
+                                placeholder="Email Address" 
+                                value={integrationEmail} 
+                                onChange={(e) => setIntegrationEmail(e.target.value)} 
+                                className="w-full"
+                            />
+                            <Input 
+                                placeholder="Password" 
+                                type="password"
+                                value={integrationPassword} 
+                                onChange={(e) => setIntegrationPassword(e.target.value)} 
+                                className="w-full"
+                            />
+                        </>
+                    ) : (
+                        <div className="space-y-4">
+                            <Input 
+                                placeholder="API Key / Access Token" 
+                                type="password"
+                                value={integrationKey} 
+                                onChange={(e) => setIntegrationKey(e.target.value)} 
+                                className="w-full font-mono text-sm"
+                            />
+                            <div className="text-xs text-white/40 flex items-center gap-2">
+                                <Lock size={12} /> Encrypted at rest via AES-256
+                            </div>
+                        </div>
+                    )}
+                    
+                    <Button 
+                        onClick={() => {
+                            if (!activeModalIntegration) return;
+                            setIsConnecting(true);
+                            setTimeout(() => {
+                                toggleIntegrationStatus(activeModalIntegration.id);
+                                setIsConnecting(false);
+                                setActiveModalIntegration(null);
+                                setIntegrationEmail('');
+                                setIntegrationPassword('');
+                                setIntegrationKey('');
+                            }, 1500);
+                        }} 
+                        disabled={isConnecting}
+                        className="w-full h-12 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl"
+                    >
+                        {isConnecting ? <Loader2 size={16} className="animate-spin mx-auto" /> : 'Authenticate Connection'}
+                    </Button>
+                </div>
+            </Modal>
         </motion.div>
     );
 };
