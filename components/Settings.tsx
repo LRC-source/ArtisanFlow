@@ -13,11 +13,12 @@ import { toast } from 'sonner';
 
 export const AccountSettings = () => {
     const { businessProfile, updateBusinessProfile } = useArtisanData();
-    const [formData, setFormData] = useState({ fullName: businessProfile.ownerName, email: businessProfile.email });
+    const [formData, setFormData] = useState({ fullName: businessProfile.ownerName, email: businessProfile.email, avatarUrl: businessProfile.avatarUrl });
     const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleSave = () => {
+        updateBusinessProfile({ ...businessProfile, ownerName: formData.fullName, email: formData.email, avatarUrl: formData.avatarUrl });
         setIsSuccess(true);
         setTimeout(() => setIsSuccess(false), 2500);
     };
@@ -50,6 +51,21 @@ export const AccountSettings = () => {
                 <div className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-10 ${isSuccess ? 'ring-1 ring-emerald-500/50 bg-emerald-900/10' : ''} transition-all duration-500 rounded-[2.5rem]`}>
                     <h3 className="text-3xl font-serif text-white font-bold mb-8 tracking-tight">Identity Nodes</h3>
                     <div className="space-y-8">
+                        <div className="flex items-center gap-6">
+                            <div className="w-20 h-20 rounded-[1.2rem] bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)]">
+                                <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
+                                    {formData.avatarUrl ? (
+                                        <img src={formData.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <User size={32} className="text-[#C5A059]" />
+                                    )}
+                                </div>
+                            </div>
+                            <div className="space-y-2 flex-1">
+                                <label className="text-[10px] font-sans text-white/40 uppercase tracking-widest block font-bold">Avatar URL</label>
+                                <Input value={formData.avatarUrl || ''} onChange={e => setFormData({...formData, avatarUrl: e.target.value})} placeholder="https://example.com/avatar.jpg" className="h-10 rounded-xl bg-white/5 border-white/10 text-white" />
+                            </div>
+                        </div>
                         <div className="space-y-6">
                             <div>
                                 <label className="text-[10px] font-sans text-white/40 uppercase tracking-widest mb-2 block font-bold">Full Legal Name</label>

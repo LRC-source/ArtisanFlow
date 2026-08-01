@@ -60,6 +60,7 @@ import { FinanceHub, FinancialProjections } from './components/Finance';
 import { ContextualTutorialModal } from './components/ContextualTutorialModal';
 import { BudgetGuard } from './components/BudgetGuard';
 import { LolaTodos } from './components/LolaTodos';
+import { TermsAndConditions, PrivacyPolicy } from './components/Legal';
 import { TierProvider } from './context/TierContext';
 import { SuperAdmin } from './components/SuperAdmin';
 import { Card, Button, LockedNode, VaultBanner } from './components/UI';
@@ -474,6 +475,9 @@ const AppContent = () => {
         } />
         
         <Route path="/lola/todos" element={<LolaTodos />} />
+        
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         
         <Route path="/profit-guard" element={
             <LockedNode isLocked={userTier !== 'Margin Protection Pro'} requiredTier="Margin Protection Pro" onUpgrade={() => navigate('/settings/subscription')}>

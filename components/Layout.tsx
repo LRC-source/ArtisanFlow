@@ -23,7 +23,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
   const { businessProfile, userTier, logout, inventory, orders, getMarginMetrics, startTutorial } = useArtisanData();
   
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<string | null>(null);
@@ -189,8 +189,8 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               )}
 
               {/* Mobile/Collapsed Logo */}
-              <div className="md:hidden lg:hidden xl:hidden">
-                <LRCLogo size={32} className="opacity-80" />
+              <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
+                 <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-[40px] w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')} />
               </div>
 
               {/* Breadcrumbs - Path Navigator */}
@@ -272,8 +272,14 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                        <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
                      </p>
                  </div>
-                 <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 overflow-hidden shadow-lg group cursor-pointer hover:border-[#C5A059] transition-colors">
-                    <User size={24} className="group-hover:text-[#C5A059] transition-colors" />
+                 <div onClick={() => navigate('/settings')} className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
+                    <div className="w-full h-full rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
+                        {businessProfile.avatarUrl ? (
+                            <img src={businessProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                        ) : (
+                            <User size={22} className="text-[#C5A059] group-hover:scale-110 transition-transform" />
+                        )}
+                    </div>
                  </div>
             </div>
         </header>
@@ -281,6 +287,15 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
         <div className="flex-1 p-6 md:p-12 max-w-7xl mx-auto pb-32 min-h-full relative z-10 w-full">
           {children}
         </div>
+        
+        <footer className="w-full py-8 border-t border-white/5 mt-auto flex flex-col md:flex-row items-center justify-center gap-4 text-[10px] uppercase tracking-widest text-white/40 font-bold bg-black/40 z-20">
+            <span>© 2026 LRC ArtisanFlow. All rights reserved.</span>
+            <div className="flex items-center gap-4">
+                <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>
+                <span>|</span>
+                <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/privacy')}>Privacy Policy</span>
+            </div>
+        </footer>
       </main>
     </div>
   );

@@ -68,6 +68,7 @@ export interface BusinessProfile {
   ownerName: string;
   email: string;
   logo?: string;
+  avatarUrl?: string;
   industry: string;
   tier: UserTier;
   role?: 'admin' | 'user';
