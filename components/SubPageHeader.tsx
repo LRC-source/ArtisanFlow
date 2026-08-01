@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MoreHorizontal, Share2, Star } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface SubPageHeaderProps {
   title: string;
@@ -74,14 +75,14 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
           className="flex items-center gap-3"
         >
           {actions}
-          <div className="flex items-center gap-2 ml-2 pl-4 border-l border-stone-100">
-            <button className="p-3 rounded-2xl bg-white border border-stone-100 text-gray-400 hover:text-[#C5A059] transition-colors shadow-sm">
+          <div className="flex items-center gap-2 ml-2 pl-4 border-l border-white/10">
+            <button onClick={() => toast.info("Star feature coming soon")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-[#C5A059] hover:bg-white/10 transition-all shadow-sm">
               <Star size={18} />
             </button>
-            <button className="p-3 rounded-2xl bg-white border border-stone-100 text-gray-400 hover:text-[#6A2C91] transition-colors shadow-sm">
+            <button onClick={() => toast.info("Share feature coming soon")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-[#6A2C91] hover:bg-white/10 transition-all shadow-sm">
               <Share2 size={18} />
             </button>
-            <button className="p-3 rounded-2xl bg-white border border-stone-100 text-gray-400 hover:text-gray-600 transition-colors shadow-sm">
+            <button onClick={() => toast.info("More options coming soon")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-sm">
               <MoreHorizontal size={18} />
             </button>
           </div>
@@ -89,7 +90,7 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
       </div>
 
       {/* Decorative Separator */}
-      <div className="mt-10 h-[1px] w-full bg-gradient-to-r from-stone-100 via-stone-200 to-transparent" />
+      <div className="mt-10 h-[1px] w-full bg-gradient-to-r from-white/10 via-white/20 to-transparent" />
     </div>
   );
 };

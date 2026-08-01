@@ -5,6 +5,7 @@ import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 export const CRM = () => {
   const { orders, manualCustomers, addManualCustomer, getTotalRevenue } = useArtisanData();
@@ -87,6 +88,7 @@ export const CRM = () => {
                 description={`Detailed interaction ledger for ${customer.name}.`}
                 actions={
                   <Button 
+                    onClick={() => toast.info("Edit Customer functionality coming soon.")}
                     className="bg-white/10 hover:bg-white/20 text-white h-12 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-white/10"
                   >
                     Edit Node
@@ -128,7 +130,7 @@ export const CRM = () => {
                                       <p className="text-[10px] text-white/30 font-sans uppercase tracking-[0.2em] flex items-center gap-2"><Calendar size={12}/> {order.date}</p>
                                   </div>
                                   <div className="text-right">
-                                      <p className="font-serif text-white text-2xl mb-2">${order.total.toFixed(2)}</p>
+                                      <p className="font-sans font-light tracking-tight text-white text-3xl mb-2">${order.total.toFixed(2)}</p>
                                       <Badge color={order.status === 'Delivered' ? 'green' : 'blue'} className="text-[9px] uppercase tracking-widest">{order.status}</Badge>
                                   </div>
                               </div>
@@ -147,11 +149,11 @@ export const CRM = () => {
                           <div className="grid grid-cols-2 gap-6">
                               <div className="bg-black/40 p-6 rounded-[2rem] border border-white/5">
                                 <p className="text-[10px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-3">First Interaction</p>
-                                <p className="font-serif text-white text-xl">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
+                                <p className="font-sans font-light tracking-tight text-white text-2xl">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
                               </div>
                               <div className="bg-black/40 p-6 rounded-[2rem] border border-white/5">
                                 <p className="text-[10px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-3">Latest Update</p>
-                                <p className="font-serif text-white text-xl">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
+                                <p className="font-sans font-light tracking-tight text-white text-2xl">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
                               </div>
                           </div>
                           
