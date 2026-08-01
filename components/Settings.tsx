@@ -4,6 +4,7 @@ import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from './UI';
 import { useArtisanData, Integration, UserTier } from './DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 /**
  * ArtisanFlow Architecture 1.0 - STATUS: COMPLETE ✅
