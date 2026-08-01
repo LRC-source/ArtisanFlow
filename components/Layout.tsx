@@ -78,8 +78,8 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       {/* Sidebar - Artisan Flow Glassmorphic Floating Panel Redesign */}
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
           <div className="sidebar-brand-block flex items-center justify-center relative">
-              <div className="flex items-center justify-center w-full">
-                  <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-16 w-auto object-contain mx-auto" />
+              <div className="flex items-center justify-center w-full py-2">
+                  <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-[90px] w-auto object-contain mx-auto" />
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />

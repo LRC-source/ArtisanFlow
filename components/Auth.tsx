@@ -97,7 +97,7 @@ export const AuthGateway = ({ initialView = 'login', onBack }: { initialView?: '
                 transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="relative mb-8"
               >
-                <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="w-64 h-auto object-contain mx-auto" />
+                <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="w-[350px] h-auto object-contain mx-auto" />
               </motion.div>
               <motion.p 
                 initial={{ opacity: 0 }}
@@ -115,7 +115,7 @@ export const AuthGateway = ({ initialView = 'login', onBack }: { initialView?: '
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
             >
               <Card className="luxury-card p-8 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
-                <h2 className="text-lg font-serif text-white mb-8 flex items-center gap-3">
+                <h2 className="text-lg font-serif text-white mb-8 flex items-center justify-center gap-3 text-center">
                   {view === 'login' ? <Lock size={18} className="text-[#C5A059]"/> : <Mail size={18} className="text-[#C5A059]"/>}
                   {view === 'login' ? 'Sign In To Vault' : 'Initialize Account'}
                 </h2>
@@ -130,7 +130,7 @@ export const AuthGateway = ({ initialView = 'login', onBack }: { initialView?: '
                     <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="h-12 bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
-                  <Button variant="premium" type="submit" className="w-full h-12 font-black tracking-widest shadow-2xl">
+                  <Button variant="premium" type="submit" className="w-full md:w-full flex items-center justify-center h-12 font-black tracking-widest shadow-2xl">
                     {view === 'login' ? 'ENTER DASHBOARD' : 'START ONBOARDING'} <ArrowRight size={18} className="ml-1" />
                   </Button>
                 </form>
@@ -140,7 +140,7 @@ export const AuthGateway = ({ initialView = 'login', onBack }: { initialView?: '
                   <div className="relative flex justify-center text-[10px] font-black uppercase bg-transparent px-4 text-white/20 tracking-[0.2em]">Secure Entry Point</div>
                 </div>
 
-                <Button variant="outline" onClick={handleGoogleAuth} className="w-full h-12 font-bold border-white/10 hover:bg-white/5 text-white">
+                <Button variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center h-12 font-bold border-white/10 hover:bg-white/5 text-white">
                   <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
                 </Button>
 
