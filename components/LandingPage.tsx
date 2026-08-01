@@ -148,7 +148,7 @@ export const LandingPage = () => {
                 {/* 20% overlay for 80% image visibility */}
                 <div className="absolute inset-0 bg-black/20 z-0"></div>
                 <div className="max-w-4xl text-center space-y-8 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50/90 backdrop-blur-sm border border-purple-200/50 text-[#6A2C91] text-xs font-bold uppercase tracking-widest shadow-lg">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-lg border border-stone-200 text-[#6A2C91] text-xs font-bold uppercase tracking-widest shadow-lg">
                         <Sparkles size={14} /> Built-in AI-Supported Operations
                     </div>
                     <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase italic leading-[0.9] drop-shadow-xl">
@@ -247,15 +247,15 @@ export const LandingPage = () => {
     );
 };
 
-const TierCard = ({ title, price, features, tierNumber, color, isPopular, onSelect }: any) => (
-    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 hover:shadow-2xl duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] shadow-xl shadow-[#6A2C91]/20' : 'border-white/10 shadow-md hover:border-[#C5A059]/50'}`}>
+const TierCard = ({ title, price, features, tierNumber, isPopular, onSelect }: any) => (
+    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] hover:shadow-[0_0_40px_rgba(106,44,145,0.6)]' : 'border-white/10 hover:border-[#C5A059]/50 hover:shadow-[0_0_40px_rgba(197,160,89,0.3)]'}`}>
         {isPopular && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#6A2C91] to-purple-800 text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg border border-purple-400/30">
                 Recommended for Growth
             </div>
         )}
         <div className="mb-8">
-            <div className={`w-14 h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic border border-white/20`}>
+            <div className={`w-14 h-14 bg-white/80 backdrop-blur-lg text-[#6A2C91] rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic border border-white/40`}>
                 {tierNumber}
             </div>
             <h3 className="text-2xl font-black text-white tracking-tight">{title}</h3>
