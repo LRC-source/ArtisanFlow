@@ -145,7 +145,7 @@ export const LandingPage = () => {
                 className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24 bg-cover bg-center bg-no-repeat relative"
                 style={{ backgroundImage: 'url(/artisan_flow_hero.png)' }}
             >
-                <div className="absolute inset-0 bg-stone-50/60 backdrop-blur-sm z-0"></div>
+                {/* No overlay, 100% image visibility */}
                 <div className="max-w-4xl text-center space-y-8 relative z-10">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 border border-purple-100 text-[#6A2C91] text-xs font-bold uppercase tracking-widest">
                         <Sparkles size={14} /> AI-Powered Operations
