@@ -128,13 +128,13 @@ export const LandingPage = () => {
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
             
             {/* Nav */}
-            <nav className="w-full px-8 py-6 flex justify-between items-center z-10">
+            <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-white/80 backdrop-blur-lg border-b border-stone-200/50 shadow-sm sticky top-0">
                 <div className="flex items-center gap-3">
-                    <Hexagon size={32} className="text-[#C5A059]" />
-                    <span className="text-xl font-black text-gray-900 tracking-tight uppercase italic">Artisan Flow</span>
+                    <Hexagon size={28} className="text-[#C5A059]" />
+                    <span className="text-lg font-black text-gray-900 tracking-tight uppercase italic">Artisan Flow</span>
                 </div>
                 <div>
-                    <Button variant="outline" onClick={() => setView('login')} className="h-10 px-6 font-bold border-[#6A2C91] text-[#6A2C91] hover:bg-purple-50">
+                    <Button variant="primary" onClick={() => setView('login')} className="h-10 px-8 font-black bg-[#6A2C91] text-white hover:bg-purple-900 shadow-xl shadow-purple-900/20 rounded-full tracking-widest text-xs uppercase">
                         Sign In
                     </Button>
                 </div>
@@ -145,15 +145,16 @@ export const LandingPage = () => {
                 className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24 bg-cover bg-center bg-no-repeat relative"
                 style={{ backgroundImage: 'url(/artisan_flow_hero.png)' }}
             >
-                {/* No overlay, 100% image visibility */}
+                {/* 20% overlay for 80% image visibility */}
+                <div className="absolute inset-0 bg-black/20 z-0"></div>
                 <div className="max-w-4xl text-center space-y-8 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 border border-purple-100 text-[#6A2C91] text-xs font-bold uppercase tracking-widest">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50/90 backdrop-blur-sm border border-purple-200/50 text-[#6A2C91] text-xs font-bold uppercase tracking-widest shadow-lg">
                         <Sparkles size={14} /> AI-Powered Operations
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter uppercase italic leading-[0.9]">
-                        Precision Manufacturing <br/> <span className="text-[#6A2C91]">For Artisanal Brands</span>
+                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase italic leading-[0.9] drop-shadow-xl">
+                        Precision Manufacturing <br/> <span className="text-[#C5A059]">For Artisanal Brands</span>
                     </h1>
-                    <p className="text-xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-xl text-white font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
                         Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI.
                     </p>
                 </div>
