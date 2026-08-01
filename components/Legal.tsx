@@ -53,8 +53,8 @@ export const PrivacyPolicy = () => {
                 </section>
 
                 <section className="space-y-3">
-                    <h2 className="text-[#C5A059] font-black text-xl uppercase tracking-widest">3. Lola AI Processing</h2>
-                    <p className="leading-relaxed">Queries and operational data processed by the Lola AI Assistant are anonymized where possible and utilized strictly to provide insights and business logic to your specific user node. We do not sell your proprietary business data to third-party advertisers.</p>
+                    <h2 className="text-[#C5A059] font-black text-xl uppercase tracking-widest">3. Ecosystem Data & AI Processing</h2>
+                    <p className="leading-relaxed">Your privacy is our utmost priority. We do not sell, trade, or otherwise transfer your proprietary business data to any outside third parties. ArtisanFlow operates exclusively within the LRC Digital Systems ecosystem. Data processed by the Lola AI Assistant is strictly utilized internally across the LRC Digital Systems platform to continuously enhance our automated AI functions, providing you with a seamless, highly integrated, and increasingly intelligent operational experience.</p>
                 </section>
             </div>
         </motion.div>
