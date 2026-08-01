@@ -95,21 +95,13 @@ export const AuthGateway = () => {
           >
             <div className="flex flex-col items-center mb-12">
               <motion.div 
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="relative mb-8"
               >
-                <LRCLogo size={256} className="luxury-shadow bg-black/20 border-white/10" />
+                <img src="/ArtisanFlowLogo.png" alt="ArtisanFlow Logo" className="w-64 h-auto object-contain mx-auto" />
               </motion.div>
-              <motion.h1 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="text-4xl text-white leading-tight font-serif tracking-tight"
-              >
-                Artisan Flow
-              </motion.h1>
               <motion.p 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

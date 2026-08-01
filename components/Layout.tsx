@@ -79,11 +79,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
           <div className="sidebar-brand-block flex items-center justify-between">
               <div className="flex items-center">
-                  <LRCLogo size={32} className="sidebar-logo text-[#C5A059]" />
-                  <div className="brand-meta ml-3">
-                      <span className="brand-title text-base line-clamp-1">Artisan Flow</span>
-                      <span className="version-tag">V2.5 Stable</span>
-                  </div>
+                  <img src="/ArtisanFlowLogo.png" alt="ArtisanFlow Logo" className="h-10 w-auto object-contain" />
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden ml-auto text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />
