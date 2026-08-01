@@ -134,9 +134,9 @@ export const LandingPage = () => {
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none z-0"></div>
             
             {/* Nav */}
-            <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-sm sticky top-0">
+            <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-black border-b border-white/20 shadow-sm sticky top-0">
                 <div className="flex items-center">
-                    <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-12 w-auto object-contain" />
+                    <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-20 w-auto object-contain" />
                 </div>
                 <div>
                     <Button variant="primary" onClick={() => setView('login')} className="h-10 px-8 font-black bg-[#6A2C91] text-white hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(106,44,145,0.8)] transition-all duration-300 rounded-full tracking-widest text-xs uppercase">

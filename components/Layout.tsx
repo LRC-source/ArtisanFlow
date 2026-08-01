@@ -77,14 +77,14 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       {/* Sidebar - Artisan Flow Synaptic Redesign */}
       {/* Sidebar - Artisan Flow Glassmorphic Floating Panel Redesign */}
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
-          <div className="sidebar-brand-block flex items-center justify-between">
-              <div className="flex items-center">
-                  <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-10 w-auto object-contain" />
+          <div className="sidebar-brand-block flex items-center justify-center relative">
+              <div className="flex items-center justify-center w-full">
+                  <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-16 w-auto object-contain mx-auto" />
               </div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden ml-auto text-white/50 hover:text-[#C5A059] transition-colors">
+              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />
               </button>
-              <button onClick={() => setIsSidebarCollapsed(true)} className="hidden md:block ml-auto text-white/50 hover:text-[#C5A059] transition-colors">
+              <button onClick={() => setIsSidebarCollapsed(true)} className="hidden md:block absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
                   <Menu size={20} />
               </button>
           </div>

@@ -75,17 +75,9 @@ export const AuthGateway = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="min-h-screen flex items-center justify-center bg-[#0A0A0A] p-6 relative overflow-hidden"
+          className="min-h-screen flex items-center justify-center bg-black p-6 relative overflow-hidden"
         >
-          <div className="carbon-texture"></div>
-          <div className="light-streak-top"></div>
-          <div className="light-streak-bottom"></div>
-          <div className="light-streak-left"></div>
-          
-          {/* Ombre Brand Background */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#6A2C91_0%,transparent_60%)] opacity-30"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,#C5A059_0%,transparent_60%)] opacity-20"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#10b981_0%,transparent_70%)] opacity-10"></div>
+          <div className="absolute inset-0 bg-black"></div>
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
