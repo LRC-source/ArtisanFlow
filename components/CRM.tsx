@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Badge, Button, Input, Select, Modal } from './UI';
-import { Search, Filter, Mail, MapPin, Users, TrendingUp, DollarSign, ShoppingBag, ShoppingCart, Package, Plus, RefreshCw, ArrowLeft, Calendar, UserPlus, CheckCircle, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { Badge, Button, Input, Modal, VaultBanner } from './UI';
+import { Search, Mail, MapPin, Users, TrendingUp, DollarSign, ShoppingCart, Package, RefreshCw, ArrowLeft, Calendar, UserPlus, Sparkles } from 'lucide-react';
 import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
+import { SubPageHeader } from './SubPageHeader';
+import { motion } from 'framer-motion';
 
 export const CRM = () => {
   const { orders, manualCustomers, addManualCustomer, getTotalRevenue } = useArtisanData();
@@ -27,7 +29,7 @@ export const CRM = () => {
           email: lastOrder?.email || 'N/A',
           location: lastOrder?.location || 'Unknown',
           initial: name.charAt(0),
-          color: 'bg-purple-600',
+          color: 'bg-[#6A2C91]',
           totalSpent,
           orderCount: customerOrders.length,
           orders: customerOrders,
@@ -58,7 +60,7 @@ export const CRM = () => {
   const handleAddManual = () => {
       if (!newCust.name || !newCust.email) return;
       addManualCustomer(newCust);
-      const tempId = `M-${Date.now()}`; // For local feedback
+      const tempId = `M-${Date.now()}`; 
       setJustAddedId(tempId);
       setNewCust({ name: '', email: '', location: '' });
       setIsAddModalOpen(false);
@@ -71,190 +73,230 @@ export const CRM = () => {
       if (!customer) return null;
 
       return (
-          <div className="space-y-6 animate-in fade-in pb-20">
-              <button onClick={() => setSelectedCustomer(null)} className="flex items-center gap-2 text-gray-500 hover:text-[#6A2C91] font-bold text-xs uppercase tracking-widest transition-colors">
-                  <ArrowLeft size={16} /> Back to CRM Hub
-              </button>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+          >
+              <SubPageHeader 
+                title={customer.name}
+                parentTitle="CRM Hub"
+                onBack={() => setSelectedCustomer(null)}
+                description={`Detailed interaction ledger for ${customer.name}.`}
+                actions={
+                  <Button 
+                    className="bg-white/10 hover:bg-white/20 text-white h-12 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-white/10"
+                  >
+                    Edit Node
+                  </Button>
+                }
+              />
 
-              <div className="bg-white rounded-[2rem] p-10 border border-stone-200 shadow-xl overflow-hidden relative">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-bl-full opacity-50 -mr-10 -mt-10"></div>
-                  <div className="flex items-center gap-8 relative z-10">
-                      <div className={`w-24 h-24 ${customer.color} rounded-3xl flex items-center justify-center text-white text-4xl font-black shadow-lg shadow-purple-200`}>
+              <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-16 relative overflow-hidden group shadow-2xl">
+                  <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500 opacity-5 rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
+                  <div className="flex items-center gap-10 relative z-10">
+                      <div className={`w-32 h-32 ${customer.color} bg-opacity-20 rounded-[2rem] flex items-center justify-center text-white text-5xl font-serif shadow-inner border border-white/10 group-hover:scale-105 group-hover:rotate-3 transition-all duration-700`}>
                           {customer.initial}
                       </div>
                       <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                             <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">{customer.name}</h1>
-                             <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'}>{customer.type}</Badge>
+                          <div className="flex items-center gap-4 mb-4">
+                             <h1 className="text-6xl font-serif text-white tracking-tighter">{customer.name}</h1>
+                             <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em]">{customer.type}</Badge>
                           </div>
-                          <div className="flex gap-6 text-gray-500 font-medium">
-                              <span className="flex items-center gap-2"><Mail size={16} className="text-[#6A2C91]"/> {customer.email}</span>
-                              <span className="flex items-center gap-2"><MapPin size={16} className="text-[#C5A059]"/> {customer.location}</span>
+                          <div className="flex gap-8 text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.3em]">
+                              <span className="flex items-center gap-3"><Mail size={16} className="text-[#6A2C91]"/> {customer.email}</span>
+                              <span className="flex items-center gap-3"><MapPin size={16} className="text-[#C5A059]"/> {customer.location}</span>
                           </div>
                       </div>
                       <div className="text-right">
-                          <p className="text-[10px] text-gray-400 uppercase font-black tracking-[0.2em] mb-1">Lifetime Value</p>
-                          <p className="text-5xl font-black text-gray-900 tracking-tighter">${customer.totalSpent.toFixed(2)}</p>
+                          <p className="text-[11px] text-white/40 uppercase font-sans font-medium tracking-[0.3em] mb-3">Lifetime Value</p>
+                          <p className="text-7xl font-serif text-white tracking-tighter">${customer.totalSpent.toFixed(2)}</p>
                       </div>
                   </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <Card title="Activity Ledger" className="rounded-[2rem] border-stone-100">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                  <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-12">
+                      <h3 className="text-2xl font-serif text-white tracking-tight mb-8">Activity Ledger</h3>
                       <div className="space-y-4">
                           {customer.orders.length > 0 ? customer.orders.map(order => (
-                              <div key={order.id} className="flex justify-between items-center p-4 bg-stone-50 rounded-2xl border border-transparent hover:border-purple-200 transition-all group">
+                              <div key={order.id} className="flex justify-between items-center p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 transition-all duration-500 group">
                                   <div>
-                                      <p className="font-black text-gray-900 uppercase text-xs tracking-tight">Order {order.id}</p>
-                                      <p className="text-[10px] text-gray-400 font-bold flex items-center gap-1 mt-0.5"><Calendar size={12}/> {order.date}</p>
+                                      <p className="font-sans font-medium text-white uppercase text-[11px] tracking-[0.2em] mb-2">Order {order.id}</p>
+                                      <p className="text-[10px] text-white/30 font-sans uppercase tracking-[0.2em] flex items-center gap-2"><Calendar size={12}/> {order.date}</p>
                                   </div>
                                   <div className="text-right">
-                                      <p className="font-black text-gray-900 text-lg">${order.total.toFixed(2)}</p>
+                                      <p className="font-serif text-white text-2xl mb-2">${order.total.toFixed(2)}</p>
                                       <Badge color={order.status === 'Delivered' ? 'green' : 'blue'} className="text-[9px] uppercase tracking-widest">{order.status}</Badge>
                                   </div>
                               </div>
                           )) : (
-                              <div className="p-12 text-center">
-                                 <Package size={48} className="text-stone-200 mx-auto mb-4" />
-                                 <p className="text-gray-400 text-sm font-bold uppercase tracking-widest italic">No Transactional History</p>
+                              <div className="py-16 text-center bg-black/20 rounded-[2rem] border border-dashed border-white/10">
+                                 <Package size={48} className="text-white/10 mx-auto mb-6" strokeWidth={0.5} />
+                                 <p className="text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.3em]">No Transactional History</p>
                               </div>
                           )}
                       </div>
-                  </Card>
-                  <Card title="Node Metadata" className="rounded-[2rem] border-stone-100">
-                      <div className="space-y-6">
-                          <div className="grid grid-cols-2 gap-4">
-                              <div className="bg-stone-50 p-4 rounded-2xl">
-                                <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">First Interaction</p>
-                                <p className="font-bold text-gray-900">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
+                  </div>
+                  
+                  <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-12 flex flex-col">
+                      <h3 className="text-2xl font-serif text-white tracking-tight mb-8">Node Metadata</h3>
+                      <div className="space-y-8 flex-1">
+                          <div className="grid grid-cols-2 gap-6">
+                              <div className="bg-black/40 p-6 rounded-[2rem] border border-white/5">
+                                <p className="text-[10px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-3">First Interaction</p>
+                                <p className="font-serif text-white text-xl">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
                               </div>
-                              <div className="bg-stone-50 p-4 rounded-2xl">
-                                <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">Latest Update</p>
-                                <p className="font-bold text-gray-900">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
+                              <div className="bg-black/40 p-6 rounded-[2rem] border border-white/5">
+                                <p className="text-[10px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-3">Latest Update</p>
+                                <p className="font-serif text-white text-xl">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
                               </div>
                           </div>
-                          <div className="bg-purple-50/50 p-5 rounded-2xl border border-purple-100">
-                              <p className="text-[10px] text-purple-400 font-black uppercase tracking-widest mb-2">Vault Strategy Insight</p>
-                              <p className="text-sm font-medium text-purple-900 leading-relaxed italic">"Customer shows high affinity for Skincare categories. Recommend 'Last Chance' email for midnight serum restock."</p>
+                          
+                          <div className="bg-[#6A2C91]/10 p-8 rounded-[2rem] border border-[#6A2C91]/20 mt-auto">
+                              <p className="text-[11px] text-[#C5A059] font-sans font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+                                  <Sparkles size={16} /> Vault Strategy Insight
+                              </p>
+                              <p className="text-sm font-sans font-light text-white/80 leading-relaxed italic">
+                                  "Customer shows high affinity for Skincare categories. Recommend 'Last Chance' email for midnight serum restock."
+                              </p>
                           </div>
                       </div>
-                  </Card>
+                  </div>
               </div>
-          </div>
+          </motion.div>
       );
   }
 
   // --- OVERVIEW ---
   return (
-    <div className="p-6 space-y-8 animate-in fade-in pb-20">
-        <button onClick={() => navigate('/operations')} className="flex items-center gap-2 text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest mb-4 transition-colors">
-            <ArrowLeft size={18} /> Back to Operations
-        </button>
-
-        <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Initialize Vault Node (Manual Customer)">
-            <div className="space-y-6 p-2">
-                <div className="space-y-1">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Full Legal Name</label>
-                    <Input placeholder="Artisan Client Name" value={newCust.name} onChange={e => setNewCust({...newCust, name: e.target.value})} />
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+    >
+        <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Initialize Vault Node">
+            <div className="space-y-8 p-4">
+                <div className="space-y-3">
+                    <label className="text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.2em] ml-1">Full Legal Name</label>
+                    <Input placeholder="Artisan Client Name" value={newCust.name} onChange={e => setNewCust({...newCust, name: e.target.value})} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
-                <div className="space-y-1">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Secure Email Address</label>
-                    <Input placeholder="client@synaptic.com" value={newCust.email} onChange={e => setNewCust({...newCust, email: e.target.value})} />
+                <div className="space-y-3">
+                    <label className="text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.2em] ml-1">Secure Email Address</label>
+                    <Input placeholder="client@synaptic.com" value={newCust.email} onChange={e => setNewCust({...newCust, email: e.target.value})} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
-                <div className="space-y-1">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Geographic Location</label>
-                    <Input placeholder="City, State / Global" value={newCust.location} onChange={e => setNewCust({...newCust, location: e.target.value})} />
+                <div className="space-y-3">
+                    <label className="text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.2em] ml-1">Geographic Location</label>
+                    <Input placeholder="City, State / Global" value={newCust.location} onChange={e => setNewCust({...newCust, location: e.target.value})} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
-                <Button className="w-full bg-[#6A2C91] text-white h-14 font-black text-xs tracking-widest shadow-xl shadow-purple-100 mt-4" onClick={handleAddManual}>
+                <Button className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full font-sans font-medium text-[11px] tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 mt-8 transition-all" onClick={handleAddManual}>
                     AUTHORIZE NODE CREATION
                 </Button>
             </div>
         </Modal>
 
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div>
-                <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">CRM Hub</h1>
-                <p className="text-gray-500 font-medium">Synaptic client management and lifetime value analytics.</p>
-            </div>
-            <div className="flex flex-col gap-2 w-full md:w-auto">
+        <div className="flex flex-col gap-8">
+          <SubPageHeader 
+            title="CRM Hub"
+            parentTitle="Command Center"
+            onBack={() => navigate('/command-center')}
+            description="Synaptic client management and lifetime value analytics."
+          />
+          
+          <VaultBanner 
+            title="CRM Hub"
+            subtitle="Synaptic client management and lifetime value analytics."
+            badge="Client Protocol Active"
+          >
+            <div className="flex gap-4">
                 <Button 
-                    className="w-full md:min-w-[200px] bg-[#6A2C91] text-white h-12 font-black text-[10px] tracking-[0.2em] shadow-lg shadow-purple-100" 
+                    variant="outline" 
+                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm" 
                     onClick={handleSync} 
                     disabled={isSyncing}
                 >
-                    <RefreshCw size={16} className={isSyncing ? "animate-spin mr-2" : "mr-2"} /> {isSyncing ? "SYNCING..." : "SYNC FROM ORDERS"}
+                    <RefreshCw size={16} className={isSyncing ? "animate-spin mr-3" : "mr-3"} /> {isSyncing ? "SYNCING..." : "SYNC FROM ORDERS"}
                 </Button>
                 <Button 
-                    className="w-full md:min-w-[200px] bg-[#C5A059] text-white h-12 font-black text-[10px] tracking-[0.2em] shadow-lg shadow-amber-100 hover:bg-[#b08e4d] transition-all" 
+                    variant="primary" 
+                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all" 
                     onClick={() => setIsAddModalOpen(true)}
                 >
-                    <UserPlus size={16} className="mr-2" /> ADD MANUAL NODE
+                    <UserPlus size={16} className="mr-3" /> ADD MANUAL NODE
                 </Button>
             </div>
+          </VaultBanner>
         </div>
 
         {/* KPI Cards */}
-         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { label: 'Active Nodes', val: allCustomers.length, icon: Users, color: 'text-purple-600', bg: 'bg-purple-50' },
-              { label: 'Network Value', val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-amber-50' },
-              { label: 'Synaptic Health', val: '98%', icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-              { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'text-red-500', bg: 'bg-red-50' }
+              { label: 'Active Nodes', val: allCustomers.length, icon: Users, color: 'text-purple-400', bg: 'bg-[#6A2C91]/20', border: 'border-[#6A2C91]/30' },
+              { label: 'Network Value', val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-[#C5A059]/20', border: 'border-[#C5A059]/30' },
+              { label: 'Synaptic Health', val: '98%', icon: TrendingUp, color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/30' },
+              { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' }
             ].map((kpi, i) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-sm flex flex-col items-start group hover:border-[#6A2C91] transition-all">
-                <div className={`p-3 ${kpi.bg} ${kpi.color} rounded-2xl mb-4 group-hover:scale-110 transition-transform`}><kpi.icon size={20} /></div>
-                <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] mb-1">{kpi.label}</p>
-                <p className="text-3xl font-black text-gray-900 tracking-tighter">{kpi.val}</p>
+              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
+                <div className={`p-4 ${kpi.bg} ${kpi.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${kpi.border}`}>
+                    <kpi.icon size={24} />
+                </div>
+                <p className="text-[11px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
+                <p className="text-4xl font-serif text-white tracking-tighter">{kpi.val}</p>
               </div>
             ))}
         </div>
 
         {/* Customer List */}
-        <div className="space-y-6">
+        <div className="space-y-10">
             <div className="relative group max-w-2xl">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#6A2C91] transition-colors" size={20} />
-                <Input placeholder="Scan for nodes by name, email, or metadata..." className="pl-14 py-4 rounded-[2rem] bg-white shadow-inner border-stone-200" />
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#C5A059] transition-colors" size={20} />
+                <Input placeholder="Scan for nodes by name, email, or metadata..." className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {allCustomers.map((c, i) => (
                     <div 
                         key={c.id} 
                         onClick={() => setSelectedCustomer(c.name)}
-                        className={`bg-white p-8 rounded-[2.5rem] border border-stone-200 shadow-sm hover:shadow-2xl transition-all cursor-pointer group relative overflow-hidden ${justAddedId && c.id.includes('M-') ? 'animate-soft-success border-emerald-500' : 'hover:border-[#6A2C91] hover:-translate-y-1'}`}
+                        className={`luxury-card bg-white/5 p-10 rounded-[3rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer group relative overflow-hidden ${justAddedId && c.id.includes('M-') ? 'animate-soft-success border-emerald-500/50 shadow-emerald-500/10' : 'hover:border-white/20 hover:bg-white/10'}`}
                     >
-                        <div className="flex justify-between items-start mb-6">
-                            <div className="flex gap-4 items-center">
-                                <div className={`w-14 h-14 ${c.color} rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg`}>
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-bl-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-700"></div>
+                        
+                        <div className="flex justify-between items-start mb-10 relative z-10">
+                            <div className="flex gap-6 items-center">
+                                <div className={`w-16 h-16 ${c.color} bg-opacity-20 rounded-2xl flex items-center justify-center text-white font-serif text-2xl shadow-inner border border-white/10 group-hover:scale-105 transition-transform duration-500`}>
                                     {c.initial}
                                 </div>
                                 <div>
-                                    <h3 className="font-black text-white text-lg uppercase italic tracking-tight group-hover:text-[#6A2C91] transition-colors">{c.name}</h3>
-                                    <Badge color={c.type === 'Ordered' ? 'purple' : 'gold'} className="text-[8px] uppercase font-black tracking-widest px-2 py-0.5 mt-1">{c.type}</Badge>
+                                    <h3 className="font-serif text-white text-2xl tracking-tight group-hover:text-[#C5A059] transition-colors">{c.name}</h3>
+                                    <Badge color={c.type === 'Ordered' ? 'purple' : 'gold'} className="text-[8px] uppercase font-sans font-bold tracking-[0.3em] px-3 py-1 mt-2 shadow-sm">{c.type}</Badge>
                                 </div>
                             </div>
-                            <div className="p-2 bg-stone-50 rounded-xl text-stone-300 group-hover:text-[#C5A059] transition-colors">
-                                <Sparkles size={16} />
-                            </div>
                         </div>
-                        <div className="space-y-3 text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-8">
-                            <div className="flex items-center gap-3"><Mail size={14} className="text-[#6A2C91] opacity-40"/> {c.email}</div>
-                            <div className="flex items-center gap-3"><MapPin size={14} className="text-[#C5A059] opacity-40"/> {c.location}</div>
+                        
+                        <div className="space-y-4 text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.3em] mb-10 relative z-10">
+                            <div className="flex items-center gap-4"><Mail size={16} className="text-[#6A2C91]"/> {c.email}</div>
+                            <div className="flex items-center gap-4"><MapPin size={16} className="text-[#C5A059]"/> {c.location}</div>
                         </div>
-                         <div className="pt-6 border-t border-stone-100 flex justify-between items-end">
+                        
+                        <div className="pt-8 border-t border-white/10 flex justify-between items-end relative z-10 group-hover:border-white/20 transition-colors">
                             <div>
-                                <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest mb-1">Orders</p>
-                                <p className="font-black text-gray-900">{c.orderCount}</p>
+                                <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.3em] mb-2">Order Nodes</p>
+                                <p className="font-serif text-white text-xl">{c.orderCount}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest mb-1">Lifetime Node Value</p>
-                                <p className="font-black text-[#6A2C91] text-xl tracking-tighter">${c.totalSpent.toFixed(2)}</p>
+                                <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.3em] mb-2">Lifetime Value</p>
+                                <p className="font-serif text-[#C5A059] text-3xl tracking-tighter">${c.totalSpent.toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
-    </div>
+    </motion.div>
   );
 };
