@@ -69,9 +69,20 @@ export interface BusinessProfile {
   logo?: string;
   industry: string;
   tier: UserTier;
+  role?: 'admin' | 'user';
   status: 'Active' | 'Inactive';
   brandVoice: { adjectives: string[]; restrictedWords: string[] };
   receptionistLogic: { qualificationQuestions: string[] };
+}
+
+export interface SystemUser {
+    id: string;
+    name: string;
+    email: string;
+    tier: string;
+    status: 'Active' | 'Suspended' | 'Pending';
+    lastLogin: string;
+    revenueProcessed: number;
 }
 
 export interface Report {
@@ -239,6 +250,10 @@ interface DataContextType {
   setTutorialStep: (step: number) => void;
   completeTutorial: () => void;
   toggleIntegrationStatus: (id: string) => void;
+  systemUsers: SystemUser[];
+  updateSystemUser: (id: string, updates: Partial<SystemUser>) => void;
+  deleteSystemUser: (id: string) => void;
+  inviteSystemUser: (email: string, tier: string) => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -265,6 +280,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     email: 'admin@artisanflow.app', 
     industry: 'Skincare',
     tier: 'Artisan Flow Basic',
+    role: 'admin',
     status: 'Active',
     brandVoice: { adjectives: ['Artisanal', 'Luxurious'], restrictedWords: [] },
     receptionistLogic: { qualificationQuestions: ['What is your wholesale budget?', 'Do you have a physical storefront?'] }
@@ -353,6 +369,12 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   ]);
   
+  const [systemUsers, setSystemUsers] = useState<SystemUser[]>([
+    { id: 'usr_8x92a', name: 'John A.', email: 'admin1@domain.com', tier: 'Margin Protection Pro', status: 'Active', lastLogin: 'Today, 08:24 AM', revenueProcessed: 145020 },
+    { id: 'usr_9j2bb', name: 'Sarah M.', email: 'admin2@domain.com', tier: 'Artisan Flow Basic', status: 'Active', lastLogin: 'Yesterday, 14:12 PM', revenueProcessed: 42000 },
+    { id: 'usr_2m4cc', name: 'Client X.', email: 'client@domain.com', tier: 'Free Audit', status: 'Pending', lastLogin: 'Never', revenueProcessed: 0 },
+  ]);
+
   const [integrations, setIntegrations] = useState<Integration[]>([
     { 
       id: 'shopify', 
@@ -606,6 +628,26 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }));
   };
 
+  const updateSystemUser = (id: string, updates: Partial<SystemUser>) => {
+      setSystemUsers(prev => prev.map(u => u.id === id ? { ...u, ...updates } : u));
+  };
+  
+  const deleteSystemUser = (id: string) => {
+      setSystemUsers(prev => prev.filter(u => u.id !== id));
+  };
+  
+  const inviteSystemUser = (email: string, tier: string) => {
+      setSystemUsers(prev => [...prev, {
+          id: `usr_${Math.random().toString(36).substr(2, 5)}`,
+          name: 'Pending User',
+          email,
+          tier,
+          status: 'Pending',
+          lastLogin: 'Never',
+          revenueProcessed: 0
+      }]);
+  };
+
   return (
     <DataContext.Provider value={{ 
       inventory, orders, manualCustomers, businessProfile, isAuthenticated, userTier, reports, productionStats,
@@ -614,7 +656,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
       importData, addInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
       generateSchedule, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
-      startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus
+      startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
+      systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser
     }}>
       {children}
     </DataContext.Provider>

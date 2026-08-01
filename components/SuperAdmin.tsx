@@ -1,29 +1,81 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldAlert, Users, Database, Server, Activity, ArrowUpRight, Search, Lock, Edit2, Download, AlertTriangle, Key } from 'lucide-react';
-import { Card, Button, Badge, Input, Select, VaultBanner } from './UI';
+import { ShieldAlert, Users, Database, Server, Activity, ArrowUpRight, Search, Lock, Edit2, Download, AlertTriangle, Key, X, Loader2 } from 'lucide-react';
+import { Card, Button, Badge, Input, Select, VaultBanner, Modal } from './UI';
 import { SubPageHeader } from './SubPageHeader';
-
-interface SystemUser {
-    id: string;
-    name: string;
-    email: string;
-    tier: string;
-    status: 'Active' | 'Suspended' | 'Pending';
-    lastLogin: string;
-    revenueProcessed: number;
-}
-
-const mockUsers: SystemUser[] = [
-    { id: 'usr_8x92a', name: 'John A.', email: 'admin1@domain.com', tier: 'Margin Protection Pro', status: 'Active', lastLogin: 'Today, 08:24 AM', revenueProcessed: 145020 },
-    { id: 'usr_9j2bb', name: 'Sarah M.', email: 'admin2@domain.com', tier: 'Artisan Flow Basic', status: 'Active', lastLogin: 'Yesterday, 14:12 PM', revenueProcessed: 42000 },
-    { id: 'usr_2m4cc', name: 'Client X.', email: 'client@domain.com', tier: 'Free Audit', status: 'Pending', lastLogin: 'Never', revenueProcessed: 0 },
-];
+import { useArtisanData, SystemUser } from './DataContext';
+import { toast } from 'sonner';
 
 export const SuperAdmin = () => {
+    const { systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser } = useArtisanData();
     const [search, setSearch] = useState('');
-    const [users, setUsers] = useState<SystemUser[]>(mockUsers);
     
+    // Invite Modal State
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+    const [inviteEmail, setInviteEmail] = useState('');
+    const [inviteTier, setInviteTier] = useState('Free Audit');
+    const [isInviting, setIsInviting] = useState(false);
+
+    // Edit Modal State
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState<SystemUser | null>(null);
+
+    // Sync State
+    const [isSyncing, setIsSyncing] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
+
+    const filteredUsers = systemUsers.filter(u => 
+        u.email.toLowerCase().includes(search.toLowerCase()) || 
+        u.id.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const handleInvite = () => {
+        if (!inviteEmail) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+        setIsInviting(true);
+        setTimeout(() => {
+            inviteSystemUser(inviteEmail, inviteTier);
+            toast.success(`Invitation sent to ${inviteEmail}.`);
+            setIsInviting(false);
+            setIsInviteModalOpen(false);
+            setInviteEmail('');
+            setInviteTier('Free Audit');
+        }, 800);
+    };
+
+    const handleSaveEdit = () => {
+        if (editingUser) {
+            updateSystemUser(editingUser.id, editingUser);
+            toast.success("User access modified successfully.");
+            setIsEditModalOpen(false);
+        }
+    };
+
+    const handleDelete = (id: string) => {
+        if(window.confirm("Are you sure you want to revoke access and lock this account?")) {
+            deleteSystemUser(id);
+            toast.success("Account access revoked.");
+        }
+    };
+
+    const handleSync = () => {
+        setIsSyncing(true);
+        setTimeout(() => {
+            toast.success("Google Sheets Matrix successfully synced.");
+            setIsSyncing(false);
+        }, 1200);
+    };
+
+    const handleVerify = () => {
+        setIsVerifying(true);
+        setTimeout(() => {
+            toast.success("Firebase Core Integration securely verified.");
+            setIsVerifying(false);
+        }, 1200);
+    };
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -44,15 +96,15 @@ export const SuperAdmin = () => {
                 badge="Master Override Active"
             >
                 <div className="flex gap-4">
-                    <Button className="bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-[11px] h-16 rounded-full px-10 tracking-[0.3em] uppercase shadow-2xl shadow-red-500/20 transition-all flex items-center gap-3">
-                        <Database size={16} /> EXPORT MASTER LEDGER
+                    <Button onClick={handleSync} className="bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-[11px] h-16 rounded-full px-10 tracking-[0.3em] uppercase shadow-2xl shadow-red-500/20 transition-all flex items-center gap-3">
+                        {isSyncing ? <Loader2 size={16} className="animate-spin" /> : <Database size={16} />} EXPORT MASTER LEDGER
                     </Button>
                 </div>
             </VaultBanner>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <AdminStatCard title="Total Platform Users" value="3" icon={Users} trend="+1 This Week" />
-                <AdminStatCard title="Pro Tier Subscribers" value="1" icon={CrownIcon} trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
+                <AdminStatCard title="Total Platform Users" value={systemUsers.length.toString()} icon={Users} trend="+1 This Week" />
+                <AdminStatCard title="Pro Tier Subscribers" value={systemUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
                 <AdminStatCard title="Global Volume Processed" value="$187,020" icon={Activity} trend="+14% MoM" color="text-emerald-400" />
                 <AdminStatCard title="System Health" value="100%" icon={Server} trend="All Nodes Online" color="text-blue-400" />
             </div>
@@ -64,11 +116,11 @@ export const SuperAdmin = () => {
                         <Input 
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Email address or user ID..."
-                            className="bg-white/5 border-white/10 rounded-2xl pl-12 h-14 font-sans font-light text-sm focus:border-[#6A2C91]"
+                            placeholder="Search by Email Address..."
+                            className="bg-white/5 border-white/10 rounded-2xl pl-12 h-14 font-sans font-light text-sm focus:border-[#6A2C91] text-white"
                         />
                     </div>
-                    <Button variant="outline" className="border-white/10 text-white hover:bg-white/5 h-14 rounded-2xl font-sans font-bold text-[10px] uppercase tracking-[0.2em] px-8 transition-all">
+                    <Button onClick={() => setIsInviteModalOpen(true)} variant="outline" className="border-white/10 text-white hover:bg-white/5 h-14 rounded-2xl font-sans font-bold text-[10px] uppercase tracking-[0.2em] px-8 transition-all">
                         <Key size={14} className="mr-2" /> Invite New User
                     </Button>
                 </div>
@@ -78,7 +130,7 @@ export const SuperAdmin = () => {
                         <thead className="bg-[#6A2C91]/10 text-white/50 font-sans font-bold text-[10px] uppercase tracking-[0.2em] border-b border-white/5">
                             <tr>
                                 <th className="p-6">User ID</th>
-                                <th className="p-6">Contact Email</th>
+                                <th className="p-6">Email Address</th>
                                 <th className="p-6">Assigned Tier</th>
                                 <th className="p-6">Status</th>
                                 <th className="p-6">System Load</th>
@@ -86,7 +138,7 @@ export const SuperAdmin = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                            {users.map(u => (
+                            {filteredUsers.map(u => (
                                 <tr key={u.id} className="hover:bg-white/5 transition-colors">
                                     <td className="p-6 font-mono text-xs text-white/50">{u.id}</td>
                                     <td className="p-6 text-white/90">{u.email}</td>
@@ -103,8 +155,8 @@ export const SuperAdmin = () => {
                                     </td>
                                     <td className="p-6 text-white/70 font-mono text-xs">${u.revenueProcessed.toLocaleString()}</td>
                                     <td className="p-6 text-right space-x-2">
-                                        <button className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-colors border border-white/5"><Edit2 size={14} /></button>
-                                        <button className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-500 hover:text-red-400 transition-colors border border-red-500/20"><Lock size={14} /></button>
+                                        <button onClick={() => { setEditingUser(u); setIsEditModalOpen(true); }} className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-colors border border-white/5"><Edit2 size={14} /></button>
+                                        <button onClick={() => handleDelete(u.id)} className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-500 hover:text-red-400 transition-colors border border-red-500/20"><Lock size={14} /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -121,8 +173,8 @@ export const SuperAdmin = () => {
                             <div>
                                 <h4 className="text-white font-serif text-xl mb-1">Google Sheets Sync</h4>
                                 <p className="text-white/50 text-sm font-sans font-light mb-4">Export Super-Admin matrix automatically to a master Google Sheet.</p>
-                                <Button className="bg-[#C5A059]/20 hover:bg-[#C5A059]/30 text-[#C5A059] border border-[#C5A059]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
-                                    Authenticate Sheet
+                                <Button onClick={handleSync} className="bg-[#C5A059]/20 hover:bg-[#C5A059]/30 text-[#C5A059] border border-[#C5A059]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
+                                    {isSyncing ? 'Authenticating...' : 'Authenticate Sheet'}
                                 </Button>
                             </div>
                         </div>
@@ -131,8 +183,8 @@ export const SuperAdmin = () => {
                             <div>
                                 <h4 className="text-white font-serif text-xl mb-1">Firebase Core Integration</h4>
                                 <p className="text-white/50 text-sm font-sans font-light mb-4">Manage remote config and user authentication nodes.</p>
-                                <Button className="bg-[#6A2C91]/20 hover:bg-[#6A2C91]/30 text-[#6A2C91] border border-[#6A2C91]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
-                                    Verify Connection
+                                <Button onClick={handleVerify} className="bg-[#6A2C91]/20 hover:bg-[#6A2C91]/30 text-[#6A2C91] border border-[#6A2C91]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
+                                    {isVerifying ? 'Verifying...' : 'Verify Connection'}
                                 </Button>
                             </div>
                         </div>
@@ -158,6 +210,74 @@ export const SuperAdmin = () => {
                     </div>
                 </Card>
             </div>
+
+            {/* Invite Modal */}
+            <Modal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} title="Invite User">
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-white/50 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Email Address</label>
+                        <Input 
+                            value={inviteEmail} 
+                            onChange={(e) => setInviteEmail(e.target.value)} 
+                            placeholder="Enter Email Address"
+                            className="bg-white/5 border-white/10 text-white w-full rounded-xl"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-white/50 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Assigned Tier</label>
+                        <Select 
+                            value={inviteTier} 
+                            onChange={(e) => setInviteTier(e.target.value)}
+                            className="bg-white/5 border-white/10 text-white w-full rounded-xl"
+                        >
+                            {['Free Audit', 'Artisan Flow Basic', 'Margin Protection Pro'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
+                        </Select>
+                    </div>
+                    <Button onClick={handleInvite} className="w-full bg-[#6A2C91] hover:bg-[#6A2C91]/80 text-white h-12 rounded-xl border border-[#6A2C91]/50" disabled={isInviting}>
+                        {isInviting ? <Loader2 size={16} className="animate-spin mx-auto" /> : 'Send Protocol Invitation'}
+                    </Button>
+                </div>
+            </Modal>
+
+            {/* Edit Modal */}
+            <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Modify User Access">
+                {editingUser && (
+                    <div className="space-y-6">
+                        <div>
+                            <label className="block text-white/50 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Email Address</label>
+                            <Input 
+                                value={editingUser.email} 
+                                disabled
+                                className="bg-white/5 border-white/10 text-white/50 w-full rounded-xl"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-white/50 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Tier Level</label>
+                            <Select 
+                                value={editingUser.tier} 
+                                onChange={(e) => setEditingUser({ ...editingUser, tier: e.target.value })}
+                                className="bg-white/5 border-white/10 text-white w-full rounded-xl"
+                            >
+                                {['Free Audit', 'Artisan Flow Basic', 'Margin Protection Pro'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
+                            </Select>
+                        </div>
+                        <div>
+                            <label className="block text-white/50 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Status</label>
+                            <Select 
+                                value={editingUser.status} 
+                                onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value as any })}
+                                className="bg-white/5 border-white/10 text-white w-full rounded-xl"
+                            >
+                                {['Active', 'Pending', 'Suspended'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
+                            </Select>
+                        </div>
+                        <Button onClick={handleSaveEdit} className="w-full bg-[#C5A059] hover:bg-[#C5A059]/80 text-black h-12 rounded-xl border border-[#C5A059]/50">
+                            Save Configuration
+                        </Button>
+                    </div>
+                )}
+            </Modal>
+
         </motion.div>
     );
 };

@@ -275,7 +275,7 @@ const InsightRow = ({ color, text }: any) => (
 );
 
 const AppContent = () => {
-  const { isAuthenticated, userTier, isSessionVerifying } = useArtisanData();
+  const { isAuthenticated, userTier, isSessionVerifying, businessProfile } = useArtisanData();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -487,7 +487,9 @@ const AppContent = () => {
              </LockedNode>
         } />
         <Route path="/settings/privacy" element={<PrivacyGovernance />} />
-        <Route path="/super-admin" element={<SuperAdmin />} />
+        <Route path="/super-admin" element={
+            businessProfile.role === 'admin' ? <SuperAdmin /> : <Navigate to="/" replace />
+        } />
         
         <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
