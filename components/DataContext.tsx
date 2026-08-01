@@ -266,7 +266,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
   const [userTier, setUserTier] = useState<UserTier>('Artisan Flow Basic');
-  const [isSessionVerifying, setIsSessionVerifying] = useState(false);
+  const [isSessionVerifying, setIsSessionVerifying] = useState(true);
   const [demandInsights, setDemandInsights] = useState<any[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [manualCustomers, setManualCustomers] = useState<ManualCustomer[]>([]);

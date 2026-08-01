@@ -292,8 +292,6 @@ const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (!isAuthenticated) return <LandingPage />;
-  
   if (isSessionVerifying) {
       return (
           <div className="h-screen w-full flex flex-col items-center justify-center bg-stone-50 gap-4">
@@ -307,6 +305,8 @@ const AppContent = () => {
           </div>
       );
   }
+
+  if (!isAuthenticated) return <LandingPage />;
 
   return (
     <Layout>
