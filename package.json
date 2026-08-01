@@ -12,6 +12,7 @@
   "dependencies": {
     "@google/genai": "^1.33.0",
     "clsx": "2.1.0",
+    "firebase": "^12.17.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "0.263.1",
     "react": "18.2.0",

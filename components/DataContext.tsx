@@ -1,4 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { auth, db } from '../services/firebase';
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 /**
  * ArtisanFlow Architecture 1.1 - Lola Intelligence Node
@@ -411,27 +421,80 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   ]);
 
   useEffect(() => {
-    const verifySession = async () => {
-      if (isAuthenticated) {
-        setIsSessionVerifying(true);
-        await new Promise(r => setTimeout(r, 800));
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setIsSessionVerifying(true);
+      if (user) {
+        setIsAuthenticated(true);
+        // Load user profile from Firestore (Phase 3 implementation)
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setBusinessProfile(prev => ({ ...prev, ...docSnap.data().profile }));
+            setUserTier(docSnap.data().tier || 'Artisan Flow Basic');
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+        
         setDemandInsights([
             { id: '1', material: 'Rosemary Leaf', isCritical: true, recommendedBatch: 50, daysRemaining: 2 }
         ]);
-        setIsSessionVerifying(false);
+      } else {
+        setIsAuthenticated(false);
       }
-    };
-    verifySession();
-  }, [isAuthenticated]);
+      setIsSessionVerifying(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
-  const login = async (email: string, pass: string) => { setIsAuthenticated(true); return true; };
-  const googleLogin = async () => { setIsAuthenticated(true); };
-  const logout = () => { setIsAuthenticated(false); };
+  const login = async (email: string, pass: string) => { 
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      return true;
+    } catch (error) {
+      console.error("Login Error:", error);
+      return false;
+    }
+  };
+
+  const googleLogin = async () => { 
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Google Auth Error:", error);
+    }
+  };
+
+  const logout = () => { 
+    signOut(auth);
+  };
 
   const signUp = async (data: any) => {
-    setBusinessProfile(prev => ({ ...prev, ...data }));
-    setUserTier(data.tier);
-    setIsAuthenticated(true);
+    try {
+      // First, create the auth user
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password || 'TemporaryPass123!');
+      const user = userCredential.user;
+
+      // Then save their profile to Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        email: data.email,
+        tier: data.tier,
+        status: data.status,
+        profile: {
+          name: data.name || 'New Artisan Business',
+          ownerName: data.ownerName || 'Admin User',
+          email: data.email,
+        },
+        createdAt: new Date().toISOString()
+      });
+
+      setBusinessProfile(prev => ({ ...prev, ...data }));
+      setUserTier(data.tier);
+    } catch (error) {
+      console.error("Signup Error:", error);
+    }
   };
 
   const updateTier = async (tier: UserTier) => {
