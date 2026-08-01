@@ -227,6 +227,12 @@ export const MarketingStudio = () => {
         >
             <ContextualTutorialModal
                 hubId="marketing_studio"
+                title="Marketing Studio"
+                description="Central command for all your marketing and branding efforts."
+                steps={["Access Visual Analysis to audit assets.","Use Marketing Creator for quick designs.","Generate your Brand Voice Profile."]}
+            />
+            <ContextualTutorialModal
+                hubId="marketing_studio"
                 title="Marketing Studio Overview"
                 description="Welcome to the Marketing Studio, your centralized hub for AI-driven asset creation and brand strategy."
                 steps={[
@@ -1283,6 +1289,12 @@ export const BrandVoiceProfile = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20"
         >
+            <ContextualTutorialModal
+                hubId="brand_voice"
+                title="Brand Voice Profile"
+                description="Define and enforce your brands unique tone and style."
+                steps={["Upload reference materials to train the AI.","Select core brand adjectives.","Establish restricted vocabulary to avoid off-brand messaging."]}
+            />
             <div className="flex flex-col gap-8">
                 <SubPageHeader 
                   title="Business DNA & Brand Voice"

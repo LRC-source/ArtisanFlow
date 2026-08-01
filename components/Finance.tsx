@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { useNavigate } from 'react-router-dom';
 import { 
   DollarSign, TrendingUp, BarChart3, ArrowLeft, Sparkles, 
@@ -57,6 +58,12 @@ export const FinanceHub: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="space-y-12 pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
         >
+            <ContextualTutorialModal
+                hubId="finance"
+                title="Finance & Margins"
+                description="Keep a pulse on your profitability and cash flow."
+                steps={["Review total revenue and expenses.","Analyze margin multipliers per product.","Forecast cash runway and operational costs."]}
+            />
             <Modal 
                 isOpen={reportModal.isOpen} 
                 onClose={() => setReportModal({ isOpen: false, type: '' })}

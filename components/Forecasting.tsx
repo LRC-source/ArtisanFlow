@@ -1,4 +1,5 @@
 import React from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Badge, Input, Select, VaultBanner } from './UI';
 import { TrendingUp, ArrowUpRight, DollarSign, Lock, RefreshCw, BarChart3, Upload, Plus, Trash2, AlertCircle, ArrowLeft, Crown, Sparkles, ChevronRight, History as HistoryIcon } from 'lucide-react';
@@ -69,6 +70,12 @@ export const Forecasting = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-12 pb-24 max-w-[1600px] mx-auto p-8 md:p-16"
         >
+            <ContextualTutorialModal
+                hubId="forecasting"
+                title="Forecasting"
+                description="Predict demand and optimize purchasing."
+                steps={["Review AI-generated demand predictions.","Plan material purchases based on lead times.","Analyze seasonal trends and sales velocity."]}
+            />
              <SubPageHeader 
                 title="Forecasting & Strategy"
                 parentTitle="Operations"

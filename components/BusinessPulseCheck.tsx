@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Input, Select, FileUploader, Badge } from './UI';
 import { Sparkles, ArrowRight, Activity, AlertTriangle, Lock, FileText, TrendingUp, BarChart3, ChevronRight } from 'lucide-react';
@@ -30,6 +31,12 @@ export const BusinessPulseCheck = () => {
   if (step === 1) {
     return (
       <div className="max-w-7xl mx-auto py-12 animate-in fade-in duration-700 pb-32">
+            <ContextualTutorialModal
+                hubId="trapcast_audit"
+                title="TrapCast Audit"
+                description="Get an instant health check of your entire operation."
+                steps={["Run a full system diagnostic.","Review critical alerts for stockouts or capacity bottlenecks.","Action AI recommendations to improve margins."]}
+            />
         <div className="w-full md:w-1/2 mb-12">
             <div className="flex items-center gap-4 mb-4">
                 <div className="p-4 bg-gradient-to-br from-[#1A1A1A] to-[#333333] rounded-full text-[#C5A059] shadow-xl">

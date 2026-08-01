@@ -1,4 +1,5 @@
 import React from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { Card, Badge, Button } from './UI';
 import { useArtisanData } from './DataContext';
 import { Clock, ArrowLeft } from 'lucide-react';
@@ -10,6 +11,12 @@ export const ProductionWorkflow = () => {
 
   return (
     <div className="p-6 space-y-6 animate-in fade-in pb-20">
+            <ContextualTutorialModal
+                hubId="manufacturing"
+                title="Manufacturing Hub"
+                description="Oversee and optimize your entire production pipeline."
+                steps={["View active production batches.","Log QA checks and record defect rates.","Manage capacity and workstation loads."]}
+            />
       <div>
           <button onClick={() => navigate('/operations')} className="flex items-center gap-2 text-gray-400 hover:text-[#6A2C91] mb-4 font-black text-xs uppercase tracking-widest transition-colors">
             <ArrowLeft size={18} /> Back to Operations

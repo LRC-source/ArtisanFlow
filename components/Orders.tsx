@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { Card, Button, Badge, Input, Select, VaultBanner } from './UI';
 import { Search, Filter, ShoppingCart, DollarSign, Package, Truck, User, MapPin, Calendar, CheckCircle, Download, RefreshCw, AlertCircle, X, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useArtisanData } from './DataContext';
@@ -69,6 +70,12 @@ export const Orders = () => {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="p-10 md:p-16 space-y-12 pb-20 max-w-[1600px] mx-auto"
     >
+        <ContextualTutorialModal
+            hubId="orders"
+            title="Orders Hub"
+            description="Fulfill and track customer orders."
+            steps={["Process incoming orders from all channels.","Generate shipping labels and track shipments.","Manage returns and refunds."]}
+        />
         {/* Toast Notification Overlay */}
         {toast && (
           <div className="fixed top-8 right-8 z-[60] animate-in slide-in-from-right-10">

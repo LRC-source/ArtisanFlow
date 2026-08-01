@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
 import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from './UI';
 import { useArtisanData, Integration, UserTier } from './DataContext';
@@ -177,6 +178,12 @@ export const SubscriptionManagement = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20"
         >
+            <ContextualTutorialModal
+                hubId="subscription_status"
+                title="Subscription Status"
+                description="Manage your ArtisanFlow plan and billing."
+                steps={["Review your current tier and usage limits.","Upgrade to unlock advanced features.","Manage payment methods and billing history."]}
+            />
             <Modal isOpen={!!selectedUpgrade} onClose={() => setSelectedUpgrade(null)} title="Vault Payment Gateway">
                 <div className="space-y-8 text-center p-6">
                     <div className="p-8 bg-white/5 rounded-3xl mb-6 border border-white/10">
@@ -301,6 +308,12 @@ export const Integrations = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20"
         >
+            <ContextualTutorialModal
+                hubId="integrations"
+                title="Integrations Hub"
+                description="Connect ArtisanFlow to your external tools."
+                steps={["Link your Shopify or WooCommerce stores.","Connect accounting software like QuickBooks.","Enable social media channels for auto-posting."]}
+            />
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 <div className="w-full md:w-1/2">
                     <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">

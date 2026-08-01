@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { Badge, Button, Input, Modal, VaultBanner } from './UI';
 import { Search, Mail, MapPin, Users, TrendingUp, DollarSign, ShoppingCart, Package, RefreshCw, ArrowLeft, Calendar, UserPlus, Sparkles } from 'lucide-react';
 import { useArtisanData } from './DataContext';
@@ -81,6 +82,12 @@ export const CRM = () => {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
           >
+            <ContextualTutorialModal
+                hubId="crm"
+                title="CRM Hub"
+                description="Manage your client relationships and sales pipeline."
+                steps={["Track B2B and B2C clients.","Monitor deal stages and revenue probabilities.","Send personalized communications."]}
+            />
               <SubPageHeader 
                 title={customer.name}
                 parentTitle="CRM Hub"

@@ -59,6 +59,12 @@ export const Inventory = () => {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
         >
+            <ContextualTutorialModal
+                hubId="materials_matrix"
+                title="Materials Matrix"
+                description="Track raw materials and finished goods inventory."
+                steps={["Monitor stock levels and reorder points.","Log raw material usage for production.","Adjust inventory counts via cycle counts."]}
+            />
             <SubPageHeader 
               title={selectedItem.name}
               parentTitle="Inventory Hub"

@@ -18,7 +18,7 @@ export const AIAssistant: React.FC = () => {
   const { businessProfile, addAppointment, inventory, productionStats, getTotalRevenue, getMarginMetrics, todos, integrations } = useArtisanData();
   const [isOpen, setIsOpen] = useState(false); 
   const [messages, setMessages] = useState<Msg[]>([ 
-    { role: 'assistant', text: `Greetings! Lola online. Cognitive nodes multiplexed: Fast, Thinking, Search available. ✅`, followUpQuestions: ["Fast check?", "Market search?"] } 
+    { role: 'assistant', text: `Greetings! Lola online. Cognitive nodes multiplexed: Fast, Thinking, Search available. Ask Lola to summarize your margins, check your orders, or brainstorm marketing ideas! ✅`, followUpQuestions: ["Check Margins", "Marketing Ideas?"] } 
   ]); 
   const [input, setInput] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
@@ -190,8 +190,8 @@ export const AIAssistant: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-80 h-[380px] max-h-[calc(100vh-64px)] bg-white border border-stone-200 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 border-t-4 border-t-[#6A2C91]">
-      <div className="bg-stone-50 p-4 flex justify-between items-center relative border-b border-stone-100">
+    <div className="fixed bottom-6 right-6 w-80 h-[380px] max-h-[calc(100vh-64px)] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_0_50px_rgba(106,44,145,0.4)] flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 border-t-4 border-t-[#C5A059]">
+      <div className="bg-transparent p-4 flex justify-between items-center relative border-b border-white/10">
         <div className="flex items-center gap-2 pl-2">
             <div className="p-1.5 bg-[#6A2C91]/10 rounded-lg">
                 <Database size={14} className="text-[#6A2C91]" />
@@ -202,29 +202,29 @@ export const AIAssistant: React.FC = () => {
             <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)] ${isSpeaking ? 'bg-amber-400 animate-ping' : 'bg-emerald-500 animate-pulse'} ml-1`}></div>
         </div>
         <div className="flex items-center gap-1.5">
-            <button onClick={() => setIsTtsEnabled(!isTtsEnabled)} className={`p-2 rounded-xl transition-all ${isTtsEnabled ? 'bg-[#6A2C91] text-white shadow-lg' : 'text-stone-400 hover:text-[#6A2C91] hover:bg-white'}`} title={isTtsEnabled ? "Disable Voice" : "Enable Voice Output"}>
+            <button onClick={() => setIsTtsEnabled(!isTtsEnabled)} className={`p-2 rounded-xl transition-all ${isTtsEnabled ? 'bg-[#C5A059] text-black shadow-lg' : 'text-white/40 hover:text-[#C5A059] hover:bg-white/5'}`} title={isTtsEnabled ? "Disable Voice" : "Enable Voice Output"}>
                 {isTtsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
-            <button onClick={() => setIsOpen(false)} className="p-2 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"><Minimize2 size={16} /></button>
+            <button onClick={() => setIsOpen(false)} className="p-2 text-white/40 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"><Minimize2 size={16} /></button>
         </div>
       </div>
 
-      <div className="bg-stone-100/50 p-2 border-b border-stone-100 flex justify-center gap-2">
-          <button onClick={() => setMode('fast')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'fast' ? 'bg-[#6A2C91] text-white' : 'bg-white text-stone-400'}`}>
+      <div className="bg-white/5 p-2 border-b border-white/5 flex justify-center gap-2">
+          <button onClick={() => setMode('fast')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'fast' ? 'bg-[#6A2C91] text-white' : 'bg-black/50 text-white/50 border border-white/5'}`}>
               <Zap size={10} /> Fast
           </button>
-          <button onClick={() => setMode('deep')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'deep' ? 'bg-[#C5A059] text-white' : 'bg-white text-stone-400'}`}>
+          <button onClick={() => setMode('deep')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'deep' ? 'bg-[#C5A059] text-black' : 'bg-black/50 text-white/50 border border-white/5'}`}>
               <Database size={10} /> Think
           </button>
-          <button onClick={() => setMode('search')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'search' ? 'bg-blue-600 text-white' : 'bg-white text-stone-400'}`}>
+          <button onClick={() => setMode('search')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'search' ? 'bg-blue-600 text-white' : 'bg-black/50 text-white/50 border border-white/5'}`}>
               <Search size={10} /> Search
           </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white scrollbar-hide">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent scrollbar-hide">
         {messages.map((msg, idx) => (
           <div key={idx} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-            <div className={`max-w-[85%] p-3.5 rounded-2xl text-[11px] shadow-sm leading-relaxed group relative ${msg.role === 'user' ? 'bg-[#6A2C91] text-white rounded-br-none shadow-purple-100' : 'bg-stone-50 text-gray-800 rounded-bl-none border border-stone-100'}`}>
+            <div className={`max-w-[85%] p-3.5 rounded-2xl text-[11px] shadow-sm leading-relaxed group relative ${msg.role === 'user' ? 'bg-[#C5A059] text-black rounded-br-none shadow-[#C5A059]/20 font-medium' : 'bg-white/10 text-white rounded-bl-none border border-white/5'}`}>
               {msg.text}
               {msg.suggestedRoute && (
                   <button onClick={() => { navigate(msg.suggestedRoute!); setIsOpen(false); }} className="mt-3 flex items-center gap-2 w-full py-2 px-3 bg-white border border-purple-200 text-[#6A2C91] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-purple-50 transition-all shadow-sm">
@@ -241,7 +241,7 @@ export const AIAssistant: React.FC = () => {
             {msg.role === 'assistant' && msg.followUpQuestions && msg.followUpQuestions.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1.5 px-1 animate-in fade-in slide-up duration-500">
                     {msg.followUpQuestions.map((q, i) => (
-                        <button key={i} onClick={() => handleSend(q)} className="bg-stone-50 border border-stone-200 text-[9px] font-bold text-stone-500 px-3 py-1 rounded-full hover:border-[#6A2C91] hover:text-[#6A2C91] hover:bg-purple-50 transition-all shadow-sm">
+                        <button key={i} onClick={() => handleSend(q)} className="bg-black/40 border border-white/10 text-[9px] font-bold text-white/70 px-3 py-1 rounded-full hover:border-[#C5A059] hover:text-[#C5A059] hover:bg-white/5 transition-all shadow-sm">
                             {q}
                         </button>
                     ))}
@@ -251,27 +251,27 @@ export const AIAssistant: React.FC = () => {
         ))}
         {isLoading && (
             <div className="flex justify-start">
-                <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100 animate-pulse flex items-center gap-2.5">
+                <div className="bg-white/5 p-3 rounded-2xl border border-white/10 animate-pulse flex items-center gap-2.5">
                     <div className="flex gap-1">
-                        <div className="w-1.5 h-1.5 bg-stone-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-1.5 h-1.5 bg-stone-300 rounded-full animate-bounce" style={{ animationDelay: '200ms' }}></div>
-                        <div className="w-1.5 h-1.5 bg-stone-300 rounded-full animate-bounce" style={{ animationDelay: '400ms' }}></div>
+                        <div className="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '200ms' }}></div>
+                        <div className="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '400ms' }}></div>
                     </div>
-                    <span className="text-[9px] font-black text-stone-400 uppercase tracking-[0.2em]">{mode === 'deep' ? 'THINKING...' : 'ANALYZING...'}</span>
+                    <span className="text-[9px] font-black text-[#C5A059] uppercase tracking-[0.2em]">{mode === 'deep' ? 'THINKING...' : 'ANALYZING...'}</span>
                 </div>
             </div>
         )}
         <div ref={messagesEndRef} />
       </div>
       
-      <div className="p-4 bg-white border-t border-stone-100">
-        <div className="flex items-center gap-2 bg-stone-100 rounded-2xl px-3 py-1.5 border border-stone-200 focus-within:border-[#6A2C91] focus-within:bg-white focus-within:ring-4 focus-within:ring-purple-50 transition-all">
-          <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} placeholder={isListening ? "Listening..." : "Query Lola..."} className="flex-1 bg-transparent py-2 text-gray-900 text-xs outline-none placeholder:text-stone-400 font-bold" />
+      <div className="p-4 bg-black border-t border-white/10">
+        <div className="flex items-center gap-2 bg-white/5 rounded-2xl px-3 py-1.5 border border-white/10 focus-within:border-[#C5A059] focus-within:bg-black focus-within:ring-2 focus-within:ring-[#C5A059]/20 transition-all">
+          <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} placeholder={isListening ? "Listening..." : "Ask Lola..."} className="flex-1 bg-transparent py-2 text-white text-xs outline-none placeholder:text-white/30 font-bold" />
           <div className="flex items-center gap-1.5">
-              <button onClick={toggleDictation} className={`p-2 rounded-xl transition-all ${isListening ? 'bg-emerald-50 text-emerald-500 shadow-inner' : 'text-stone-400 hover:text-[#6A2C91] hover:bg-white shadow-sm border border-transparent hover:border-stone-100'}`} title="Voice Input">
+              <button onClick={toggleDictation} className={`p-2 rounded-xl transition-all ${isListening ? 'bg-emerald-500/20 text-emerald-400 shadow-inner' : 'text-white/40 hover:text-[#C5A059] hover:bg-white/5 shadow-sm border border-transparent hover:border-white/5'}`} title="Voice Input">
                 {isListening ? <MicOff size={18} /> : <Mic size={18} />}
               </button>
-              <button onClick={() => handleSend()} disabled={isLoading || !input.trim()} className="p-2.5 bg-[#6A2C91] text-white rounded-xl hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 flex items-center justify-center shadow-lg shadow-purple-500/20" title="Send (Enter)">
+              <button onClick={() => handleSend()} disabled={isLoading || !input.trim()} className="p-2.5 bg-[#C5A059] text-black rounded-xl hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 flex items-center justify-center shadow-lg shadow-[#C5A059]/20" title="Send (Enter)">
                 <Send size={14} />
               </button>
           </div>
