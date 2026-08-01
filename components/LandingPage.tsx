@@ -247,17 +247,17 @@ export const LandingPage = () => {
 };
 
 const TierCard = ({ title, price, features, tierNumber, color, isPopular, onSelect }: any) => (
-    <Card className={`relative flex flex-col h-full border-2 transition-all hover:-translate-y-2 hover:shadow-2xl duration-500 ${isPopular ? 'border-[#6A2C91] shadow-xl bg-gradient-to-b from-white to-purple-50/30' : 'border-gray-200 shadow-md bg-white hover:border-[#C5A059]/50'}`}>
+    <div className={`relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 hover:shadow-2xl duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] shadow-xl shadow-[#6A2C91]/20' : 'border-white/10 shadow-md hover:border-[#C5A059]/50'}`}>
         {isPopular && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#6A2C91] to-purple-800 text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg border border-purple-400/30">
                 Recommended for Growth
             </div>
         )}
         <div className="mb-8">
-            <div className={`w-14 h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic`}>
+            <div className={`w-14 h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic border border-white/20`}>
                 {tierNumber}
             </div>
-            <h3 className="text-2xl font-black text-gray-900 tracking-tight">{title}</h3>
+            <h3 className="text-2xl font-black text-white tracking-tight">{title}</h3>
             <div className="flex items-baseline mt-2">
                 <span className="text-3xl font-black text-[#6A2C91]">{price}</span>
                 <span className="text-gray-400 text-sm font-bold ml-1 uppercase">/month</span>
@@ -267,16 +267,16 @@ const TierCard = ({ title, price, features, tierNumber, color, isPopular, onSele
             {features.map((f: string) => (
                 <div key={f} className="flex items-start gap-3">
                     <CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                    <span className="text-sm font-medium text-gray-600">{f}</span>
+                    <span className="text-sm font-medium text-gray-300">{f}</span>
                 </div>
             ))}
         </div>
         <Button 
             variant={isPopular ? 'primary' : 'outline'} 
             onClick={onSelect}
-            className={`w-full h-14 font-black tracking-widest text-xs uppercase ${isPopular ? '' : 'border-[#6A2C91] text-[#6A2C91] hover:bg-purple-50'}`}
+            className={`w-full h-14 font-black tracking-widest text-xs uppercase rounded-xl ${isPopular ? 'bg-[#6A2C91] hover:bg-purple-900 border-none' : 'border-white/20 text-white hover:bg-white/5'}`}
         >
             Initialize {title}
         </Button>
-    </Card>
+    </div>
 );
