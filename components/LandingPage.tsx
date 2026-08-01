@@ -128,9 +128,12 @@ export const LandingPage = () => {
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
             
             {/* Nav */}
-            <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-black/80 backdrop-blur-lg border-b border-stone-200/20 shadow-sm sticky top-0">
+            <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-sm sticky top-0">
                 <div className="flex items-center gap-3">
-                    <Hexagon size={28} className="text-[#C5A059]" />
+                    {/* Logo Placeholder - replace this div with an <img src="/your-logo.png" className="h-8 w-auto" /> when ready */}
+                    <div className="h-8 w-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/40 shadow-inner">
+                        <span className="text-[10px] font-black text-white">LOGO</span>
+                    </div>
                     <span className="text-lg font-black text-white tracking-tight uppercase italic">Artisan Flow</span>
                 </div>
                 <div>
