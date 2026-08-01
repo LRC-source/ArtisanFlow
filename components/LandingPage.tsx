@@ -123,9 +123,15 @@ export const LandingPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-stone-50 relative overflow-hidden flex flex-col">
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#6A2C91] opacity-[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+        <div 
+            className="min-h-screen bg-stone-900 relative overflow-hidden flex flex-col bg-cover bg-center bg-fixed bg-no-repeat"
+            style={{ backgroundImage: 'url(/artisan_flow_hero.png)' }}
+        >
+            {/* 20% overlay for 80% image visibility across entire page */}
+            <div className="absolute inset-0 bg-black/20 z-0"></div>
+            
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#6A2C91] opacity-[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none z-0"></div>
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none z-0"></div>
             
             {/* Nav */}
             <nav className="w-full px-8 py-3 flex justify-between items-center z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-sm sticky top-0">
@@ -144,12 +150,7 @@ export const LandingPage = () => {
             </nav>
 
             {/* Hero */}
-            <main 
-                className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24 bg-cover bg-center bg-no-repeat relative"
-                style={{ backgroundImage: 'url(/artisan_flow_hero.png)' }}
-            >
-                {/* 20% overlay for 80% image visibility */}
-                <div className="absolute inset-0 bg-black/20 z-0"></div>
+            <main className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24 relative">
                 <div className="max-w-4xl text-center space-y-8 relative z-10">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white text-xs font-bold uppercase tracking-widest shadow-lg">
                         <Sparkles size={14} /> Built-in AI-Supported Operations
