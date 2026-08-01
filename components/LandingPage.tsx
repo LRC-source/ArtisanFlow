@@ -148,7 +148,7 @@ export const LandingPage = () => {
                 {/* 20% overlay for 80% image visibility */}
                 <div className="absolute inset-0 bg-black/20 z-0"></div>
                 <div className="max-w-4xl text-center space-y-8 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-lg border border-stone-200 text-[#6A2C91] text-xs font-bold uppercase tracking-widest shadow-lg">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white text-xs font-bold uppercase tracking-widest shadow-lg">
                         <Sparkles size={14} /> Built-in AI-Supported Operations
                     </div>
                     <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase italic leading-[0.9] drop-shadow-xl">
@@ -255,7 +255,7 @@ const TierCard = ({ title, price, features, tierNumber, isPopular, onSelect }: a
             </div>
         )}
         <div className="mb-8">
-            <div className={`w-14 h-14 bg-white/80 backdrop-blur-lg text-[#6A2C91] rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic border border-white/40`}>
+            <div className={`w-14 h-14 bg-white/10 backdrop-blur-lg text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic border border-white/20`}>
                 {tierNumber}
             </div>
             <h3 className="text-2xl font-black text-white tracking-tight">{title}</h3>
