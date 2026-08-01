@@ -13,10 +13,10 @@ export const AuthGateway = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await login(email, pass);
-    if (success) {
-      // Check if user is new or active
-      if (isNewUser) setView('tiers');
+    if (view === 'signup') {
+      setView('tiers');
+    } else {
+      await login(email, pass);
     }
   };
 
@@ -66,7 +66,7 @@ export const AuthGateway = () => {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="w-full min-h-screen"
         >
-          <TierSelection onSelect={(tier) => signUp({ email, tier, status: 'Active' })} />
+          <TierSelection onSelect={(tier) => signUp({ email, password: pass, tier, status: 'Active' })} />
         </motion.div>
       ) : (
         <motion.div
