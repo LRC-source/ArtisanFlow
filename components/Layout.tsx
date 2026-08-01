@@ -272,7 +272,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                        <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
                      </p>
                  </div>
-                 <div onClick={() => navigate('/settings')} className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
+                 <div onClick={() => navigate('/settings/account')} className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
                     <div className="w-full h-full rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
                         {businessProfile.avatarUrl ? (
                             <img src={businessProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
@@ -284,15 +284,15 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
         </header>
         
-        <div className="flex-1 p-6 md:p-12 max-w-7xl mx-auto pb-32 min-h-full relative z-10 w-full">
+        <div className="flex-1 p-6 md:p-12 max-w-7xl mx-auto relative z-10 w-full">
           {children}
         </div>
         
-        <footer className="w-full py-8 border-t border-white/5 mt-auto flex flex-col md:flex-row items-center justify-center gap-4 text-[10px] uppercase tracking-widest text-white/40 font-bold bg-black/40 z-20">
+        <footer className="w-full py-6 mt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-white/60 font-bold bg-[#0A0A0A] z-20 sticky bottom-0">
             <span>© 2026 LRC ArtisanFlow. All rights reserved.</span>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
                 <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>
-                <span>|</span>
+                <span className="text-white/20">|</span>
                 <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/privacy')}>Privacy Policy</span>
             </div>
         </footer>
