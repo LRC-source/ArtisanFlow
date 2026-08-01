@@ -12,6 +12,7 @@ import { useArtisanData } from './DataContext';
 import { LRCLogo } from './UI';
 import { searchBusinessData } from '../services/geminiService';
 import { TutorialOverlay } from './TutorialOverlay';
+import { SupportModal } from './SupportModal';
 
 /**
  * ArtisanFlow Synaptic Layout Engine - STATUS: COMPLETE ✅
@@ -24,6 +25,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
   
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<string | null>(null);
@@ -74,7 +76,6 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
         )}
       </AnimatePresence>
       
-      {/* Sidebar - Artisan Flow Synaptic Redesign */}
       {/* Sidebar - Artisan Flow Glassmorphic Floating Panel Redesign */}
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
           <div className="sidebar-brand-block flex items-center justify-center relative">
@@ -158,6 +159,10 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   <button onClick={() => { navigate('/marketing/brand-voice'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing/brand-voice' ? 'active' : ''}`}>
                       <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✉️</span>
                       <span className="flex-1 text-left">Brand Voice Profile</span>
+                  </button>
+                  <button onClick={() => { setIsSupportOpen(true); setIsMobileMenuOpen(false); }} className="nav-item">
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🆘</span>
+                      <span className="flex-1 text-left">Support Node</span>
                   </button>
               </div>
           </nav>
@@ -297,6 +302,8 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
         </footer>
       </main>
+
+      <SupportModal isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
     </div>
   );
 }

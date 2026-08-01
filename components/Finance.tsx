@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import { generateFinancialAnalysis, generateBudgetStrategy } from '../services/geminiService';
 import { motion } from 'framer-motion';
+import { TaxExporter } from './TaxExporter';
 
 const COLORS_LIST = ['#6A2C91', '#C5A059', '#78BE20', '#5B5F7F', '#1A1A1A'];
 
@@ -563,6 +564,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                     )}
                 </div>
             </div>
+            <TaxExporter />
         </motion.div>
     );
 };

@@ -511,6 +511,16 @@ export const Integrations = () => {
                         </>
                     ) : (
                         <div className="space-y-4">
+                            {activeModalIntegration?.id === 'square' && (
+                                <div className="p-4 bg-[#C5A059]/10 border border-[#C5A059]/30 rounded-xl mb-4 text-xs text-[#C5A059] font-sans">
+                                    <strong>OAuth Permissions Required:</strong>
+                                    <ul className="list-disc pl-5 mt-2 space-y-1 text-white/70 font-light">
+                                        <li><code className="text-[#C5A059]">ORDERS_READ</code>: To track multi-channel sales</li>
+                                        <li><code className="text-[#C5A059]">INVENTORY_READ</code>: To sync matrix levels</li>
+                                        <li><code className="text-[#C5A059]">PAYMENTS_READ</code>: To parse transaction fees</li>
+                                    </ul>
+                                </div>
+                            )}
                             <Input 
                                 placeholder="API Key / Access Token" 
                                 type="password"

@@ -13,6 +13,7 @@ interface TierContextType {
   usage: Record<string, number>;
   checkAccess: (featureKey: string) => boolean;
   incrementUsage: (featureKey: string) => Promise<boolean>;
+  getProUsageStatus: () => { isPro: boolean; creditsUsed: number; softCap: number; showWarning: boolean };
   isTierLoading: boolean;
 }
 
@@ -114,8 +115,18 @@ export const TierProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const getProUsageStatus = () => {
+    const isPro = currentTier === 'Margin Protection Pro';
+    const softCap = 2500;
+    // Aggregate total usage across all features (mocked logic for credit count)
+    const creditsUsed = Object.values(usage).reduce((a, b) => a + b, 0);
+    const showWarning = isPro && creditsUsed >= softCap * 0.9;
+    
+    return { isPro, creditsUsed, softCap, showWarning };
+  };
+
   return (
-    <TierContext.Provider value={{ currentTier, permissionsMap, usage, checkAccess, incrementUsage, isTierLoading }}>
+    <TierContext.Provider value={{ currentTier, permissionsMap, usage, checkAccess, incrementUsage, getProUsageStatus, isTierLoading }}>
       {children}
     </TierContext.Provider>
   );
