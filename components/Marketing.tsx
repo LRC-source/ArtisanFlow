@@ -782,8 +782,21 @@ export const AIAvatarStudio = () => {
     const navigate = useNavigate();
     const [isGenerating, setIsGenerating] = useState(false);
     const [prompt, setPrompt] = useState('');
+    const [referenceImage, setReferenceImage] = useState<string | null>(null);
     const [generatedImage, setGeneratedImage] = useState<string | null>(null);
     const [history, setHistory] = useState<{id: string, url: string}[]>([]);
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setReferenceImage(reader.result as string);
+                toast.success("Reference photo uploaded for synthesis.");
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleGenerate = async () => {
         if (!prompt) return toast.error("Please define your brand persona.");
@@ -863,6 +876,28 @@ export const AIAvatarStudio = () => {
                                 className="w-full bg-black/40 border border-white/10 rounded-2xl p-8 text-base font-sans font-light text-gray-300 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 h-64 resize-none transition-all duration-500 shadow-sm outline-none leading-relaxed placeholder:text-gray-600"
                             />
                         </div>
+                        
+                        <div className="space-y-4">
+                            <label className="block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1">Reference Likeness (Optional)</label>
+                            <div className="flex items-center gap-4">
+                                <label className="flex-1 cursor-pointer group">
+                                    <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                                    <div className="w-full h-16 border-2 border-dashed border-white/10 rounded-full flex items-center justify-center gap-3 text-gray-400 group-hover:border-[#6A2C91] group-hover:text-[#6A2C91] transition-all bg-black/20">
+                                        <Upload size={18} />
+                                        <span className="text-[11px] font-sans uppercase tracking-[0.2em]">{referenceImage ? "Replace Reference Photo" : "Upload Reference Photo"}</span>
+                                    </div>
+                                </label>
+                                {referenceImage && (
+                                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#6A2C91] relative">
+                                        <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
+                                        <button onClick={() => setReferenceImage(null)} className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 flex items-center justify-center text-white transition-opacity">
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
                         <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/20 transition-all duration-500">
                             {isGenerating ? <Loader2 className="animate-spin" /> : 'Synthesize Avatar'}
                         </Button>
