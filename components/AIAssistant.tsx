@@ -193,8 +193,8 @@ export const AIAssistant: React.FC = () => {
     <div className="fixed bottom-6 right-6 w-80 h-[380px] max-h-[calc(100vh-64px)] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_0_50px_rgba(106,44,145,0.4)] flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 border-t-4 border-t-[#C5A059]">
       <div className="bg-transparent p-4 flex justify-between items-center relative border-b border-white/10">
         <div className="flex items-center gap-2 pl-2">
-            <div className="p-1.5 bg-[#6A2C91]/10 rounded-lg">
-                <Database size={14} className="text-[#6A2C91]" />
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-[#C5A059]/30 shadow-[0_0_10px_rgba(197,160,89,0.2)]">
+                <img src="/lola_avatar.jpg" alt="Lola" className="w-full h-full object-cover" />
             </div>
             <h3 className="font-black text-xs tracking-tight flex items-center gap-1 uppercase italic text-white">
                 Lola <Sparkles size={10} className="text-[#C5A059]" />
@@ -224,7 +224,13 @@ export const AIAssistant: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent scrollbar-hide">
         {messages.map((msg, idx) => (
           <div key={idx} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-            <div className={`max-w-[85%] p-3.5 rounded-2xl text-[11px] shadow-sm leading-relaxed group relative ${msg.role === 'user' ? 'bg-[#C5A059] text-black rounded-br-none shadow-[#C5A059]/20 font-medium' : 'bg-white/10 text-white rounded-bl-none border border-white/5'}`}>
+            <div className="flex gap-2 items-end w-full" style={{ justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+              {msg.role === 'assistant' && (
+                  <div className="w-6 h-6 rounded-full overflow-hidden border border-[#C5A059]/30 shrink-0 mb-1">
+                      <img src="/lola_avatar.jpg" alt="Lola" className="w-full h-full object-cover" />
+                  </div>
+              )}
+              <div className={`max-w-[85%] p-3.5 rounded-2xl text-[11px] shadow-sm leading-relaxed group relative ${msg.role === 'user' ? 'bg-[#C5A059] text-black rounded-br-none shadow-[#C5A059]/20 font-medium' : 'bg-white/10 text-white rounded-bl-none border border-white/5'}`}>
               {msg.text}
               {msg.suggestedRoute && (
                   <button onClick={() => { navigate(msg.suggestedRoute!); setIsOpen(false); }} className="mt-3 flex items-center gap-2 w-full py-2 px-3 bg-white border border-purple-200 text-[#6A2C91] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-purple-50 transition-all shadow-sm">
@@ -237,6 +243,7 @@ export const AIAssistant: React.FC = () => {
                    <button onClick={() => handleSelectSlot('10:00 AM', 'Manufacturing Audit')} className="w-full bg-[#C5A059] text-white py-2 rounded-lg text-[8px] font-black uppercase tracking-[0.2em] shadow-md shadow-amber-200/50 hover:bg-[#b08e4d] transition-all active:scale-95">Schedule Audit</button>
                 </div>
               )}
+            </div>
             </div>
             {msg.role === 'assistant' && msg.followUpQuestions && msg.followUpQuestions.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1.5 px-1 animate-in fade-in slide-up duration-500">
