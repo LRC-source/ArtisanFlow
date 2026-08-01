@@ -58,6 +58,7 @@ import { AuthGateway } from './components/Auth';
 import { FinanceHub, FinancialProjections } from './components/Finance';
 import { BudgetGuard } from './components/BudgetGuard';
 import { LolaTodos } from './components/LolaTodos';
+import { SuperAdmin } from './components/SuperAdmin';
 import { Card, Button, LockedNode, VaultBanner } from './components/UI';
 import { ArtisanDataProvider, useArtisanData } from './components/DataContext';
 
@@ -486,6 +487,7 @@ const AppContent = () => {
              </LockedNode>
         } />
         <Route path="/settings/privacy" element={<PrivacyGovernance />} />
+        <Route path="/super-admin" element={<SuperAdmin />} />
         
         <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

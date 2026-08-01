@@ -106,6 +106,11 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                       <span className="flex-1 text-left">Subscription Status</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
+                  <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg">🛡️</span>
+                      <span className="flex-1 text-left">Super-Admin</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
+                  </button>
               </div>
 
               <div className="nav-section-group">

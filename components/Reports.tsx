@@ -1,11 +1,14 @@
-
 import React, { useState } from 'react';
-import { Card, Button, Select, Badge } from './UI';
-import { Sparkles, Download, FileText, Filter, Save, Trash2, ArrowLeft, Clock, History } from 'lucide-react';
+import { Card, Button, Select, Badge, VaultBanner } from './UI';
+import { Sparkles, Download, FileText, Filter, Save, Trash2, ArrowLeft, Clock, History, Loader2, Target } from 'lucide-react';
 import { useArtisanData, Report } from './DataContext';
+import { useNavigate } from 'react-router-dom';
+import { SubPageHeader } from './SubPageHeader';
+import { motion } from 'framer-motion';
 
 export const Reports = () => {
   const { inventory, orders, productionStats, getInventoryValue, getTotalRevenue, reports, saveReport, deleteReport } = useArtisanData();
+  const navigate = useNavigate();
   
   const [view, setView] = useState<'generator' | 'saved'>('generator');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -19,7 +22,6 @@ export const Reports = () => {
   const handleGenerate = () => {
       setIsGenerating(true);
       
-      // Simulate AI Processing time
       setTimeout(() => {
           let newReport: Omit<Report, 'id'> = {
               title: `${category} - ${reportType}`,
@@ -31,7 +33,6 @@ export const Reports = () => {
               summaryStats: []
           };
 
-          // Logic to generate interconnected data based on real app state
           if (category === 'Inventory & Materials') {
               newReport.headers = ['SKU', 'Name', 'Type', 'Stock', 'Unit Cost', 'Total Value', 'Status'];
               newReport.data = inventory.map(item => ({
@@ -49,14 +50,13 @@ export const Reports = () => {
 
               newReport.summaryStats = [
                   { label: 'Total Items', value: inventory.length },
-                  { label: 'Total Valuation', value: `$${getInventoryValue().toFixed(2)}`, color: 'text-purple-600' },
-                  { label: 'Low Stock Alerts', value: lowStockCount, color: 'text-amber-600' },
-                  { label: 'Out of Stock', value: outOfStockCount, color: 'text-red-600' }
+                  { label: 'Total Valuation', value: `$${getInventoryValue().toFixed(2)}`, color: 'text-[#C5A059]' },
+                  { label: 'Low Stock Alerts', value: lowStockCount, color: 'text-amber-500' },
+                  { label: 'Out of Stock', value: outOfStockCount, color: 'text-red-500' }
               ];
           } 
           else if (category === 'Sales & Revenue') {
               newReport.headers = ['Order ID', 'Customer', 'Date', 'Platform', 'Status', 'Total'];
-              // Filter logic for time range would go here in a real app
               newReport.data = orders.map(order => ({
                   id: order.id,
                   customer: order.customer,
@@ -70,9 +70,9 @@ export const Reports = () => {
 
               newReport.summaryStats = [
                   { label: 'Total Orders', value: orders.length },
-                  { label: 'Total Revenue', value: `$${getTotalRevenue().toFixed(2)}`, color: 'text-emerald-600' },
-                  { label: 'Avg Order Value', value: `$${avgOrderValue.toFixed(2)}`, color: 'text-blue-600' },
-                  { label: 'Pending Processing', value: orders.filter(o => o.status === 'Processing').length, color: 'text-amber-600' }
+                  { label: 'Total Revenue', value: `$${getTotalRevenue().toFixed(2)}`, color: 'text-[#C5A059]' },
+                  { label: 'Avg Order Value', value: `$${avgOrderValue.toFixed(2)}`, color: 'text-[#6A2C91]' },
+                  { label: 'Pending Processing', value: orders.filter(o => o.status === 'Processing').length, color: 'text-amber-500' }
               ];
           }
           else if (category === 'Production Efficiency') {
@@ -86,14 +86,14 @@ export const Reports = () => {
 
               newReport.summaryStats = [
                   { label: 'Active Jobs', value: productionStats.active },
-                  { label: 'Pending', value: productionStats.pending, color: 'text-amber-600' },
-                  { label: 'Completed', value: productionStats.completed, color: 'text-emerald-600' },
-                  { label: 'Overall Efficiency', value: '94%', color: 'text-purple-600' }
+                  { label: 'Pending', value: productionStats.pending, color: 'text-amber-500' },
+                  { label: 'Completed', value: productionStats.completed, color: 'text-[#C5A059]' },
+                  { label: 'Overall Efficiency', value: '94%', color: 'text-[#6A2C91]' }
               ];
           }
 
-          saveReport(newReport); // Auto-save to history
-          setCurrentReport({ ...newReport, id: 'temp' }); // Set for display
+          saveReport(newReport);
+          setCurrentReport({ ...newReport, id: 'temp' });
           setIsGenerating(false);
       }, 1500);
   };
@@ -116,51 +116,54 @@ export const Reports = () => {
       document.body.removeChild(link);
   };
 
-  // --- VIEW: SAVED REPORTS ---
   if (view === 'saved') {
       return (
-          <div className="space-y-6 animate-in fade-in pb-20">
-              <div className="flex items-center gap-2 mb-4">
-                  <button onClick={() => setView('generator')} className="text-gray-400 hover:text-[#6A2C91] transition-colors font-medium flex items-center gap-1">
-                      <ArrowLeft size={18} /> Back to Generator
-                  </button>
-              </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-12 animate-in fade-in pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+          >
+              <button onClick={() => setView('generator')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit mb-4">
+                  <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Generator
+              </button>
               
-              <div className="flex justify-between items-center">
-                  <h1 className="text-3xl font-bold text-white">Saved Reports</h1>
-                  <p className="text-gray-500">History of your AI-generated analytics</p>
-              </div>
+              <VaultBanner 
+                  title="Saved Reports"
+                  subtitle="Archive of generated financial and operational dossiers."
+                  badge="Archive Accessed"
+              />
 
               {reports.length === 0 ? (
-                  <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[400px]">
-                      <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                          <History size={32} className="text-gray-400" />
+                  <div className="bg-white/5 border border-dashed border-white/10 rounded-[3rem] p-24 flex flex-col items-center justify-center min-h-[400px]">
+                      <div className="w-24 h-24 bg-white/5 rounded-[2rem] flex items-center justify-center mb-8 shadow-inner border border-white/10 text-white/20">
+                          <History size={48} strokeWidth={1} />
                       </div>
-                      <h3 className="text-white font-bold font-medium mb-1">No reports saved yet</h3>
-                      <p className="text-gray-400 text-sm">Generate a report to see it here</p>
+                      <h3 className="text-3xl font-serif text-white tracking-tight mb-2">No Reports Archieved</h3>
+                      <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Generate a report to see it here</p>
                   </div>
               ) : (
-                  <div className="grid grid-cols-1 gap-4">
+                  <div className="grid grid-cols-1 gap-6">
                       {reports.map((report) => (
-                          <div key={report.id} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row justify-between items-center gap-4">
-                              <div className="flex items-start gap-4">
-                                  <div className="p-3 bg-purple-50 text-[#6A2C91] rounded-lg">
-                                      <FileText size={24} />
+                          <div key={report.id} className="luxury-card bg-white/5 p-8 rounded-[2rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all flex flex-col md:flex-row justify-between items-center gap-8 group">
+                              <div className="flex items-start gap-6">
+                                  <div className="p-4 bg-black/40 text-[#C5A059] rounded-xl border border-white/5 group-hover:bg-[#C5A059]/20 transition-all">
+                                      <FileText size={28} strokeWidth={1.5} />
                                   </div>
                                   <div>
-                                      <h3 className="font-bold text-white text-lg">{report.title}</h3>
-                                      <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-                                          <span className="flex items-center gap-1"><Clock size={14}/> Generated: {report.generatedDate}</span>
-                                          <Badge color="gray">{report.category}</Badge>
+                                      <h3 className="font-serif text-white text-2xl tracking-tight mb-2">{report.title}</h3>
+                                      <div className="flex items-center gap-4 text-xs text-white/50">
+                                          <span className="flex items-center gap-2 font-sans font-light"><Clock size={14}/> Generated: {report.generatedDate}</span>
+                                          <Badge color="purple" className="text-[9px] uppercase tracking-widest">{report.category}</Badge>
                                       </div>
                                   </div>
                               </div>
                               
-                              <div className="flex items-center gap-2 w-full md:w-auto">
-                                  <Button variant="outline" onClick={() => handleExport(report)} className="flex-1 md:flex-none">
-                                      <Download size={16} /> CSV
+                              <div className="flex items-center gap-4 w-full md:w-auto">
+                                  <Button variant="outline" onClick={() => handleExport(report)} className="flex-1 md:flex-none border-white/10 text-white hover:bg-white/5 hover:border-white/20 h-12 rounded-xl text-[10px] font-sans font-bold tracking-[0.3em] uppercase transition-all shadow-sm">
+                                      <Download size={14} className="mr-2" /> CSV
                                   </Button>
-                                  <Button variant="outline" onClick={() => deleteReport(report.id)} className="text-red-500 hover:bg-red-50 border-red-200">
+                                  <Button variant="outline" onClick={() => deleteReport(report.id)} className="text-red-400 hover:text-red-300 hover:bg-red-500/10 border-red-500/20 h-12 rounded-xl transition-all">
                                       <Trash2 size={16} />
                                   </Button>
                               </div>
@@ -168,68 +171,83 @@ export const Reports = () => {
                       ))}
                   </div>
               )}
-          </div>
+          </motion.div>
       );
   }
 
-  // --- VIEW: GENERATOR ---
   return (
-    <div className="space-y-8 animate-in fade-in pb-20">
-        <div className="flex justify-between items-center">
-            <div>
-                <h1 className="text-3xl font-bold text-white">Reports & Analytics</h1>
-                <p className="text-gray-500">Generate automated reports and export data</p>
-            </div>
-            <Button variant="outline" onClick={() => setView('saved')}>
-                <History size={16} className="mr-2"/> View Saved Reports ({reports.length})
+    <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="space-y-12 pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+    >
+        <button onClick={() => navigate('/operations')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit mb-4">
+            <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Operations
+        </button>
+
+        <VaultBanner 
+            title="Reports & Analytics"
+            subtitle="Synthesize complex datasets into actionable financial and operational intelligence."
+            badge="Reporting Module Active"
+        >
+            <Button 
+                variant="outline" 
+                onClick={() => setView('saved')}
+                className="bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[11px] h-16 rounded-full px-10 border-white/20 tracking-[0.3em] uppercase transition-all flex items-center gap-3"
+            >
+                <History size={16} /> VIEW SAVED ARCHIVES ({reports.length})
             </Button>
-        </div>
+        </VaultBanner>
 
         {/* AI Report Generator Section */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-            <div className="flex items-center gap-2 mb-6">
-                <Sparkles className="text-[#6A2C91]" size={20} />
-                <h3 className="text-lg font-bold text-white">AI-Powered Report Generator</h3>
+        <div className="luxury-card bg-white/5 backdrop-blur-xl rounded-[3rem] p-12 border border-white/10 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6A2C91]/20 to-transparent rounded-bl-full opacity-50 -mr-16 -mt-16 pointer-events-none"></div>
+            
+            <div className="flex items-center gap-4 mb-10 relative z-10">
+                <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner">
+                    <Sparkles size={24} strokeWidth={1.5} />
+                </div>
+                <h3 className="text-3xl font-serif text-white tracking-tight">AI-Powered Extraction</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 relative z-10">
                 <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Report Category</label>
-                    <Select value={category} onChange={(e) => setCategory(e.target.value)}>
-                        <option>Inventory & Materials</option>
-                        <option>Sales & Revenue</option>
-                        <option>Production Efficiency</option>
+                    <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] block mb-4">Report Category</label>
+                    <Select value={category} onChange={(e) => setCategory(e.target.value)} className="bg-black/40 border-white/10 text-white rounded-2xl h-16 text-sm">
+                        <option className="bg-[#1A1A1A]">Inventory & Materials</option>
+                        <option className="bg-[#1A1A1A]">Sales & Revenue</option>
+                        <option className="bg-[#1A1A1A]">Production Efficiency</option>
                     </Select>
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Report Type</label>
-                    <Select value={reportType} onChange={(e) => setReportType(e.target.value)}>
-                        <option>Summary</option>
-                        <option>Detailed Log</option>
-                        <option>Exception Report</option>
+                    <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] block mb-4">Report Type</label>
+                    <Select value={reportType} onChange={(e) => setReportType(e.target.value)} className="bg-black/40 border-white/10 text-white rounded-2xl h-16 text-sm">
+                        <option className="bg-[#1A1A1A]">Summary</option>
+                        <option className="bg-[#1A1A1A]">Detailed Log</option>
+                        <option className="bg-[#1A1A1A]">Exception Report</option>
                     </Select>
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Time Range</label>
-                    <Select value={timeRange} onChange={(e) => setTimeRange(e.target.value)}>
-                        <option>Last 7 days</option>
-                        <option>Last 30 days</option>
-                        <option>This Quarter</option>
-                        <option>Year to Date</option>
+                    <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] block mb-4">Time Range</label>
+                    <Select value={timeRange} onChange={(e) => setTimeRange(e.target.value)} className="bg-black/40 border-white/10 text-white rounded-2xl h-16 text-sm">
+                        <option className="bg-[#1A1A1A]">Last 7 days</option>
+                        <option className="bg-[#1A1A1A]">Last 30 days</option>
+                        <option className="bg-[#1A1A1A]">This Quarter</option>
+                        <option className="bg-[#1A1A1A]">Year to Date</option>
                     </Select>
                 </div>
             </div>
-            <div className="flex justify-end border-t border-gray-100 pt-4">
+            <div className="flex justify-end pt-8 border-t border-white/10 relative z-10">
                  <Button 
-                    variant="primary" 
-                    className="bg-[#6A2C91] text-white w-full md:w-auto"
+                    className="bg-[#6A2C91] hover:bg-[#5a257a] text-white w-full md:w-auto h-16 rounded-full px-12 font-sans font-bold text-[11px] tracking-[0.3em] uppercase shadow-2xl shadow-[#6A2C91]/20 transition-all flex items-center justify-center gap-3"
                     onClick={handleGenerate}
                     disabled={isGenerating}
                 >
                     {isGenerating ? (
-                        <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div> Generating...</>
+                        <><Loader2 size={16} className="animate-spin" /> SYNTHESIZING...</>
                     ) : (
-                        <><Sparkles size={16} className="mr-2" /> Generate Detailed Report</>
+                        <><Sparkles size={16} /> GENERATE DOSSIER</>
                     )}
                 </Button>
             </div>
@@ -237,66 +255,69 @@ export const Reports = () => {
 
         {/* Report Preview */}
         {currentReport && (
-            <div className="space-y-4 animate-slide-up">
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2 text-[#6A2C91] font-bold">
-                        <div className="w-2 h-2 rounded-full bg-[#6A2C91] animate-pulse"></div> Report Preview
+            <div className="space-y-8 animate-in slide-up duration-700">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                    <div className="flex items-center gap-3 text-[#C5A059] font-sans font-bold text-[11px] uppercase tracking-[0.3em]">
+                        <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse shadow-[0_0_10px_#C5A059]"></div> Dossier Initialized
                     </div>
-                    <div className="flex gap-2">
-                        <Button variant="outline" onClick={() => handleExport(currentReport)}>
-                            <Download size={16} className="mr-2" /> Export CSV
-                        </Button>
-                    </div>
+                    <Button 
+                        className="bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full h-12 px-8 font-sans font-bold text-[10px] tracking-[0.3em] uppercase shadow-sm transition-all flex items-center gap-2"
+                        onClick={() => handleExport(currentReport)}
+                    >
+                        <Download size={14} /> EXPORT CSV
+                    </Button>
                 </div>
 
-                <Card className="border-t-4 border-t-[#6A2C91]">
-                    <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-white">{currentReport.title}</h2>
-                        <p className="text-gray-500">Comprehensive analysis generated based on current system data.</p>
-                        <div className="flex items-center gap-2 text-xs text-gray-400 mt-2">
+                <div className="luxury-card bg-[#1A1A1A] border-t-[6px] border-t-[#6A2C91] border-x border-b border-white/10 rounded-b-[3rem] p-12 shadow-2xl">
+                    <div className="mb-12">
+                        <h2 className="text-4xl font-serif text-white tracking-tight mb-4">{currentReport.title}</h2>
+                        <p className="text-white/50 font-sans font-light text-lg italic">Comprehensive analysis generated based on real-time operational data.</p>
+                        <div className="flex items-center gap-3 text-[11px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mt-6 bg-black/40 w-fit px-4 py-2 rounded-xl">
                             <FileText size={14} />
-                            <span>Range: {timeRange} • Generated: {currentReport.generatedDate}</span>
+                            <span>Range: {timeRange} <span className="mx-2">•</span> Generated: {currentReport.generatedDate}</span>
                         </div>
                     </div>
 
                     {/* Summary Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
                         {currentReport.summaryStats.map((stat, i) => (
-                            <div key={i} className="p-4 rounded-lg border border-gray-100 shadow-sm bg-white">
-                                <p className="text-xs text-gray-500 font-bold uppercase mb-1">{stat.label}</p>
-                                <p className={`text-2xl font-bold ${stat.color || 'text-gray-900'}`}>{stat.value}</p>
+                            <div key={i} className="p-8 rounded-[2rem] border border-white/5 bg-white/5 shadow-inner hover:bg-white/10 transition-colors">
+                                <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">{stat.label}</p>
+                                <p className={`text-3xl font-serif tracking-tighter ${stat.color || 'text-white'}`}>{stat.value}</p>
                             </div>
                         ))}
                     </div>
 
                     {/* Table */}
                     <div>
-                        <h4 className="font-bold text-white text-sm mb-4">Detailed Data</h4>
-                        <div className="overflow-x-auto rounded-lg border border-gray-100 max-h-[400px]">
-                            <table className="w-full text-sm text-left">
-                                <thead className="bg-[#6A2C91]/5 text-[#6A2C91] font-bold sticky top-0 bg-white shadow-sm">
+                        <h4 className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+                            <Target size={14} /> Raw Data Ledger
+                        </h4>
+                        <div className="overflow-x-auto rounded-[2rem] border border-white/5 bg-black/40 shadow-inner">
+                            <table className="w-full text-sm text-left font-sans">
+                                <thead className="bg-[#6A2C91]/10 text-white/70 font-sans font-bold text-[10px] uppercase tracking-[0.2em] border-b border-white/5">
                                     <tr>
                                         {currentReport.headers.map((h, i) => (
-                                            <th key={i} className="p-3">{h}</th>
+                                            <th key={i} className="p-6">{h}</th>
                                         ))}
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-100">
+                                <tbody className="divide-y divide-white/5">
                                     {currentReport.data.map((row, i) => (
-                                        <tr key={i} className="hover:bg-gray-50">
+                                        <tr key={i} className="hover:bg-white/5 transition-colors">
                                             {Object.values(row).map((val: any, j) => (
-                                                <td key={j} className="p-3 text-gray-900">{val}</td>
+                                                <td key={j} className="p-6 text-white/70 font-light">{val}</td>
                                             ))}
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-gray-400 mt-2">Report saved to history automatically.</p>
+                        <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mt-6 text-center">Report archived to synaptic history securely.</p>
                     </div>
-                </Card>
+                </div>
             </div>
         )}
-    </div>
+    </motion.div>
   );
 };

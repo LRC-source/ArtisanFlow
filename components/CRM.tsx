@@ -107,13 +107,13 @@ export const CRM = () => {
                              <h1 className="text-6xl font-serif text-white tracking-tighter">{customer.name}</h1>
                              <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em]">{customer.type}</Badge>
                           </div>
-                          <div className="flex gap-8 text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.3em]">
+                          <div className="flex gap-8 text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em]">
                               <span className="flex items-center gap-3"><Mail size={16} className="text-[#6A2C91]"/> {customer.email}</span>
                               <span className="flex items-center gap-3"><MapPin size={16} className="text-[#C5A059]"/> {customer.location}</span>
                           </div>
                       </div>
                       <div className="text-right">
-                          <p className="text-[11px] text-white/40 uppercase font-sans font-medium tracking-[0.3em] mb-3">Lifetime Value</p>
+                          <p className="text-[11px] text-white/40 uppercase font-sans font-bold tracking-[0.3em] mb-3">Lifetime Value</p>
                           <p className="text-7xl font-serif text-white tracking-tighter">${customer.totalSpent.toFixed(2)}</p>
                       </div>
                   </div>
@@ -126,18 +126,18 @@ export const CRM = () => {
                           {customer.orders.length > 0 ? customer.orders.map(order => (
                               <div key={order.id} className="flex justify-between items-center p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 transition-all duration-500 group">
                                   <div>
-                                      <p className="font-sans font-medium text-white uppercase text-[11px] tracking-[0.2em] mb-2">Order {order.id}</p>
+                                      <p className="font-sans font-bold text-white uppercase text-[11px] tracking-[0.2em] mb-2">Order {order.id}</p>
                                       <p className="text-[10px] text-white/30 font-sans uppercase tracking-[0.2em] flex items-center gap-2"><Calendar size={12}/> {order.date}</p>
                                   </div>
                                   <div className="text-right">
-                                      <p className="font-sans font-light tracking-tight text-white text-3xl mb-2">${order.total.toFixed(2)}</p>
+                                      <p className="font-serif text-white text-3xl tracking-tight mb-2">${order.total.toFixed(2)}</p>
                                       <Badge color={order.status === 'Delivered' ? 'green' : 'blue'} className="text-[9px] uppercase tracking-widest">{order.status}</Badge>
                                   </div>
                               </div>
                           )) : (
                               <div className="py-16 text-center bg-black/20 rounded-[2rem] border border-dashed border-white/10">
                                  <Package size={48} className="text-white/10 mx-auto mb-6" strokeWidth={0.5} />
-                                 <p className="text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.3em]">No Transactional History</p>
+                                 <p className="text-white/30 text-[11px] font-sans font-bold uppercase tracking-[0.3em]">No Transactional History</p>
                               </div>
                           )}
                       </div>
@@ -148,12 +148,12 @@ export const CRM = () => {
                       <div className="space-y-8 flex-1">
                           <div className="grid grid-cols-2 gap-6">
                               <div className="bg-black/40 p-6 rounded-[2rem] border border-white/5">
-                                <p className="text-[10px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-3">First Interaction</p>
-                                <p className="font-sans font-light tracking-tight text-white text-2xl">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
+                                <p className="text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-3">First Interaction</p>
+                                <p className="font-serif tracking-tight text-white text-2xl">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
                               </div>
                               <div className="bg-black/40 p-6 rounded-[2rem] border border-white/5">
-                                <p className="text-[10px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-3">Latest Update</p>
-                                <p className="font-sans font-light tracking-tight text-white text-2xl">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
+                                <p className="text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-3">Latest Update</p>
+                                <p className="font-serif tracking-tight text-white text-2xl">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
                               </div>
                           </div>
                           
@@ -184,18 +184,18 @@ export const CRM = () => {
         <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Initialize Vault Node">
             <div className="space-y-8 p-4">
                 <div className="space-y-3">
-                    <label className="text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.2em] ml-1">Full Legal Name</label>
+                    <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Full Legal Name</label>
                     <Input placeholder="Artisan Client Name" value={newCust.name} onChange={e => setNewCust({...newCust, name: e.target.value})} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
                 <div className="space-y-3">
-                    <label className="text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.2em] ml-1">Secure Email Address</label>
+                    <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Secure Email Address</label>
                     <Input placeholder="client@synaptic.com" value={newCust.email} onChange={e => setNewCust({...newCust, email: e.target.value})} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
                 <div className="space-y-3">
-                    <label className="text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.2em] ml-1">Geographic Location</label>
+                    <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Geographic Location</label>
                     <Input placeholder="City, State / Global" value={newCust.location} onChange={e => setNewCust({...newCust, location: e.target.value})} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
-                <Button className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full font-sans font-medium text-[11px] tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 mt-8 transition-all" onClick={handleAddManual}>
+                <Button className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full font-sans font-bold text-[11px] tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 mt-8 transition-all" onClick={handleAddManual}>
                     AUTHORIZE NODE CREATION
                 </Button>
             </div>
@@ -246,7 +246,7 @@ export const CRM = () => {
                 <div className={`p-4 ${kpi.bg} ${kpi.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${kpi.border}`}>
                     <kpi.icon size={24} />
                 </div>
-                <p className="text-[11px] text-white/40 font-sans font-medium uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
+                <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
                 <p className="text-4xl font-serif text-white tracking-tighter">{kpi.val}</p>
               </div>
             ))}
@@ -280,18 +280,18 @@ export const CRM = () => {
                             </div>
                         </div>
                         
-                        <div className="space-y-4 text-[11px] font-sans font-medium text-white/40 uppercase tracking-[0.3em] mb-10 relative z-10">
+                        <div className="space-y-4 text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] mb-10 relative z-10">
                             <div className="flex items-center gap-4"><Mail size={16} className="text-[#6A2C91]"/> {c.email}</div>
                             <div className="flex items-center gap-4"><MapPin size={16} className="text-[#C5A059]"/> {c.location}</div>
                         </div>
                         
                         <div className="pt-8 border-t border-white/10 flex justify-between items-end relative z-10 group-hover:border-white/20 transition-colors">
                             <div>
-                                <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.3em] mb-2">Order Nodes</p>
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Order Nodes</p>
                                 <p className="font-serif text-white text-xl">{c.orderCount}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.3em] mb-2">Lifetime Value</p>
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Lifetime Value</p>
                                 <p className="font-serif text-[#C5A059] text-3xl tracking-tighter">${c.totalSpent.toFixed(2)}</p>
                             </div>
                         </div>

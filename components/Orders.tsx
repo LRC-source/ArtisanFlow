@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Badge, Input, Select } from './UI';
+import { Card, Button, Badge, Input, Select, VaultBanner } from './UI';
 import { Search, Filter, ShoppingCart, DollarSign, Package, Truck, User, MapPin, Calendar, CheckCircle, Download, RefreshCw, AlertCircle, X, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
+import { SubPageHeader } from './SubPageHeader';
+import { motion } from 'framer-motion';
 
 export const Orders = () => {
   const { orders, processOrder, getTotalRevenue, syncWooCommerce, integrations } = useArtisanData();
@@ -60,164 +62,178 @@ export const Orders = () => {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in pb-20 relative">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="p-10 md:p-16 space-y-12 pb-20 max-w-[1600px] mx-auto"
+    >
         {/* Toast Notification Overlay */}
         {toast && (
           <div className="fixed top-8 right-8 z-[60] animate-in slide-in-from-right-10">
-            <div className={`flex items-center gap-3 p-4 rounded-2xl shadow-2xl border-l-4 min-w-[320px] backdrop-blur-md ${
-              toast.type === 'success' ? 'bg-emerald-50/90 border-emerald-500 text-emerald-900' : 
-              toast.type === 'error' ? 'bg-red-50/90 border-red-500 text-red-900' : 
-              'bg-purple-50/90 border-[#6A2C91] text-[#6A2C91]'
+            <div className={`flex items-center gap-3 p-4 rounded-2xl shadow-2xl border-l-4 min-w-[320px] backdrop-blur-xl ${
+              toast.type === 'success' ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400' : 
+              toast.type === 'error' ? 'bg-red-500/10 border-red-500 text-red-400' : 
+              'bg-[#6A2C91]/20 border-[#6A2C91] text-purple-300'
             }`}>
               <div className={`p-1.5 rounded-full ${
-                toast.type === 'success' ? 'bg-emerald-100' : 
-                toast.type === 'error' ? 'bg-red-100' : 'bg-purple-100'
+                toast.type === 'success' ? 'bg-emerald-500/20' : 
+                toast.type === 'error' ? 'bg-red-500/20' : 'bg-[#6A2C91]/40'
               }`}>
                 {toast.type === 'error' ? <AlertCircle size={16} /> : <CheckCircle size={16} />}
               </div>
-              <p className="text-sm font-bold flex-1">{toast.message}</p>
-              <button onClick={() => setToast(null)} className="opacity-30 hover:opacity-100 transition-opacity"><X size={16}/></button>
+              <p className="text-sm font-sans font-medium flex-1">{toast.message}</p>
+              <button onClick={() => setToast(null)} className="opacity-50 hover:opacity-100 transition-opacity"><X size={16}/></button>
             </div>
           </div>
         )}
 
-        <div className="flex flex-col gap-1">
-          <button onClick={() => navigate('/operations')} className="flex items-center gap-2 text-gray-400 hover:text-[#6A2C91] mb-4 font-black text-xs uppercase tracking-widest transition-colors">
-            <ArrowLeft size={18} /> Back to Operations
-          </button>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
-                  <h1 className="text-3xl font-bold text-white">Orders & Fulfillment</h1>
-                  <p className="text-gray-500 text-sm">Omnichannel order management and synchronization.</p>
-              </div>
-              <div className="flex gap-2 w-full md:w-auto">
-                  <Button 
-                      variant="outline" 
-                      onClick={handleSync} 
-                      disabled={isSyncing}
-                      className="flex-1 md:flex-none border-[#6A2C91] text-[#6A2C91] rounded-xl"
-                  >
-                      <RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} /> 
-                      {isSyncing ? "Syncing..." : "Sync Store"}
-                  </Button>
-                  <Button variant="primary" onClick={handleExport} className="flex-1 md:flex-none bg-[#6A2C91] text-white rounded-xl shadow-lg shadow-purple-200">
-                    <Download size={16} /> Export CSV
-                  </Button>
-              </div>
-          </div>
-        </div>
+        <SubPageHeader 
+          title="Orders & Fulfillment"
+          parentTitle="Operations Hub"
+          onBack={() => navigate('/operations')}
+          description="Omnichannel order management and synchronization."
+        />
+
+        <VaultBanner 
+            title="Order Logistics"
+            subtitle="Secure handling and dispatch of transactional nodes."
+            badge="Fulfillment Protocol"
+        >
+            <div className="flex gap-4">
+                <Button 
+                    variant="outline" 
+                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm" 
+                    onClick={handleSync} 
+                    disabled={isSyncing}
+                >
+                    <RefreshCw size={16} className={isSyncing ? "animate-spin mr-3" : "mr-3"} /> {isSyncing ? "SYNCING..." : "SYNC STORE"}
+                </Button>
+                <Button 
+                    variant="primary" 
+                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all" 
+                    onClick={handleExport}
+                >
+                    <Download size={16} className="mr-3" /> EXPORT CSV
+                </Button>
+            </div>
+        </VaultBanner>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { label: 'Total Orders', val: orders.length, icon: ShoppingCart, color: 'text-blue-600', bg: 'bg-blue-50' },
-              { label: 'Revenue', val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-              { label: 'Pending', val: pendingCount, icon: Package, color: 'text-amber-600', bg: 'bg-amber-50' },
-              { label: 'Shipped', val: shippedCount, icon: Truck, color: 'text-purple-600', bg: 'bg-purple-50' }
+              { label: 'Total Orders', val: orders.length, icon: ShoppingCart, color: 'text-purple-400', bg: 'bg-[#6A2C91]/20', border: 'border-[#6A2C91]/30' },
+              { label: 'Revenue', val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-[#C5A059]/20', border: 'border-[#C5A059]/30' },
+              { label: 'Pending', val: pendingCount, icon: Package, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' },
+              { label: 'Shipped', val: shippedCount, icon: Truck, color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/30' }
             ].map((stat, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-4 hover:border-[#6A2C91] transition-all group">
-                <div className={`p-3 ${stat.bg} ${stat.color} rounded-xl group-hover:scale-110 transition-transform`}><stat.icon size={24} /></div>
-                <div>
-                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">{stat.label}</p>
-                    <p className="text-2xl font-black text-gray-900">{stat.val}</p>
+              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
+                <div className={`p-4 ${stat.bg} ${stat.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${stat.border}`}>
+                    <stat.icon size={24} />
                 </div>
+                <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{stat.label}</p>
+                <p className="text-4xl font-serif text-white tracking-tighter">{stat.val}</p>
               </div>
             ))}
         </div>
 
         {/* Orders Table Container */}
-        <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm">
-            <div className="p-6 border-b border-gray-100 bg-gray-50/30 flex flex-col md:flex-row gap-4">
-                <div className="relative flex-1 group">
-                    <Search className="absolute left-4 top-3 text-gray-400 group-focus-within:text-[#6A2C91] transition-colors" size={18} />
+        <div className="space-y-10">
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="relative group max-w-2xl flex-1">
+                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#C5A059] transition-colors" size={20} />
                     <Input 
-                        placeholder="Search by Order ID or Customer..." 
-                        className="pl-12 rounded-2xl bg-white" 
+                        placeholder="Scan for orders by ID or customer..." 
+                        className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all w-full" 
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <div className="flex gap-2">
                     <Select 
-                        className="w-40 rounded-2xl"
+                        className="w-48 py-6 rounded-[2rem] bg-black/40 border border-white/10 text-white font-sans text-sm focus:border-[#C5A059] focus:ring-[#C5A059]/20 shadow-inner"
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value)}
                     >
-                        <option>All Status</option>
-                        <option>Processing</option>
-                        <option>Shipped</option>
-                        <option>Delivered</option>
+                        <option value="All Status" className="bg-[#1A1A1A]">All Status</option>
+                        <option value="Processing" className="bg-[#1A1A1A]">Processing</option>
+                        <option value="Shipped" className="bg-[#1A1A1A]">Shipped</option>
+                        <option value="Delivered" className="bg-[#1A1A1A]">Delivered</option>
                     </Select>
                 </div>
             </div>
 
-            <div className="divide-y divide-gray-50">
+            <div className="grid grid-cols-1 gap-6">
                 {filteredOrders.length === 0 ? (
-                    <div className="p-24 text-center">
-                        <Package size={64} className="text-stone-200 mx-auto mb-4" />
-                        <h3 className="text-lg font-bold text-white italic">No orders in current flow.</h3>
+                    <div className="py-24 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
+                        <Package size={64} className="text-white/10 mx-auto mb-6" strokeWidth={0.5} />
+                        <h3 className="text-xl font-serif text-white tracking-tight mb-2">No Transactional History</h3>
+                        <p className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em]">Adjust your scan parameters.</p>
                     </div>
                 ) : (
                     filteredOrders.map((order) => (
-                        <div key={order.id} className={`p-6 hover:bg-stone-50 transition-all group border-l-4 border-transparent ${processedId === order.id ? 'animate-soft-success border-emerald-500' : 'hover:border-[#6A2C91]'}`}>
-                            <div className="flex flex-col lg:flex-row justify-between gap-8">
+                        <div key={order.id} className={`luxury-card bg-white/5 p-10 rounded-[3rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 group relative overflow-hidden ${processedId === order.id ? 'animate-soft-success border-emerald-500/50 shadow-emerald-500/10' : 'hover:border-white/20'}`}>
+                            <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-bl-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-700"></div>
+                            
+                            <div className="flex flex-col lg:flex-row justify-between gap-8 relative z-10">
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <Badge color={order.status === 'Processing' ? 'blue' : order.status === 'Shipped' ? 'purple' : 'green'} className="uppercase font-black text-[10px] tracking-widest px-3 py-1">
+                                    <div className="flex items-center gap-4 mb-8">
+                                        <Badge color={order.status === 'Processing' ? 'blue' : order.status === 'Shipped' ? 'purple' : 'green'} className="uppercase font-sans font-bold text-[10px] tracking-[0.3em] px-4 py-1.5 shadow-sm">
                                             {order.status}
                                         </Badge>
-                                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{order.platform}</span>
-                                        <span className="text-xs text-gray-400 font-mono font-bold"># {order.id}</span>
+                                        <span className="text-[11px] font-bold font-sans text-white/40 uppercase tracking-[0.3em]">{order.platform}</span>
+                                        <span className="text-[11px] text-white/60 font-mono tracking-widest bg-black/40 px-3 py-1 rounded-full border border-white/5"># {order.id}</span>
                                     </div>
                                     
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        <div className="space-y-1">
-                                            <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest">Customer</p>
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-[#6A2C91] font-black text-sm border border-purple-100">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                        <div className="space-y-4">
+                                            <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-12 h-12 rounded-[1rem] bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059] font-serif text-2xl border border-[#C5A059]/30 shadow-inner">
                                                     {order.customer.charAt(0)}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-gray-900 leading-none">{order.customer}</p>
-                                                    <p className="text-[10px] text-gray-400 font-medium mt-1">{order.location}</p>
+                                                    <p className="font-serif text-2xl text-white tracking-tight">{order.customer}</p>
+                                                    <p className="text-[10px] text-white/40 font-sans uppercase tracking-[0.2em] mt-1">{order.location}</p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="space-y-1">
-                                            <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest">Manifest</p>
-                                            <div className="space-y-1">
+                                        <div className="space-y-4">
+                                            <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Manifest</p>
+                                            <div className="space-y-3">
                                                 {order.items.map((item, idx) => (
-                                                    <div key={idx} className="flex justify-between text-xs">
-                                                        <span className="text-gray-600 font-medium truncate max-w-[150px]">{item.name}</span>
-                                                        <span className="text-[#6A2C91] font-black">x{item.qty}</span>
+                                                    <div key={idx} className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                                        <span className="text-white/60 font-sans font-light truncate max-w-[150px]">{item.name}</span>
+                                                        <span className="text-[#C5A059] font-sans font-bold tracking-widest text-[11px]">x{item.qty}</span>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
 
-                                        <div className="space-y-1 lg:text-right">
-                                            <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest">Settlement</p>
-                                            <p className="text-2xl font-black text-gray-900">${order.total.toFixed(2)}</p>
-                                            <p className="text-[9px] text-emerald-600 font-black uppercase tracking-widest">Fully Captured</p>
+                                        <div className="space-y-4 lg:text-right">
+                                            <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Settlement</p>
+                                            <p className="text-4xl font-serif text-white tracking-tighter">${order.total.toFixed(2)}</p>
+                                            <p className="text-[9px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 inline-block">Fully Captured</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="flex lg:flex-col justify-end items-end gap-2 min-w-[180px]">
+                                <div className="flex lg:flex-col justify-end items-end gap-4 min-w-[200px]">
                                     {order.status === 'Processing' ? (
                                         <Button 
-                                            className="w-full bg-[#6A2C91] text-white hover:bg-[#5a257a] h-12 text-[10px] font-black tracking-[0.2em] rounded-xl shadow-lg shadow-purple-100"
+                                            className="w-full bg-[#6A2C91] text-white hover:bg-[#5a257a] h-14 text-[11px] font-sans font-bold tracking-[0.3em] rounded-2xl shadow-xl shadow-[#6A2C91]/20 transition-all flex items-center justify-center gap-2 group/btn"
                                             onClick={() => handleProcess(order.id)}
                                         >
-                                            AUTHORIZE FLOW <ChevronRight size={14} className="ml-1" />
+                                            AUTHORIZE FLOW <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                                         </Button>
                                     ) : (
-                                        <div className="flex items-center gap-2 text-emerald-600 font-black text-xs px-4 py-3 bg-emerald-50 rounded-xl border border-emerald-100 w-full justify-center tracking-widest uppercase">
-                                            <CheckCircle size={16} /> Dispatched
+                                        <div className="flex items-center gap-3 text-emerald-400 font-sans font-bold text-[11px] px-6 py-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 w-full justify-center tracking-[0.3em] uppercase shadow-inner">
+                                            <CheckCircle size={16} strokeWidth={1.5} /> Dispatched
                                         </div>
                                     )}
-                                    <Button variant="outline" className="w-full h-10 text-[10px] font-black border-stone-200 text-stone-400 hover:bg-stone-50 rounded-xl tracking-widest">
+                                    <Button variant="outline" className="w-full h-12 text-[10px] font-sans font-bold border-white/10 text-white/40 hover:text-white hover:bg-white/5 hover:border-white/20 rounded-2xl tracking-[0.3em] uppercase transition-all shadow-sm">
                                         VIEW METADATA
                                     </Button>
                                 </div>
@@ -227,6 +243,6 @@ export const Orders = () => {
                 )}
             </div>
         </div>
-    </div>
+    </motion.div>
   );
 };

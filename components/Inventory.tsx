@@ -66,7 +66,7 @@ export const Inventory = () => {
               actions={
                 <Button 
                   onClick={() => toast.info("Audit protocol initialized.")}
-                  className="bg-[#6A2C91] hover:bg-[#5a257a] text-white h-12 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg shadow-purple-500/10"
+                  className="bg-[#6A2C91] hover:bg-[#5a257a] text-white h-12 px-6 rounded-2xl font-sans font-bold text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg shadow-purple-500/10"
                 >
                   <RefreshCw size={14} className="mr-2" /> Run Audit
                 </Button>
@@ -87,8 +87,8 @@ export const Inventory = () => {
                     </div>
                     
                     <div className="space-y-4">
-                        <Button className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
-                        <Button variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
+                        <Button className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
+                        <Button variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
                     </div>
 
                     <div className="p-8 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
@@ -120,7 +120,7 @@ export const Inventory = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="luxury-card bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
-                            <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Unit Valuation</p>
+                            <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Stock Integrity</p>
                             <p className="text-4xl font-serif text-white tracking-tight">${selectedItem.unitCost.toFixed(2)}</p>
                         </div>
                         <div className="luxury-card bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
@@ -192,42 +192,42 @@ export const Inventory = () => {
             badge="Asset Management Protocol Active"
           >
             <div className="flex gap-4">
-                <Button variant="outline" className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm"><Upload size={16} className="mr-3"/> INGEST CSV</Button>
-                <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
+                <Button variant="outline" className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm"><Upload size={16} className="mr-3"/> INGEST CSV</Button>
+                <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
             </div>
           </VaultBanner>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                <div className="flex items-center gap-10 relative z-10 mb-16">
-                    <div className="w-28 h-28 bg-black/20 rounded-[2rem] flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
-                        <Box size={48} strokeWidth={1} />
+            <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
+                <div className="flex items-center gap-8 relative z-10 mb-12">
+                    <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
+                        <Box size={32} strokeWidth={1.5} />
                     </div>
                     <div>
-                        <h3 className="text-5xl font-serif text-white tracking-tight mb-3">Raw Materials</h3>
-                        <p className="text-white/30 font-sans font-medium uppercase text-[11px] tracking-[0.3em]">{rawMaterials.length} Active Nodes</p>
+                        <h3 className="text-4xl font-serif text-white tracking-tight mb-2">Materials Matrix</h3>
+                        <p className="text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{rawMaterials.length} Active Nodes</p>
                     </div>
                 </div>
-                <div className="mt-auto flex items-center gap-4 text-[11px] font-sans font-medium text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
-                    ACCESS RAW VAULT <ChevronRight size={18} />
+                <div className="mt-auto flex items-center gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
+                    ACCESS RAW VAULT <ChevronRight size={16} />
                 </div>
             </div>
 
-            <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                <div className="flex items-center gap-10 relative z-10 mb-16">
-                    <div className="w-28 h-28 bg-black/20 rounded-[2rem] flex items-center justify-center text-[#C5A059] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
-                        <Package size={48} strokeWidth={1} />
+            <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
+                <div className="flex items-center gap-8 relative z-10 mb-12">
+                    <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#C5A059] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
+                        <Package size={32} strokeWidth={1.5} />
                     </div>
                     <div>
-                        <h3 className="text-5xl font-serif text-white tracking-tight mb-3">Finished Output</h3>
-                        <p className="text-white/30 font-sans font-medium uppercase text-[11px] tracking-[0.3em]">{finishedProducts.length} Retail Ready</p>
+                        <h3 className="text-4xl font-serif text-white tracking-tight mb-2">Finished Output</h3>
+                        <p className="text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{finishedProducts.length} Retail Ready</p>
                     </div>
                 </div>
-                <div className="mt-auto flex items-center gap-4 text-[11px] font-sans font-medium text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
-                    ACCESS PRODUCT VAULT <ChevronRight size={18} />
+                <div className="mt-auto flex items-center gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
+                    ACCESS PRODUCT VAULT <ChevronRight size={16} />
                 </div>
             </div>
         </div>
@@ -238,17 +238,17 @@ export const Inventory = () => {
                     <BarChart size={240} className="text-[#C5A059]" strokeWidth={0.5} />
                 </div>
                 <div className="relative z-10">
-                    <p className="text-[11px] text-white/40 font-sans font-medium uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                    <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
                         <DollarSign size={16} className="text-[#C5A059]" /> Total Liquid Asset Valuation
                     </p>
                     <p className="text-8xl font-serif text-white tracking-tighter">${getInventoryValue().toLocaleString()}</p>
                     <div className="mt-12 flex gap-12">
                         <div>
-                            <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.2em] mb-2">Raw Value</p>
+                            <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.2em] mb-2">Raw Value</p>
                             <p className="text-3xl font-serif text-[#6A2C91]">${(getInventoryValue() * 0.4).toLocaleString()}</p>
                         </div>
                         <div>
-                            <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.2em] mb-2">Finished Value</p>
+                            <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.2em] mb-2">Finished Value</p>
                             <p className="text-3xl font-serif text-[#C5A059]">${(getInventoryValue() * 0.6).toLocaleString()}</p>
                         </div>
                     </div>
