@@ -18,7 +18,7 @@ export const AIAssistant: React.FC = () => {
   const { businessProfile, addAppointment, inventory, productionStats, getTotalRevenue, getMarginMetrics, todos, integrations } = useArtisanData();
   const [isOpen, setIsOpen] = useState(false); 
   const [messages, setMessages] = useState<Msg[]>([ 
-    { role: 'assistant', text: `Greetings! Lola online. Cognitive nodes multiplexed: Fast, Thinking, Search available. Ask Lola to summarize your margins, check your orders, or brainstorm marketing ideas! ✅`, followUpQuestions: ["Check Margins", "Marketing Ideas?"] } 
+    { role: 'assistant', text: `Hi, I'm Lola, your flow assistant. I can help you summarize your financial margins, check your orders, and even brainstorm marketing ideas. How can I help you today?`, followUpQuestions: ["Check Margins", "Marketing Ideas?"] } 
   ]); 
   const [input, setInput] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
