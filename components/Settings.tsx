@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2 } from 'lucide-react';
 import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from './UI';
 import { useArtisanData, Integration, UserTier } from './DataContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 /**
@@ -150,6 +150,8 @@ export const SubscriptionManagement = () => {
     const [selectedUpgrade, setSelectedUpgrade] = useState<UserTier | null>(null);
     const navigate = useNavigate();
 
+    const location = useLocation();
+
     const handleUpgrade = async () => {
         if (!selectedUpgrade) return;
         setIsUpgrading(true);
@@ -157,6 +159,13 @@ export const SubscriptionManagement = () => {
         await updateTier(selectedUpgrade);
         setIsUpgrading(false);
         setSelectedUpgrade(null);
+        toast.success("Protocol Authorized. Access Granted.");
+        
+        if (location.state?.from) {
+            navigate(location.state.from);
+        } else {
+            navigate(-1); // Try to go back in history if no state
+        }
     };
 
     return (

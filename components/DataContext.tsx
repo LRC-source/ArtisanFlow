@@ -500,6 +500,13 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const updateTier = async (tier: UserTier) => {
     setUserTier(tier);
     setBusinessProfile(prev => ({ ...prev, tier }));
+    if (auth.currentUser) {
+      try {
+        await setDoc(doc(db, 'users', auth.currentUser.uid), { tier }, { merge: true });
+      } catch (e) {
+        console.error("Failed to sync tier upgrade", e);
+      }
+    }
   };
 
   const updateBusinessProfile = (updates: Partial<BusinessProfile>) => setBusinessProfile(prev => ({ ...prev, ...updates }));

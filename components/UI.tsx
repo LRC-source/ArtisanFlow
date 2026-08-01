@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Upload, FileText, X, CheckCircle, AlertCircle, Lock, Crown, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -70,6 +71,13 @@ export const LRCLogo: React.FC<{ size?: number; className?: string }> = ({ size 
 };
 
 export const LockedNode: React.FC<{ children: React.ReactNode; isLocked: boolean; requiredTier: string; onUpgrade: () => void }> = ({ children, isLocked, requiredTier, onUpgrade }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleUpgradeClick = () => {
+    navigate('/settings/subscription', { state: { from: location.pathname } });
+  };
+
   if (!isLocked) return <>{children}</>;
 
   return (
@@ -83,7 +91,7 @@ export const LockedNode: React.FC<{ children: React.ReactNode; isLocked: boolean
         </div>
         <h4 className="text-2xl font-serif text-white tracking-tight mb-3">Vault Node Locked</h4>
         <p className="text-white/50 font-sans font-light text-sm mb-8 max-w-[240px] leading-relaxed">This synaptic protocol requires a <span className="font-medium text-[#6A2C91]">{requiredTier}</span> authorization.</p>
-        <Button variant="primary" onClick={onUpgrade} className="h-12 px-10">
+        <Button variant="primary" onClick={handleUpgradeClick} className="h-12 px-10">
           <Crown size={16} className="mr-2 text-[#C5A059]" strokeWidth={1.5} /> UPGRADE ACCESS
         </Button>
       </div>
