@@ -257,6 +257,8 @@ interface DataContextType {
   inviteSystemUser: (email: string, tier: string) => void;
   connectedChannels: Record<string, boolean>;
   toggleChannelConnection: (platform: string) => void;
+  onboardingState: Record<string, boolean>;
+  markHubVisited: (hubId: string) => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -276,6 +278,23 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   
   const [isTutorialActive, setIsTutorialActive] = useState(false);
   const [tutorialStep, setTutorialStepState] = useState(0);
+
+  // Read initial onboarding state from localStorage if available
+  const [onboardingState, setOnboardingState] = useState<Record<string, boolean>>(() => {
+      try {
+          const stored = localStorage.getItem('artisanflow_onboarding');
+          if (stored) return JSON.parse(stored);
+      } catch (e) { console.error(e); }
+      return {};
+  });
+
+  const markHubVisited = (hubId: string) => {
+      setOnboardingState(prev => {
+          const newState = { ...prev, [hubId]: true };
+          localStorage.setItem('artisanflow_onboarding', JSON.stringify(newState));
+          return newState;
+      });
+  };
 
   const [connectedChannels, setConnectedChannels] = useState<Record<string, boolean>>({
       'Instagram': false,
@@ -690,6 +709,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       inventory, orders, manualCustomers, businessProfile, isAuthenticated, userTier, reports, productionStats,
       suppliers, marketingPosts, integrations, qualityChecks, locations, supplierCommunications, recipes, appointments, 
       isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, updateBusinessProfile,
+      onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
       importData, addInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
       generateSchedule, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,

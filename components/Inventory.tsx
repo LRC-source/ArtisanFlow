@@ -6,6 +6,7 @@ import { useArtisanData, InventoryItem } from './DataContext';
 import { motion } from 'framer-motion';
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 
 /**
  * Inventory Hub - High-Fidelity Synaptic Architecture ✅
@@ -178,6 +179,16 @@ export const Inventory = () => {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
       >
+        <ContextualTutorialModal
+            hubId="inventory_hub"
+            title="Inventory Hub Overview"
+            description="Welcome to the Inventory Hub. Here you can track your raw materials and finished products."
+            steps={[
+                "Deploy new assets (raw materials or finished goods).",
+                "Monitor stock levels and reorder points.",
+                "Review automated Lola AI insights on margin impact."
+            ]}
+        />
         <div className="flex flex-col gap-8">
           <SubPageHeader 
             title="Inventory Hub"

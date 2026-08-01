@@ -10,6 +10,7 @@ import { GoogleGenAI } from "@google/genai";
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
 import { useFeatureGate } from '../hooks/useFeatureGate';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 
 
 // --- REUSABLE MARKETING GRID ---
@@ -224,6 +225,17 @@ export const MarketingStudio = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="p-6 space-y-12 pb-20 max-w-7xl mx-auto"
         >
+            <ContextualTutorialModal
+                hubId="marketing_studio"
+                title="Marketing Studio Overview"
+                description="Welcome to the Marketing Studio, your centralized hub for AI-driven asset creation and brand strategy."
+                steps={[
+                    "Use Visual Analysis to audit product photos.",
+                    "Generate high-fidelity assets in the Marketing Creator.",
+                    "Build a comprehensive strategy in Marketing Strategy.",
+                    "Define your Brand Voice for consistent output."
+                ]}
+            />
             <div>
                 <h1 className="text-5xl font-serif text-white tracking-tight mb-3">Marketing Studio</h1>
                 <p className="text-gray-400 font-sans font-light text-lg max-w-xl leading-relaxed">AI-powered content creation and marketing protocols.</p>

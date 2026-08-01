@@ -53,9 +53,11 @@ import { WarehouseView } from './components/WarehouseView';
 import { CRM } from './components/CRM';
 import { Orders } from './components/Orders';
 import { ProfitGuardPage } from './components/ProfitGuard';
+import { LandingPage } from './components/LandingPage';
 import { AIAssistant } from './components/AIAssistant';
 import { AuthGateway } from './components/Auth';
 import { FinanceHub, FinancialProjections } from './components/Finance';
+import { ContextualTutorialModal } from './components/ContextualTutorialModal';
 import { BudgetGuard } from './components/BudgetGuard';
 import { LolaTodos } from './components/LolaTodos';
 import { TierProvider } from './context/TierContext';
@@ -151,6 +153,16 @@ const DashboardPage = () => {
 
   return (
     <div className="space-y-16 animate-in fade-in duration-700 max-w-7xl mx-auto">
+      <ContextualTutorialModal
+          hubId="dashboard_home"
+          title="Welcome to Artisan Flow"
+          description="Your centralized command center. We've synchronized your modules to offer an overarching view of your business operations."
+          steps={[
+              "View high-level revenue and inventory stats.",
+              "Access main nodes: Operations, Finance, Marketing, and Profit Guard.",
+              "Monitor AI Logic insights tailored to your data."
+          ]}
+      />
       <VaultBanner 
         title="Vault Access Authorized"
         subtitle={`Precision architecture online. Membership Level: ${userTier}. Synchronizing brand craftsmanship with automated growth nodes.`}
@@ -280,7 +292,7 @@ const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (!isAuthenticated) return <AuthGateway />;
+  if (!isAuthenticated) return <LandingPage />;
   
   if (isSessionVerifying) {
       return (
