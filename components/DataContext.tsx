@@ -234,7 +234,7 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true); 
+  const [isAuthenticated, setIsAuthenticated] = useState(false); 
   const [userTier, setUserTier] = useState<UserTier>('Artisan Flow Basic');
   const [isSessionVerifying, setIsSessionVerifying] = useState(false);
   const [demandInsights, setDemandInsights] = useState<any[]>([]);
@@ -250,9 +250,9 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [tutorialStep, setTutorialStepState] = useState(0);
 
   const [businessProfile, setBusinessProfile] = useState<BusinessProfile>({
-    name: 'Herbalistic Wellness', 
-    ownerName: 'LaToya Renee Carter', 
-    email: 'irenee.bss@gmail.com', 
+    name: 'Artisan Flow Demo', 
+    ownerName: 'Admin User', 
+    email: 'admin@artisanflow.app', 
     industry: 'Skincare',
     tier: 'Artisan Flow Basic',
     status: 'Active',
