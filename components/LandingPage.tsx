@@ -3,6 +3,7 @@ import { Card, Button, Input } from './UI';
 import { useArtisanData, UserTier } from './DataContext';
 import { Hexagon, Lock, ArrowRight, ShieldCheck, Zap, Crown, CheckCircle, Mail, Chrome, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { AuthGateway } from './Auth';
 
 export const LandingPage = () => {
     const { login, googleLogin, signUp } = useArtisanData();
@@ -36,90 +37,8 @@ export const LandingPage = () => {
         }
     };
 
-    if (view === 'login') {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-stone-50 p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#6A2C91] opacity-[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.03] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-                <div className="w-full max-w-md animate-in fade-in zoom-in duration-500 relative z-10">
-                    <button onClick={() => setView('hero')} className="absolute -top-12 left-0 text-sm font-bold text-gray-500 hover:text-[#6A2C91] transition-colors">
-                        &larr; Back to Platform
-                    </button>
-                    <div className="flex flex-col items-center mb-8">
-                        <div className="relative mb-4">
-                            <Hexagon size={64} className="text-[#C5A059] fill-[#C5A059]/10" />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-4 h-4 bg-[#6A2C91] rounded-full shadow-lg animate-pulse"></div>
-                            </div>
-                        </div>
-                        <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase italic">LRC Artisan Flow</h1>
-                        <p className="text-gray-500 font-medium text-sm mt-1">Orchestrating High-Precision Manufacturing</p>
-                    </div>
-                    <Card className="shadow-2xl border-stone-100">
-                        <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                            <Lock size={20} className="text-[#6A2C91]"/>
-                            Sign In To Vault
-                        </h2>
-                        <form onSubmit={handleLogin} className="space-y-4">
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Work Email</label>
-                                <Input type="email" placeholder="alex@artisanflow.app" value={email} onChange={e => setEmail(e.target.value)} required />
-                            </div>
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Vault Key (Password)</label>
-                                <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required />
-                            </div>
-                            <Button variant="primary" type="submit" className="w-full h-12 font-black tracking-widest shadow-[#6A2C91]/20">
-                                ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
-                            </Button>
-                        </form>
-                        <div className="relative my-8">
-                            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100"></div></div>
-                            <div className="relative flex justify-center text-[10px] font-black uppercase bg-white px-4 text-gray-400 tracking-[0.2em]">Secure Entry Point</div>
-                        </div>
-                        <Button variant="outline" onClick={handleGoogleAuth} className="w-full h-12 font-bold border-stone-200 hover:bg-stone-50">
-                            <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
-                        </Button>
-                    </Card>
-                </div>
-            </div>
-        );
-    }
-
-    if (view === 'signup') {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-stone-50 p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#6A2C91] opacity-[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                <div className="w-full max-w-md animate-in fade-in zoom-in duration-500 relative z-10">
-                    <button onClick={() => setView('hero')} className="absolute -top-12 left-0 text-sm font-bold text-gray-500 hover:text-[#6A2C91] transition-colors">
-                        &larr; Back to Platform
-                    </button>
-                    <Card className="shadow-2xl border-stone-100">
-                        <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                            Initialize {selectedTier}
-                        </h2>
-                        <div className="p-4 bg-purple-50 rounded-lg border border-purple-100 mb-6">
-                            <p className="text-sm font-medium text-[#6A2C91] mb-2">Secure Checkout via Square</p>
-                            <p className="text-xs text-purple-700/70">Enter your business email to proceed to the Square Payment Gateway and complete your subscription setup.</p>
-                        </div>
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
-                            alert("Redirecting to Square SDK Gateway...");
-                            signUp({ email, tier: selectedTier, status: 'Active' });
-                            navigate('/command-center');
-                        }} className="space-y-4">
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Work Email</label>
-                                <Input type="email" placeholder="alex@artisanflow.app" value={email} onChange={e => setEmail(e.target.value)} required />
-                            </div>
-                            <Button variant="primary" type="submit" className="w-full h-12 font-black tracking-widest bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 border-none">
-                                PROCEED TO PAYMENT <ArrowRight size={18} className="ml-1" />
-                            </Button>
-                        </form>
-                    </Card>
-                </div>
-            </div>
-        );
+    if (view === 'login' || view === 'signup') {
+        return <AuthGateway initialView={view} onBack={() => setView('hero')} />;
     }
 
     return (

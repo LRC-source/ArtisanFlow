@@ -4,9 +4,9 @@ import { useArtisanData, UserTier } from './DataContext';
 import { Chrome, Mail, Lock, ArrowRight, ShieldCheck, Zap, Crown, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export const AuthGateway = () => {
+export const AuthGateway = ({ initialView = 'login', onBack }: { initialView?: 'login' | 'signup' | 'tiers', onBack?: () => void }) => {
   const { login, googleLogin, signUp } = useArtisanData();
-  const [view, setView] = useState<'login' | 'signup' | 'tiers'>('login');
+  const [view, setView] = useState<'login' | 'signup' | 'tiers'>(initialView);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [isNewUser, setIsNewUser] = useState(false);
@@ -85,6 +85,11 @@ export const AuthGateway = () => {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-md z-10"
           >
+            {onBack && (
+              <button onClick={onBack} className="absolute -top-12 left-0 text-sm font-bold text-white/50 hover:text-white transition-colors">
+                &larr; Back to Platform
+              </button>
+            )}
             <div className="flex flex-col items-center mb-12">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
