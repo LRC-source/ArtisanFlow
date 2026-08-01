@@ -37,12 +37,40 @@ export const Dashboard = () => {
         </Button>
       </VaultBanner>
 
-      {/* Metrics */}
+      {/* Primary Navigation Portals */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-        <MetricCard title="Revenue Velocity" value="$24,500" icon={DollarSign} trend="+12.5%" trendUp={true} delay={0.3} />
-        <MetricCard title="Active Inventory" value="1,204" subtitle="Units" icon={Package} trend="+2.1%" trendUp={true} delay={0.4} />
-        <MetricCard title="Production Nodes" value="12" subtitle="Active" icon={Activity} trend="Stable" trendUp={true} delay={0.5} />
-        <MetricCard title="Critical Alerts" value="3" subtitle="Low Stock" icon={AlertTriangle} trend="Action Required" trendUp={false} alert={true} delay={0.6} />
+        <MainNodePortal 
+            title="Marketing Studio" 
+            path="/marketing"
+            icon="✨" 
+            delay={0.3} 
+            color="from-purple-600/40 to-indigo-600/40"
+            shadow="shadow-purple-900/40"
+        />
+        <MainNodePortal 
+            title="Manufacturing" 
+            path="/recipes"
+            icon="🏭" 
+            delay={0.4} 
+            color="from-emerald-600/40 to-teal-600/40"
+            shadow="shadow-emerald-900/40"
+        />
+        <MainNodePortal 
+            title="CRM Hub" 
+            path="/operations/crm"
+            icon="🤝" 
+            delay={0.5} 
+            color="from-blue-600/40 to-cyan-600/40"
+            shadow="shadow-blue-900/40"
+        />
+        <MainNodePortal 
+            title="Orders & Finance" 
+            path="/finance"
+            icon="📈" 
+            delay={0.6} 
+            color="from-[#C5A059]/40 to-amber-600/40"
+            shadow="shadow-amber-900/40"
+        />
       </div>
 
       {/* Charts & Insights */}
@@ -122,26 +150,42 @@ export const Dashboard = () => {
   );
 };
 
-const MetricCard = ({ title, value, subtitle, icon: Icon, trend, trendUp, alert, delay }: any) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.8 }}
-    className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-8 relative overflow-hidden group ${alert ? 'border-red-500/30' : ''}`}
-  >
-    {alert && <div className="absolute top-0 left-0 w-full h-1 bg-red-500/50"></div>}
-    <div className="flex justify-between items-start mb-6">
-      <div className={`p-3 rounded-2xl shadow-sm transition-transform group-hover:scale-105 border border-white/5 ${alert ? 'bg-red-500/10 text-red-400' : 'bg-white/5 text-[#C5A059]'}`}>
-        <Icon size={24} strokeWidth={1.5} />
-      </div>
-      <Badge color={alert ? 'red' : trendUp ? 'green' : 'gray'} className="text-[9px] px-2 py-1 shadow-sm font-sans tracking-widest uppercase">{trend}</Badge>
-    </div>
-    <div>
-      <p className="text-xs font-sans text-white/40 uppercase tracking-widest mb-2">{title}</p>
-      <div className="flex items-baseline gap-2">
-          <h3 className="text-3xl font-serif text-white tracking-tight">{value}</h3>
-          {subtitle && <span className="text-sm font-sans font-light text-white/30">{subtitle}</span>}
-      </div>
-    </div>
-  </motion.div>
-);
+const MainNodePortal = ({ title, path, icon, color, shadow, delay }: any) => {
+  const navigate = useNavigate();
+  return (
+      <motion.button
+          onClick={() => navigate(path)}
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          whileHover={{ scale: 1.05, y: -10 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ delay, duration: 0.6, type: 'spring', stiffness: 100 }}
+          className={`relative group h-64 rounded-[3rem] p-1 overflow-hidden shadow-2xl ${shadow}`}
+      >
+          {/* Glass edge layer */}
+          <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-white/20 to-transparent p-[1px]">
+              <div className="absolute inset-0 rounded-[3rem] bg-black/60 backdrop-blur-2xl h-full w-full"></div>
+          </div>
+          
+          {/* Core glow */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-40 group-hover:opacity-80 transition-opacity duration-700 blur-2xl`}></div>
+          
+          {/* Inner Content */}
+          <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 border border-white/10 rounded-[3rem] bg-black/40 shadow-inner overflow-hidden">
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+              
+              <div className="text-6xl mb-6 drop-shadow-[0_20px_20px_rgba(0,0,0,0.8)] grayscale-0 group-hover:scale-125 transition-transform duration-700 ease-out">
+                  {icon}
+              </div>
+              
+              <h3 className="text-xl font-serif text-white font-bold tracking-tight text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:text-white transition-colors">
+                  {title}
+              </h3>
+              
+              <div className="mt-6 flex items-center gap-2 text-[9px] font-sans font-black text-white/40 uppercase tracking-[0.3em] group-hover:text-white/80 transition-colors">
+                  Initialize <ArrowRight size={12} className="group-hover:translate-x-2 transition-transform" />
+              </div>
+          </div>
+      </motion.button>
+  );
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MoreHorizontal, Share2, Star } from 'lucide-react';
@@ -20,6 +20,7 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
   description 
 }) => {
   const navigate = useNavigate();
+  const [isStarred, setIsStarred] = useState(false);
 
   const handleBack = () => {
     if (onBack) {
@@ -27,6 +28,20 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
     } else {
       navigate(-1);
     }
+  };
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success("Link copied to clipboard!");
+    } catch (err) {
+      toast.error("Failed to copy link");
+    }
+  };
+
+  const handleStar = () => {
+    setIsStarred(!isStarred);
+    toast.success(isStarred ? "Removed from favorites" : "Added to favorites");
   };
 
   return (
@@ -76,13 +91,19 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
         >
           {actions}
           <div className="flex items-center gap-2 ml-2 pl-4 border-l border-white/10">
-            <button onClick={() => toast.info("Star feature coming soon")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-[#C5A059] hover:bg-white/10 transition-all shadow-sm">
-              <Star size={18} />
+            <button 
+                onClick={handleStar} 
+                className={`p-3 rounded-2xl border border-white/10 transition-all shadow-sm ${isStarred ? 'bg-[#C5A059]/20 text-[#C5A059]' : 'bg-white/5 text-white/40 hover:text-[#C5A059] hover:bg-white/10'}`}
+            >
+              <Star size={18} fill={isStarred ? "currentColor" : "none"} />
             </button>
-            <button onClick={() => toast.info("Share feature coming soon")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-[#6A2C91] hover:bg-white/10 transition-all shadow-sm">
+            <button 
+                onClick={handleShare} 
+                className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-[#6A2C91] hover:bg-white/10 transition-all shadow-sm"
+            >
               <Share2 size={18} />
             </button>
-            <button onClick={() => toast.info("More options coming soon")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-sm">
+            <button onClick={() => toast.info("More options available in the vault")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-sm">
               <MoreHorizontal size={18} />
             </button>
           </div>

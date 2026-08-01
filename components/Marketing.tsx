@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 const MarketingGrid = () => {
     const navigate = useNavigate();
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <HubCard 
                 title="Visual Analysis" 
                 icon={Eye} 
@@ -273,15 +273,17 @@ export const MarketingHub = () => {
 };
 
 const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => (
-    <div onClick={onClick} className="luxury-card bg-black/40 backdrop-blur-xl p-12 rounded-[3rem] cursor-pointer group hover:-translate-y-2 transition-all duration-700 flex flex-col h-full relative overflow-hidden border border-white/10 shadow-2xl shadow-black/20">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 opacity-[0.03] rounded-bl-full -mr-12 -mt-12 group-hover:opacity-10 transition-opacity duration-700"></div>
-        <div className="flex items-center gap-6 mb-10 relative z-10">
-            <div className={`w-20 h-20 bg-white/5 rounded-[1.5rem] flex items-center justify-center group-hover:scale-110 group-hover:bg-white/10 group-hover:shadow-xl group-hover:shadow-black/5 transition-all duration-700 shadow-sm border border-white/5 ${color}`}>
-                <Icon size={32} strokeWidth={1} />
+    <div onClick={onClick} className="luxury-card bg-black/40 backdrop-blur-xl p-8 rounded-[2rem] cursor-pointer group hover:-translate-y-2 transition-all duration-700 flex flex-col h-full relative overflow-hidden border border-white/10 shadow-2xl shadow-black/20">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 group-hover:opacity-10 transition-opacity duration-700"></div>
+        <div className="flex items-center gap-4 mb-6 relative z-10">
+            <div className={`relative w-14 h-14 rounded-[1rem] flex items-center justify-center group-hover:scale-110 group-hover:shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-700 shadow-sm border border-white/10 bg-gradient-to-br from-white/10 to-transparent ${color} overflow-hidden`}>
+                <div className="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
+                <div className="absolute inset-0 rounded-[1rem] shadow-[inset_0_2px_4px_rgba(255,255,255,0.2)]"></div>
+                <Icon size={24} strokeWidth={1.5} className="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
             </div>
-            <h3 className="text-3xl font-serif text-white tracking-tight leading-none">{title}</h3>
+            <h3 className="text-xl font-serif text-white tracking-tight leading-none">{title}</h3>
         </div>
-        <p className="text-base text-gray-400 font-sans font-light leading-relaxed mb-10 relative z-10 flex-grow">{desc}</p>
+        <p className="text-sm text-gray-400 font-sans font-light leading-relaxed mb-6 relative z-10 flex-grow">{desc}</p>
         <div className="flex justify-end relative z-10 mt-auto">
             <button className="text-[11px] font-sans font-medium uppercase tracking-[0.3em] text-gray-500 group-hover:text-[#C5A059] transition-all duration-500 flex items-center gap-3">
                 Initialize Module <ArrowLeft size={16} className="rotate-180 transition-transform duration-500 group-hover:translate-x-1" />

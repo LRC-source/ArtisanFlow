@@ -94,85 +94,74 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
           </div>
 
           <nav className="sidebar-nav-container">
+
               <div className="nav-section-group">
-                  <span className="nav-section-title">Terminal Control</span>
+                  <span className="nav-section-title">Primary Nodes</span>
                   <button onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">📊</span>
-                      <span className="flex-1 text-left">Overview Terminal</span>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📊</span>
+                      <span className="flex-1 text-left">Dashboard</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
-                  <button onClick={() => { navigate('/settings/account'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/account' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">💎</span>
-                      <span className="flex-1 text-left">Subscription Status</span>
+                  <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✨</span>
+                      <span className="flex-1 text-left">Marketing Studio</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
-                  {businessProfile.role === 'admin' && (
-                    <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
-                        <span className="nav-icon text-lg">🛡️</span>
-                        <span className="flex-1 text-left">Super-Admin</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
-                    </button>
-                  )}
+                  <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🏭</span>
+                      <span className="flex-1 text-left">Manufacturing</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🤝</span>
+                      <span className="flex-1 text-left">CRM Hub</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📈</span>
+                      <span className="flex-1 text-left">Orders & Finance</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
               </div>
 
               <div className="nav-section-group">
                   <span className="nav-section-title">Supply Logistics</span>
                   <button onClick={() => { navigate('/inventory'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/inventory' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">📦</span>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📦</span>
                       <span className="flex-1 text-left">Materials Matrix</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
-                  <button onClick={() => { navigate('/finance/projections'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance/projections' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">⏳</span>
-                      <span className="flex-1 text-left">Inventory Forecasting</span>
+                  <button onClick={() => { navigate('/forecasting'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/forecasting' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">⏳</span>
+                      <span className="flex-1 text-left">Forecasting</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
                   </button>
                   <button onClick={() => { navigate('/qc'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/qc' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">💸</span>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💸</span>
                       <span className="flex-1 text-left">Trapped Cash Audit</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
                   </button>
               </div>
 
-              <div className="nav-section-group">
-                  <span className="nav-section-title">Formulation Vault</span>
-                  <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">🏺</span>
-                      <span className="flex-1 text-left">Golden Ratio Ledger</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+              <div className="nav-section-group mt-auto pt-8">
+                  <span className="nav-section-title text-[#C5A059]">My Account</span>
+                  <button onClick={() => { navigate('/settings/account'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/account' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💎</span>
+                      <span className="flex-1 text-left">Subscription Status</span>
                   </button>
-                  <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">🧮</span>
-                      <span className="flex-1 text-left">COGS Confidence Matrix</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                  </button>
-              </div>
-
-              <div className="nav-section-group">
-                  <span className="nav-section-title">Client Logistics</span>
-                  <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">🤝</span>
-                      <span className="flex-1 text-left">CRM Hub</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                  </button>
-              </div>
-
-              <div className="nav-section-group">
-                  <span className="nav-section-title">Secure Extensions</span>
+                  {businessProfile.role === 'admin' && (
+                    <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
+                        <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🛡️</span>
+                        <span className="flex-1 text-left">Super-Admin</span>
+                    </button>
+                  )}
                   <button onClick={() => { navigate('/settings/integrations'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/integrations' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">💳</span>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💳</span>
                       <span className="flex-1 text-left">Integrations</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/marketing/brand-voice'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing/brand-voice' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">✉️</span>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✉️</span>
                       <span className="flex-1 text-left">Brand Voice Profile</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                  </button>
-                  <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg">✨</span>
-                      <span className="flex-1 text-left">Marketing Studio</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
               </div>
           </nav>
