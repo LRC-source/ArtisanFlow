@@ -4,6 +4,7 @@ import { Upload, FileText, X, CheckCircle, AlertCircle, Lock, Crown, ShieldCheck
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useArtisanData } from './DataContext';
+import { useFeatureGate } from '../hooks/useFeatureGate';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'premium' | 'danger';
@@ -72,15 +73,24 @@ export const LRCLogo: React.FC<{ size?: number; className?: string }> = ({ size 
   );
 };
 
-export const LockedNode: React.FC<{ children: React.ReactNode; isLocked: boolean; requiredTier: string; onUpgrade: () => void }> = ({ children, isLocked, requiredTier, onUpgrade }) => {
+export const LockedNode: React.FC<{ children: React.ReactNode; isLocked?: boolean; requiredTier: string; onUpgrade?: () => void; featureKey?: string }> = ({ children, isLocked, requiredTier, onUpgrade, featureKey }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  
+  // If featureKey is provided, use the global TierContext gate
+  const gate = featureKey ? useFeatureGate(featureKey) : { isLocked: !!isLocked, isTierLoading: false };
+  const effectiveIsLocked = featureKey ? gate.isLocked : !!isLocked;
 
   const handleUpgradeClick = () => {
-    navigate('/settings/subscription', { state: { from: location.pathname } });
+    if (onUpgrade) {
+      onUpgrade();
+    } else {
+      navigate('/settings/subscription', { state: { from: location.pathname } });
+    }
   };
 
-  if (!isLocked) return <>{children}</>;
+  if (gate.isTierLoading) return <div className="flex items-center justify-center p-20"><Loader2 className="animate-spin text-[#C5A059]" size={32} /></div>;
+  if (!effectiveIsLocked) return <>{children}</>;
 
   return (
     <div className="relative overflow-hidden rounded-[2rem] luxury-card group">

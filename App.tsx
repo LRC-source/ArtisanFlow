@@ -58,6 +58,7 @@ import { AuthGateway } from './components/Auth';
 import { FinanceHub, FinancialProjections } from './components/Finance';
 import { BudgetGuard } from './components/BudgetGuard';
 import { LolaTodos } from './components/LolaTodos';
+import { TierProvider } from './context/TierContext';
 import { SuperAdmin } from './components/SuperAdmin';
 import { Card, Button, LockedNode, VaultBanner } from './components/UI';
 import { ArtisanDataProvider, useArtisanData } from './components/DataContext';
@@ -404,7 +405,7 @@ const AppContent = () => {
             </LockedNode>
         } />
         <Route path="/marketing/creator" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Artisan Flow Basic" featureKey="marketing_creator" onUpgrade={() => navigate('/settings/subscription')}>
                 <MarketingCreator />
             </LockedNode>
         } />
@@ -429,12 +430,12 @@ const AppContent = () => {
             </LockedNode>
         } />
         <Route path="/marketing/avatar" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Artisan Flow Basic" featureKey="ai_avatar_studio" onUpgrade={() => navigate('/settings/subscription')}>
                 <AIAvatarStudio />
             </LockedNode>
         } />
         <Route path="/marketing/advanced" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Artisan Flow Basic" featureKey="advanced_synthesis" onUpgrade={() => navigate('/settings/subscription')}>
                 <AdvancedContentGenerator />
             </LockedNode>
         } />
@@ -468,7 +469,7 @@ const AppContent = () => {
             </LockedNode>
         } />
         <Route path="/forecasting" element={
-            <LockedNode isLocked={userTier !== 'Margin Protection Pro'} requiredTier="Margin Protection Pro" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Margin Protection Pro" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
                 <Forecasting />
             </LockedNode>
         } />
@@ -504,7 +505,9 @@ export default function App() {
   return (
     <Router>
         <ArtisanDataProvider>
-          <AppContent />
+          <TierProvider>
+            <AppContent />
+          </TierProvider>
         </ArtisanDataProvider>
     </Router>
   );

@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenAI } from "@google/genai";
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
+import { useFeatureGate } from '../hooks/useFeatureGate';
 
 
 // --- REUSABLE MARKETING GRID ---
@@ -1523,6 +1524,7 @@ export const ReceptionistLogic = () => {
 export const MarketingCreator = () => {
     const navigate = useNavigate();
     const { addMarketingPost } = useArtisanData();
+    const { executeAction } = useFeatureGate('marketing_creator');
     const [isGenerating, setIsGenerating] = useState(false);
     const [topic, setTopic] = useState('');
     const [assetType, setAssetType] = useState('Product Photo');
@@ -1531,8 +1533,12 @@ export const MarketingCreator = () => {
     const [aspectRatio, setAspectRatio] = useState('1:1');
     const [imageSize, setImageSize] = useState<'1K' | '2K' | '4K'>('1K');
 
-    const handleGenerate = async () => {
-        if (!topic) return toast.error("Please enter a topic.");
+    const handleGenerate = () => {
+        executeAction(async () => {
+            if (!topic) {
+                toast.error("Please enter a topic.");
+                return;
+            }
         
         // Handle API Key selection if needed
         if ((window as any).aistudio) {
@@ -1560,6 +1566,7 @@ export const MarketingCreator = () => {
               toast.error("Synthesis failed: Node offline.", { id: toastId }); 
             }
         } finally { setIsGenerating(false); }
+        }, true); // pass true for isMetered
     };
 
     const handleSave = () => {
