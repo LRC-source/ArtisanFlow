@@ -425,12 +425,12 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setIsSessionVerifying(true);
       if (user) {
-        setIsAuthenticated(true);
         // Load user profile from Firestore (Phase 3 implementation)
         try {
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
+            setIsAuthenticated(true);
             const profileData = docSnap.data().profile;
             const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online'];
             
@@ -545,6 +545,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
       setBusinessProfile(prev => ({ ...prev, ...data }));
       setUserTier(data.tier);
+      setIsAuthenticated(true);
       setIsTutorialActive(true); // Trigger tutorial for new users
     } catch (error: any) {
       console.error("Signup Error:", error);
