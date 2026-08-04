@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Package, TrendingUp, Settings, 
   ShoppingBag, Activity, Menu, X, Hexagon, User, ChevronDown, ChevronRight, LogOut, Crown, Search, Sparkles, Loader2,
   Boxes, FileText, Truck, ClipboardList, Target, Volume2, Headphones, Calendar, Share2, Video, PenTool, CheckSquare, Factory, MapPin, DollarSign, Shield, ShieldCheck, RefreshCw, Layers, HelpCircle,
-  ArrowLeft, Bell, MoreHorizontal, Lock, Unlock
+  ArrowLeft, Bell, MoreHorizontal, Lock, Unlock, AlertTriangle
 } from 'lucide-react';
 import { useArtisanData } from './DataContext';
 import { LRCLogo } from './UI';
@@ -276,6 +276,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                      <p className="text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
                        <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
                      </p>
+                 </div>
                  <div onClick={() => navigate('/settings/account')} className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
                     <div className="w-full h-full rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
                         {businessProfile.avatarUrl ? (

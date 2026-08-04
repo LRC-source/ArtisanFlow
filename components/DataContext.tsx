@@ -72,7 +72,7 @@ export interface BusinessProfile {
   industry: string;
   tier: UserTier;
   role?: 'admin' | 'user';
-  status: 'Active' | 'Inactive';
+  status: 'Active' | 'Inactive' | 'Past Due';
   brandVoice: { adjectives: string[]; restrictedWords: string[] };
   receptionistLogic: { qualificationQuestions: string[] };
 }
