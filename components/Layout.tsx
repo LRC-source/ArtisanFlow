@@ -276,6 +276,194 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                      <p className="text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
                        <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
                      </p>
+              </div>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
+                  <X size={20} />
+              </button>
+              <button onClick={() => setIsSidebarCollapsed(true)} className="hidden md:block absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
+                  <Menu size={20} />
+              </button>
+          </div>
+
+          <nav className="sidebar-nav-container">
+
+              <div className="nav-section-group">
+                  <span className="nav-section-title">Primary Nodes</span>
+                  <button onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📊</span>
+                      <span className="flex-1 text-left">Dashboard</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✨</span>
+                      <span className="flex-1 text-left">Marketing Studio</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🏭</span>
+                      <span className="flex-1 text-left">Manufacturing</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🤝</span>
+                      <span className="flex-1 text-left">CRM Hub</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📈</span>
+                      <span className="flex-1 text-left">Orders & Finance</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+              </div>
+
+              <div className="nav-section-group">
+                  <span className="nav-section-title">Supply Logistics</span>
+                  <button onClick={() => { navigate('/inventory'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/inventory' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📦</span>
+                      <span className="flex-1 text-left">Materials Matrix</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/forecasting'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/forecasting' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">⏳</span>
+                      <span className="flex-1 text-left">Forecasting</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/qc'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/qc' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💸</span>
+                      <span className="flex-1 text-left">Trapped Cash Audit</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
+                  </button>
+              </div>
+
+              <div className="nav-section-group mt-auto pt-8">
+                  <span className="nav-section-title text-[#C5A059]">My Account</span>
+                  <button onClick={() => { navigate('/settings/account'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/account' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💎</span>
+                      <span className="flex-1 text-left">Subscription Status</span>
+                  </button>
+                  {businessProfile.role === 'admin' && (
+                    <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
+                        <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🛡️</span>
+                        <span className="flex-1 text-left">Super-Admin</span>
+                    </button>
+                  )}
+                  <button onClick={() => { navigate('/settings/integrations'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/integrations' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💳</span>
+                      <span className="flex-1 text-left">Integrations</span>
+                  </button>
+                  <button onClick={() => { navigate('/marketing/brand-voice'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing/brand-voice' ? 'active' : ''}`}>
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✉️</span>
+                      <span className="flex-1 text-left">Brand Voice Profile</span>
+                  </button>
+                  <button onClick={() => { setIsSupportOpen(true); setIsMobileMenuOpen(false); }} className="nav-item">
+                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🆘</span>
+                      <span className="flex-1 text-left">Support Node</span>
+                  </button>
+              </div>
+          </nav>
+
+          <div className="sidebar-user-footer">
+              <div className="user-avatar-frame text-xl">👤</div>
+              <div className="user-details text-left flex-1 min-w-0">
+                  <span className="user-name truncate">{businessProfile.ownerName || 'LaToya Carter'}</span>
+                  <span className="user-role truncate">Sovereign Architect</span>
+              </div>
+              <button onClick={logout} className="ml-2 p-2 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-full transition-colors" title="Revoke Access">
+                  <LogOut size={16} />
+              </button>
+          </div>
+      </aside>
+
+      <main className={`flex-1 overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-0' : 'md:ml-[280px]'}`}>
+        <header className="sticky top-0 z-30 w-full bg-black/40 backdrop-blur-xl border-b border-white/5 px-6 md:px-10 py-5 flex items-center justify-between gap-8 md:gap-12 transition-all duration-500">
+            <div className="flex items-center gap-4 md:gap-8">
+              <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white/60 hover:text-white">
+                <Menu size={24} />
+              </button>
+              {isSidebarCollapsed && (
+                <button onClick={() => setIsSidebarCollapsed(false)} className="hidden md:block p-2 -ml-2 text-white/60 hover:text-[#C5A059] transition-colors">
+                  <Menu size={24} />
+                </button>
+              )}
+
+              <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
+                 <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-[40px] w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')} />
+              </div>
+
+              <nav className="hidden md:flex items-center space-x-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/30">
+                  <span className="hover:text-[#C5A059] cursor-pointer transition-colors flex items-center gap-1" onClick={() => navigate('/')}>
+                    <Hexagon size={10} className="text-[#C5A059]/40" /> Vault
+                  </span>
+                  {pathnames.map((name, index) => {
+                      const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
+                      const isLast = index === pathnames.length - 1;
+                      return (
+                          <React.Fragment key={name}>
+                              <ChevronRight size={12} className="text-white/10" />
+                              <span 
+                                className={`transition-all duration-300 ${isLast ? 'text-[#C5A059] font-black' : 'hover:text-white cursor-pointer'}`} 
+                                onClick={() => !isLast && navigate(routeTo)}
+                              >
+                                  {name.replace(/[-_]/g, ' ')}
+                              </span>
+                          </React.Fragment>
+                      );
+                  })}
+              </nav>
+            </div>
+
+            <form onSubmit={handleSearch} className="flex-1 max-w-xl relative group">
+                <div className="relative">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C5A059] transition-colors" size={16} />
+                    <input 
+                        type="text"
+                        placeholder="Ask Lola..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-12 text-xs focus:bg-white/10 focus:border-[#C5A059] focus:ring-4 focus:ring-amber-500/5 transition-all outline-none shadow-inner font-medium text-white"
+                    />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                        {isSearching ? <Loader2 size={14} className="animate-spin text-[#C5A059]" /> : <Sparkles size={14} className="text-[#C5A059] animate-pulse" />}
+                    </div>
+                </div>
+
+                {searchResult && (
+                    <div className="absolute top-full left-0 right-0 mt-5 bg-white border border-stone-200 rounded-[2.5rem] shadow-2xl p-10 animate-in slide-up z-50 border-t-8 border-t-[#6A2C91]">
+                        <div className="flex items-start gap-6">
+                            <div className="p-4 bg-purple-50 rounded-3xl text-[#6A2C91] shadow-inner"><Sparkles size={28} /></div>
+                            <div className="flex-1">
+                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6A2C91] mb-2 italic">Synaptic Analysis Result</p>
+                                <p className="text-lg text-gray-800 leading-relaxed font-semibold">{searchResult}</p>
+                            </div>
+                            <button onClick={() => setSearchResult(null)} className="text-gray-300 hover:text-red-500 p-2 transition-colors"><X size={20}/></button>
+                        </div>
+                    </div>
+                )}
+            </form>
+
+            <div className="flex items-center gap-6">
+                 <div className="hidden lg:flex items-center gap-2 pr-6 border-r border-white/5">
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-2.5 rounded-xl bg-white/5 text-white/40 hover:text-[#C5A059] transition-colors"
+                    >
+                      <Bell size={18} />
+                    </motion.button>
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-2.5 rounded-xl bg-white/5 text-white/40 hover:text-[#C5A059] transition-colors"
+                    >
+                      <RefreshCw size={18} />
+                    </motion.button>
+                 </div>
+
+                 <div className="text-right hidden sm:block">
+                     <p className="text-xs font-black text-white uppercase tracking-tighter">{businessProfile.ownerName}</p>
+                     <p className="text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
+                       <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
+                     </p>
                  </div>
                  <div onClick={() => navigate('/settings/account')} className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
                     <div className="w-full h-full rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
@@ -288,6 +476,23 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                  </div>
             </div>
         </header>
+
+        {businessProfile.status === 'Past Due' && location.pathname !== '/settings/subscription' && (
+            <div className="bg-red-900/90 border-b border-red-500/50 p-4 w-full flex flex-col md:flex-row items-center justify-between px-6 md:px-12 gap-4 z-20 shadow-md">
+                <div className="flex items-center gap-3 text-red-200">
+                    <AlertTriangle size={20} className="text-red-400" />
+                    <span className="font-sans font-medium text-sm">
+                        <strong className="text-white">ACTION REQUIRED:</strong> Your tier subscription payment is past due. Tier access may be restricted at any time.
+                    </span>
+                </div>
+                <button 
+                    onClick={() => navigate('/settings/account')}
+                    className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-sans font-bold text-[10px] uppercase tracking-widest whitespace-nowrap transition-colors shadow-sm"
+                >
+                    Resolve Now
+                </button>
+            </div>
+        )}
         
         <div className="flex-1 p-6 md:p-12 max-w-7xl mx-auto relative z-10 w-full">
           {children}

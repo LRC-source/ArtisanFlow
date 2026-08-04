@@ -4,6 +4,7 @@ import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, 
 import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from './UI';
 import { useArtisanData, Integration, UserTier } from './DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { PaymentGateway } from './Auth';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
@@ -163,7 +164,6 @@ export const BusinessSetup = () => {
 };
 
 export const SubscriptionManagement = () => {
-    const [cardNumber, setCardNumber] = useState("4242 4242 4242 4242");
     const { userTier, updateTier, businessProfile } = useArtisanData();
     const [isUpgrading, setIsUpgrading] = useState(false);
     const [selectedUpgrade, setSelectedUpgrade] = useState<UserTier | null>(null);
@@ -171,42 +171,11 @@ export const SubscriptionManagement = () => {
 
     const location = useLocation();
 
-    const handleUpgrade = async () => {
-        if (!selectedUpgrade) return;
-        setIsUpgrading(true);
-        
-        try {
-            const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
-            if (gasUrl) {
-                const response = await fetch(gasUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'processPayment',
-                        userId: businessProfile.email,
-                        tier: selectedUpgrade,
-                        cardNumber: cardNumber
-                    })
-                });
-                const result = await response.json();
-                
-                if (result.success) {
-                    await updateTier(selectedUpgrade);
-                    toast.success("Protocol Authorized. Access Granted.");
-                    setSelectedUpgrade(null);
-                    if (location.state?.from) navigate(location.state.from);
-                    else navigate(-1);
-                } else {
-                    toast.error(`Payment Failed: ${result.message}`);
-                }
-            } else {
-                toast.error("Database connection lost. Cannot process payment.");
-            }
-        } catch (error) {
-            toast.error("Payment Gateway Error. Please try again.");
-        } finally {
-            setIsUpgrading(false);
-        }
+    const handleSuccess = async (tierToApply: UserTier) => {
+        await updateTier(tierToApply);
+        toast.success("Protocol Authorized. Access Granted.");
+        setSelectedUpgrade(null);
+        if (location.state?.from) navigate(location.state.from);
     };
 
     return (
@@ -224,30 +193,14 @@ export const SubscriptionManagement = () => {
                 steps={["Review your current tier and usage limits.","Upgrade to unlock advanced features.","Manage payment methods and billing history."]}
             />
             <Modal isOpen={!!selectedUpgrade} onClose={() => setSelectedUpgrade(null)} title="Vault Payment Gateway">
-                <div className="space-y-8 text-center p-6">
-                    <div className="p-8 bg-white/5 rounded-3xl mb-6 border border-white/10">
-                        <p className="text-[10px] font-sans text-white/50 uppercase tracking-widest mb-2 font-bold">Authorize Tier Upgrade</p>
-                        <h4 className="text-3xl font-serif text-[#C5A059] font-bold tracking-tight">{selectedUpgrade}</h4>
-                        {process.env.SQUARE_LOCATION_ID && (
-                            <p className="text-[9px] text-[#C5A059] font-sans uppercase tracking-widest mt-3">
-                                Square Location Node: {process.env.SQUARE_LOCATION_ID}
-                            </p>
-                        )}
-                    </div>
-                    <div className="space-y-6">
-                        <Input placeholder="Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
-                        <div className="grid grid-cols-2 gap-6">
-                            <Input placeholder="MM/YY" defaultValue="12/26" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
-                            <Input placeholder="CVC" defaultValue="***" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
-                        </div>
-                    </div>
-                    <div className="pt-8">
-                        <Button className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white h-14 rounded-full font-sans font-medium text-[10px] uppercase tracking-widest shadow-md transition-all" onClick={handleUpgrade} disabled={isUpgrading}>
-                           {isUpgrading ? 'ESTABLISHING HANDSHAKE...' : <><CreditCard size={18} className="mr-2" /> Authorize Protocol</>}
-                        </Button>
-                        <p className="text-[10px] text-white/30 mt-6 font-sans uppercase tracking-widest">Encrypted via ArtisanFlow Secure Vault. AES-256 Protocol Active.</p>
-                    </div>
-                </div>
+                {selectedUpgrade && (
+                   <PaymentGateway 
+                      tier={selectedUpgrade} 
+                      email={businessProfile.email} 
+                      onSuccess={() => handleSuccess(selectedUpgrade)} 
+                      onBack={() => setSelectedUpgrade(null)} 
+                   />
+                )}
             </Modal>
 
             <div className="w-full md:w-1/2">
@@ -257,6 +210,18 @@ export const SubscriptionManagement = () => {
                 <h1 className="text-4xl md:text-5xl font-serif text-white font-bold tracking-tight mb-2">Access Level</h1>
                 <p className="text-white/40 font-sans font-light text-lg">Defining system throughput and logic capabilities.</p>
             </div>
+            
+            {businessProfile.status === 'Past Due' && (
+                <div className="bg-red-900/30 border-l-4 border-red-500 p-6 rounded-2xl shadow-lg mb-8">
+                    <h3 className="text-red-400 font-bold text-lg flex items-center gap-2 mb-2"><AlertTriangle size={20} /> ACTION REQUIRED: PAST DUE BALANCE</h3>
+                    <p className="text-white/80 font-sans font-light leading-relaxed mb-4">
+                        Your most recent tier payment was declined or could not be processed. Tier features and architectural logic modules <strong>can and will be restricted at any time</strong>. Express urgency by processing your payment below to retain your uninhibited access to all ArtisanFlow features.
+                    </p>
+                    <Button onClick={() => setSelectedUpgrade(userTier as UserTier)} className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2 rounded-xl transition-colors">
+                        Process Secure Payment Now
+                    </Button>
+                </div>
+            )}
             
             <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-12 flex flex-col md:flex-row justify-between items-center gap-10 relative overflow-hidden group rounded-[3rem]">
                <div className="absolute top-0 right-0 p-12 opacity-[0.02] text-[#C5A059] pointer-events-none group-hover:opacity-[0.05] transition-opacity duration-700"><Crown size={160} /></div>
@@ -319,7 +284,7 @@ export const SubscriptionManagement = () => {
 
 export const Integrations = () => {
     const navigate = useNavigate();
-    const { integrations, toggleIntegrationStatus } = useArtisanData();
+    const { integrations, toggleIntegrationStatus, businessProfile } = useArtisanData();
     const [activeTab, setActiveTab] = useState('All');
     const [isDiagnosticRunning, setIsDiagnosticRunning] = useState<string | null>(null);
     const [activeModalIntegration, setActiveModalIntegration] = useState<Integration | null>(null);
@@ -377,17 +342,19 @@ export const Integrations = () => {
                         LRC Artisan Flow synthesizes your omnichannel operations, bridging the void between digital storefronts and the manufacturing floor. Ingest orders automatically and maintain surgical stock levels across every connected node.
                     </p>
                     
-                    <div className="mt-6 p-6 bg-[#6A2C91]/10 border border-[#6A2C91]/30 rounded-2xl w-full max-w-4xl">
-                        <p className="text-white/70 font-sans font-bold text-[10px] uppercase tracking-widest mb-2">Webhook URL (For Shopify, Etsy, Square Webhooks)</p>
-                        <div className="flex items-center gap-3">
-                            <Input value={`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`} readOnly className="w-full font-mono text-sm bg-black/50 border-[#6A2C91]/30 text-emerald-400" />
-                            <Button onClick={() => {
-                                navigator.clipboard.writeText(`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`);
-                                toast.success("Webhook URL copied to clipboard");
-                            }} variant="outline" className="border-[#6A2C91]/30 hover:bg-[#6A2C91]/20">Copy</Button>
+                    {businessProfile?.role === 'admin' && (
+                        <div className="mt-6 p-6 bg-[#6A2C91]/10 border border-[#6A2C91]/30 rounded-2xl w-full max-w-4xl">
+                            <p className="text-white/70 font-sans font-bold text-[10px] uppercase tracking-widest mb-2">Webhook URL (For Shopify, Etsy, Square Webhooks)</p>
+                            <div className="flex items-center gap-3">
+                                <Input value={`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`} readOnly className="w-full font-mono text-sm bg-black/50 border-[#6A2C91]/30 text-emerald-400" />
+                                <Button onClick={() => {
+                                    navigator.clipboard.writeText(`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`);
+                                    toast.success("Webhook URL copied to clipboard");
+                                }} variant="outline" className="border-[#6A2C91]/30 hover:bg-[#6A2C91]/20">Copy</Button>
+                            </div>
+                            <p className="text-white/40 text-xs font-light mt-2">Paste this URL into your storefront's webhook settings to enable automatic raw material deduction on new orders.</p>
                         </div>
-                        <p className="text-white/40 text-xs font-light mt-2">Paste this URL into your storefront's webhook settings to enable automatic raw material deduction on new orders.</p>
-                    </div>
+                    )}
 
                     <div className="flex flex-wrap gap-8 pt-6">
                         <div className="flex items-center gap-3 text-[10px] font-sans font-bold uppercase tracking-widest text-white/50">
@@ -432,7 +399,7 @@ export const Integrations = () => {
                         
                         <div className="flex justify-between items-start mb-8 relative z-10">
                             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 w-24 h-24 flex items-center justify-center group-hover:bg-white/10 group-hover:border-[#6A2C91]/30 transition-all duration-500 shadow-sm relative overflow-hidden">
-                                <img src={int.logo} className={`max-h-12 max-w-full object-contain ${int.status === 'Connected' ? '' : 'grayscale opacity-60'} group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700`} alt={int.name} />
+                                <span className="font-serif text-3xl text-white/80 group-hover:text-white transition-colors">{int.name.charAt(0)}</span>
                                 {int.status === 'Connected' && (
                                     <div className="absolute -top-1 -right-1 bg-emerald-500 text-black rounded-full p-1 border-2 border-black shadow-sm animate-in zoom-in duration-300">
                                         <CheckCircle2 size={12} />
@@ -488,7 +455,9 @@ export const Integrations = () => {
                                     variant="outline"
                                     className="w-full h-12 border-white/20 text-white/70 font-sans font-bold text-[10px] tracking-widest uppercase rounded-full hover:bg-white/5 hover:border-white/30 hover:text-white transition-colors"
                                 >
-                                    {isDiagnosticRunning === int.id ? <><Loader2 size={14} className="animate-spin mr-2" /> ANALYZING LINK...</> : <><Cpu size={14} className="mr-2" /> TEST SYNAPTIC LINK</>}
+                                    {isDiagnosticRunning === int.id 
+                                        ? <><Loader2 size={14} className="animate-spin mr-2" /> {businessProfile?.role === 'admin' ? 'ANALYZING LINK...' : 'VERIFYING...'}</> 
+                                        : <><Cpu size={14} className="mr-2" /> {businessProfile?.role === 'admin' ? 'TEST SYNAPTIC LINK' : 'VERIFY CONNECTION'}</>}
                                 </Button>
                             )}
                             <Button 
@@ -505,7 +474,10 @@ export const Integrations = () => {
                                         : 'bg-[#6A2C91] text-white hover:bg-[#5a257a]'
                                 }`} 
                             >
-                                {int.status === 'Connected' ? 'RECONFIGURE PROTOCOL' : 'INITIALIZE HANDSHAKE'}
+                                {businessProfile?.role === 'admin' 
+                                    ? (int.status === 'Connected' ? 'RECONFIGURE PROTOCOL' : 'INITIALIZE HANDSHAKE')
+                                    : (int.status === 'Connected' ? 'UPDATE SETTINGS' : 'CONNECT ACCOUNT')
+                                }
                             </Button>
                             
                             <button className="w-full flex items-center justify-center gap-2 text-[10px] font-sans font-bold text-white/30 uppercase tracking-widest hover:text-[#C5A059] transition-colors mt-4">

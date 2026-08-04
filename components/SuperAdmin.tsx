@@ -10,28 +10,72 @@ export const SuperAdmin = () => {
     const { updateSystemUser, deleteSystemUser, inviteSystemUser } = useArtisanData();
     const [search, setSearch] = useState('');
     const [liveUsers, setLiveUsers] = useState<SystemUser[]>([]);
-    const [isLoadingUsers, setIsLoadingUsers] = useState(true);
+    const [isLoadingData, setIsLoadingData] = useState(true);
+    const [ledgerTransactions, setLedgerTransactions] = useState<any[]>([]);
+    const [systemAlerts, setSystemAlerts] = useState<any[]>([]);
+    const [globalIntegrations, setGlobalIntegrations] = useState<any[]>([
+        { platform: 'Shopify', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'WooCommerce', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'Etsy', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'Square', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'QuickBooks', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'Gmail', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'Google Drive', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'Amazon', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+        { platform: 'WordPress', apiKey: '', webhookSecret: '', status: 'Unconfigured' },
+    ]);
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchDashboardData = async () => {
+            setIsLoadingData(true);
             try {
                 const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
-                if (!gasUrl) {
-                    setIsLoadingUsers(false);
-                    return;
+                if (!gasUrl) return;
+
+                const makePostReq = async (action: string) => {
+                    const res = await fetch(gasUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({ action })
+                    });
+                    return await res.json();
+                };
+
+                const [usersData, ledgerData, alertsData, integrationsData] = await Promise.all([
+                    makePostReq('fetchSystemUsers'),
+                    makePostReq('fetchPaymentLedger'),
+                    makePostReq('fetchSystemAlerts'),
+                    makePostReq('fetchGlobalIntegrations')
+                ]);
+
+                if (usersData.status === 'success' && usersData.users) {
+                    setLiveUsers(usersData.users);
                 }
-                const res = await fetch(`${gasUrl}?action=fetchSystemUsers`);
-                const data = await res.json();
-                if (data.status === 'success' && data.users) {
-                    setLiveUsers(data.users);
+                
+                if (ledgerData.status === 'success' && ledgerData.transactions) {
+                    setLedgerTransactions(ledgerData.transactions);
                 }
+                
+                if (alertsData.status === 'success' && alertsData.alerts) {
+                    setSystemAlerts(alertsData.alerts);
+                }
+                
+                if (integrationsData.status === 'success' && integrationsData.integrations && integrationsData.integrations.length > 0) {
+                    // Merge fetched integrations with default empty list
+                    const merged = globalIntegrations.map(def => {
+                        const found = integrationsData.integrations.find((i: any) => i.platform === def.platform);
+                        return found ? { ...def, ...found } : def;
+                    });
+                    setGlobalIntegrations(merged);
+                }
+
             } catch (err) {
-                console.error("Failed to fetch live system users", err);
+                console.error("Failed to fetch Super Admin dashboard data", err);
             } finally {
-                setIsLoadingUsers(false);
+                setIsLoadingData(false);
             }
         };
-        fetchUsers();
+        fetchDashboardData();
     }, []);
     
     // Invite Modal State
@@ -162,7 +206,7 @@ export const SuperAdmin = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                            {isLoadingUsers ? (
+                            {isLoadingData ? (
                                 <tr>
                                     <td colSpan={7} className="p-6 text-center text-white/50 text-xs py-12">
                                         Syncing active ledger with Super Admin node...
@@ -231,20 +275,28 @@ export const SuperAdmin = () => {
 
                 <Card title="System Alerts" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
                     <div className="space-y-4 mt-4">
-                        <div className="p-5 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <AlertTriangle className="text-amber-500" size={18} />
-                                <span className="text-amber-500/80 font-sans font-light text-sm">2 Users approaching API rate limits.</span>
+                        {isLoadingData ? (
+                            <div className="p-5 text-center text-white/50 text-xs flex items-center justify-center gap-2">
+                                <Loader2 size={14} className="animate-spin" /> Fetching alerts...
                             </div>
-                            <button className="text-[10px] text-amber-500 font-bold uppercase tracking-[0.2em] hover:text-amber-400">Review</button>
-                        </div>
-                        <div className="p-5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <ShieldAlert className="text-emerald-500" size={18} />
-                                <span className="text-emerald-500/80 font-sans font-light text-sm">Automated backup completed successfully.</span>
+                        ) : systemAlerts.length === 0 ? (
+                            <div className="p-5 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <ShieldAlert className="text-emerald-500" size={18} />
+                                    <span className="text-emerald-500/80 font-sans font-light text-sm">All systems nominal. No alerts active.</span>
+                                </div>
                             </div>
-                            <button className="text-[10px] text-emerald-500 font-bold uppercase tracking-[0.2em] hover:text-emerald-400">Log</button>
-                        </div>
+                        ) : (
+                            systemAlerts.map(alert => (
+                                <div key={alert.id} className={`p-5 rounded-2xl flex items-center justify-between ${alert.type === 'warning' ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+                                    <div className="flex items-center gap-4">
+                                        <AlertTriangle className={alert.type === 'warning' ? 'text-amber-500' : 'text-red-500'} size={18} />
+                                        <span className={`${alert.type === 'warning' ? 'text-amber-500/80' : 'text-red-500/80'} font-sans font-light text-sm`}>{alert.message}</span>
+                                    </div>
+                                    <button className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${alert.type === 'warning' ? 'text-amber-500 hover:text-amber-400' : 'text-red-500 hover:text-red-400'}`}>Review</button>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </Card>
             </div>
@@ -254,22 +306,65 @@ export const SuperAdmin = () => {
                 <Card title="Integrations Configuration Node" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
                     <p className="text-white/50 text-sm font-sans font-light mb-6">Manage global API keys and webhook secrets for tenant integrations.</p>
                     <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                        {['Shopify', 'WooCommerce', 'Etsy', 'Square', 'QuickBooks', 'Gmail', 'Google Drive', 'Amazon', 'WordPress'].map((platform) => (
-                            <div key={platform} className="p-5 bg-white/5 border border-white/10 rounded-2xl">
+                        {isLoadingData ? (
+                            <div className="py-8 text-center text-white/50 text-xs flex items-center justify-center gap-2">
+                                <Loader2 size={14} className="animate-spin" /> Initializing config...
+                            </div>
+                        ) : globalIntegrations.map((integration, idx) => (
+                            <div key={integration.platform} className="p-5 bg-white/5 border border-white/10 rounded-2xl">
                                 <div className="flex justify-between items-center mb-4">
-                                    <h4 className="text-white font-serif text-lg">{platform}</h4>
-                                    <Badge color={['Shopify', 'Gmail'].includes(platform) ? 'green' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
-                                        {['Shopify', 'Gmail'].includes(platform) ? 'Active' : 'Unconfigured'}
+                                    <h4 className="text-white font-serif text-lg">{integration.platform}</h4>
+                                    <Badge color={integration.status === 'Active' ? 'green' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
+                                        {integration.status}
                                     </Badge>
                                 </div>
                                 <div className="space-y-3">
-                                    <input type="password" placeholder="API Key / Bearer Token" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]" />
-                                    <input type="text" placeholder="Webhook URL / Secret" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]" />
+                                    <input 
+                                        type="password" 
+                                        placeholder="API Key / Bearer Token" 
+                                        value={integration.apiKey}
+                                        onChange={(e) => {
+                                            const newConfig = [...globalIntegrations];
+                                            newConfig[idx].apiKey = e.target.value;
+                                            setGlobalIntegrations(newConfig);
+                                        }}
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]" 
+                                    />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Webhook URL / Secret" 
+                                        value={integration.webhookSecret}
+                                        onChange={(e) => {
+                                            const newConfig = [...globalIntegrations];
+                                            newConfig[idx].webhookSecret = e.target.value;
+                                            setGlobalIntegrations(newConfig);
+                                        }}
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]" 
+                                    />
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <Button className="w-full mt-6 bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl h-12 text-[10px] uppercase tracking-widest font-bold">
+                    <Button 
+                        onClick={async () => {
+                            try {
+                                const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
+                                if(!gasUrl) return;
+                                toast.loading("Saving configurations...");
+                                await fetch(gasUrl, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                                    body: JSON.stringify({ action: 'saveGlobalIntegrations', integrations: globalIntegrations })
+                                });
+                                toast.dismiss();
+                                toast.success("Global configurations saved to master sheet.");
+                            } catch (e) {
+                                toast.dismiss();
+                                toast.error("Failed to save global configurations.");
+                            }
+                        }}
+                        className="w-full mt-6 bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl h-12 text-[10px] uppercase tracking-widest font-bold"
+                    >
                         Save Global Configurations
                     </Button>
                 </Card>
@@ -278,24 +373,30 @@ export const SuperAdmin = () => {
                 <Card title="Payment Verification Ledger" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
                     <p className="text-white/50 text-sm font-sans font-light mb-6">Real-time payment event tracking (Stripe / Square).</p>
                     <div className="space-y-4">
-                        {[
-                            { id: 'txn_9821', user: 'Client X', tier: 'Pro', amount: 149.99, status: 'Success', date: 'Just now' },
-                            { id: 'txn_9820', user: 'User Y', tier: 'Basic', amount: 49.99, status: 'Success', date: '2 hrs ago' },
-                            { id: 'txn_9819', user: 'Attacker Z', tier: 'Pro', amount: 0, status: 'Failed (Blocked)', date: '5 hrs ago' },
-                        ].map((txn) => (
-                            <div key={txn.id} className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between">
-                                <div>
-                                    <p className="text-white text-sm font-medium">{txn.user} <span className="text-white/40 ml-2">{txn.id}</span></p>
-                                    <p className="text-white/50 text-xs mt-1">Tier: {txn.tier} | ${txn.amount}</p>
-                                </div>
-                                <div className="text-right">
-                                    <span className={`text-xs font-bold uppercase tracking-widest ${txn.status.includes('Success') ? 'text-emerald-400' : 'text-red-400'}`}>
-                                        {txn.status}
-                                    </span>
-                                    <p className="text-white/40 text-xs mt-1">{txn.date}</p>
-                                </div>
+                        {isLoadingData ? (
+                            <div className="py-8 text-center text-white/50 text-xs flex items-center justify-center gap-2">
+                                <Loader2 size={14} className="animate-spin" /> Fetching ledger...
                             </div>
-                        ))}
+                        ) : ledgerTransactions.length === 0 ? (
+                            <div className="py-8 text-center border border-white/5 rounded-2xl bg-white/5">
+                                <span className="text-white/40 text-xs">No payment transactions recorded yet.</span>
+                            </div>
+                        ) : (
+                            ledgerTransactions.map((txn) => (
+                                <div key={txn.id} className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between">
+                                    <div>
+                                        <p className="text-white text-sm font-medium">{txn.user} <span className="text-white/40 ml-2">{txn.id}</span></p>
+                                        <p className="text-white/50 text-xs mt-1">Tier: {txn.tier} | ${txn.amount}</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className={`text-xs font-bold uppercase tracking-widest ${txn.status.includes('Success') || txn.status.includes('Active') ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                            {txn.status}
+                                        </span>
+                                        <p className="text-white/40 text-xs mt-1">{new Date(txn.date).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </Card>
             </div>

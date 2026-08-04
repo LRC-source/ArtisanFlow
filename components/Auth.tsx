@@ -307,7 +307,7 @@ const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSele
   </motion.div>
 );
 
-const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserTier, email: string, onSuccess: () => void, onBack: () => void }) => {
+export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserTier, email: string, onSuccess: () => void, onBack: () => void }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
