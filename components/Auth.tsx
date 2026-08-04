@@ -175,8 +175,8 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
                     <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="h-12 bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
-                  <Button variant="premium" type="submit" className="w-full md:w-full flex items-center justify-center h-12 font-black tracking-widest shadow-2xl">
-                    {view === 'login' ? 'ENTER DASHBOARD' : 'START ONBOARDING'} <ArrowRight size={18} className="ml-1" />
+                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center h-12 font-black tracking-widest shadow-2xl">
+                    ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
                 </form>
 

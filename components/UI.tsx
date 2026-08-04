@@ -7,7 +7,7 @@ import { useArtisanData } from './DataContext';
 import { useFeatureGate } from '../hooks/useFeatureGate';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'premium' | 'danger';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'premium' | 'danger' | 'success';
   children: React.ReactNode;
 }
 
@@ -26,6 +26,8 @@ export const Button: React.FC<ButtonProps> = ({ variant = 'primary', className =
     variantClass = "border border-white/10 text-white/70 hover:bg-white/5 active:scale-95";
   } else if (variant === 'danger') {
     variantClass = "bg-red-500/10 text-red-300 border border-red-500/20 hover:bg-red-500/20 hover:text-red-200 shadow-sm active:scale-95";
+  } else if (variant === 'success') {
+    variantClass = "bg-green-600 text-white hover:bg-green-700 shadow-[0_8px_30px_rgba(22,163,74,0.3)] hover:shadow-[0_8px_30px_rgba(22,163,74,0.5)] active:scale-95 border-none font-black";
   } else {
     variantClass = "text-white/50 hover:bg-white/5 hover:text-white active:scale-95";
   }
