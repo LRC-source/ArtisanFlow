@@ -11,7 +11,7 @@ import { toast } from 'sonner';
  */
 
 export const Recipes = () => {
-  const { recipes, inventory } = useArtisanData();
+  const { recipes, inventory, produceBatch } = useArtisanData();
   const navigate = useNavigate();
 
   return (
@@ -64,12 +64,31 @@ export const Recipes = () => {
                                   <Badge color="purple" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">V{recipe.version} SKU: {recipe.sku}</Badge>
                               </div>
                           </div>
-                          <button 
-                            onClick={() => navigate(`/recipes/builder/${recipe.id}`)}
-                            className="p-4 bg-white/5 border border-white/10 text-white/40 rounded-2xl hover:bg-[#6A2C91] hover:text-white transition-all shadow-sm group-hover:border-[#6A2C91]/30"
-                          >
-                             <Edit2 size={20} />
-                          </button>
+                          <div className="flex items-center gap-3">
+                              <button 
+                                onClick={() => {
+                                    const result = produceBatch(recipe.id, 1);
+                                    if (result.success) {
+                                        if (result.warnings.length > 0) {
+                                            toast.warning(`Batch Produced with Warnings:\n${result.warnings.join('\n')}`);
+                                        } else {
+                                            toast.success(`${recipe.name} Batch successfully produced and deducted from raw materials.`);
+                                        }
+                                    } else {
+                                        toast.error(result.warnings[0]);
+                                    }
+                                }}
+                                className="px-6 py-4 bg-[#6A2C91] text-white rounded-2xl hover:bg-[#59227A] transition-all shadow-sm font-sans font-bold text-[10px] uppercase tracking-widest"
+                              >
+                                Produce Batch
+                              </button>
+                              <button 
+                                onClick={() => navigate(`/recipes/builder/${recipe.id}`)}
+                                className="p-4 bg-white/5 border border-white/10 text-white/40 rounded-2xl hover:bg-[#6A2C91] hover:text-white transition-all shadow-sm group-hover:border-[#6A2C91]/30"
+                              >
+                                 <Edit2 size={20} />
+                              </button>
+                          </div>
                       </div>
 
                       <div className="grid grid-cols-3 gap-4 mb-8 relative z-10">

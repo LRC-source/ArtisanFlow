@@ -240,6 +240,7 @@ interface DataContextType {
   addManualCustomer: (customer: Omit<ManualCustomer, 'id' | 'createdDate'>) => void;
   updateMarketingPost: (id: string, updates: Partial<MarketingPost>) => void;
   generateSchedule: () => void;
+  produceBatch: (recipeId: string, multiplier: number) => { success: boolean; warnings: string[] };
   processOrder: (id: string) => void;
   syncWooCommerce: () => Promise<{ success: boolean; count?: number; error?: string }>;
   addRecipe: (recipe: any) => void;
@@ -595,7 +596,10 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const getMarginMetrics = () => {
     const finished = inventory.filter(i => i.type === 'finished');
     if (finished.length === 0) return { isMarginHealthy: true, marginMultiplier: 2.2 };
-    const avgMultiplier = finished.reduce((acc, i) => acc + (i.retailPrice && i.unitCost ? i.retailPrice / i.unitCost : 2.2), 0) / finished.length;
+    const avgMultiplier = finished.reduce((acc, i) => {
+        const cost = (i.unitCost && i.unitCost > 0) ? i.unitCost : 1; // Prevent division by zero
+        return acc + (i.retailPrice ? i.retailPrice / cost : 2.2);
+    }, 0) / finished.length;
     return { isMarginHealthy: avgMultiplier >= 2.2, marginMultiplier: avgMultiplier };
   };
 
@@ -623,7 +627,77 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const updateMarketingPost = (id: string, updates: any) => setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
   const generateSchedule = () => setProductionStats(prev => ({ ...prev, active: prev.active + 1 }));
   
+  const produceBatch = (recipeId: string, multiplier: number) => {
+      const recipe = recipes.find(r => r.id === recipeId);
+      if (!recipe) return { success: false, warnings: ['Recipe not found.'] };
+
+      const warnings: string[] = [];
+      let newInventory = [...inventory];
+
+      // 1. Deduct Raw Materials
+      recipe.ingredients.forEach(ing => {
+          const invItemIndex = newInventory.findIndex(i => i.name.toLowerCase() === ing.name.toLowerCase() || i.sku === ing.name);
+          const deduction = parseFloat(ing.qty) * multiplier;
+          
+          if (invItemIndex >= 0) {
+              const currentStock = newInventory[invItemIndex].stock;
+              const newStock = currentStock - deduction;
+              if (newStock < 0) {
+                  warnings.push(`Negative stock warning: ${newInventory[invItemIndex].name} dropped to ${newStock.toFixed(2)} units.`);
+              }
+              newInventory[invItemIndex] = { ...newInventory[invItemIndex], stock: newStock, stockValue: newStock * newInventory[invItemIndex].unitCost };
+          } else {
+              warnings.push(`Material not found in inventory: ${ing.name}. Batch will proceed without deduction for this item.`);
+          }
+      });
+
+      // 2. Add Finished Goods Yield
+      const yieldAmount = (parseFloat(recipe.yield) || 1) * multiplier;
+      const finishedProductIndex = newInventory.findIndex(i => i.name.toLowerCase() === recipe.name.toLowerCase());
+      
+      if (finishedProductIndex >= 0) {
+          const newStock = newInventory[finishedProductIndex].stock + yieldAmount;
+          newInventory[finishedProductIndex] = { ...newInventory[finishedProductIndex], stock: newStock, stockValue: newStock * newInventory[finishedProductIndex].unitCost };
+      } else {
+          // Auto-create finished product if it doesn't exist
+          newInventory.push({
+              id: Date.now(),
+              name: recipe.name,
+              sku: recipe.sku || `SKU-${Date.now()}`,
+              type: 'finished',
+              category: 'Finished Goods',
+              stock: yieldAmount,
+              unitCost: recipe.totalCost / (parseFloat(recipe.yield) || 1),
+              retailPrice: recipe.totalCost * 2.5, // Default markup
+              stockValue: recipe.totalCost * multiplier
+          });
+      }
+
+      setInventory(newInventory);
+      setProductionStats(prev => ({ ...prev, active: prev.active + 1, completed: prev.completed + 1 }));
+      return { success: true, warnings };
+  };
+
   const processOrder = (id: string) => {
+      const order = orders.find(o => o.id === id);
+      if (order && order.status !== 'Shipped') {
+          // Deduct from finished goods inventory
+          setInventory(prev => {
+              const newInv = [...prev];
+              order.items.forEach(item => {
+                  const invItemIndex = newInv.findIndex(i => i.name.toLowerCase() === item.name.toLowerCase() || i.sku === item.name);
+                  if (invItemIndex >= 0) {
+                      const newStock = newInv[invItemIndex].stock - item.qty;
+                      if (newStock < 0) {
+                          toast.warning(`Negative stock: ${newInv[invItemIndex].name} is now ${newStock}.`);
+                      }
+                      newInv[invItemIndex] = { ...newInv[invItemIndex], stock: newStock, stockValue: newStock * newInv[invItemIndex].unitCost };
+                  }
+              });
+              return newInv;
+          });
+      }
+
       setOrders(prev => prev.map(o => o.id === id ? { ...o, status: 'Shipped' } : o));
       completeTodoByCategory('orders');
   };
@@ -713,7 +787,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
       importData, addInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
-      generateSchedule, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
+      generateSchedule, produceBatch, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,
       connectedChannels,

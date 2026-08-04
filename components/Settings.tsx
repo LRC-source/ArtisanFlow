@@ -163,7 +163,8 @@ export const BusinessSetup = () => {
 };
 
 export const SubscriptionManagement = () => {
-    const { userTier, updateTier } = useArtisanData();
+    const [cardNumber, setCardNumber] = useState("4242 4242 4242 4242");
+    const { userTier, updateTier, businessProfile } = useArtisanData();
     const [isUpgrading, setIsUpgrading] = useState(false);
     const [selectedUpgrade, setSelectedUpgrade] = useState<UserTier | null>(null);
     const navigate = useNavigate();
@@ -173,16 +174,38 @@ export const SubscriptionManagement = () => {
     const handleUpgrade = async () => {
         if (!selectedUpgrade) return;
         setIsUpgrading(true);
-        await new Promise(r => setTimeout(r, 2000));
-        await updateTier(selectedUpgrade);
-        setIsUpgrading(false);
-        setSelectedUpgrade(null);
-        toast.success("Protocol Authorized. Access Granted.");
         
-        if (location.state?.from) {
-            navigate(location.state.from);
-        } else {
-            navigate(-1); 
+        try {
+            const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
+            if (gasUrl) {
+                const response = await fetch(gasUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'processPayment',
+                        userId: businessProfile.email,
+                        tier: selectedUpgrade,
+                        cardNumber: cardNumber
+                    })
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    await updateTier(selectedUpgrade);
+                    toast.success("Protocol Authorized. Access Granted.");
+                    setSelectedUpgrade(null);
+                    if (location.state?.from) navigate(location.state.from);
+                    else navigate(-1);
+                } else {
+                    toast.error(`Payment Failed: ${result.message}`);
+                }
+            } else {
+                toast.error("Database connection lost. Cannot process payment.");
+            }
+        } catch (error) {
+            toast.error("Payment Gateway Error. Please try again.");
+        } finally {
+            setIsUpgrading(false);
         }
     };
 
@@ -212,7 +235,7 @@ export const SubscriptionManagement = () => {
                         )}
                     </div>
                     <div className="space-y-6">
-                        <Input placeholder="Card Number" defaultValue="4242 4242 4242 4242" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
+                        <Input placeholder="Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
                         <div className="grid grid-cols-2 gap-6">
                             <Input placeholder="MM/YY" defaultValue="12/26" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
                             <Input placeholder="CVC" defaultValue="***" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:bg-white/10 transition-colors" />
@@ -353,6 +376,19 @@ export const Integrations = () => {
                     <p className="text-white/60 max-w-4xl leading-relaxed text-lg font-sans font-light">
                         LRC Artisan Flow synthesizes your omnichannel operations, bridging the void between digital storefronts and the manufacturing floor. Ingest orders automatically and maintain surgical stock levels across every connected node.
                     </p>
+                    
+                    <div className="mt-6 p-6 bg-[#6A2C91]/10 border border-[#6A2C91]/30 rounded-2xl w-full max-w-4xl">
+                        <p className="text-white/70 font-sans font-bold text-[10px] uppercase tracking-widest mb-2">Webhook URL (For Shopify, Etsy, Square Webhooks)</p>
+                        <div className="flex items-center gap-3">
+                            <Input value={`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`} readOnly className="w-full font-mono text-sm bg-black/50 border-[#6A2C91]/30 text-emerald-400" />
+                            <Button onClick={() => {
+                                navigator.clipboard.writeText(`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`);
+                                toast.success("Webhook URL copied to clipboard");
+                            }} variant="outline" className="border-[#6A2C91]/30 hover:bg-[#6A2C91]/20">Copy</Button>
+                        </div>
+                        <p className="text-white/40 text-xs font-light mt-2">Paste this URL into your storefront's webhook settings to enable automatic raw material deduction on new orders.</p>
+                    </div>
+
                     <div className="flex flex-wrap gap-8 pt-6">
                         <div className="flex items-center gap-3 text-[10px] font-sans font-bold uppercase tracking-widest text-white/50">
                             <div className="w-2 h-2 rounded-full bg-[#6A2C91]" /> Bidirectional Stock Sync

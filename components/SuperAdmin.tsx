@@ -7,8 +7,32 @@ import { useArtisanData, SystemUser } from './DataContext';
 import { toast } from 'sonner';
 
 export const SuperAdmin = () => {
-    const { systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser } = useArtisanData();
+    const { updateSystemUser, deleteSystemUser, inviteSystemUser } = useArtisanData();
     const [search, setSearch] = useState('');
+    const [liveUsers, setLiveUsers] = useState<SystemUser[]>([]);
+    const [isLoadingUsers, setIsLoadingUsers] = useState(true);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
+                if (!gasUrl) {
+                    setIsLoadingUsers(false);
+                    return;
+                }
+                const res = await fetch(`${gasUrl}?action=fetchSystemUsers`);
+                const data = await res.json();
+                if (data.status === 'success' && data.users) {
+                    setLiveUsers(data.users);
+                }
+            } catch (err) {
+                console.error("Failed to fetch live system users", err);
+            } finally {
+                setIsLoadingUsers(false);
+            }
+        };
+        fetchUsers();
+    }, []);
     
     // Invite Modal State
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -24,7 +48,7 @@ export const SuperAdmin = () => {
     const [isSyncing, setIsSyncing] = useState(false);
     const [isVerifying, setIsVerifying] = useState(false);
 
-    const filteredUsers = systemUsers.filter(u => 
+    const filteredUsers = liveUsers.filter(u => 
         u.email.toLowerCase().includes(search.toLowerCase()) || 
         u.id.toLowerCase().includes(search.toLowerCase())
     );
@@ -138,28 +162,42 @@ export const SuperAdmin = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                            {filteredUsers.map(u => (
-                                <tr key={u.id} className="hover:bg-white/5 transition-colors">
-                                    <td className="p-6 font-mono text-xs text-white/50">{u.id}</td>
-                                    <td className="p-6 text-white/90">{u.email}</td>
-                                    <td className="p-6">
-                                        <Badge color={u.tier === 'Margin Protection Pro' ? 'gold' : u.tier === 'Artisan Flow Basic' ? 'purple' : 'gray'} className="text-[9px] uppercase tracking-widest px-3 py-1">
-                                            {u.tier}
-                                        </Badge>
-                                    </td>
-                                    <td className="p-6">
-                                        <div className="flex items-center gap-2">
-                                            <div className={`w-1.5 h-1.5 rounded-full ${u.status === 'Active' ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
-                                            <span className="text-white/70 font-light text-xs">{u.status}</span>
-                                        </div>
-                                    </td>
-                                    <td className="p-6 text-white/70 font-mono text-xs">${u.revenueProcessed.toLocaleString()}</td>
-                                    <td className="p-6 text-right space-x-2">
-                                        <button onClick={() => { setEditingUser(u); setIsEditModalOpen(true); }} className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-colors border border-white/5"><Edit2 size={14} /></button>
-                                        <button onClick={() => handleDelete(u.id)} className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-500 hover:text-red-400 transition-colors border border-red-500/20"><Lock size={14} /></button>
+                            {isLoadingUsers ? (
+                                <tr>
+                                    <td colSpan={7} className="p-6 text-center text-white/50 text-xs py-12">
+                                        Syncing active ledger with Super Admin node...
                                     </td>
                                 </tr>
-                            ))}
+                            ) : filteredUsers.length === 0 ? (
+                                <tr>
+                                    <td colSpan={7} className="p-6 text-center text-white/50 text-xs py-12">
+                                        No authorized protocols found
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredUsers.map(u => (
+                                    <tr key={u.id} className="hover:bg-white/5 transition-colors">
+                                        <td className="p-6 font-mono text-xs text-white/50">{u.id}</td>
+                                        <td className="p-6 text-white/90">{u.email}</td>
+                                        <td className="p-6">
+                                            <Badge color={u.tier === 'Margin Protection Pro' ? 'gold' : u.tier === 'Artisan Flow Basic' ? 'purple' : 'gray'} className="text-[9px] uppercase tracking-widest px-3 py-1">
+                                                {u.tier}
+                                            </Badge>
+                                        </td>
+                                        <td className="p-6">
+                                            <div className="flex items-center gap-2">
+                                                <div className={`w-1.5 h-1.5 rounded-full ${u.status === 'Active' ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
+                                                <span className="text-white/70 font-light text-xs">{u.status}</span>
+                                            </div>
+                                        </td>
+                                        <td className="p-6 text-white/70 font-mono text-xs">${u.revenueProcessed.toLocaleString()}</td>
+                                        <td className="p-6 text-right space-x-2">
+                                            <button onClick={() => { setEditingUser(u); setIsEditModalOpen(true); }} className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-colors border border-white/5"><Edit2 size={14} /></button>
+                                            <button onClick={() => handleDelete(u.id)} className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-500 hover:text-red-400 transition-colors border border-red-500/20"><Lock size={14} /></button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -207,6 +245,57 @@ export const SuperAdmin = () => {
                             </div>
                             <button className="text-[10px] text-emerald-500 font-bold uppercase tracking-[0.2em] hover:text-emerald-400">Log</button>
                         </div>
+                    </div>
+                </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Integrations API Node */}
+                <Card title="Integrations Configuration Node" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
+                    <p className="text-white/50 text-sm font-sans font-light mb-6">Manage global API keys and webhook secrets for tenant integrations.</p>
+                    <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                        {['Shopify', 'WooCommerce', 'Etsy', 'Square', 'QuickBooks', 'Gmail', 'Google Drive', 'Amazon', 'WordPress'].map((platform) => (
+                            <div key={platform} className="p-5 bg-white/5 border border-white/10 rounded-2xl">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h4 className="text-white font-serif text-lg">{platform}</h4>
+                                    <Badge color={['Shopify', 'Gmail'].includes(platform) ? 'emerald' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
+                                        {['Shopify', 'Gmail'].includes(platform) ? 'Active' : 'Unconfigured'}
+                                    </Badge>
+                                </div>
+                                <div className="space-y-3">
+                                    <input type="password" placeholder="API Key / Bearer Token" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]" />
+                                    <input type="text" placeholder="Webhook URL / Secret" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <Button className="w-full mt-6 bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl h-12 text-[10px] uppercase tracking-widest font-bold">
+                        Save Global Configurations
+                    </Button>
+                </Card>
+
+                {/* Payment Verification Ledger */}
+                <Card title="Payment Verification Ledger" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
+                    <p className="text-white/50 text-sm font-sans font-light mb-6">Real-time payment event tracking (Stripe / Square).</p>
+                    <div className="space-y-4">
+                        {[
+                            { id: 'txn_9821', user: 'Client X', tier: 'Pro', amount: 149.99, status: 'Success', date: 'Just now' },
+                            { id: 'txn_9820', user: 'User Y', tier: 'Basic', amount: 49.99, status: 'Success', date: '2 hrs ago' },
+                            { id: 'txn_9819', user: 'Attacker Z', tier: 'Pro', amount: 0, status: 'Failed (Blocked)', date: '5 hrs ago' },
+                        ].map((txn) => (
+                            <div key={txn.id} className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between">
+                                <div>
+                                    <p className="text-white text-sm font-medium">{txn.user} <span className="text-white/40 ml-2">{txn.id}</span></p>
+                                    <p className="text-white/50 text-xs mt-1">Tier: {txn.tier} | ${txn.amount}</p>
+                                </div>
+                                <div className="text-right">
+                                    <span className={`text-xs font-bold uppercase tracking-widest ${txn.status.includes('Success') ? 'text-emerald-400' : 'text-red-400'}`}>
+                                        {txn.status}
+                                    </span>
+                                    <p className="text-white/40 text-xs mt-1">{txn.date}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </Card>
             </div>

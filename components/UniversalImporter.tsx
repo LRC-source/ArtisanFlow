@@ -5,8 +5,10 @@ import { Card, Button, VaultBanner } from './UI';
 import { SubPageHeader } from './SubPageHeader';
 import { useArtisanData } from './DataContext';
 import { toast } from 'sonner';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
 
-export const CraftybaseImporter = () => {
+export const UniversalImporter = () => {
+    const { markHubVisited } = useArtisanData();
     const [isDragging, setIsDragging] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -41,8 +43,20 @@ export const CraftybaseImporter = () => {
         if (uploadedFile.type === 'text/csv' || uploadedFile.name.endsWith('.csv')) {
             setFile(uploadedFile);
         } else {
-            toast.error("Invalid file format. Please upload a Craftybase CSV export.");
+            toast.error("Invalid file format. Please upload a valid CSV export from your provider.");
         }
+    };
+
+    const detectSourcePlatform = (fileName: string, headers: string): string => {
+        const lowerName = fileName.toLowerCase();
+        const lowerHeaders = headers.toLowerCase();
+        if (lowerName.includes('craftybase') || lowerHeaders.includes('project')) return 'Craftybase';
+        if (lowerName.includes('shopify') || lowerHeaders.includes('variant sku')) return 'Shopify';
+        if (lowerName.includes('etsy') || lowerHeaders.includes('listing id')) return 'Etsy';
+        if (lowerName.includes('woo') || lowerHeaders.includes('post_title')) return 'WooCommerce';
+        if (lowerName.includes('quickbooks') || lowerHeaders.includes('qb')) return 'QuickBooks';
+        if (lowerName.includes('paypal') || lowerHeaders.includes('transaction id')) return 'PayPal';
+        return 'Generic_CSV';
     };
 
     const handleUpload = async () => {
@@ -54,14 +68,18 @@ export const CraftybaseImporter = () => {
         reader.onload = async (event) => {
             try {
                 const csvText = event.target?.result as string;
-                // Basic CSV parsing to get row count
                 const rows = csvText.split('\n').filter(row => row.trim().length > 0);
-                const recordsImported = Math.max(0, rows.length - 1); // Exclude header
+                const recordsImported = Math.max(0, rows.length - 1); 
                 
+                const sourcePlatform = detectSourcePlatform(file.name, rows[0] || '');
+
                 let fileType = "Unknown_CSV";
                 if (file.name.toLowerCase().includes('recipe')) fileType = 'Recipes_CSV';
                 else if (file.name.toLowerCase().includes('material') || file.name.toLowerCase().includes('inventory')) fileType = 'Materials_CSV';
                 else if (file.name.toLowerCase().includes('vendor')) fileType = 'Vendors_CSV';
+                else if (file.name.toLowerCase().includes('order') || file.name.toLowerCase().includes('sales')) fileType = 'Orders_CSV';
+                else if (file.name.toLowerCase().includes('customer') || file.name.toLowerCase().includes('crm') || rows[0].toLowerCase().includes('customer_email')) fileType = 'CRM_CSV';
+                else if (file.name.toLowerCase().includes('finance') || file.name.toLowerCase().includes('ledger') || rows[0].toLowerCase().includes('total_revenue')) fileType = 'Finance_CSV';
 
                 const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
                 if (gasUrl) {
@@ -69,19 +87,19 @@ export const CraftybaseImporter = () => {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            action: 'importCraftybaseData',
+                            action: 'importUniversalData',
                             userId: businessProfile.email || 'usr_002',
-                            sourcePlatform: 'Craftybase',
+                            sourcePlatform: sourcePlatform,
                             fileType: fileType,
                             recordsImported: recordsImported,
                             fileName: file.name
                         })
-                    }).catch(e => console.warn("GAS Mock Error", e));
+                    }).catch(e => console.warn("GAS Error", e));
                 }
 
                 setIsUploading(false);
                 setIsSuccess(true);
-                toast.success(`Successfully migrated ${recordsImported} records from ${file.name}.`);
+                toast.success(`Successfully migrated ${recordsImported} records from ${sourcePlatform}.`);
                 setFile(null);
                 
                 setTimeout(() => setIsSuccess(false), 5000);
@@ -101,11 +119,22 @@ export const CraftybaseImporter = () => {
 
     return (
         <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="p-10 md:p-16 space-y-12 max-w-[1200px] mx-auto pb-32"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="p-8 space-y-12 max-w-5xl mx-auto pb-32"
         >
+            <ContextualTutorialModal
+                hubId="importer"
+                title="Universal Importer"
+                description="Easily migrate your data from other platforms."
+                steps={[
+                    "Export a CSV file from your external platform (Shopify, Etsy, QuickBooks, etc).",
+                    "Drag and drop the CSV file here, or click to upload.",
+                    "Our system will automatically detect the platform and file type (Inventory, CRM, Finance).",
+                    "Wait for the success message to confirm your records were migrated!"
+                ]}
+            />
+            
             <SubPageHeader title="Legacy Migration Hub" description="Seamlessly migrate your legacy Craftybase data into the ArtisanFlow ecosystem." />
             
             <VaultBanner 

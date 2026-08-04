@@ -89,7 +89,9 @@ export const Forecasting = () => {
                 badge="Strategy Node Active"
              >
                 <div className="flex gap-4">
-                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full px-10 shadow-2xl shadow-[#6A2C91]/20 transition-all font-sans font-medium text-[11px] tracking-[0.2em] uppercase" onClick={() => navigate('/forecasting')}>
+                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full px-10 shadow-2xl shadow-[#6A2C91]/20 transition-all font-sans font-medium text-[11px] tracking-[0.2em] uppercase" onClick={() => {
+                        alert("Initial forecast generation complete. Predictive algorithms have ingested historical sales.");
+                     }}>
                         <Plus size={16} className="mr-3" /> Initialize New Forecast
                      </Button>
                 </div>

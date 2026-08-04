@@ -44,7 +44,7 @@ import { Reports } from './components/Reports';
 import { ProductionScheduler } from './components/ProductionScheduler';
 import { ProductionWorkflow } from './components/ProductionWorkflow';
 import { SupplierManager } from './components/SupplierManager';
-import { CraftybaseImporter } from './components/CraftybaseImporter';
+import { UniversalImporter } from './components/UniversalImporter';
 import { SupplierCommunication } from './components/SupplierCommunication'; 
 import { QualityControl } from './components/QualityControl'; 
 import { Locations } from './components/Locations'; 

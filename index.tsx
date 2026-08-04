@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { runProductionAudit } from './utils/productionChecklist';
+import { Analytics } from '@vercel/analytics/react';
 
 // Execute environmental check for production readiness
 runProductionAudit();
@@ -16,5 +17,6 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    <Analytics />
   </React.StrictMode>
 );

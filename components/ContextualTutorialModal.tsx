@@ -14,11 +14,15 @@ export const ContextualTutorialModal: React.FC<ContextualTutorialProps> = ({ hub
     const { onboardingState, markHubVisited, businessProfile } = useArtisanData();
     const [isVisible, setIsVisible] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
+    const hasInitialized = React.useRef(false);
 
     useEffect(() => {
-        // If this hub hasn't been visited yet, or admin is in testing, show the modal
-        if (!onboardingState[hubId] || businessProfile.role === 'admin') {
-            setIsVisible(true);
+        if (!hasInitialized.current) {
+            hasInitialized.current = true;
+            // Only show if this hub hasn't been visited yet
+            if (!onboardingState[hubId]) {
+                setIsVisible(true);
+            }
         }
     }, [hubId, onboardingState, businessProfile.role]);
 

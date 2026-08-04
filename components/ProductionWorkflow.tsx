@@ -6,7 +6,7 @@ import { Clock, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const ProductionWorkflow = () => {
-  const { productionStats } = useArtisanData();
+  const { productionStats, recipes, produceBatch } = useArtisanData();
   const navigate = useNavigate();
 
   return (
@@ -47,11 +47,57 @@ export const ProductionWorkflow = () => {
           </div>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[400px]">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <Clock size={32} className="text-gray-400" />
-          </div>
-          <p className="text-gray-500">No active production orders</p>
+      <div className="mt-8 space-y-4">
+          <h2 className="text-xl font-bold text-white mb-6">Active Formulations Ready for Production</h2>
+          {recipes.length === 0 ? (
+              <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[400px]">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <Clock size={32} className="text-gray-400" />
+                  </div>
+                  <p className="text-gray-500">No active production formulas found. Create one in Recipes.</p>
+              </div>
+          ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {recipes.map(recipe => (
+                      <div key={recipe.id} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col justify-between">
+                          <div>
+                              <div className="flex justify-between items-start mb-4">
+                                  <div>
+                                      <h3 className="text-xl font-bold text-white">{recipe.name}</h3>
+                                      <p className="text-gray-400 text-sm mt-1">SKU: {recipe.sku}</p>
+                                  </div>
+                                  <Badge color="purple">{recipe.yield} Units</Badge>
+                              </div>
+                              <div className="space-y-2 mb-6">
+                                  <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Bill of Materials:</p>
+                                  <div className="flex flex-wrap gap-2">
+                                      {recipe.ingredients.map((ing: any, i: number) => (
+                                          <span key={i} className="text-xs bg-white/10 text-white/80 px-2 py-1 rounded-md">{ing.name} ({ing.qty})</span>
+                                      ))}
+                                  </div>
+                              </div>
+                          </div>
+                          <Button 
+                              className="w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl font-bold uppercase tracking-widest text-xs h-12"
+                              onClick={() => {
+                                  const result = produceBatch(recipe.id, 1);
+                                  if (result.success) {
+                                      if (result.warnings.length > 0) {
+                                          alert(`Batch Produced with Warnings:\n${result.warnings.join('\n')}`);
+                                      } else {
+                                          alert(`${recipe.name} Batch successfully produced and materials deducted.`);
+                                      }
+                                  } else {
+                                      alert(result.warnings[0]);
+                                  }
+                              }}
+                          >
+                              Commit Batch to Production
+                          </Button>
+                      </div>
+                  ))}
+              </div>
+          )}
       </div>
     </div>
   );
