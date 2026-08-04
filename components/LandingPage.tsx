@@ -38,7 +38,7 @@ export const LandingPage = () => {
     };
 
     if (view === 'login' || view === 'signup') {
-        return <AuthGateway initialView={view} onBack={() => setView('hero')} />;
+        return <AuthGateway initialView={view} selectedTier={selectedTier || undefined} onBack={() => setView('hero')} />;
     }
 
     return (
