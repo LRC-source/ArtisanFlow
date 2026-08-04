@@ -94,6 +94,7 @@ export const LandingPage = () => {
                         isPopular 
                         tierNumber="2"
                         color="bg-[#6A2C91]"
+                        buttonText="Join Our Basic Tier"
                         features={[
                             'Advanced CRM: Automated Follow-ups', 
                             'Advanced Inventory: Omnichannel Sync', 
@@ -107,6 +108,7 @@ export const LandingPage = () => {
                         price="$149" 
                         tierNumber="3"
                         color="bg-[#C5A059]"
+                        buttonText="Join Our Pro Tier"
                         features={[
                             'Pro CRM: Sentiment Analysis', 
                             'Pro Inventory: Predictive Reordering', 
