@@ -162,7 +162,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
               <Card className="luxury-card p-8 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
                 <h2 className="text-lg font-serif text-white mb-8 flex items-center justify-center gap-3 text-center">
                   {view === 'login' ? <Lock size={18} className="text-[#C5A059]"/> : <Mail size={18} className="text-[#C5A059]"/>}
-                  {view === 'login' ? 'Sign In To Vault' : 'Create New Account'}
+                  {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
                 </h2>
 
                 <form onSubmit={handleLogin} className="space-y-6">
@@ -191,9 +191,9 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
 
                 <div className="mt-4">
                   <Button 
-                    variant="outline"
+                    variant="primary"
                     onClick={() => { setView(view === 'login' ? 'signup' : 'login'); setIsNewUser(view === 'login'); }}
-                    className="w-full md:w-full flex items-center justify-center h-12 font-bold border-white/10 hover:bg-white/5 text-white"
+                    className="w-full md:w-full flex items-center justify-center h-12 font-bold bg-[#6A2C91] hover:bg-purple-800 border-none text-white transition-colors"
                   >
                     {view === 'login' ? "Don't have an access key? Initialize here" : "Already Have A Account, Sign In Here"}
                   </Button>
