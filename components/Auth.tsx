@@ -58,18 +58,19 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
      */
 
     try {
-      await googleLogin();
-      if (isNewUser) {
+      const user = await googleLogin();
+      if (isNewUser && user) {
         if (selectedTier === 'Free Audit') {
           try {
-            // Provide a dummy email/password since Google Auth handles the real ones
-            await signUp({ email: 'googleuser@artisanflow.app', password: '', tier: 'Free Audit', status: 'Active' });
+            await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Audit', status: 'Active' });
           } catch (e) {
             console.error(e);
           }
         } else if (selectedTier) {
+          setEmail(user.email); // Pre-fill the email state for the payment gateway
           setView('payment');
         } else {
+          setEmail(user.email);
           setView('tiers');
         }
       }

@@ -217,7 +217,7 @@ interface DataContextType {
   isTutorialActive: boolean;
   tutorialStep: number;
   login: (email: string, pass: string) => Promise<boolean>;
-  googleLogin: () => Promise<void>;
+  googleLogin: () => Promise<any>;
   logout: () => void;
   signUp: (data: any) => Promise<void>;
   updateTier: (tier: UserTier) => Promise<void>;
@@ -470,9 +470,11 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const googleLogin = async () => { 
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      return result.user;
     } catch (error) {
       console.error("Google Auth Error:", error);
+      throw error;
     }
   };
 
@@ -493,9 +495,16 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const signUp = async (data: any) => {
     try {
-      // First, create the auth user
-      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password || 'TemporaryPass123!');
-      const user = userCredential.user;
+      let user = auth.currentUser;
+      // First, create the auth user if this is a standard email/password signup
+      if (data.password) {
+        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        user = userCredential.user;
+      }
+      
+      if (!user) {
+         throw new Error("No authenticated user found for signup.");
+      }
 
       // Then save their profile to Firestore
       await setDoc(doc(db, 'users', user.uid), {
