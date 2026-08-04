@@ -129,7 +129,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
                 transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="relative mb-8"
               >
-                <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="w-[350px] h-auto object-contain mx-auto" />
+                <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="w-[350px] h-auto object-contain mx-auto" />
               </motion.div>
               <motion.p 
                 initial={{ opacity: 0 }}

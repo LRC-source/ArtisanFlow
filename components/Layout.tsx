@@ -80,7 +80,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
           <div className="sidebar-brand-block flex items-center justify-center relative">
               <div className="flex items-center justify-center w-full py-2">
-                  <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-[90px] w-auto object-contain mx-auto" />
+                  <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-[90px] w-auto object-contain mx-auto" />
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />
@@ -195,7 +195,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
 
               {/* Mobile/Collapsed Logo */}
               <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
-                 <img src="/ArtisanFlowLogo4.png" alt="ArtisanFlow Logo" className="h-[40px] w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')} />
+                 <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-[40px] w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')} />
               </div>
 
               {/* Breadcrumbs - Path Navigator */}
