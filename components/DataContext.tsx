@@ -572,8 +572,9 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
       setBusinessProfile(prev => ({ ...prev, ...data }));
       setUserTier(data.tier);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Signup Error:", error);
+      throw error;
     }
   };
 

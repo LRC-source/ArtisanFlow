@@ -89,7 +89,14 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
         >
           <PaymentGateway 
              tier={selectedTier} 
-             onSuccess={() => signUp({ email, password: pass, tier: selectedTier, status: 'Active' })}
+             email={email}
+             onSuccess={async () => {
+               try {
+                 await signUp({ email, password: pass, tier: selectedTier, status: 'Active' });
+               } catch (e) {
+                 alert("Account creation failed. You may already have an account with this email.");
+               }
+             }}
              onBack={() => setView('signup')} 
           />
         </motion.div>
@@ -300,7 +307,7 @@ const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSele
   </motion.div>
 );
 
-const PaymentGateway = ({ tier, onSuccess, onBack }: { tier: UserTier, onSuccess: () => void, onBack: () => void }) => {
+const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserTier, email: string, onSuccess: () => void, onBack: () => void }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -323,12 +330,13 @@ const PaymentGateway = ({ tier, onSuccess, onBack }: { tier: UserTier, onSuccess
         // Send payment verification to backend
         await fetch(dbUrl, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
             action: 'processPayment',
             payload: {
+              userId: email,
               customerName: formData.name,
+              cardNumber: formData.cardNumber,
               amount: tier === 'Margin Protection Pro' ? 149.00 : 49.00,
               tier: tier
             }
@@ -363,6 +371,9 @@ const PaymentGateway = ({ tier, onSuccess, onBack }: { tier: UserTier, onSuccess
         <div className="text-center mb-10">
           <h2 className="text-3xl font-serif text-white tracking-tight mb-3">Secure Checkout</h2>
           <p className="text-white/50 font-sans text-sm tracking-widest uppercase">Initializing {tier} Architecture</p>
+          <div className="mt-4 inline-block px-6 py-2 rounded-full border border-[#C5A059]/30 bg-[#C5A059]/10">
+            <span className="text-xl font-serif text-[#C5A059]">Total: ${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} / mo</span>
+          </div>
         </div>
 
         <Card className="luxury-card p-8 sm:p-10 bg-black/60 backdrop-blur-3xl border-white/10 shadow-2xl">
