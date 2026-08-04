@@ -431,7 +431,15 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
-            setBusinessProfile(prev => ({ ...prev, ...docSnap.data().profile }));
+            const profileData = docSnap.data().profile;
+            const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online'];
+            
+            // Securely grant admin rights if the authenticated Firebase user matches an admin email
+            if (user.email && adminEmails.includes(user.email.toLowerCase())) {
+              profileData.role = 'admin';
+            }
+            
+            setBusinessProfile(prev => ({ ...prev, ...profileData }));
             setUserTier(docSnap.data().tier || 'Artisan Flow Basic');
           }
         } catch (error) {
@@ -450,24 +458,6 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, []);
 
   const login = async (email: string, pass: string) => { 
-    // Hardcoded Admin Bypass
-    const adminEmails = [
-      'lacarmsu38@gmail.com',
-      'lcarter@lrcholisticmarketing.online'
-    ];
-    
-    if (adminEmails.includes(email.toLowerCase()) && pass === 'Bossbabe26##') {
-      setIsAuthenticated(true);
-      setBusinessProfile(prev => ({ 
-        ...prev, 
-        email: email,
-        role: 'admin',
-        ownerName: 'Super Admin'
-      }));
-      toast.success('Architect Authorization Confirmed.');
-      return true;
-    }
-
     try {
       await signInWithEmailAndPassword(auth, email, pass);
       return true;
