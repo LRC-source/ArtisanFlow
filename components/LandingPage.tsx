@@ -27,14 +27,8 @@ export const LandingPage = () => {
     };
 
     const handlePurchase = (tier: UserTier) => {
-        if (tier === 'Free Audit') {
-            signUp({ email: 'newuser@artisanflow.app', tier, status: 'Active' });
-            navigate('/command-center');
-        } else {
-            // Square Payment SDK Placeholder
-            setSelectedTier(tier);
-            setView('signup');
-        }
+        setSelectedTier(tier);
+        setView('signup');
     };
 
     if (view === 'login' || view === 'signup') {
@@ -85,6 +79,7 @@ export const LandingPage = () => {
                         price="$0" 
                         tierNumber="1"
                         color="bg-slate-700"
+                        buttonText="Join Our Free Tier"
                         features={[
                             'Basic CRM: Client Tracking', 
                             'Basic Inventory: Spreadsheet Sync', 
@@ -166,7 +161,7 @@ export const LandingPage = () => {
     );
 };
 
-const TierCard = ({ title, price, features, tierNumber, isPopular, onSelect }: any) => (
+const TierCard = ({ title, price, features, tierNumber, isPopular, buttonText, onSelect }: any) => (
     <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] hover:shadow-[0_0_40px_rgba(106,44,145,0.6)]' : 'border-white/10 hover:border-[#C5A059]/50 hover:shadow-[0_0_40px_rgba(197,160,89,0.3)]'}`}>
         {isPopular && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#6A2C91] to-purple-800 text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg border border-purple-400/30">
@@ -196,7 +191,7 @@ const TierCard = ({ title, price, features, tierNumber, isPopular, onSelect }: a
             onClick={onSelect}
             className={`w-full h-14 font-black tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ${isPopular ? 'bg-[#6A2C91] hover:bg-purple-800 group-hover:shadow-[0_0_25px_rgba(106,44,145,0.8)] border-none' : 'border-white/20 text-white hover:bg-white/5 group-hover:shadow-[0_0_20px_rgba(197,160,89,0.4)]'}`}
         >
-            Initialize {title}
+            {buttonText || `Initialize ${title}`}
         </Button>
     </div>
 );
