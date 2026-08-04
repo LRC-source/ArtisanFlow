@@ -194,7 +194,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
                     onClick={() => { setView(view === 'login' ? 'signup' : 'login'); setIsNewUser(view === 'login'); }}
                     className="text-xs font-bold text-white/40 hover:text-[#C5A059] transition-colors tracking-wide"
                   >
-                    {view === 'login' ? "Don't have an access key? Initialize here" : "Already have a vault key? Enter here"}
+                    {view === 'login' ? "Don't have an access key? Initialize here" : "> Already Have An Account Sign In Here <"}
                   </button>
                 </div>
               </Card>
