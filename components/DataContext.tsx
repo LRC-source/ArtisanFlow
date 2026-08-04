@@ -452,7 +452,6 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const login = async (email: string, pass: string) => { 
     // Hardcoded Admin Bypass
     const adminEmails = [
-      'admin@artisanflow.app',
       'lacarmsu38@gmail.com',
       'lcarter@lrcholisticmarketing.online'
     ];
