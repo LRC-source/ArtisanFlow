@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldAlert, Users, Database, Server, Activity, ArrowUpRight, Search, Lock, Edit2, Download, AlertTriangle, Key, X, Loader2 } from 'lucide-react';
 import { Card, Button, Badge, Input, Select, VaultBanner, Modal } from './UI';
@@ -127,8 +127,8 @@ export const SuperAdmin = () => {
             </VaultBanner>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <AdminStatCard title="Total Platform Users" value={systemUsers.length.toString()} icon={Users} trend="+1 This Week" />
-                <AdminStatCard title="Pro Tier Subscribers" value={systemUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
+                <AdminStatCard title="Total Platform Users" value={liveUsers.length.toString()} icon={Users} trend="+1 This Week" />
+                <AdminStatCard title="Pro Tier Subscribers" value={liveUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
                 <AdminStatCard title="Global Volume Processed" value="$187,020" icon={Activity} trend="+14% MoM" color="text-emerald-400" />
                 <AdminStatCard title="System Health" value="100%" icon={Server} trend="All Nodes Online" color="text-blue-400" />
             </div>
@@ -258,7 +258,7 @@ export const SuperAdmin = () => {
                             <div key={platform} className="p-5 bg-white/5 border border-white/10 rounded-2xl">
                                 <div className="flex justify-between items-center mb-4">
                                     <h4 className="text-white font-serif text-lg">{platform}</h4>
-                                    <Badge color={['Shopify', 'Gmail'].includes(platform) ? 'emerald' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
+                                    <Badge color={['Shopify', 'Gmail'].includes(platform) ? 'green' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
                                         {['Shopify', 'Gmail'].includes(platform) ? 'Active' : 'Unconfigured'}
                                     </Badge>
                                 </div>

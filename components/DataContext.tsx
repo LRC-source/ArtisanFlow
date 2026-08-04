@@ -669,7 +669,9 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               stock: yieldAmount,
               unitCost: recipe.totalCost / (parseFloat(recipe.yield) || 1),
               retailPrice: recipe.totalCost * 2.5, // Default markup
-              stockValue: recipe.totalCost * multiplier
+              stockValue: recipe.totalCost * multiplier,
+              unit: 'pcs',
+              reorderPoint: 5
           });
       }
 
