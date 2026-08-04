@@ -313,8 +313,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setConnectedChannels(prev => ({ ...prev, [platform]: !prev[platform] }));
   };
 
-  const [businessProfile, setBusinessProfile] = useState<BusinessProfile>({
-    name: 'Artisan Flow Demo', 
+  const INITIAL_BUSINESS_PROFILE: BusinessProfile = {
+    name: 'New Artisan Business', 
     ownerName: 'Admin User', 
     email: 'admin@artisanflow.app', 
     industry: 'Skincare',
@@ -323,7 +323,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     status: 'Active',
     brandVoice: { adjectives: ['Artisanal', 'Luxurious'], restrictedWords: [] },
     receptionistLogic: { qualificationQuestions: ['What is your wholesale budget?', 'Do you have a physical storefront?'] }
-  });
+  };
+  const [businessProfile, setBusinessProfile] = useState<BusinessProfile>(INITIAL_BUSINESS_PROFILE);
 
   const [budgets, setBudgets] = useState<BudgetConfig>({
       daily: 50,
@@ -332,87 +333,26 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       yearly: 18000
   });
 
-  const [inventory, setInventory] = useState<InventoryItem[]>([
-    { id: 1, name: '100% Grain Alcohol', sku: 'ALC-100', stock: 230, unit: 'oz', unitCost: 0.77, stockValue: 177.10, reorderPoint: 50, type: 'raw', supplier: 'Essence Org' },
-    { id: 2, name: 'Rosemary Leaf', sku: 'Herb-115', stock: 6, unit: 'oz', unitCost: 2.50, stockValue: 15.00, reorderPoint: 10, type: 'raw', lowStock: true, supplier: 'Global Botanicals' },
-    { id: 3, name: 'Lavender Buds', sku: 'LAV-B', stock: 45, unit: 'oz', unitCost: 1.20, stockValue: 54.00, reorderPoint: 20, type: 'raw', supplier: 'Global Botanicals' },
-    { id: 101, name: 'Lavender Rose SOAP', sku: 'SOAP-LR', stock: 7, unit: 'piece', unitCost: 3.20, retailPrice: 8.00, stockValue: 22.40, reorderPoint: 20, type: 'finished', category: 'Soaps' },
-    { id: 102, name: 'Turmeric Myrrh Soap', sku: 'SOAP-TM', stock: 12, unit: 'piece', unitCost: 3.50, retailPrice: 9.00, stockValue: 42.00, reorderPoint: 15, type: 'finished', category: 'Soaps' },
-  ]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
-  const [orders, setOrders] = useState<Order[]>([
-    { id: '#13086', customer: 'RJ Baise', email: 'rj.baise@me.com', date: new Date().toLocaleDateString(), location: 'Cave City, KY', status: 'Processing', platform: 'Direct', total: 24.59, items: [{ name: 'Turmeric Myrrh Soap', qty: 10, price: 6.15 }] }
-  ]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   const [reports, setReports] = useState<Report[]>([]);
-  const [productionStats, setProductionStats] = useState({ active: 2, inProgress: 1, awaiting: 1, completed: 5, pending: 2 });
+  const [productionStats, setProductionStats] = useState({ active: 0, inProgress: 0, awaiting: 0, completed: 0, pending: 0 });
   
-  const [suppliers, setSuppliers] = useState<Supplier[]>([
-    { id: 's1', name: 'Essence Org', contactName: 'Sarah Miles', email: 'orders@essence.org', phone: '555-0102', rating: 5, tier: 'Reliable', pricePerUnit: 12.50, leadTime: 7, paymentTerms: 'Net 30' },
-    { id: 's2', name: 'Global Botanicals', contactName: 'Marcus Thorne', email: 'sales@globalbotanicals.com', phone: '555-0941', rating: 4, tier: 'Moderate', pricePerUnit: 8.00, leadTime: 14, paymentTerms: 'Net 15' }
-  ]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
 
-  const [marketingPosts, setMarketingPosts] = useState<MarketingPost[]>([
-    { id: 'm1', platform: 'Instagram', topic: 'Behind the Scenes', content: 'Our rosemary is freshly sourced...', scheduledDate: '2025-12-01', status: 'Scheduled', type: 'Image' }
-  ]);
+  const [marketingPosts, setMarketingPosts] = useState<MarketingPost[]>([]);
   
-  const [qualityChecks, setQualityChecks] = useState<QualityCheck[]>([
-    { id: 'qc1', productName: 'Lavender Rose SOAP', batchNumber: 'B-1024', status: 'Passed', inspector: 'L. Carter', date: '2025-11-20' },
-    { id: 'qc2', productName: 'Turmeric Myrrh Soap', batchNumber: 'B-1025', status: 'Pending', inspector: 'L. Carter', date: '2025-11-24' }
-  ]);
+  const [qualityChecks, setQualityChecks] = useState<QualityCheck[]>([]);
 
-  const [locations, setLocations] = useState<Location[]>([
-    { id: 'l1', name: 'Main Studio', type: 'Warehouse', address: '123 Artisan Way', capacity: '5000 sqft' }
-  ]);
+  const [locations, setLocations] = useState<Location[]>([]);
 
   const [supplierCommunications, setSupplierCommunications] = useState<SupplierCommunication[]>([]);
   
-  const [recipes, setRecipes] = useState<Recipe[]>([
-    { 
-        id: 'r1', 
-        name: 'Lavender Rose SOAP', 
-        version: '2.1', 
-        sku: 'SOAP-LR', 
-        yield: '50 Units',
-        yieldValue: 50,
-        materialCost: 150.00, 
-        laborCost: 50.00,
-        totalCost: 200.00, 
-        productionTime: 120,
-        ingredients: [
-            { name: '100% Grain Alcohol', qty: '10 oz' },
-            { name: 'Lavender Buds', qty: '5 oz' }
-        ],
-        rawIngredients: [
-            { inventoryItemId: '1', quantity: 10, unit: 'oz' },
-            { inventoryItemId: '3', quantity: 5, unit: 'oz' }
-        ]
-    },
-    { 
-        id: 'r2', 
-        name: 'Turmeric Myrrh Soap', 
-        version: '1.0', 
-        sku: 'SOAP-TM', 
-        yield: '25 Units',
-        yieldValue: 25,
-        materialCost: 85.00, 
-        laborCost: 25.00,
-        totalCost: 110.00, 
-        productionTime: 90,
-        ingredients: [
-            { name: 'Rosemary Leaf', qty: '2 oz' }
-        ],
-        rawIngredients: [
-            { inventoryItemId: '2', quantity: 2, unit: 'oz' }
-        ]
-    }
-  ]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   
-  const [systemUsers, setSystemUsers] = useState<SystemUser[]>([
-    { id: 'usr_8x92a', name: 'John A.', email: 'admin1@domain.com', tier: 'Margin Protection Pro', status: 'Active', lastLogin: 'Today, 08:24 AM', revenueProcessed: 145020 },
-    { id: 'usr_9j2bb', name: 'Sarah M.', email: 'admin2@domain.com', tier: 'Artisan Flow Basic', status: 'Active', lastLogin: 'Yesterday, 14:12 PM', revenueProcessed: 42000 },
-    { id: 'usr_2m4cc', name: 'Client X.', email: 'client@domain.com', tier: 'Free Audit', status: 'Pending', lastLogin: 'Never', revenueProcessed: 0 },
-  ]);
+  const [systemUsers, setSystemUsers] = useState<SystemUser[]>([]);
 
   const [integrations, setIntegrations] = useState<Integration[]>([
     { 
@@ -547,8 +487,19 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  const logout = () => { 
-    signOut(auth);
+  const logout = async () => { 
+    try {
+      await signOut(auth);
+      setBusinessProfile(INITIAL_BUSINESS_PROFILE);
+      setInventory([]);
+      setOrders([]);
+      setSuppliers([]);
+      setRecipes([]);
+      setMarketingPosts([]);
+      window.location.href = '/'; // Force reload to clear all state and route to landing
+    } catch (err) {
+      console.error("Error signing out", err);
+    }
   };
 
   const signUp = async (data: any) => {
@@ -567,11 +518,13 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
           ownerName: data.ownerName || 'Admin User',
           email: data.email,
         },
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        isNewUser: true // explicitly marking as new user for the database if needed
       });
 
       setBusinessProfile(prev => ({ ...prev, ...data }));
       setUserTier(data.tier);
+      setIsTutorialActive(true); // Trigger tutorial for new users
     } catch (error: any) {
       console.error("Signup Error:", error);
       throw error;

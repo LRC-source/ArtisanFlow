@@ -128,12 +128,64 @@ export const SuperAdmin = () => {
         }
     };
 
-    const handleSync = () => {
+    const fetchDashboardData = async () => {
+        setIsLoadingData(true);
+        try {
+            const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
+            if (!gasUrl) {
+                toast.error("VITE_GAS_DATABASE_URL is not configured.");
+                setIsLoadingData(false);
+                return;
+            }
+
+            const makePostReq = async (action: string) => {
+                const res = await fetch(gasUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action })
+                });
+                return await res.json();
+            };
+
+            const [usersData, ledgerData, alertsData, integrationsData] = await Promise.all([
+                makePostReq('fetchSystemUsers'),
+                makePostReq('fetchPaymentLedger'),
+                makePostReq('fetchSystemAlerts'),
+                makePostReq('fetchGlobalIntegrations')
+            ]);
+
+            if (usersData?.status === 'success' && usersData.users) {
+                setLiveUsers(usersData.users);
+            }
+            
+            if (ledgerData?.status === 'success' && ledgerData.transactions) {
+                setLedgerTransactions(ledgerData.transactions);
+            }
+            
+            if (alertsData?.status === 'success' && alertsData.alerts) {
+                setSystemAlerts(alertsData.alerts);
+            }
+            
+            if (integrationsData?.status === 'success' && integrationsData.integrations && integrationsData.integrations.length > 0) {
+                setGlobalIntegrations(prev => prev.map(def => {
+                    const found = integrationsData.integrations.find((i: any) => i.platform === def.platform);
+                    return found ? { ...def, ...found } : def;
+                }));
+            }
+
+        } catch (err) {
+            console.error("Failed to fetch Super Admin dashboard data", err);
+            toast.error("Failed to fetch data from Google Apps Script.");
+        } finally {
+            setIsLoadingData(false);
+        }
+    };
+
+    const handleSync = async () => {
         setIsSyncing(true);
-        setTimeout(() => {
-            toast.success("Google Sheets Matrix successfully synced.");
-            setIsSyncing(false);
-        }, 1200);
+        await fetchDashboardData();
+        toast.success("Google Sheets Matrix successfully synced.");
+        setIsSyncing(false);
     };
 
     const handleVerify = () => {
