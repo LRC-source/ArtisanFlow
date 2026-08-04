@@ -14,7 +14,13 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (view === 'signup') {
-      if (selectedTier && selectedTier !== 'Free Audit') {
+      if (selectedTier === 'Free Audit') {
+        try {
+          await signUp({ email, password: pass, tier: 'Free Audit', status: 'Active' });
+        } catch (e) {
+          alert("Account creation failed. You may already have an account with this email.");
+        }
+      } else if (selectedTier) {
         setView('payment');
       } else {
         setView('tiers');
@@ -54,7 +60,14 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
     try {
       await googleLogin();
       if (isNewUser) {
-        if (selectedTier && selectedTier !== 'Free Audit') {
+        if (selectedTier === 'Free Audit') {
+          try {
+            // Provide a dummy email/password since Google Auth handles the real ones
+            await signUp({ email: 'googleuser@artisanflow.app', password: '', tier: 'Free Audit', status: 'Active' });
+          } catch (e) {
+            console.error(e);
+          }
+        } else if (selectedTier) {
           setView('payment');
         } else {
           setView('tiers');
