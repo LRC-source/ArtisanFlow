@@ -182,8 +182,8 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       {/* Main Content Area */}
       <main className={`flex-1 overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-0' : 'md:ml-[280px]'}`}>
         {/* TOP BAR: SYNAPTIC HEADER */}
-        <header className="sticky top-0 z-30 w-full bg-black/40 backdrop-blur-xl border-b border-white/5 px-6 md:px-10 py-5 flex items-center justify-between gap-8 md:gap-12 transition-all duration-500">
-            <div className="flex items-center gap-4 md:gap-8">
+        <header className="sticky top-0 z-30 w-full bg-black/40 backdrop-blur-xl border-b border-white/5 px-4 md:px-10 py-3 md:py-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 md:gap-4 sm:p-12 transition-all duration-500">
+            <div className="flex items-center gap-4 md:gap-4 sm:p-8">
               <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white/60 hover:text-white">
                 <Menu size={24} />
               </button>
@@ -222,24 +222,24 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
 
             {/* Global AI Search Gateway */}
-            <form onSubmit={handleSearch} className="flex-1 max-w-xl relative group">
+            <form onSubmit={handleSearch} className="flex-1 min-w-[150px] w-full order-3 sm:order-none mt-2 sm:mt-0 max-w-xl relative group">
                 <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C5A059] transition-colors" size={16} />
+                    <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C5A059] transition-colors" size={14} />
                     <input 
                         type="text"
                         placeholder="Ask Lola..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-12 text-xs focus:bg-white/10 focus:border-[#C5A059] focus:ring-4 focus:ring-amber-500/5 transition-all outline-none shadow-inner font-medium text-white"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-2 sm:py-3 pl-9 sm:pl-12 pr-10 sm:pr-12 text-xs focus:bg-white/10 focus:border-[#C5A059] focus:ring-4 focus:ring-amber-500/5 transition-all outline-none shadow-inner font-medium text-white"
                     />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                        {isSearching ? <Loader2 size={14} className="animate-spin text-[#C5A059]" /> : <Sparkles size={14} className="text-[#C5A059] animate-pulse" />}
+                    <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2">
+                        {isSearching ? <Loader2 size={12} className="animate-spin text-[#C5A059]" /> : <Sparkles size={12} className="text-[#C5A059] animate-pulse" />}
                     </div>
                 </div>
 
                 {/* AI Search Result Dropdown */}
                 {searchResult && (
-                    <div className="absolute top-full left-0 right-0 mt-5 bg-white border border-stone-200 rounded-[2.5rem] shadow-2xl p-10 animate-in slide-up z-50 border-t-8 border-t-[#6A2C91]">
+                    <div className="absolute top-full left-0 right-0 mt-5 bg-white border border-stone-200 rounded-[2.5rem] shadow-2xl p-4 sm:p-10 animate-in slide-up z-50 border-t-8 border-t-[#6A2C91]">
                         <div className="flex items-start gap-6">
                             <div className="p-4 bg-purple-50 rounded-3xl text-[#6A2C91] shadow-inner"><Sparkles size={28} /></div>
                             <div className="flex-1">
@@ -306,7 +306,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
         )}
         
-        <div className="flex-1 p-6 md:p-12 max-w-7xl mx-auto relative z-10 w-full">
+        <div className="flex-1 p-4 sm:p-6 md:p-4 sm:p-12 max-w-7xl mx-auto relative z-10 w-full overflow-x-hidden">
           {children}
         </div>
         

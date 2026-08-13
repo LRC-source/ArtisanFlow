@@ -6,6 +6,7 @@ import {
   BarChart3, ArrowUpRight, ArrowDownRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { Card, Input, Button, Badge, VaultBanner } from './UI';
 import { useArtisanData } from './DataContext';
 import { SubPageHeader } from './SubPageHeader';
@@ -29,7 +30,7 @@ export const ProfitGuardPage = () => {
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="p-8 space-y-12 max-w-7xl mx-auto pb-32"
+            className="p-4 sm:p-8 space-y-12 max-w-7xl mx-auto pb-32"
         >
             <SubPageHeader 
                 title="Profit Guard™"
@@ -38,10 +39,10 @@ export const ProfitGuardPage = () => {
                 description="High-precision margin protection and profitability diagnostics."
             />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-8">
                 {/* Input Section */}
                 <div className="lg:col-span-1 space-y-6">
-                    <Card className="p-8 border-none shadow-sm bg-white rounded-3xl">
+                    <Card className="p-4 sm:p-8 border-none shadow-sm bg-white rounded-3xl">
                         <h3 className="text-sm font-sans font-bold uppercase tracking-widest text-white mb-8">Production Inputs</h3>
                         <div className="space-y-8">
                             <div>
@@ -127,8 +128,8 @@ export const ProfitGuardPage = () => {
                         />
                     </div>
 
-                    <Card className="p-10 border-none shadow-sm bg-white rounded-[2.5rem] relative overflow-hidden">
-                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 relative z-10">
+                    <Card className="p-4 sm:p-10 border-none shadow-sm bg-white rounded-[2.5rem] relative overflow-hidden">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:p-8 relative z-10">
                             <div>
                                 <h3 className="text-sm font-sans font-bold uppercase tracking-widest text-white mb-2">Total Batch Profitability</h3>
                                 <p className="text-6xl font-serif text-stone-900 tracking-tighter">${totalProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -145,14 +146,14 @@ export const ProfitGuardPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-12 pt-8 border-t border-stone-50 grid grid-cols-3 gap-8">
+                        <div className="mt-12 pt-8 border-t border-stone-50 grid grid-cols-3 gap-4 sm:p-8">
                             <StatMini label="Markup" value={`${currentMultiplier.toFixed(2)}x`} />
                             <StatMini label="Break Even" value={`${Math.ceil(materialCost / plannedPrice)} Units`} />
                             <StatMini label="ROI" value={`${((totalProfit / materialCost) * 100).toFixed(0)}%`} />
                         </div>
                     </Card>
 
-                    <div className="p-8 bg-white/50 rounded-[2rem] border border-stone-100">
+                    <div className="p-4 sm:p-8 bg-white/50 rounded-[2rem] border border-stone-100">
                         <h6 className="text-[10px] font-sans font-bold text-white uppercase tracking-[0.3em] mb-4">Strategic Recommendations</h6>
                         <ul className="space-y-3 text-sm font-sans font-light text-stone-600">
                             <li className="flex items-start gap-3">
@@ -171,10 +172,10 @@ export const ProfitGuardPage = () => {
                     </div>
 
                     <div className="flex gap-4">
-                        <Button className="flex-1 h-16 bg-[#1A1A1A] text-white rounded-2xl font-sans font-bold text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all shadow-lg shadow-black/5">
+                        <Button onClick={() => toast.success('Exporting financial report...')} className="flex-1 h-16 bg-[#1A1A1A] text-white rounded-2xl font-sans font-bold text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all shadow-lg shadow-black/5">
                             Commit Batch to Production
                         </Button>
-                        <Button variant="outline" className="h-16 px-10 border-stone-200 rounded-2xl font-sans font-bold text-[11px] uppercase tracking-widest hover:bg-stone-50 transition-all">
+                        <Button onClick={() => toast.info('Syncing with Square financials...')} variant="outline" className="h-16 px-10 border-stone-200 rounded-2xl font-sans font-bold text-[11px] uppercase tracking-widest hover:bg-stone-50 transition-all">
                             Export Diagnostic
                         </Button>
                     </div>

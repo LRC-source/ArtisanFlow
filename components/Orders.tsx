@@ -5,6 +5,7 @@ import { Search, Filter, ShoppingCart, DollarSign, Package, Truck, User, MapPin,
 import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
+import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
 export const Orders = () => {
@@ -68,7 +69,7 @@ export const Orders = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="p-10 md:p-16 space-y-12 pb-20 max-w-[1600px] mx-auto"
+      className="p-4 sm:p-10 md:p-16 space-y-12 pb-20 max-w-[1600px] mx-auto"
     >
         <ContextualTutorialModal
             hubId="orders"
@@ -78,7 +79,7 @@ export const Orders = () => {
         />
         {/* Toast Notification Overlay */}
         {toast && (
-          <div className="fixed top-8 right-8 z-[60] animate-in slide-in-from-right-10">
+          <div className="fixed top-4 sm:p-8 right-8 z-[60] animate-in slide-in-from-right-10">
             <div className={`flex items-center gap-3 p-4 rounded-2xl shadow-2xl border-l-4 min-w-[320px] backdrop-blur-xl ${
               toast.type === 'success' ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400' : 
               toast.type === 'error' ? 'bg-red-500/10 border-red-500 text-red-400' : 
@@ -128,14 +129,14 @@ export const Orders = () => {
         </VaultBanner>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
             {[
               { label: 'Total Orders', val: orders.length, icon: ShoppingCart, color: 'text-purple-400', bg: 'bg-[#6A2C91]/20', border: 'border-[#6A2C91]/30' },
               { label: 'Revenue', val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-[#C5A059]/20', border: 'border-[#C5A059]/30' },
               { label: 'Pending', val: pendingCount, icon: Package, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' },
               { label: 'Shipped', val: shippedCount, icon: Truck, color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/30' }
             ].map((stat, i) => (
-              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
+              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
                 <div className={`p-4 ${stat.bg} ${stat.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${stat.border}`}>
                     <stat.icon size={24} />
                 </div>
@@ -183,7 +184,7 @@ export const Orders = () => {
                         <div key={order.id} className={`luxury-card bg-white/5 p-10 rounded-[3rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 group relative overflow-hidden ${processedId === order.id ? 'animate-soft-success border-emerald-500/50 shadow-emerald-500/10' : 'hover:border-white/20'}`}>
                             <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-bl-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-700"></div>
                             
-                            <div className="flex flex-col lg:flex-row justify-between gap-8 relative z-10">
+                            <div className="flex flex-col lg:flex-row justify-between gap-4 sm:p-8 relative z-10">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-4 mb-8">
                                         <Badge color={order.status === 'Processing' ? 'blue' : order.status === 'Shipped' ? 'purple' : 'green'} className="uppercase font-sans font-bold text-[10px] tracking-[0.3em] px-4 py-1.5 shadow-sm">
@@ -193,7 +194,7 @@ export const Orders = () => {
                                         <span className="text-[11px] text-white/60 font-mono tracking-widest bg-black/40 px-3 py-1 rounded-full border border-white/5"># {order.id}</span>
                                     </div>
                                     
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:p-10">
                                         <div className="space-y-4">
                                             <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
                                             <div className="flex items-center gap-4">
@@ -240,8 +241,8 @@ export const Orders = () => {
                                             <CheckCircle size={16} strokeWidth={1.5} /> Dispatched
                                         </div>
                                     )}
-                                    <Button variant="outline" className="w-full h-12 text-[10px] font-sans font-bold border-white/10 text-white/40 hover:text-white hover:bg-white/5 hover:border-white/20 rounded-2xl tracking-[0.3em] uppercase transition-all shadow-sm">
-                                        VIEW METADATA
+                                    <Button onClick={() => setToast({ message: 'Syncing orders from Square...', type: 'info' })} variant="outline" className="w-full h-12 text-[10px] font-sans font-bold border-white/10 text-white/40 hover:text-white hover:bg-white/5 hover:border-white/20 rounded-2xl tracking-[0.3em] uppercase transition-all shadow-sm">
+                                        Manual Sync
                                     </Button>
                                 </div>
                             </div>

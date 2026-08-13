@@ -493,3 +493,7 @@ select option {
 select {
   color-scheme: dark !important;
 }
+
+/* Mobile Touch Target Safety */
+button, input, select { min-height: var(--touch-target, 48px); }
+

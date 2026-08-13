@@ -50,7 +50,7 @@ export const ProductionWorkflow = () => {
       <div className="mt-8 space-y-4">
           <h2 className="text-xl font-bold text-white mb-6">Active Formulations Ready for Production</h2>
           {recipes.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[400px]">
+              <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]">
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                       <Clock size={32} className="text-gray-400" />
                   </div>

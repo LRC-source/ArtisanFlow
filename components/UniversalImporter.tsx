@@ -121,7 +121,7 @@ export const UniversalImporter = () => {
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="p-8 space-y-12 max-w-5xl mx-auto pb-32"
+            className="p-4 sm:p-8 space-y-12 max-w-5xl mx-auto pb-32"
         >
             <ContextualTutorialModal
                 hubId="importer"
@@ -149,7 +149,7 @@ export const UniversalImporter = () => {
                 </div>
             </VaultBanner>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8">
                 {/* Upload Zone */}
                 <div 
                     className={`border-2 border-dashed rounded-3xl p-16 flex flex-col items-center justify-center text-center transition-all duration-300 ${isDragging ? 'border-[#C5A059] bg-[#C5A059]/10' : 'border-white/10 bg-white/5'} ${isSuccess ? 'border-emerald-500/50 bg-emerald-900/10' : ''}`}
@@ -202,7 +202,7 @@ export const UniversalImporter = () => {
                 </div>
 
                 {/* Info Panel */}
-                <Card className="bg-black/40 backdrop-blur-xl border border-white/10 p-10 rounded-3xl space-y-8 flex flex-col justify-center">
+                <Card className="bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-3xl space-y-8 flex flex-col justify-center">
                     <h3 className="text-2xl font-serif text-white font-bold tracking-tight flex items-center gap-3">
                         <ShieldCheck size={28} className="text-[#C5A059]" /> Automated Schema Mapping
                     </h3>

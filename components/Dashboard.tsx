@@ -22,7 +22,7 @@ export const Dashboard = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto"
+      className="p-4 sm:p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto"
     >
       <VaultBanner 
         title="Command Center"
@@ -38,7 +38,7 @@ export const Dashboard = () => {
       </VaultBanner>
 
       {/* Primary Navigation Portals */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-10">
         <MainNodePortal 
             title="Marketing Studio" 
             path="/marketing"
@@ -74,12 +74,12 @@ export const Dashboard = () => {
       </div>
 
       {/* Charts & Insights */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12">
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 1 }}
-            className="lg:col-span-2 luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-12 rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20"
+            className="lg:col-span-2 luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-12 rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20"
         >
           <div className="flex justify-between items-center mb-12">
               <div>
@@ -118,7 +118,7 @@ export const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 1 }}
-            className="luxury-card bg-[#1A1A1A] p-12 rounded-[3rem] relative overflow-hidden flex flex-col justify-between group shadow-2xl shadow-purple-900/10"
+            className="luxury-card bg-[#1A1A1A] p-4 sm:p-12 rounded-[3rem] relative overflow-hidden flex flex-col justify-between group shadow-2xl shadow-purple-900/10"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6A2C91]/20 to-transparent rounded-bl-full opacity-30 -mr-16 -mt-16"></div>
           <div>
@@ -171,7 +171,7 @@ const MainNodePortal = ({ title, path, icon, color, shadow, delay }: any) => {
           <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-40 group-hover:opacity-80 transition-opacity duration-700 blur-2xl`}></div>
           
           {/* Inner Content */}
-          <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 border border-white/10 rounded-[3rem] bg-black/40 shadow-inner overflow-hidden">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 sm:p-8 border border-white/10 rounded-[3rem] bg-black/40 shadow-inner overflow-hidden">
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
               
               <div className="text-6xl mb-6 drop-shadow-[0_20px_20px_rgba(0,0,0,0.8)] grayscale-0 group-hover:scale-125 transition-transform duration-700 ease-out">

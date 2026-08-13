@@ -7,12 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { UpgradeModal } from './UpgradeModal';
 
 export const CRM = () => {
-  const { orders, manualCustomers, addManualCustomer, getTotalRevenue } = useArtisanData();
+  const { orders, manualCustomers, addManualCustomer, getTotalRevenue, userTier } = useArtisanData();
   const navigate = useNavigate();
   const [isSyncing, setIsSyncing] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   
   // Modal States
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -60,6 +62,11 @@ export const CRM = () => {
   };
 
   const handleAddManual = () => {
+      if (userTier === 'Free Audit' && allCustomers.length >= 25) {
+          setIsAddModalOpen(false);
+          setShowUpgradeModal(true);
+          return;
+      }
       if (!newCust.name || !newCust.email) return;
       addManualCustomer(newCust);
       const tempId = `M-${Date.now()}`; 
@@ -80,7 +87,7 @@ export const CRM = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+            className="p-4 sm:p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
           >
             <ContextualTutorialModal
                 hubId="crm"
@@ -105,7 +112,7 @@ export const CRM = () => {
 
               <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-16 relative overflow-hidden group shadow-2xl">
                   <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500 opacity-5 rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                  <div className="flex items-center gap-10 relative z-10">
+                  <div className="flex items-center gap-4 sm:p-10 relative z-10">
                       <div className={`w-32 h-32 ${customer.color} bg-opacity-20 rounded-[2rem] flex items-center justify-center text-white text-5xl font-serif shadow-inner border border-white/10 group-hover:scale-105 group-hover:rotate-3 transition-all duration-700`}>
                           {customer.initial}
                       </div>
@@ -114,7 +121,7 @@ export const CRM = () => {
                              <h1 className="text-6xl font-serif text-white tracking-tighter">{customer.name}</h1>
                              <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em]">{customer.type}</Badge>
                           </div>
-                          <div className="flex gap-8 text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em]">
+                          <div className="flex gap-4 sm:p-8 text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em]">
                               <span className="flex items-center gap-3"><Mail size={16} className="text-[#6A2C91]"/> {customer.email}</span>
                               <span className="flex items-center gap-3"><MapPin size={16} className="text-[#C5A059]"/> {customer.location}</span>
                           </div>
@@ -126,8 +133,8 @@ export const CRM = () => {
                   </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                  <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-10">
+                  <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-4 sm:p-12">
                       <h3 className="text-2xl font-serif text-white tracking-tight mb-8">Activity Ledger</h3>
                       <div className="space-y-4">
                           {customer.orders.length > 0 ? customer.orders.map(order => (
@@ -150,7 +157,7 @@ export const CRM = () => {
                       </div>
                   </div>
                   
-                  <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-12 flex flex-col">
+                  <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-4 sm:p-12 flex flex-col">
                       <h3 className="text-2xl font-serif text-white tracking-tight mb-8">Node Metadata</h3>
                       <div className="space-y-8 flex-1">
                           <div className="grid grid-cols-2 gap-6">
@@ -164,7 +171,7 @@ export const CRM = () => {
                               </div>
                           </div>
                           
-                          <div className="bg-[#6A2C91]/10 p-8 rounded-[2rem] border border-[#6A2C91]/20 mt-auto">
+                          <div className="bg-[#6A2C91]/10 p-4 sm:p-8 rounded-[2rem] border border-[#6A2C91]/20 mt-auto">
                               <p className="text-[11px] text-[#C5A059] font-sans font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
                                   <Sparkles size={16} /> Vault Strategy Insight
                               </p>
@@ -186,7 +193,7 @@ export const CRM = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+      className="p-4 sm:p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
     >
         <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Initialize Vault Node">
             <div className="space-y-8 p-4">
@@ -208,7 +215,7 @@ export const CRM = () => {
             </div>
         </Modal>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4 sm:p-8">
           <SubPageHeader 
             title="CRM Hub"
             parentTitle="Operations Hub"
@@ -242,14 +249,14 @@ export const CRM = () => {
         </div>
 
         {/* KPI Cards */}
-         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
             {[
               { label: 'Active Nodes', val: allCustomers.length, icon: Users, color: 'text-purple-400', bg: 'bg-[#6A2C91]/20', border: 'border-[#6A2C91]/30' },
               { label: 'Network Value', val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-[#C5A059]/20', border: 'border-[#C5A059]/30' },
               { label: 'Synaptic Health', val: '98%', icon: TrendingUp, color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/30' },
               { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' }
             ].map((kpi, i) => (
-              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
+              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
                 <div className={`p-4 ${kpi.bg} ${kpi.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${kpi.border}`}>
                     <kpi.icon size={24} />
                 </div>
@@ -266,7 +273,7 @@ export const CRM = () => {
                 <Input placeholder="Scan for nodes by name, email, or metadata..." className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:p-10">
                 {allCustomers.map((c, i) => (
                     <div 
                         key={c.id} 
@@ -305,6 +312,14 @@ export const CRM = () => {
                     </div>
                 ))}
             </div>
+            
+            <UpgradeModal 
+                isOpen={showUpgradeModal} 
+                onClose={() => setShowUpgradeModal(false)}
+                featureName="CRM Contacts"
+                currentLimit={25}
+                requiredTier="Artisan Flow Basic"
+            />
         </div>
     </motion.div>
   );

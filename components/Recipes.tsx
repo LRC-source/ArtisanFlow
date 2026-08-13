@@ -15,8 +15,8 @@ export const Recipes = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20">
-      <div className="flex flex-col gap-8">
+    <div className="p-4 sm:p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20">
+      <div className="flex flex-col gap-4 sm:p-8">
         <SubPageHeader 
           title="Golden Ratio Ledger"
           parentTitle="Resource Hub"
@@ -51,9 +51,9 @@ export const Recipes = () => {
               <Button onClick={() => navigate('/recipes/builder')} className="mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">LAUNCH BUILDER</Button>
           </div>
       ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8">
               {recipes.map(recipe => (
-                  <div key={recipe.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 hover:shadow-2xl hover:border-[#6A2C91]/50 transition-all group relative overflow-hidden">
+                  <div key={recipe.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#6A2C91]/50 transition-all group relative overflow-hidden">
                       <div className="flex justify-between items-start mb-8 relative z-10">
                           <div className="flex items-center gap-6">
                               <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:bg-white/10 transition-colors">
@@ -126,7 +126,7 @@ export const Recipes = () => {
 };
 
 const StatBox = ({ label, val, color, icon: Icon }: any) => (
-    <div className="luxury-card bg-black/40 backdrop-blur-xl p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#6A2C91]/30 transition-all">
+    <div className="luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#6A2C91]/30 transition-all">
         <div className={`p-4 bg-white/5 border border-white/10 rounded-2xl mb-6 text-white/50 group-hover:text-[#6A2C91] group-hover:scale-110 transition-all`}><Icon size={24} /></div>
         <p className="text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
         <p className={`text-4xl font-serif tracking-tight ${color}`}>{val}</p>

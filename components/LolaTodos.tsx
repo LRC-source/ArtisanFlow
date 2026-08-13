@@ -61,7 +61,7 @@ export const LolaTodos: React.FC = () => {
             </div>
 
             <Card className="border-stone-100 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-10 opacity-[0.03] text-[#6A2C91] pointer-events-none">
+                <div className="absolute top-0 right-0 p-4 sm:p-10 opacity-[0.03] text-[#6A2C91] pointer-events-none">
                     <Sparkles size={160} />
                 </div>
 
@@ -119,9 +119,9 @@ export const LolaTodos: React.FC = () => {
                 </div>
             </Card>
 
-            <div className="bg-[#6A2C91] rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden group">
+            <div className="bg-[#6A2C91] rounded-[2.5rem] p-4 sm:p-10 text-white shadow-2xl relative overflow-hidden group">
                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                 <div className="flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
+                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative z-10">
                     <div className="space-y-2 text-center md:text-left">
                          <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
                              <ShieldCheck size={20} className="text-emerald-400" />

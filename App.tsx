@@ -57,6 +57,10 @@ import { ProfitGuardPage } from './components/ProfitGuard';
 import { LandingPage } from './components/LandingPage';
 import { AIAssistant } from './components/AIAssistant';
 import { AuthGateway } from './components/Auth';
+import MakerFunnel from './components/Funnels/MakerFunnel';
+import ApothecaryFunnel from './components/Funnels/ApothecaryFunnel';
+import ScaleFunnel from './components/Funnels/ScaleFunnel';
+import { PublicLayout } from './components/Funnels/PublicLayout';
 import { FinanceHub, FinancialProjections } from './components/Finance';
 import { ContextualTutorialModal } from './components/ContextualTutorialModal';
 import { BudgetGuard } from './components/BudgetGuard';
@@ -308,7 +312,44 @@ const AppContent = () => {
       );
   }
 
-  if (!isAuthenticated) return <LandingPage />;
+  // Define public routes that should bypass the auth wall entirely
+  const publicRoutes = ['/makers', '/apothecaries', '/scale', '/auth'];
+  const isPublicRoute = publicRoutes.includes(location.pathname);
+
+  // If user is not authenticated and trying to access a protected route, show the general landing page (or auth)
+  if (!isAuthenticated && !isPublicRoute && location.pathname !== '/') {
+      return <LandingPage />;
+  }
+
+  if (!isAuthenticated && location.pathname === '/') {
+      return <LandingPage />;
+  }
+
+  // Unauthenticated routing for specific funnels
+  if (!isAuthenticated && isPublicRoute) {
+      return (
+          <PublicLayout>
+              <AnimatePresence mode="wait">
+                  <motion.div
+                      key={location.pathname}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                  >
+                      <Routes location={location} key={location.pathname}>
+                          <Route path="/makers" element={<MakerFunnel />} />
+                          <Route path="/apothecaries" element={<ApothecaryFunnel />} />
+                          <Route path="/scale" element={<ScaleFunnel />} />
+                          {/* Using AuthGateway for auth route. Note: AuthGateway itself might need to handle the ?tier= query params */}
+                          <Route path="/auth" element={<AuthGateway />} />
+                          <Route path="*" element={<Navigate to="/" replace />} />
+                      </Routes>
+                  </motion.div>
+              </AnimatePresence>
+          </PublicLayout>
+      );
+  }
 
   return (
     <Layout>
@@ -330,22 +371,10 @@ const AppContent = () => {
                 <DashboardPage />
             </LockedNode>
         } />
-        <Route path="/inventory" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
-                <Inventory />
-            </LockedNode>
-        } />
+        <Route path="/inventory" element={<Inventory />} />
 
-        <Route path="/recipes" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
-                <Recipes />
-            </LockedNode>
-        } />
-        <Route path="/recipes/builder/:id?" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
-                <RecipeBuilder />
-            </LockedNode>
-        } />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/builder/:id?" element={<RecipeBuilder />} />
         <Route path="/supplier_manager" element={
             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
                 <SupplierManager />
@@ -357,11 +386,7 @@ const AppContent = () => {
             </LockedNode>
         } />
         
-        <Route path="/operations" element={
-             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
-                <OperationsDashboard />
-             </LockedNode>
-        } />
+        <Route path="/operations" element={<OperationsDashboard />} />
         <Route path="/operations/warehouse" element={
             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
                 <WarehouseView />
@@ -372,21 +397,13 @@ const AppContent = () => {
                 <Orders />
             </LockedNode>
         } />
-        <Route path="/operations/crm" element={
-             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
-                <CRM />
-             </LockedNode>
-        } />
+        <Route path="/operations/crm" element={<CRM />} />
         <Route path="/production_scheduler" element={
              <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
                 <ProductionScheduler />
              </LockedNode>
         } />
-        <Route path="/production_workflow" element={
-             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
-                <ProductionWorkflow />
-             </LockedNode>
-        } />
+        <Route path="/production_workflow" element={<ProductionWorkflow />} />
         
         <Route path="/marketing" element={
             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
@@ -486,7 +503,7 @@ const AppContent = () => {
             </LockedNode>
         } />
         <Route path="/forecasting" element={
-            <LockedNode requiredTier="Margin Protection Pro" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier !== 'Margin Protection Pro'} requiredTier="Margin Protection Pro" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
                 <Forecasting />
             </LockedNode>
         } />

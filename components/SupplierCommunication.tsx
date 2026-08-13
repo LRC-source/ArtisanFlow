@@ -88,7 +88,7 @@ export const SupplierCommunication = () => {
       </div>
 
       {supplierCommunications.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[400px]">
+          <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                   <MessageSquare size={32} className="text-gray-400" />
               </div>

@@ -89,11 +89,11 @@ export const BudgetGuard: React.FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-8">
                 {/* Manual Target Node */}
                 <div className="lg:col-span-1 space-y-8">
                     <Card title="Architect's Target" className="rounded-[2.5rem] border-stone-100 shadow-xl overflow-hidden relative">
-                         <div className="absolute top-0 right-0 p-8 opacity-5 text-purple-600"><Target size={80} /></div>
+                         <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-5 text-purple-600"><Target size={80} /></div>
                          <div className="space-y-6 mt-4 relative z-10">
                             <div className="space-y-1">
                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Set Your {timeframe} Limit ($)</label>
@@ -126,7 +126,7 @@ export const BudgetGuard: React.FC = () => {
                          </div>
                     </Card>
 
-                    <div className="bg-stone-900 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
+                    <div className="bg-stone-900 p-4 sm:p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
                          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                          <div className="flex items-center gap-3 mb-6">
                             <Zap size={20} className="text-amber-400" />
@@ -157,7 +157,7 @@ export const BudgetGuard: React.FC = () => {
 
                 {/* AI Proposal Node */}
                 <div className="lg:col-span-2 space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-8">
                         <Card title="Lola’s Proposal" className="bg-purple-50 border-purple-100 shadow-lg relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-6 opacity-[0.03] text-purple-600"><Sparkles size={100} /></div>
                             <div className="mt-4 relative z-10">

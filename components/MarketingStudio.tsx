@@ -2,6 +2,7 @@ import React from 'react';
 import { Camera, Type, Share2, Video, Sparkles, ArrowLeft } from 'lucide-react';
 import { VaultBanner, Button } from './UI';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const MarketingStudio = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export const MarketingStudio = () => {
           badge="Creative Engine Online"
         >
           <div className="flex gap-4">
-            <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all">
+            <Button onClick={() => toast.info('Initializing Strategy Node...')} className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all">
                 <Sparkles size={16} className="mr-3"/> GENERATE STRATEGY
             </Button>
           </div>
@@ -32,7 +33,7 @@ export const MarketingStudio = () => {
                 <h3 className="font-bold text-white">Campaign Generator</h3>
             </div>
             <p className="text-gray-500 text-sm mb-4">Generate comprehensive strategies based on inventory levels.</p>
-            <button className="w-full py-2 bg-purple-600 text-white font-bold rounded hover:bg-purple-700 transition-colors shadow-sm">Generate Strategy</button>
+            <button onClick={() => toast.info('Initializing Strategy Node...')} className="w-full py-2 bg-purple-600 text-white font-bold rounded hover:bg-purple-700 transition-colors shadow-sm">Generate Strategy</button>
         </div>
 
         <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
@@ -41,7 +42,7 @@ export const MarketingStudio = () => {
                 <h3 className="font-bold text-white">Copywriter</h3>
             </div>
             <p className="text-gray-500 text-sm mb-4">Create blog posts, emails, and social captions.</p>
-            <button className="w-full py-2 border border-gray-300 text-gray-700 hover:border-purple-500 hover:text-purple-700 rounded transition-colors">Open Editor</button>
+            <button onClick={() => toast.info('Opening Email Editor...')} className="w-full py-2 border border-gray-300 text-gray-700 hover:border-purple-500 hover:text-purple-700 rounded transition-colors">Open Editor</button>
         </div>
 
         <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
@@ -50,7 +51,7 @@ export const MarketingStudio = () => {
                 <h3 className="font-bold text-white">Visual Studio</h3>
             </div>
             <p className="text-gray-500 text-sm mb-4">AI image generation for product showcases.</p>
-            <button className="w-full py-2 border border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 rounded transition-colors">Create Images</button>
+            <button onClick={() => toast.info('Spinning up Image Generation Node...')} className="w-full py-2 border border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 rounded transition-colors">Create Images</button>
         </div>
 
         <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
@@ -59,7 +60,7 @@ export const MarketingStudio = () => {
                 <h3 className="font-bold text-white">Video Scripts</h3>
             </div>
             <p className="text-gray-500 text-sm mb-4">Generate scripts for TikTok and Reels.</p>
-            <button className="w-full py-2 border border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-600 rounded transition-colors">Write Script</button>
+            <button onClick={() => toast.info('Script Generation AI Activating...')} className="w-full py-2 border border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-600 rounded transition-colors">Write Script</button>
         </div>
     </div>
   </div>

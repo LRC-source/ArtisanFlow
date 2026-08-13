@@ -9,6 +9,7 @@ import {
   onAuthStateChanged 
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db as dataLayer } from '../services/dataLayer';
 import { toast } from 'sonner';
 
 /**
@@ -228,7 +229,8 @@ interface DataContextType {
   saveReport: (report: Omit<Report, 'id'>) => void;
   deleteReport: (id: string) => void;
   importData: (files: File[]) => Promise<boolean>;
-  addInventoryItem: (item: any) => void;
+  addInventoryItem: (item: any) => Promise<void>;
+  updateInventory: (id: string | number, updates: Partial<InventoryItem>) => void;
   addSupplier: (supplier: any) => void;
   updateSupplier: (id: string, updates: Partial<Supplier>) => void;
   deleteSupplier: (id: string) => void;
@@ -243,7 +245,7 @@ interface DataContextType {
   produceBatch: (recipeId: string, multiplier: number) => { success: boolean; warnings: string[] };
   processOrder: (id: string) => void;
   syncWooCommerce: () => Promise<{ success: boolean; count?: number; error?: string }>;
-  addRecipe: (recipe: any) => void;
+  addRecipe: (recipe: any) => Promise<void>;
   updateRecipe: (id: string, updates: any) => void;
   updateBudget: (updates: Partial<BudgetConfig>) => void;
   addTodo: (task: string, category: TodoItem['category']) => void;
@@ -272,11 +274,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [demandInsights, setDemandInsights] = useState<any[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [manualCustomers, setManualCustomers] = useState<ManualCustomer[]>([]);
-  const [todos, setTodos] = useState<TodoItem[]>([
-      { id: '1', task: 'Process pending orders', completed: false, category: 'orders', createdDate: new Date().toISOString() },
-      { id: '2', task: 'Review raw material burn rates', completed: false, category: 'inventory', createdDate: new Date().toISOString() },
-      { id: '3', task: 'Initialize Q4 marketing strategy', completed: false, category: 'marketing', createdDate: new Date().toISOString() },
-  ]);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
   
   const [isTutorialActive, setIsTutorialActive] = useState(false);
   const [tutorialStep, setTutorialStepState] = useState(0);
@@ -314,12 +312,12 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   const INITIAL_BUSINESS_PROFILE: BusinessProfile = {
-    name: 'New Artisan Business', 
-    ownerName: 'Admin User', 
-    email: 'admin@artisanflow.app', 
+    name: '', 
+    ownerName: '', 
+    email: '', 
     industry: 'Skincare',
-    tier: 'Artisan Flow Basic',
-    role: 'admin',
+    tier: 'Free Audit',
+    role: 'user',
     status: 'Active',
     brandVoice: { adjectives: ['Artisanal', 'Luxurious'], restrictedWords: [] },
     receptionistLogic: { qualificationQuestions: ['What is your wholesale budget?', 'Do you have a physical storefront?'] }
@@ -354,72 +352,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   
   const [systemUsers, setSystemUsers] = useState<SystemUser[]>([]);
 
-  const [integrations, setIntegrations] = useState<Integration[]>([
-    { 
-      id: 'shopify', 
-      name: 'Shopify', 
-      category: 'E-commerce', 
-      status: 'Connected', 
-      logo: 'https://logo.clearbit.com/shopify.com', 
-      description: 'Unified storefront commerce logic.',
-      aiCapability: 'Predictive Stock Reconciliation',
-      features: ['Real-time Order Ingestion', 'Inventory Sync'],
-      lastSync: 'Today, 09:12 AM'
-    },
-    { 
-      id: 'woocommerce', 
-      name: 'WooCommerce', 
-      category: 'Wholesale', 
-      status: 'Connected', 
-      logo: 'https://logo.clearbit.com/woocommerce.com', 
-      description: 'Daily metadata sync active.',
-      aiCapability: 'Profit Margin Shield',
-      features: ['Daily Metadata Sync', 'Bidirectional Stock Push'],
-      lastSync: 'Today, 04:12 AM'
-    },
-    { 
-      id: 'etsy', 
-      name: 'Etsy', 
-      category: 'Marketplace', 
-      status: 'Connect', 
-      logo: 'https://logo.clearbit.com/etsy.com', 
-      description: 'Artisanal marketplace integration.',
-      aiCapability: 'SEO Tag Synthesizer',
-      features: ['Listing Management', 'Order Tracking'],
-    },
-    { 
-      id: 'square', 
-      name: 'Square', 
-      category: 'POS', 
-      status: 'Connect', 
-      logo: 'https://logo.clearbit.com/squareup.com', 
-      description: 'Physical point-of-sale reconciliation.',
-      aiCapability: 'Foot-Traffic Forecasting',
-      features: ['In-person Sales Sync', 'Stock Adjustment'],
-    },
-    { 
-      id: 'gmail', 
-      name: 'Gmail', 
-      category: 'System', 
-      status: 'Connected', 
-      logo: 'https://logo.clearbit.com/gmail.com', 
-      description: 'Synaptic communication protocols.',
-      aiCapability: 'Lead Analysis Node',
-      features: ['Lead Notification Parsing', 'Auto-Reply Synthesis'],
-      lastSync: 'Today, 10:45 AM'
-    },
-    { 
-      id: 'gdrive', 
-      name: 'Google Drive', 
-      category: 'System', 
-      status: 'Connected', 
-      logo: 'https://logo.clearbit.com/drive.google.com', 
-      description: 'Secure architectural asset storage.',
-      aiCapability: 'BOM Metadata Extraction',
-      features: ['BOM Export Sync', 'Production Asset Ingestion'],
-      lastSync: 'Today, 08:30 AM'
-    }
-  ]);
+  const [integrations, setIntegrations] = useState<Integration[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -513,7 +446,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
         status: data.status,
         profile: {
           name: data.name || 'New Artisan Business',
-          ownerName: data.ownerName || 'Admin User',
+          ownerName: data.ownerName || 'Business Owner',
           email: data.email,
         },
         createdAt: new Date().toISOString(),
@@ -582,7 +515,29 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const saveReport = (r: any) => setReports(prev => [{ ...r, id: Date.now().toString() }, ...prev]);
   const deleteReport = (id: string) => setReports(prev => prev.filter(r => r.id !== id));
   const importData = async (files: File[]) => true;
-  const addInventoryItem = (item: any) => setInventory(prev => [...prev, { ...item, id: Date.now(), stockValue: (item.stock || 0) * (item.unitCost || 0) }]);
+  const addInventoryItem = async (item: any) => {
+    try {
+      const res = await fetch('/api/gating', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: userTier.toLowerCase().replace(/ /g, '-'), action: 'ADD_INVENTORY', currentCount: inventory.length })
+      });
+      const gate = await res.json();
+      if (!gate.allowed) {
+        throw new Error(`Tier limit reached: ${gate.limit}`);
+      }
+      
+      const newItem = { ...item, id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`, stockValue: (item.stock || 0) * (item.unitCost || 0) };
+      setInventory(prev => [...prev, newItem]);
+      await dataLayer.create('inventory', newItem);
+    } catch (e: any) {
+      toast.error(e.message || 'Failed to add inventory item');
+      throw e;
+    }
+  };
+  const updateInventory = (id: string | number, updates: Partial<InventoryItem>) => {
+    setInventory(prev => prev.map(item => String(item.id) === String(id) ? { ...item, ...updates, stockValue: ((updates.stock ?? item.stock) || 0) * ((updates.unitCost ?? item.unitCost) || 0) } : item));
+  };
   
   const addSupplier = (s: any) => setSuppliers(prev => [...prev, { ...s, id: Date.now().toString() }]);
   const updateSupplier = (id: string, updates: Partial<Supplier>) => {
@@ -685,9 +640,26 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       return { success: true, count: 0 };
   };
 
-  const addRecipe = (recipe: any) => {
-    setRecipes(prev => [...prev, { ...recipe, id: `r-${Date.now()}` }]);
-    completeTodoByCategory('recipes');
+  const addRecipe = async (recipe: any) => {
+    try {
+      const res = await fetch('/api/gating', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: userTier.toLowerCase().replace(/ /g, '-'), action: 'ADD_RECIPE', currentCount: recipes.length })
+      });
+      const gate = await res.json();
+      if (!gate.allowed) {
+        throw new Error(`Tier limit reached: ${gate.limit}`);
+      }
+      
+      const newRecipe = { ...recipe, id: `r-${Date.now()}` };
+      setRecipes(prev => [...prev, newRecipe]);
+      await dataLayer.create('recipes', newRecipe);
+      completeTodoByCategory('recipes');
+    } catch (e: any) {
+      toast.error(e.message || 'Failed to add formula');
+      throw e;
+    }
   };
 
   const updateRecipe = (id: string, updates: any) => {
@@ -764,7 +736,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, updateBusinessProfile,
       onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
-      importData, addInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
+      importData, addInventoryItem, updateInventory, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
       generateSchedule, produceBatch, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,

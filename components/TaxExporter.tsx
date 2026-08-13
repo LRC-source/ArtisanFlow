@@ -25,11 +25,11 @@ export const TaxExporter = () => {
     };
 
     return (
-        <Card className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 rounded-3xl relative overflow-hidden">
+        <Card className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 sm:p-8 rounded-3xl relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute -top-32 -right-32 w-64 h-64 bg-emerald-600/20 rounded-full blur-[100px]" />
             
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 sm:p-8">
                 <div className="space-y-4 flex-1">
                     <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">

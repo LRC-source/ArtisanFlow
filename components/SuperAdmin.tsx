@@ -201,7 +201,7 @@ export const SuperAdmin = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-12 pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+            className="space-y-12 pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
         >
             <SubPageHeader 
                 title="Super-Admin Matrix"
@@ -222,14 +222,14 @@ export const SuperAdmin = () => {
                 </div>
             </VaultBanner>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
                 <AdminStatCard title="Total Platform Users" value={liveUsers.length.toString()} icon={Users} trend="+1 This Week" />
                 <AdminStatCard title="Pro Tier Subscribers" value={liveUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
                 <AdminStatCard title="Global Volume Processed" value="$187,020" icon={Activity} trend="+14% MoM" color="text-emerald-400" />
                 <AdminStatCard title="System Health" value="100%" icon={Server} trend="All Nodes Online" color="text-blue-400" />
             </div>
 
-            <Card title="User Matrix & Tier Assignment" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-12">
+            <Card title="User Matrix & Tier Assignment" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-12">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
                     <div className="relative w-full md:w-96">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
@@ -246,7 +246,7 @@ export const SuperAdmin = () => {
                 </div>
 
                 <div className="overflow-x-auto rounded-[2rem] border border-white/5 bg-black/20 shadow-inner">
-                    <table className="w-full text-sm text-left font-sans">
+                    <div className="overflow-x-auto w-full"><table className="w-full text-sm text-left font-sans">
                         <thead className="bg-[#6A2C91]/10 text-white/50 font-sans font-bold text-[10px] uppercase tracking-[0.2em] border-b border-white/5">
                             <tr>
                                 <th className="p-6">User ID</th>
@@ -295,12 +295,12 @@ export const SuperAdmin = () => {
                                 ))
                             )}
                         </tbody>
-                    </table>
+                    </table></div>
                 </div>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Card title="Database Sync Configuration" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-8">
+                <Card title="Database Sync Configuration" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10">
                     <div className="space-y-6 mt-4">
                         <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-4">
                             <Database className="text-[#C5A059] shrink-0 mt-1" size={20} />
@@ -325,7 +325,7 @@ export const SuperAdmin = () => {
                     </div>
                 </Card>
 
-                <Card title="System Alerts" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
+                <Card title="System Alerts" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10">
                     <div className="space-y-4 mt-4">
                         {isLoadingData ? (
                             <div className="p-5 text-center text-white/50 text-xs flex items-center justify-center gap-2">
@@ -345,7 +345,7 @@ export const SuperAdmin = () => {
                                         <AlertTriangle className={alert.type === 'warning' ? 'text-amber-500' : 'text-red-500'} size={18} />
                                         <span className={`${alert.type === 'warning' ? 'text-amber-500/80' : 'text-red-500/80'} font-sans font-light text-sm`}>{alert.message}</span>
                                     </div>
-                                    <button className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${alert.type === 'warning' ? 'text-amber-500 hover:text-amber-400' : 'text-red-500 hover:text-red-400'}`}>Review</button>
+                                    <button onClick={() => toast.info('Opening alert for review...')} className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${alert.type === 'warning' ? 'text-amber-500 hover:text-amber-400' : 'text-red-500 hover:text-red-400'}`}>Review</button>
                                 </div>
                             ))
                         )}
@@ -353,9 +353,9 @@ export const SuperAdmin = () => {
                 </Card>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-8">
                 {/* Integrations API Node */}
-                <Card title="Integrations Configuration Node" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
+                <Card title="Integrations Configuration Node" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10">
                     <p className="text-white/50 text-sm font-sans font-light mb-6">Manage global API keys and webhook secrets for tenant integrations.</p>
                     <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                         {isLoadingData ? (
@@ -422,7 +422,7 @@ export const SuperAdmin = () => {
                 </Card>
 
                 {/* Payment Verification Ledger */}
-                <Card title="Payment Verification Ledger" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-10">
+                <Card title="Payment Verification Ledger" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10">
                     <p className="text-white/50 text-sm font-sans font-light mb-6">Real-time payment event tracking (Stripe / Square).</p>
                     <div className="space-y-4">
                         {isLoadingData ? (
@@ -542,3 +542,4 @@ const CrownIcon = (props: any) => (
         <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
     </svg>
 );
+

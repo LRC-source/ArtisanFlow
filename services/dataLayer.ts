@@ -5,6 +5,8 @@ import {
   BusinessProfile, UserProfile, PortalConfig, MembershipTier, UserRole
 } from '../types';
 import { MOCK_INVENTORY, MOCK_PRODUCTION, MOCK_POSTS, DEFAULT_TIER } from '../constants';
+import { db as firestoreDb } from './firebase';
+import { collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 // Collection Names
 const COLLECTIONS = {
@@ -81,6 +83,18 @@ const initializeStore = () => {
   }
 };
 
+const GAS_URL = import.meta.env.VITE_GAS_DATABASE_URL;
+
+const syncToGAS = (action: string, collectionName: string, payload: any) => {
+  if (!GAS_URL) return;
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, collection: collectionName, data: payload, timestamp: new Date().toISOString() })
+  }).catch(err => console.error('GAS Sync Error:', err));
+};
+
 // Initialize on load
 if (typeof window !== 'undefined') {
   initializeStore();
@@ -96,65 +110,60 @@ export interface DataService {
   delete(collection: string, id: string): Promise<void>;
 }
 
-// LocalStorage-based Implementation of DataService
-class LocalStorageDataService implements DataService {
-  private getCollection<T>(key: string): T[] {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
+// Firestore-based Implementation of DataService with Dual-Write to GAS
+class FirestoreDataService implements DataService {
+  async list<T extends BaseEntity>(collectionName: string): Promise<T[]> {
+    const snap = await getDocs(collection(firestoreDb, collectionName));
+    if (snap.empty) {
+      // Fallback to local storage for initial seeding logic
+      const local = localStorage.getItem(collectionName);
+      if (local) return JSON.parse(local);
+      return [];
+    }
+    return snap.docs.map(d => d.data() as T);
   }
 
-  private setCollection<T>(key: string, data: T[]) {
-    localStorage.setItem(key, JSON.stringify(data));
+  async get<T extends BaseEntity>(collectionName: string, id: string): Promise<T | undefined> {
+    const snap = await getDoc(doc(firestoreDb, collectionName, id));
+    return snap.exists() ? (snap.data() as T) : undefined;
   }
 
-  // --- CRUD Operations ---
-
-  async list<T extends BaseEntity>(collection: string): Promise<T[]> {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return this.getCollection<T>(collection);
+  async getFirst<T extends BaseEntity>(collectionName: string): Promise<T | undefined> {
+    const snap = await getDocs(collection(firestoreDb, collectionName));
+    return snap.docs[0]?.data() as T;
   }
 
-  async get<T extends BaseEntity>(collection: string, id: string): Promise<T | undefined> {
-    const items = this.getCollection<T>(collection);
-    return items.find(i => i.id === id);
-  }
-
-  // Helper for singletons (User, Business Profile)
-  async getFirst<T extends BaseEntity>(collection: string): Promise<T | undefined> {
-    const items = this.getCollection<T>(collection);
-    return items[0];
-  }
-
-  async create<T extends BaseEntity>(collection: string, item: Omit<T, keyof BaseEntity>): Promise<T> {
-    const items = this.getCollection<T>(collection);
-    // Cast item to T to satisfy withTimestamps signature and return type constraint
-    const newItem = withTimestamps(item as unknown as T);
-    this.setCollection(collection, [...items, newItem]);
+  async create<T extends BaseEntity>(collectionName: string, item: Omit<T, keyof BaseEntity>): Promise<T> {
+    const itemData = item as any;
+    const id = itemData.id || generateId();
+    const newItem = {
+      ...itemData,
+      id,
+      created_date: itemData.created_date || new Date().toISOString(),
+      updated_date: new Date().toISOString(),
+      created_by: 'current_user'
+    } as unknown as T;
+    
+    await setDoc(doc(firestoreDb, collectionName, id), newItem);
+    syncToGAS('CREATE', collectionName, newItem);
     return newItem;
   }
 
-  async update<T extends BaseEntity>(collection: string, id: string, updates: Partial<T>): Promise<T> {
-    const items = this.getCollection<T>(collection);
-    const index = items.findIndex(i => i.id === id);
-    if (index === -1) throw new Error('Item not found');
+  async update<T extends BaseEntity>(collectionName: string, id: string, updates: Partial<T>): Promise<T> {
+    const docRef = doc(firestoreDb, collectionName, id);
+    const updatedData = { ...updates, updated_date: new Date().toISOString() };
+    await updateDoc(docRef, updatedData);
     
-    const updatedItem = { 
-      ...items[index], 
-      ...updates, 
-      updated_date: new Date().toISOString() 
-    };
-    
-    items[index] = updatedItem;
-    this.setCollection(collection, items);
-    return updatedItem;
+    const fullDoc = (await getDoc(docRef)).data() as T;
+    syncToGAS('UPDATE', collectionName, fullDoc);
+    return fullDoc;
   }
 
-  async delete(collection: string, id: string): Promise<void> {
-    const items = this.getCollection<BaseEntity>(collection);
-    this.setCollection(collection, items.filter(i => i.id !== id));
+  async delete(collectionName: string, id: string): Promise<void> {
+    await deleteDoc(doc(firestoreDb, collectionName, id));
+    syncToGAS('DELETE', collectionName, { id });
   }
 }
 
-export const db: DataService = new LocalStorageDataService();
+export const db: DataService = new FirestoreDataService();
 export const Collections = COLLECTIONS;

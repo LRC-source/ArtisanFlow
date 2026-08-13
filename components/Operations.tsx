@@ -3,6 +3,8 @@ import { Activity, Layers, Truck, CheckCircle, ClipboardList, Package, ShieldChe
 import { Card, Input, Button, Badge, LockedNode } from './UI';
 import { useArtisanData } from './DataContext';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 export const MarginGuard = () => {
     const { userTier } = useArtisanData();
@@ -16,7 +18,7 @@ export const MarginGuard = () => {
     const isWarning = currentMultiplier < 2.0;
 
     return (
-        <Card title="Margin Guard™ Protection" className="luxury-card mb-16 shadow-2xl shadow-black/20 overflow-hidden relative rounded-[3rem] border-none bg-black/40 backdrop-blur-xl p-10">
+        <Card title="Margin Guard™ Protection" className="luxury-card mb-16 shadow-2xl shadow-black/20 overflow-hidden relative rounded-[3rem] border-none bg-black/40 backdrop-blur-xl p-4 sm:p-10">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#6A2C91] to-[#C5A059]"></div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
                 <div className="space-y-10">
@@ -45,7 +47,7 @@ export const MarginGuard = () => {
                             </motion.div>
                         )}
                     </div>
-                    <div className="p-8">
+                    <div className="p-4 sm:p-8">
                         <label className="block text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] mb-6">Total Batch Units</label>
                         <Input 
                             type="number" 
@@ -57,7 +59,7 @@ export const MarginGuard = () => {
                     </div>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 shadow-inner h-full flex flex-col justify-center relative overflow-hidden group">
+                <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 shadow-inner h-full flex flex-col justify-center relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-48 h-48 bg-[#6A2C91] opacity-[0.03] rounded-bl-full -mr-12 -mt-12 group-hover:opacity-10 transition-opacity duration-1000"></div>
                     <div className="flex items-center gap-4 text-[#C5A059] mb-10 relative z-10">
                         <Calculator size={24} strokeWidth={1.2} />
@@ -101,7 +103,7 @@ export const MarginGuard = () => {
                               {currentMultiplier.toFixed(2)}x Markup
                           </Badge>
                       </div>
-                      <Button className="w-full mt-10 bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all group overflow-hidden relative">
+                      <Button onClick={() => toast.info('Accessing live production nodes...')} className="w-full mt-10 bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all group overflow-hidden relative">
                           <span className="relative z-10">Commit To Production</span>
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                       </Button>
@@ -121,9 +123,9 @@ export const Operations = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-32"
+      className="p-4 sm:p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-32"
     >
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:p-10">
         <div>
             <motion.div 
                 initial={{ opacity: 0, x: -20 }}
@@ -138,7 +140,7 @@ export const Operations = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:p-10">
           <HubNode icon={ClipboardList} title="Production Queue" desc="Real-time orchestration of active manufacturing batches and archival schedules." delay={0.3} />
           <HubNode icon={Package} title="Formula Manager" desc="High-precision BOM management and proprietary recipe encryption." delay={0.4} />
           
@@ -151,7 +153,7 @@ export const Operations = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 1 }}
-        className="p-10 bg-emerald-500/5 border border-emerald-500/20 rounded-[3rem] flex items-center gap-8"
+        className="p-4 sm:p-10 bg-emerald-500/5 border border-emerald-500/20 rounded-[3rem] flex items-center gap-4 sm:p-8"
       >
           <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400">
               <CheckCircle size={28} strokeWidth={1.2} />

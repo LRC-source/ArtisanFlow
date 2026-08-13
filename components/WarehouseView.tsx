@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { Card, Badge, Button } from './UI';
 import { MapPin, Package, Truck, Layers, ArrowLeft, Box, AlertCircle } from 'lucide-react';
 
@@ -32,7 +33,7 @@ export const WarehouseView = () => {
         </div>
 
         {/* Warehouse Map Visualization */}
-        <div className="flex-1 bg-white border border-gray-200 rounded-2xl shadow-lg relative overflow-hidden p-8">
+        <div className="flex-1 bg-white border border-gray-200 rounded-2xl shadow-lg relative overflow-hidden p-4 sm:p-8">
             <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
             
             <div className="grid grid-cols-12 grid-rows-6 gap-6 h-full relative z-10">
@@ -61,7 +62,7 @@ export const WarehouseView = () => {
                     <div className="absolute -top-3 left-4 bg-purple-100 text-purple-800 px-3 py-1 text-xs font-bold uppercase rounded border border-purple-200 flex items-center gap-2">
                         <Layers size={14} /> Production Floor
                     </div>
-                    <div className="flex h-full items-center justify-center gap-8 mt-4">
+                    <div className="flex h-full items-center justify-center gap-4 sm:p-8 mt-4">
                         <div className="text-center">
                             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md border border-purple-100 mx-auto mb-2 animate-pulse">
                                 <Layers className="text-purple-600" size={32} />
@@ -96,7 +97,7 @@ export const WarehouseView = () => {
                         <div className="bg-white p-3 rounded-lg shadow-sm border border-blue-100">
                             <p className="text-xs text-gray-500 uppercase">Ready to Ship</p>
                             <p className="font-bold text-gray-900">12 Parcels</p>
-                            <Button variant="primary" className="w-full mt-2 text-xs py-1 h-8 bg-blue-600 hover:bg-blue-700">Print Labels</Button>
+                            <Button onClick={() => toast.success('Labels sent to printer queue.')} variant="primary" className="w-full mt-2 text-xs py-1 h-8 bg-blue-600 hover:bg-blue-700">Print Labels</Button>
                         </div>
                     </div>
                 </div>

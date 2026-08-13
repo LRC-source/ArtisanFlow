@@ -137,7 +137,7 @@ export const MarketingStrategyReport = () => {
         </div>
 
         {/* Executive Summary Node */}
-        <div className="bg-white border border-stone-200 rounded-[2.5rem] p-10 shadow-sm relative overflow-hidden group">
+        <div className="bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-10 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-bl-full -mr-20 -mt-20 opacity-40 group-hover:opacity-100 transition-opacity"></div>
             <div className="flex items-center gap-3 text-[#6A2C91] mb-6 relative z-10">
                 <div className="p-3 bg-purple-50 rounded-2xl shadow-inner"><Sparkles size={24} /></div>
@@ -153,10 +153,10 @@ export const MarketingStrategyReport = () => {
             <h3 className="text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3">
                 <TrendingUp className="text-[#6A2C91]" /> Content Pillars & Allocation
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8">
                 {strategyData.pillars.map((pillar, i) => (
-                    <div key={i} className="bg-white border border-stone-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl transition-all group overflow-hidden relative">
-                        <div className="absolute top-0 right-0 p-8 opacity-[0.03] text-purple-600"><PieChart size={60} /></div>
+                    <div key={i} className="bg-white border border-stone-100 rounded-[2rem] p-4 sm:p-8 shadow-sm hover:shadow-xl transition-all group overflow-hidden relative">
+                        <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] text-purple-600"><PieChart size={60} /></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
                              <h4 className="font-black text-white uppercase tracking-tight italic">{pillar.name}</h4>
                              <span className="text-2xl font-black text-[#6A2C91] tracking-tighter">{pillar.pct}%</span>
@@ -173,9 +173,9 @@ export const MarketingStrategyReport = () => {
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-10">
             <Card title="Synaptic Channel Links" className="rounded-[2.5rem] border-stone-100 shadow-xl overflow-hidden relative">
-                 <div className="absolute top-0 right-0 p-8 opacity-[0.03] text-purple-600"><Globe size={80} /></div>
+                 <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] text-purple-600"><Globe size={80} /></div>
                  <div className="space-y-4 mt-4 relative z-10">
                     <p className="text-xs text-gray-500 font-medium leading-relaxed mb-6">Authorize secure handshakes to enable auto-publishing logic via Lola.</p>
                     {Object.entries(connectedChannels).map(([platform, isConnected]) => (
@@ -208,7 +208,7 @@ export const MarketingStrategyReport = () => {
             <div className="lg:col-span-2 space-y-10">
                 <Card title="Target Audience Node" className="rounded-[2.5rem] border-stone-100">
                     <p className="text-gray-900 text-lg font-black uppercase italic tracking-tight mb-4">{strategyData.audience.demographics}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-8">
                         <div>
                             <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2"><Target size={14} /> Synaptic Affinity</h4>
                             <div className="flex flex-wrap gap-2">
@@ -229,9 +229,9 @@ export const MarketingStrategyReport = () => {
                 </Card>
 
                 {/* AI CONTENT BUNDLE TRIGGER */}
-                <div className="bg-[#6A2C91] rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden group">
+                <div className="bg-[#6A2C91] rounded-[2.5rem] p-4 sm:p-10 text-white shadow-2xl relative overflow-hidden group">
                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                     <div className="flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
+                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative z-10">
                         <div className="space-y-2 text-center md:text-left">
                              <h3 className="text-3xl font-black uppercase italic tracking-tighter">AI Content Workbench</h3>
                              <p className="text-purple-200 font-medium">Auto-generate a week of optimized posts based on your strategy.</p>
@@ -254,11 +254,11 @@ export const MarketingStrategyReport = () => {
                 <h3 className="text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3">
                     <Layers className="text-[#6A2C91]" /> Content Queue Nodes
                 </h3>
-                <div className="flex overflow-x-auto gap-8 pb-10 scrollbar-hide px-2">
+                <div className="flex overflow-x-auto gap-4 sm:p-8 pb-10 scrollbar-hide px-2">
                     {contentBundle.map((post, idx) => {
                         const isScheduled = scheduledIds.includes(`${post.platform}-${idx}`);
                         return (
-                            <div key={idx} className="min-w-[340px] max-w-[340px] bg-white border border-stone-200 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col group relative">
+                            <div key={idx} className="min-w-[340px] max-w-[340px] bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-8 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col group relative">
                                 <div className="flex justify-between items-start mb-6">
                                     <div className={`p-3 rounded-2xl ${isScheduled ? 'bg-emerald-50 text-emerald-600' : 'bg-stone-50 text-gray-900'}`}>
                                         {getPlatformIcon(post.platform)}
@@ -302,7 +302,7 @@ export const MarketingStrategyReport = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
                 {strategyData.platforms.map((platform, i) => (
-                    <div key={i} className="bg-white border border-stone-200 rounded-[2.5rem] p-8 hover:shadow-xl hover:border-[#6A2C91] transition-all group">
+                    <div key={i} className="bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-8 hover:shadow-xl hover:border-[#6A2C91] transition-all group">
                         <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center text-[#6A2C91] mb-6 shadow-inner group-hover:bg-[#6A2C91] group-hover:text-white transition-all">
                             {getPlatformIcon(platform.name)}
                         </div>
@@ -315,7 +315,7 @@ export const MarketingStrategyReport = () => {
         </div>
 
         {/* Bottom Directive Ledger */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8">
             <Card title="Raw Concept Repository" className="rounded-[2.5rem] border-stone-100">
                 <div className="space-y-4 mt-4">
                     {strategyData.ideas.map((idea, i) => (
@@ -328,7 +328,7 @@ export const MarketingStrategyReport = () => {
             </Card>
 
             <Card title="Strategic Financial Guardrails" className="rounded-[2.5rem] border-stone-100 relative overflow-hidden">
-                <div className="absolute bottom-0 right-0 p-10 opacity-[0.03] text-emerald-600"><DollarSign size={120} /></div>
+                <div className="absolute bottom-0 right-0 p-4 sm:p-10 opacity-[0.03] text-emerald-600"><DollarSign size={120} /></div>
                 <div className="space-y-6 mt-4 relative z-10">
                     {[
                         { label: 'Initial Acquisition Buffer', val: '$1,200.00', status: 'Stable' },

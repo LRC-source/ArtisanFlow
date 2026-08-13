@@ -73,7 +73,7 @@ export const LandingPage = () => {
                 </div>
 
                 {/* Tiers */}
-                <div className="mt-24 w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8 px-4 relative z-10">
+                <div className="mt-24 w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8 px-4 relative z-10">
                     <TierCard 
                         title="Free Audit" 
                         price="$0" 

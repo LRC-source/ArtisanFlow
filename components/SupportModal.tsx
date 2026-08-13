@@ -97,7 +97,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                             </div>
 
                             {isSuccess ? (
-                                <div className="p-10 flex flex-col items-center justify-center text-center space-y-4">
+                                <div className="p-4 sm:p-10 flex flex-col items-center justify-center text-center space-y-4">
                                     <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-4">
                                         <CheckCircle size={40} />
                                     </div>

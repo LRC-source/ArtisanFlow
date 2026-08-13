@@ -57,7 +57,7 @@ export const FinanceHub: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="space-y-12 pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+          className="space-y-12 pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
         >
             <ContextualTutorialModal
                 hubId="finance"
@@ -108,7 +108,7 @@ export const FinanceHub: React.FC = () => {
                 </div>
             )}
 
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4 sm:p-8">
                 <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
                     <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Command Center
                 </button>
@@ -130,17 +130,17 @@ export const FinanceHub: React.FC = () => {
             </div>
 
             {/* Financial Stat Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
                 <FinanceCard title="Gross Revenue" value={`$${revenue.toFixed(2)}`} trend="+12.4%" positive icon={DollarSign} />
                 <FinanceCard title="COGS (Interconnected)" value={`$${estimatedCOGS.toFixed(2)}`} trend="-2.1%" positive icon={Package} />
                 <FinanceCard title="Net Profit" value={`$${grossProfit.toFixed(2)}`} trend="+8.5%" positive icon={TrendingUp} />
                 <FinanceCard title="Avg. Margin" value={`${margin.toFixed(1)}%`} trend="Stable" positive icon={Target} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12">
                 {/* Main Cash Flow Visualizer */}
                 <div className="lg:col-span-2 space-y-12">
-                    <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-12 rounded-[3rem] shadow-2xl">
+                    <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-12 rounded-[3rem] shadow-2xl">
                         <div className="mb-10">
                             <h3 className="text-3xl font-serif text-white tracking-tight">Interconnected Flow Ledger</h3>
                         </div>
@@ -177,14 +177,14 @@ export const FinanceHub: React.FC = () => {
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
-                        <div className="flex gap-8 mt-10 justify-center">
+                        <div className="flex gap-4 sm:p-8 mt-10 justify-center">
                             <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#6A2C91] rounded-full shadow-[0_0_10px_#6A2C91]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Omnichannel Revenue</span></div>
                             <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#C5A059] rounded-full shadow-[0_0_10px_#C5A059]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Operational Expenses</span></div>
                         </div>
                     </div>
 
                     {/* AI Budget Guard */}
-                    <div className="luxury-card bg-[#1A1A1A] border border-[#C5A059]/20 p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(197,160,89,0.05)] relative overflow-hidden group">
+                    <div className="luxury-card bg-[#1A1A1A] border border-[#C5A059]/20 p-4 sm:p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(197,160,89,0.05)] relative overflow-hidden group">
                          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#C5A059]/10 to-transparent rounded-bl-full opacity-50 -mr-20 -mt-20 pointer-events-none"></div>
                          
                          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
@@ -254,7 +254,7 @@ export const FinanceHub: React.FC = () => {
 
                 {/* Report Generator Module */}
                 <div className="lg:col-span-1 space-y-8">
-                    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+                    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-10">
                         <div className="mb-8">
                             <h3 className="text-3xl font-serif text-white tracking-tight mb-4">Synaptic Reports</h3>
                             <p className="text-white/50 text-sm font-sans font-light italic leading-relaxed">
@@ -285,7 +285,7 @@ export const FinanceHub: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+                    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-10">
                         <h3 className="text-2xl font-serif text-white tracking-tight mb-8">System Parameters</h3>
                         <div className="space-y-8">
                             <div>
@@ -309,8 +309,8 @@ export const FinanceHub: React.FC = () => {
 };
 
 const FinanceCard = ({ title, value, trend, positive, icon: Icon }: any) => (
-    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
-        <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-8 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+        <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
             <Icon size={64} className="text-[#6A2C91]" />
         </div>
         <div className="flex justify-between items-start mb-6">
@@ -401,7 +401,7 @@ CERTIFIED BY LOLA AI SYSTEMS
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-12 pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+            className="space-y-12 pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
         >
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <button onClick={() => navigate('/finance')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
@@ -449,7 +449,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                     </div>
                     
                     {!loading && analysis && (
-                        <div className="w-full md:w-96 bg-black/40 rounded-[2.5rem] p-12 border border-white/5 flex flex-col items-center text-center shadow-inner">
+                        <div className="w-full md:w-96 bg-black/40 rounded-[2.5rem] p-4 sm:p-12 border border-white/5 flex flex-col items-center text-center shadow-inner">
                             <p className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] mb-8">Risk Architecture</p>
                             <div className={`w-32 h-32 rounded-full border-[10px] flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(0,0,0,0.5)] ${analysis.riskLevel === 'Low' ? 'border-emerald-500/20 text-emerald-400' : analysis.riskLevel === 'Medium' ? 'border-amber-500/20 text-amber-400' : 'border-red-500/20 text-red-400'}`}>
                                 <ShieldCheck size={48} strokeWidth={1.5} />
@@ -463,7 +463,7 @@ CERTIFIED BY LOLA AI SYSTEMS
 
             {/* Strategic Recovery Plans */}
             {!loading && analysis && (
-                <div className="luxury-card bg-[#0A0A0A] border border-[#6A2C91]/20 rounded-[3rem] p-12 shadow-2xl relative overflow-hidden">
+                <div className="luxury-card bg-[#0A0A0A] border border-[#6A2C91]/20 rounded-[3rem] p-4 sm:p-12 shadow-2xl relative overflow-hidden">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                         <h3 className="text-3xl font-serif text-white tracking-tight">Recovery Protocols</h3>
                         
@@ -480,8 +480,8 @@ CERTIFIED BY LOLA AI SYSTEMS
                         </div>
                     </div>
 
-                    <div className="p-10 bg-white/5 rounded-[2rem] border border-white/10 animate-in fade-in zoom-in duration-500 shadow-inner">
-                        <div className="flex items-start gap-8">
+                    <div className="p-4 sm:p-10 bg-white/5 rounded-[2rem] border border-white/10 animate-in fade-in zoom-in duration-500 shadow-inner">
+                        <div className="flex items-start gap-4 sm:p-8">
                             <div className="w-14 h-14 bg-[#6A2C91]/20 rounded-2xl text-[#6A2C91] flex items-center justify-center border border-[#6A2C91]/30 shrink-0"><Map size={24} strokeWidth={1.5}/></div>
                             <div>
                                 <h4 className="text-2xl font-serif text-white tracking-tight mb-4">{planTab}-Year Strategic Plan</h4>
@@ -521,7 +521,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                     </div>
                 </div>
 
-                <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12">
+                <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-12">
                     <div className="h-[500px] w-full">
                         {loading ? (
                             <div className="w-full h-full flex items-center justify-center"><Loader2 size={64} strokeWidth={1} className="animate-spin text-white/20" /></div>

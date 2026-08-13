@@ -56,10 +56,10 @@ export const BusinessPulseCheck = () => {
         </div>
 
         <div className="w-full md:w-1/2">
-            <Card className="luxury-card p-12">
+            <Card className="luxury-card p-4 sm:p-12">
                 <h3 className="text-2xl font-serif text-white font-bold tracking-tight mb-10">Establish Identity Baseline</h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:p-8">
                     <div className="space-y-2">
                         <label className="text-[10px] font-sans font-medium text-stone-400 uppercase tracking-[0.2em] ml-2">Avg Monthly Visitors</label>
                         <Input 
@@ -129,7 +129,7 @@ export const BusinessPulseCheck = () => {
                     <h4 className="text-[10px] font-sans font-medium text-[#6A2C91] uppercase tracking-[0.3em] mb-8 flex items-center gap-3">
                         <Sparkles size={16} className="text-[#C5A059]" strokeWidth={1.5} /> Creator Archetype
                     </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:p-8">
                         <div className="space-y-2">
                             <label className="text-[10px] font-sans font-medium text-stone-400 uppercase tracking-[0.2em] ml-2">Personality Node</label>
                             <Select
@@ -198,7 +198,7 @@ export const BusinessPulseCheck = () => {
         </div>
 
         <div className="w-full md:w-1/2">
-            <Card className="luxury-card text-center pb-16 p-12">
+            <Card className="luxury-card text-center pb-16 p-4 sm:p-12">
                 <h3 className="text-2xl font-serif text-white font-bold mb-12 text-left tracking-tight">Manufacturing Integrity Audit</h3>
                 
                 {/* Gauge Visualization */}
@@ -216,8 +216,8 @@ export const BusinessPulseCheck = () => {
                 <div className="text-6xl font-serif text-red-600 tracking-tight mb-4">85</div>
                 <p className="text-[10px] text-stone-400 font-sans font-medium uppercase tracking-[0.3em]">Synaptic Risk Index</p>
 
-                <div className="mt-12 bg-red-50/50 border border-red-100/50 rounded-[3rem] p-10 flex flex-col sm:flex-row items-center gap-8 text-left relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-8 opacity-[0.03] text-red-600 group-hover:rotate-12 transition-transform duration-700"><AlertTriangle size={100} strokeWidth={1}/></div>
+                <div className="mt-12 bg-red-50/50 border border-red-100/50 rounded-[3rem] p-4 sm:p-10 flex flex-col sm:flex-row items-center gap-4 sm:p-8 text-left relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] text-red-600 group-hover:rotate-12 transition-transform duration-700"><AlertTriangle size={100} strokeWidth={1}/></div>
                     <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-red-500 shadow-[0_8px_30px_rgba(239,68,68,0.15)] shrink-0 relative z-10">
                         <Activity size={32} strokeWidth={1.5} />
                     </div>
@@ -230,13 +230,13 @@ export const BusinessPulseCheck = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12">
-                    <div className="bg-[#6A2C91]/5 p-8 rounded-[3rem] border border-[#6A2C91]/10 group hover:bg-white transition-all duration-500">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:p-8 mt-12">
+                    <div className="bg-[#6A2C91]/5 p-4 sm:p-8 rounded-[3rem] border border-[#6A2C91]/10 group hover:bg-white transition-all duration-500">
                         <p className="text-[9px] text-[#6A2C91]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Omnichannel Flow</p>
                         <p className="text-4xl font-serif text-[#6A2C91] tracking-tight mb-2">30.0%</p>
                         <p className="text-[10px] text-[#6A2C91]/80 font-sans font-medium uppercase tracking-[0.2em]">Conversion Rate</p>
                     </div>
-                    <div className="bg-[#C5A059]/5 p-8 rounded-[3rem] border border-[#C5A059]/10 group hover:bg-white transition-all duration-500">
+                    <div className="bg-[#C5A059]/5 p-4 sm:p-8 rounded-[3rem] border border-[#C5A059]/10 group hover:bg-white transition-all duration-500">
                         <p className="text-[9px] text-[#C5A059]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Network Liquidity</p>
                         <p className="text-4xl font-serif text-[#C5A059] tracking-tight mb-2">$15.00</p>
                         <p className="text-[10px] text-[#C5A059]/80 font-sans font-medium uppercase tracking-[0.2em]">Avg Order Value</p>
@@ -245,8 +245,8 @@ export const BusinessPulseCheck = () => {
             </Card>
 
             <div className="mt-12 bg-gradient-to-br from-[#1A1A1A] to-[#333333] p-px rounded-[3rem] shadow-2xl">
-                <div className="bg-white rounded-[2.9rem] p-12 md:p-16 text-center relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-12 opacity-[0.02] text-gray-900 pointer-events-none group-hover:rotate-12 transition-transform duration-1000"><Sparkles size={160} strokeWidth={1}/></div>
+                <div className="bg-white rounded-[2.9rem] p-4 sm:p-12 md:p-16 text-center relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 sm:p-12 opacity-[0.02] text-gray-900 pointer-events-none group-hover:rotate-12 transition-transform duration-1000"><Sparkles size={160} strokeWidth={1}/></div>
                     
                     <div className="flex items-center justify-center gap-4 mb-6 text-[#1A1A1A]">
                         <Sparkles size={28} className="text-[#C5A059] animate-pulse" strokeWidth={1.5} />

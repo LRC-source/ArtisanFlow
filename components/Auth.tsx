@@ -3,22 +3,46 @@ import { Card, Button, Input, LRCLogo } from './UI';
 import { useArtisanData, UserTier } from './DataContext';
 import { Chrome, Mail, Lock, ArrowRight, ShieldCheck, Zap, Crown, CheckCircle, CreditCard, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useLocation } from 'react-router-dom';
+import { PaymentForm, CreditCard as SquareCreditCard } from 'react-square-web-payments-sdk';
 
-export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { initialView?: 'login' | 'signup' | 'tiers' | 'payment', selectedTier?: UserTier, onBack?: () => void }) => {
+export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedTier, onBack }: { initialView?: 'login' | 'signup' | 'tiers' | 'payment', selectedTier?: UserTier, onBack?: () => void }) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const urlTier = queryParams.get('tier') as UserTier | null;
+  const activeTier = propSelectedTier || urlTier || undefined;
+  
   const { login, googleLogin, signUp } = useArtisanData();
-  const [view, setView] = useState<'login' | 'signup' | 'tiers' | 'payment'>(initialView);
+  const [view, setView] = useState<'login' | 'signup' | 'tiers' | 'payment'>(
+    activeTier ? (activeTier === 'Free Audit' ? 'signup' : 'payment') : initialView
+  );
+  const [selectedTier, setSelectedTier] = useState<UserTier | undefined>(activeTier);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [isNewUser, setIsNewUser] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(!!activeTier);
+
+  const authSchema = z.object({
+    email: z.string().email({ message: "Invalid email address" }),
+    pass: z.string().min(8, { message: "Vault Key (Password) must be at least 8 characters long" })
+  });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const result = authSchema.safeParse({ email, pass });
+    if (!result.success) {
+      toast.error(result.error.issues[0].message);
+      return;
+    }
+
     if (view === 'signup') {
       if (selectedTier === 'Free Audit') {
         try {
           await signUp({ email, password: pass, tier: 'Free Audit', status: 'Active' });
         } catch (e) {
-          alert("Account creation failed. You may already have an account with this email.");
+          toast.error("Account creation failed. You may already have an account with this email.");
         }
       } else if (selectedTier) {
         setView('payment');
@@ -59,20 +83,23 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
 
     try {
       const user = await googleLogin();
-      if (isNewUser && user) {
-        if (selectedTier === 'Free Audit') {
-          try {
-            await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Audit', status: 'Active' });
-          } catch (e) {
-            console.error(e);
+      if (user) {
+        if (isNewUser) {
+          if (selectedTier === 'Free Audit') {
+            try {
+              await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Audit', status: 'Active' });
+            } catch (e) {
+              console.error(e);
+            }
+          } else if (selectedTier) {
+            setEmail(user.email); // Pre-fill the email state for the payment gateway
+            setView('payment');
+          } else {
+            setEmail(user.email);
+            setView('tiers');
           }
-        } else if (selectedTier) {
-          setEmail(user.email); // Pre-fill the email state for the payment gateway
-          setView('payment');
-        } else {
-          setEmail(user.email);
-          setView('tiers');
         }
+        // If not new user, onAuthStateChanged in DataContext will handle routing automatically.
       }
     } catch (error) {
       console.error("Google OAuth handshake failed:", error);
@@ -132,7 +159,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
             className="w-full max-w-md z-10"
           >
             {onBack && (
-              <button onClick={onBack} className="absolute -top-12 left-0 text-sm font-bold text-white/50 hover:text-white transition-colors">
+              <button onClick={onBack} className="absolute -top-4 sm:p-12 left-0 text-sm font-bold text-white/50 hover:text-white transition-colors">
                 &larr; Back to Platform
               </button>
             )}
@@ -160,7 +187,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
             >
-              <Card className="luxury-card p-8 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
+              <Card className="luxury-card p-4 sm:p-8 sm:p-4 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
                 <h2 className="text-lg font-serif text-white mb-8 flex items-center justify-center gap-3 text-center">
                   {view === 'login' ? <Lock size={18} className="text-[#C5A059]"/> : <Mail size={18} className="text-[#C5A059]"/>}
                   {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
@@ -186,17 +213,18 @@ export const AuthGateway = ({ initialView = 'login', selectedTier, onBack }: { i
                   <div className="relative flex justify-center text-[10px] font-black uppercase bg-transparent px-4 text-white/20 tracking-[0.2em]">Secure Entry Point</div>
                 </div>
 
-                <Button variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center h-12 font-bold border-white/10 hover:bg-white/5 text-white">
+                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center h-12 font-bold border-white/10 hover:bg-white/5 text-white">
                   <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
                 </Button>
 
                 <div className="mt-4">
                   <Button 
+                    type="button"
                     variant="primary"
                     onClick={() => { setView(view === 'login' ? 'signup' : 'login'); setIsNewUser(view === 'login'); }}
                     className="w-full md:w-full flex items-center justify-center h-12 font-bold bg-[#6A2C91] hover:bg-purple-800 border-none text-white transition-colors"
                   >
-                    {view === 'login' ? "Don't have an access key? Initialize here" : "Already Have A Account, Sign In Here"}
+                    {view === 'login' ? "Don't have an access key? Initialize here" : "Already Have An Account? Sign In Here"}
                   </Button>
                 </div>
               </Card>
@@ -244,7 +272,7 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           variants={{
             visible: { transition: { staggerChildren: 0.15 } }
           }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8 lg:gap-4 sm:p-12"
         >
            <TierCard 
              title="Free Audit" 
@@ -335,15 +363,14 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
     cvc: ''
   });
 
-  const handlePayment = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlePayment = async (token?: string) => {
     setIsProcessing(true);
 
     try {
       const dbUrl = (import.meta as any).env.VITE_GAS_DATABASE_URL;
       if (dbUrl) {
         // Send payment verification to backend
-        await fetch(dbUrl, {
+        const response = await fetch(dbUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
@@ -351,30 +378,35 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
             payload: {
               userId: email,
               customerName: formData.name,
-              cardNumber: formData.cardNumber,
+              paymentToken: token, // Sent from Square
               amount: tier === 'Margin Protection Pro' ? 149.00 : 49.00,
               tier: tier
             }
           })
         });
+        
+        // Wait for backend to confirm Square actually charged the card
+        const result = await response.json();
+        
+        if (!result || result.success === false) {
+           throw new Error(result.error || "Payment declined by backend.");
+        }
       }
       
-      // Simulate network delay for payment processing
-      setTimeout(() => {
-        setIsProcessing(false);
-        onSuccess();
-      }, 2000);
-    } catch (error) {
+      setIsProcessing(false);
+      onSuccess(); // Only proceed if backend successfully processed the payment
+    } catch (error: any) {
       console.error("Payment error:", error);
       setIsProcessing(false);
-      onSuccess(); // Still succeed for testing purposes if network fails
+      toast.error(error.message || "Payment failed. Please check your credentials.");
+      // CRITICAL: Removed the demo onSuccess() call here so failed payments actually block entry.
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-[#0A0A0A]">
       <div className="carbon-texture"></div>
-      <button onClick={onBack} className="absolute top-10 left-10 text-sm font-bold text-white/50 hover:text-white transition-colors z-20">
+      <button onClick={onBack} className="absolute top-4 sm:p-10 left-10 text-sm font-bold text-white/50 hover:text-white transition-colors z-20">
         &larr; Back to Account Creation
       </button>
 
@@ -391,8 +423,8 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
           </div>
         </div>
 
-        <Card className="luxury-card p-8 sm:p-10 bg-black/60 backdrop-blur-3xl border-white/10 shadow-2xl">
-          <form onSubmit={handlePayment} className="space-y-8">
+        <Card className="luxury-card p-4 sm:p-8 sm:p-4 sm:p-10 bg-black/60 backdrop-blur-3xl border-white/10 shadow-2xl">
+          <div className="space-y-8">
             {/* Billing Details */}
             <div className="space-y-4">
               <h3 className="text-white font-serif text-lg mb-4 border-b border-white/10 pb-2">Billing Details</h3>
@@ -425,39 +457,49 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
               <h3 className="text-white font-serif text-lg mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
                 <CreditCard size={18} className="text-[#C5A059]" /> Payment Information
               </h3>
-              <div className="space-y-2">
-                <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Card Number</label>
-                <Input type="text" placeholder="4242 4242 4242 4242" required value={formData.cardNumber} onChange={e => setFormData({...formData, cardNumber: e.target.value})} className="bg-white/5 border-white/10 text-white font-mono" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Expiry (MM/YY)</label>
-                  <Input type="text" placeholder="12/25" required value={formData.expiry} onChange={e => setFormData({...formData, expiry: e.target.value})} className="bg-white/5 border-white/10 text-white font-mono" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">CVC</label>
-                  <Input type="text" placeholder="123" required value={formData.cvc} onChange={e => setFormData({...formData, cvc: e.target.value})} className="bg-white/5 border-white/10 text-white font-mono" />
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-6">
-              <Button disabled={isProcessing} variant="premium" type="submit" className="w-full h-14 text-sm font-black tracking-widest shadow-2xl flex items-center justify-center">
-                {isProcessing ? (
-                  <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> PROCESSING SECURE PAYMENT...</>
-                ) : (
-                  <>PAY ${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} & INITIALIZE <ArrowRight size={18} className="ml-2" /></>
-                )}
-              </Button>
+              
+              <PaymentForm
+                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sandbox-sq0idb-app-id'}
+                locationId={(import.meta as any).env.VITE_SQUARE_LOCATION_ID || 'L7APSEDCE2RJX'}
+                cardTokenizeResponseReceived={async (tokenResult: any, verifiedBuyer?: any) => {
+                  if (tokenResult.status === 'OK') {
+                    await handlePayment(tokenResult.token);
+                  } else {
+                    toast.error("Payment tokenization failed. Please check your card details.");
+                    console.error("Tokenization error:", tokenResult.errors);
+                  }
+                }}
+              >
+                <SquareCreditCard
+                  buttonProps={{
+                    css: {
+                      backgroundColor: '#6A2C91',
+                      fontSize: '14px',
+                      color: '#fff',
+                      height: '56px',
+                      fontWeight: '900',
+                      letterSpacing: '0.1em',
+                      '&:hover': {
+                        backgroundColor: '#522272',
+                      },
+                    },
+                    isLoading: isProcessing,
+                  }}
+                  focus="cardNumber"
+                >
+                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} & INITIALIZE`}
+                </SquareCreditCard>
+              </PaymentForm>
             </div>
             
             <div className="flex items-center justify-center gap-2 text-white/30 mt-4">
               <ShieldCheck size={14} />
               <span className="text-[9px] uppercase tracking-widest">256-bit SSL Encrypted Transaction</span>
             </div>
-          </form>
+          </div>
         </Card>
       </motion.div>
     </div>
   );
 };
+

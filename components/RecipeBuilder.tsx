@@ -5,6 +5,9 @@ import { Api } from '../services/api';
 import { InventoryType, Recipe, RecipeIngredient } from '../types';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useArtisanData, InventoryItem } from './DataContext';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { UpgradeModal } from './UpgradeModal';
 
 /**
  * BOM & Formula Builder - High-Precision Cost Architecture
@@ -13,15 +16,35 @@ import { useArtisanData, InventoryItem } from './DataContext';
 export const RecipeBuilder: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { inventory, recipes, addRecipe, updateRecipe } = useArtisanData();
+  const { inventory, recipes, addRecipe, updateRecipe, userTier } = useArtisanData();
   const [materials, setMaterials] = useState<InventoryItem[]>([]);
   
-  const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
-  const [yieldQty, setYieldQty] = useState(1);
-  const [laborCost, setLaborCost] = useState(0);
-  const [recipeName, setRecipeName] = useState('');
-  const [sku, setSku] = useState('');
+  const loadDraft = () => {
+    const saved = sessionStorage.getItem('draft_recipe');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return null;
+  };
+  const draft = loadDraft();
+
+  const [ingredients, setIngredients] = useState<RecipeIngredient[]>(draft?.ingredients || []);
+  const [yieldQty, setYieldQty] = useState(draft?.yieldQty || 1);
+  const [laborCost, setLaborCost] = useState(draft?.laborCost || 0);
+  const [recipeName, setRecipeName] = useState(draft?.recipeName || '');
+  const [sku, setSku] = useState(draft?.sku || '');
   const [isEditing, setIsEditing] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeLimit, setUpgradeLimit] = useState(5);
+  const [requiredTier, setRequiredTier] = useState("Artisan Flow Basic");
+
+  useEffect(() => {
+    if (!isEditing) {
+      sessionStorage.setItem('draft_recipe', JSON.stringify({
+        ingredients, yieldQty, laborCost, recipeName, sku
+      }));
+    }
+  }, [ingredients, yieldQty, laborCost, recipeName, sku, isEditing]);
 
   useEffect(() => {
     setMaterials(inventory.filter(i => i.type === 'raw'));
@@ -70,38 +93,80 @@ export const RecipeBuilder: React.FC = () => {
   const costPerUnit = yieldQty > 0 ? totalCost / yieldQty : 0;
   const targetRetail = costPerUnit * 2.2;
 
+  const recipeSchema = z.object({
+    name: z.string().min(1, { message: "Formula Name is required" }),
+    sku: z.string().min(1, { message: "SKU is required" }),
+    yieldQty: z.number().min(1, { message: "Yield must be at least 1" }),
+    laborCost: z.number().min(0, { message: "Labor cost cannot be negative" }),
+    ingredients: z.array(z.object({
+      inventoryItemId: z.string().min(1),
+      quantity: z.number().min(0.01, { message: "Ingredient quantity must be greater than 0" }),
+      unit: z.string().min(1)
+    })).min(1, { message: "At least one BOM node is required" })
+  });
+
   const handleSave = async () => {
-    if (!recipeName) return alert('Vault error: Recipe Name is mandatory.');
+    if (!isEditing && userTier === 'Free Audit' && recipes.length >= 5) {
+      setShowUpgradeModal(true);
+      return;
+    }
+
+    const defaultSku = 'BOM-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+    const result = recipeSchema.safeParse({
+      name: recipeName,
+      sku: sku || defaultSku,
+      yieldQty: Number(yieldQty),
+      laborCost: Number(laborCost),
+      ingredients: ingredients.map(ing => ({
+        ...ing,
+        quantity: Number(ing.quantity)
+      }))
+    });
+
+    if (!result.success) {
+      toast.error(result.error.issues[0].message);
+      return;
+    }
     
     const recipePayload: any = {
-      name: recipeName,
-      sku: sku || 'BOM-' + Math.random().toString(36).substr(2, 5).toUpperCase(),
+      name: result.data.name,
+      sku: result.data.sku,
       version: isEditing ? '2.0' : '1.0',
-      yield: `${yieldQty} Units`,
-      yieldValue: yieldQty,
-      ingredients: ingredients.map(ing => ({
+      yield: `${result.data.yieldQty} Units`,
+      yieldValue: result.data.yieldQty,
+      ingredients: result.data.ingredients.map(ing => ({
           name: materials.find(m => m.id.toString() === ing.inventoryItemId.toString())?.name || 'Unknown',
           qty: `${ing.quantity} ${ing.unit}`
       })),
-      rawIngredients: ingredients,
-      materialCost: totalCost - laborCost,
-      laborCost: laborCost,
+      rawIngredients: result.data.ingredients,
+      materialCost: totalCost - result.data.laborCost,
+      laborCost: result.data.laborCost,
       totalCost: totalCost,
       productionTime: isEditing ? 45 : 60 // mock
     };
-    
-    if (isEditing && id) {
-        updateRecipe(id, recipePayload);
-        alert('Vault Update: Formula Re-synchronized Successfully.');
-    } else {
-        addRecipe(recipePayload);
-        alert('Vault Deployment: Formula Synchronized Successfully.');
+
+    try {
+      if (isEditing && id) {
+          updateRecipe(id, recipePayload);
+          toast.success('Vault Deployment: Formula Synchronized Successfully.');
+      } else {
+          await addRecipe(recipePayload);
+          toast.success('Vault Deployment: Formula Synchronized Successfully.');
+      }
+      sessionStorage.removeItem('draft_recipe');
+      navigate('/recipes');
+    } catch (e: any) {
+      if (e.message.includes("Tier limit reached")) {
+        const limitMatch = e.message.match(/\d+/);
+        setUpgradeLimit(limitMatch ? parseInt(limitMatch[0]) : 5);
+        setRequiredTier(userTier === 'Free Audit' ? 'Artisan Flow Basic' : 'Margin Protection Pro');
+        setShowUpgradeModal(true);
+      }
     }
-    
-    navigate('/recipes');
   };
 
   return (
+    <>
     <div className="p-6 space-y-10 animate-in fade-in pb-20">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
@@ -120,7 +185,7 @@ export const RecipeBuilder: React.FC = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-10">
         <div className="lg:col-span-2 space-y-10">
           <Card title="Structural Identity" className="rounded-[2.5rem] border-stone-100">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
@@ -185,7 +250,7 @@ export const RecipeBuilder: React.FC = () => {
 
         <div className="space-y-8">
           <Card title="Synaptic Cost Engine" className="sticky top-6 rounded-[2.5rem] border-stone-100 shadow-xl overflow-hidden">
-             <div className="absolute top-0 right-0 p-8 opacity-5 text-purple-600"><Calculator size={80} /></div>
+             <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-5 text-purple-600"><Calculator size={80} /></div>
              <div className="space-y-8 mt-4 relative z-10">
                 <div className="flex justify-between items-center border-b border-stone-50 pb-4">
                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Material Overhead</span>
@@ -234,7 +299,7 @@ export const RecipeBuilder: React.FC = () => {
              </div>
           </Card>
 
-          <div className="bg-stone-900 p-8 rounded-[2.5rem] text-white">
+          <div className="bg-stone-900 p-4 sm:p-8 rounded-[2.5rem] text-white">
               <div className="flex items-center gap-3 mb-4">
                   <Zap size={18} className="text-amber-400" />
                   <h4 className="text-lg font-black uppercase italic">AI Stress Test</h4>
@@ -242,10 +307,19 @@ export const RecipeBuilder: React.FC = () => {
               <p className="text-stone-400 text-xs leading-relaxed font-medium mb-6">
                   Lola is simulating current formula ROI based on active raw material burn rates. Your estimated break-even is <span className="text-white font-bold">14 units</span> at current wholesale projections.
               </p>
-              <button className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">VIEW ROI HEATMAP</button>
+              <button onClick={() => toast.info('Generating ROI heatmap simulation...')} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">VIEW ROI HEATMAP</button>
           </div>
         </div>
       </div>
     </div>
+    <UpgradeModal 
+      isOpen={showUpgradeModal} 
+      onClose={() => setShowUpgradeModal(false)}
+      featureName="Formulas/BOMs"
+      currentLimit={upgradeLimit}
+      requiredTier={requiredTier}
+    />
+    </>
   );
 };
+

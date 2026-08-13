@@ -12,7 +12,7 @@ export const TermsAndConditions = () => {
         >
             <SubPageHeader title="Terms & Conditions" description="Please read these terms carefully before using ArtisanFlow." />
             
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-6 text-white/70">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-8 space-y-6 text-white/70">
                 <section className="space-y-3">
                     <h2 className="text-[#C5A059] font-black text-xl uppercase tracking-widest">1. Acceptance of Terms</h2>
                     <p className="leading-relaxed">By accessing and using ArtisanFlow, you accept and agree to be bound by the terms and provision of this agreement. Any participation in this service will constitute acceptance of this agreement.</p>
@@ -41,7 +41,7 @@ export const PrivacyPolicy = () => {
         >
             <SubPageHeader title="Privacy Policy" description="How we collect, use, and protect your data." />
             
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-6 text-white/70">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-8 space-y-6 text-white/70">
                 <section className="space-y-3">
                     <h2 className="text-[#C5A059] font-black text-xl uppercase tracking-widest">1. Data Collection</h2>
                     <p className="leading-relaxed">We collect information from you when you register on our site, place an order, subscribe to our newsletter, respond to a survey, or fill out a form. The collected information includes your name, email address, and operational metrics necessary for ArtisanFlow systems to function.</p>

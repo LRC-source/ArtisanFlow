@@ -139,11 +139,11 @@ export const SupplierManager: React.FC = () => {
               <Button onClick={handleOpenCreate} className="mt-8 bg-purple-50 text-[#6A2C91] h-12 px-8 rounded-2xl font-black text-[10px] tracking-widest border border-purple-100">INITIALIZE FIRST NODE</Button>
           </div>
       ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:p-8">
               {suppliers.map(supplier => {
                   const linkedItems = getSuppliedItems(supplier.name);
                   return (
-                    <div key={supplier.id} className="bg-white border border-stone-200 rounded-[2.5rem] p-8 hover:shadow-2xl hover:border-[#6A2C91] transition-all group relative overflow-hidden flex flex-col h-full">
+                    <div key={supplier.id} className="bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-8 hover:shadow-2xl hover:border-[#6A2C91] transition-all group relative overflow-hidden flex flex-col h-full">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-stone-50 rounded-bl-full -mr-8 -mt-8 opacity-40 group-hover:bg-purple-50 group-hover:opacity-100 transition-all"></div>
                         <div className="flex justify-between items-start mb-6 relative z-10">
                             <div className="flex items-center gap-4">

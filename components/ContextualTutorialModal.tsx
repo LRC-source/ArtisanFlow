@@ -62,7 +62,7 @@ export const ContextualTutorialModal: React.FC<ContextualTutorialProps> = ({ hub
                     </div>
                     <p className="text-white/60 font-sans font-light text-sm leading-relaxed">{description}</p>
                 </div>
-                <div className="p-8 space-y-6">
+                <div className="p-4 sm:p-8 space-y-6">
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Quick Start Guide</h3>
                         <div className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.2em]">

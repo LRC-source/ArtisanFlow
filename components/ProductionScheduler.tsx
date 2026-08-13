@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar as CalendarIcon, Sparkles, CheckCircle, Clock, ArrowLeft } from 'lucide-react';
 import { Card, Badge, Button } from './UI';
+import { toast } from 'sonner';
 import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +40,7 @@ export const ProductionScheduler: React.FC = () => {
         </div>
 
         {!hasSchedule ? (
-            <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[400px]">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]">
                 <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
                     <CalendarIcon size={32} className="text-gray-400" />
                 </div>
@@ -60,7 +61,7 @@ export const ProductionScheduler: React.FC = () => {
                             <h4 className="font-bold text-white">Batch #1024: Midnight Serum</h4>
                             <p className="text-sm text-gray-500">Recipe: Midnight Serum v2 • 100 Units</p>
                         </div>
-                        <Button variant="outline" className="text-xs">View Details</Button>
+                        <Button onClick={() => toast.info('Opening production schedule details...')} variant="outline" className="text-xs">View Details</Button>
                     </div>
 
                     <div className="bg-white p-4 rounded-xl border border-l-4 border-blue-500 shadow-sm flex items-center justify-between">
@@ -72,7 +73,7 @@ export const ProductionScheduler: React.FC = () => {
                             <h4 className="font-bold text-white">Batch #1025: Lavender Soap</h4>
                              <p className="text-sm text-gray-500">Recipe: Lavender Rose • 50 Units</p>
                         </div>
-                         <Button variant="outline" className="text-xs">View Details</Button>
+                         <Button onClick={() => toast.info('Opening production schedule details...')} variant="outline" className="text-xs">View Details</Button>
                     </div>
 
                      <div className="bg-white p-4 rounded-xl border border-l-4 border-green-500 shadow-sm flex items-center justify-between opacity-75">

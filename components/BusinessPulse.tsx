@@ -91,7 +91,7 @@ export const BusinessPulse: React.FC = () => {
         </div>
 
         {/* Static Decorative Elements */}
-        <div className="absolute top-10 left-20 w-32 h-32 border border-[#C5A059]/10 rounded-2xl rotate-12"></div>
+        <div className="absolute top-4 sm:p-10 left-20 w-32 h-32 border border-[#C5A059]/10 rounded-2xl rotate-12"></div>
         <div className="absolute bottom-10 right-20 w-48 h-48 border border-[#6A2C91]/10 rounded-full"></div>
       </div>
 
@@ -100,9 +100,9 @@ export const BusinessPulse: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.8 }}
-        className="p-10 bg-black/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 relative group shadow-2xl"
+        className="p-4 sm:p-10 bg-black/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative group shadow-2xl"
       >
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 sm:p-8">
               <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-white border border-white/10">
                   <BarChart3 size={28} strokeWidth={1.5} />
               </div>
@@ -133,7 +133,7 @@ export const BusinessPulse: React.FC = () => {
           <h2 className="text-3xl font-serif text-white tracking-tight">Vault Entry Points</h2>
           <div className="h-px flex-1 bg-white/5 mx-8"></div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-10">
             <QuickAccessCard 
               icon={Factory} 
               color="text-purple-400" 
@@ -211,7 +211,7 @@ const QuickAccessCard = ({ icon: Icon, color, title, desc, image, action }: any)
         </div>
 
         {/* Content Section */}
-        <div className="p-12 flex flex-col flex-1">
+        <div className="p-4 sm:p-12 flex flex-col flex-1">
             <div className="absolute top-0 left-0 w-full h-1 bg-white/5 group-hover:bg-[#C5A059] transition-colors duration-500"></div>
             <h3 className="text-3xl font-serif text-white mb-4 tracking-tight group-hover:text-[#C5A059] transition-colors">{title}</h3>
             <p className="text-sm font-sans font-light text-white/50 uppercase tracking-[0.3em] mb-8 leading-relaxed">{desc}</p>

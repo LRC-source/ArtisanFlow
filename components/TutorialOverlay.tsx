@@ -88,7 +88,7 @@ export const TutorialOverlay: React.FC = () => {
           <X size={24} />
         </button>
 
-        <div className="p-10 space-y-8">
+        <div className="p-4 sm:p-10 space-y-8">
             <div className="flex items-center gap-4">
                 <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner">
                     <currentStep.icon size={32} />

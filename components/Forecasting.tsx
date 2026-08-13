@@ -68,7 +68,7 @@ export const Forecasting = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-12 pb-24 max-w-[1600px] mx-auto p-8 md:p-16"
+            className="space-y-12 pb-24 max-w-[1600px] mx-auto p-4 sm:p-8 md:p-16"
         >
             <ContextualTutorialModal
                 hubId="forecasting"
@@ -97,13 +97,13 @@ export const Forecasting = () => {
                 </div>
              </VaultBanner>
 
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12">
                  <motion.div
                      initial={{ opacity: 0, x: -20 }}
                      animate={{ opacity: 1, x: 0 }}
                      transition={{ delay: 0.2, duration: 0.6 }}
                  >
-                     <Card className="luxury-card min-h-[400px] p-10 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
+                     <Card className="luxury-card min-h-[400px] p-4 sm:p-10 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                          <h3 className="text-2xl font-serif text-white font-bold mb-8">Order Velocity Nodes</h3>
                          <div className="flex gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
                              <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white/50">30D Node</Badge>
@@ -136,7 +136,7 @@ export const Forecasting = () => {
                      animate={{ opacity: 1, x: 0 }}
                      transition={{ delay: 0.3, duration: 0.6 }}
                  >
-                     <Card className="luxury-card min-h-[400px] p-10 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
+                     <Card className="luxury-card min-h-[400px] p-4 sm:p-10 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                          <div className="flex justify-between items-center mb-8">
                              <h3 className="text-2xl font-serif text-white font-bold">Raw Material Burn Rate</h3>
                              <div className="flex gap-2 bg-white/5 p-1.5 rounded-full border border-white/10">
@@ -187,10 +187,10 @@ export const Forecasting = () => {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.35, duration: 0.6 }}
              >
-                 <Card className="luxury-card p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
+                 <Card className="luxury-card p-4 sm:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                      <h3 className="text-3xl font-serif text-white font-bold mb-10">Predicted Shortfalls & Procurement</h3>
                      <div className="overflow-x-auto">
-                         <table className="w-full text-left border-collapse">
+                         <div className="overflow-x-auto w-full"><table className="w-full text-left border-collapse">
                              <thead>
                                  <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em]">
                                      <th className="pb-6 pl-4">Material Node</th>
@@ -210,12 +210,12 @@ export const Forecasting = () => {
                                          <td className="py-6 text-amber-500 font-bold">{item.shortfall}</td>
                                          <td className="py-6 text-emerald-400 font-bold">{item.cost}</td>
                                          <td className="py-6 text-right pr-4">
-                                             <Button className="h-10 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-6 transition-colors">Order Now</Button>
+                                             <Button onClick={() => navigate('/supplier_manager')} className="h-10 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-6 transition-colors">Order Now</Button>
                                          </td>
                                      </tr>
                                  ))}
                              </tbody>
-                         </table>
+                         </table></div>
                      </div>
                  </Card>
              </motion.div>
@@ -225,7 +225,7 @@ export const Forecasting = () => {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.4, duration: 0.6 }}
              >
-                 <Card className="luxury-card p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
+                 <Card className="luxury-card p-4 sm:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                      <h3 className="text-3xl font-serif text-white font-bold mb-10">Synaptic Alignment Matrix</h3>
                      <div className="h-[400px]">
                           <ResponsiveContainer width="100%" height="100%">
@@ -240,7 +240,7 @@ export const Forecasting = () => {
                              </LineChart>
                           </ResponsiveContainer>
                      </div>
-                     <div className="flex flex-wrap justify-center gap-10 mt-12 text-[10px] font-sans font-bold text-white/50 uppercase tracking-widest">
+                     <div className="flex flex-wrap justify-center gap-4 sm:p-10 mt-12 text-[10px] font-sans font-bold text-white/50 uppercase tracking-widest">
                          <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 rounded-full bg-[#6A2C91] shadow-[0_0_8px_#6A2C91]"></div> Order Velocity</span>
                          <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_8px_#10B981]"></div> Revenue Handshake</span>
                          <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 rounded-full bg-[#C5A059] shadow-[0_0_8px_#C5A059]"></div> Material Burden</span>
@@ -257,9 +257,9 @@ export const Forecasting = () => {
                 <h3 className="text-3xl font-serif text-white font-bold flex items-center gap-4">
                     <div className="p-3 bg-[#C5A059]/10 rounded-xl"><HistoryIcon className="text-[#C5A059]" size={24} /></div> Historical Synthesis
                 </h3>
-                <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-10 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-8 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity"><RefreshCw size={120} className="animate-spin-slow"/></div>
-                    <div className="flex items-center gap-8 relative z-10">
+                <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity"><RefreshCw size={120} className="animate-spin-slow"/></div>
+                    <div className="flex items-center gap-4 sm:p-8 relative z-10">
                         <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:bg-white/10 transition-all duration-700">
                             <RefreshCw size={28} />
                         </div>
@@ -271,7 +271,7 @@ export const Forecasting = () => {
                             <p className="text-[11px] text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
                         </div>
                     </div>
-                    <div className="text-right relative z-10 w-full md:w-auto flex items-center gap-8 border-t border-white/5 md:border-0 pt-6 md:pt-0">
+                    <div className="text-right relative z-10 w-full md:w-auto flex items-center gap-4 sm:p-8 border-t border-white/5 md:border-0 pt-6 md:pt-0">
                          <div className="flex flex-col items-center md:items-end">
                              <p className="text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
                              <p className="text-4xl font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]">$1,976.70</p>
@@ -285,3 +285,4 @@ export const Forecasting = () => {
         </motion.div>
     );
 };
+

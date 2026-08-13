@@ -122,7 +122,7 @@ export const Reports = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-12 animate-in fade-in pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+            className="space-y-12 animate-in fade-in pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
           >
               <button onClick={() => setView('generator')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit mb-4">
                   <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Generator
@@ -145,7 +145,7 @@ export const Reports = () => {
               ) : (
                   <div className="grid grid-cols-1 gap-6">
                       {reports.map((report) => (
-                          <div key={report.id} className="luxury-card bg-white/5 p-8 rounded-[2rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all flex flex-col md:flex-row justify-between items-center gap-8 group">
+                          <div key={report.id} className="luxury-card bg-white/5 p-8 rounded-[2rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 group">
                               <div className="flex items-start gap-6">
                                   <div className="p-4 bg-black/40 text-[#C5A059] rounded-xl border border-white/5 group-hover:bg-[#C5A059]/20 transition-all">
                                       <FileText size={28} strokeWidth={1.5} />
@@ -180,7 +180,7 @@ export const Reports = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="space-y-12 pb-20 p-10 md:p-16 max-w-[1600px] mx-auto"
+        className="space-y-12 pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
     >
         <button onClick={() => navigate('/operations')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit mb-4">
             <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Operations
@@ -201,7 +201,7 @@ export const Reports = () => {
         </VaultBanner>
 
         {/* AI Report Generator Section */}
-        <div className="luxury-card bg-white/5 backdrop-blur-xl rounded-[3rem] p-12 border border-white/10 shadow-2xl relative overflow-hidden group">
+        <div className="luxury-card bg-white/5 backdrop-blur-xl rounded-[3rem] p-4 sm:p-12 border border-white/10 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6A2C91]/20 to-transparent rounded-bl-full opacity-50 -mr-16 -mt-16 pointer-events-none"></div>
             
             <div className="flex items-center gap-4 mb-10 relative z-10">
@@ -211,7 +211,7 @@ export const Reports = () => {
                 <h3 className="text-3xl font-serif text-white tracking-tight">AI-Powered Extraction</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8 mb-10 relative z-10">
                 <div>
                     <label className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] block mb-4">Report Category</label>
                     <Select value={category} onChange={(e) => setCategory(e.target.value)} className="bg-black/40 border-white/10 text-white rounded-2xl h-16 text-sm">
@@ -268,7 +268,7 @@ export const Reports = () => {
                     </Button>
                 </div>
 
-                <div className="luxury-card bg-[#1A1A1A] border-t-[6px] border-t-[#6A2C91] border-x border-b border-white/10 rounded-b-[3rem] p-12 shadow-2xl">
+                <div className="luxury-card bg-[#1A1A1A] border-t-[6px] border-t-[#6A2C91] border-x border-b border-white/10 rounded-b-[3rem] p-4 sm:p-12 shadow-2xl">
                     <div className="mb-12">
                         <h2 className="text-4xl font-serif text-white tracking-tight mb-4">{currentReport.title}</h2>
                         <p className="text-white/50 font-sans font-light text-lg italic">Comprehensive analysis generated based on real-time operational data.</p>
@@ -281,7 +281,7 @@ export const Reports = () => {
                     {/* Summary Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
                         {currentReport.summaryStats.map((stat, i) => (
-                            <div key={i} className="p-8 rounded-[2rem] border border-white/5 bg-white/5 shadow-inner hover:bg-white/10 transition-colors">
+                            <div key={i} className="p-4 sm:p-8 rounded-[2rem] border border-white/5 bg-white/5 shadow-inner hover:bg-white/10 transition-colors">
                                 <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">{stat.label}</p>
                                 <p className={`text-3xl font-serif tracking-tighter ${stat.color || 'text-white'}`}>{stat.value}</p>
                             </div>
@@ -294,7 +294,7 @@ export const Reports = () => {
                             <Target size={14} /> Raw Data Ledger
                         </h4>
                         <div className="overflow-x-auto rounded-[2rem] border border-white/5 bg-black/40 shadow-inner">
-                            <table className="w-full text-sm text-left font-sans">
+                            <div className="overflow-x-auto w-full"><table className="w-full text-sm text-left font-sans">
                                 <thead className="bg-[#6A2C91]/10 text-white/70 font-sans font-bold text-[10px] uppercase tracking-[0.2em] border-b border-white/5">
                                     <tr>
                                         {currentReport.headers.map((h, i) => (
@@ -311,7 +311,7 @@ export const Reports = () => {
                                         </tr>
                                     ))}
                                 </tbody>
-                            </table>
+                            </table></div>
                         </div>
                         <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mt-6 text-center">Report archived to synaptic history securely.</p>
                     </div>
@@ -321,3 +321,4 @@ export const Reports = () => {
     </motion.div>
   );
 };
+

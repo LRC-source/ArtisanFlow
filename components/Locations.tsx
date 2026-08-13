@@ -58,7 +58,7 @@ export const Locations = () => {
       </div>
 
       {locations.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-12 flex flex-col items-center justify-center min-h-[500px]">
+          <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[500px]">
               <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                   <MapPin size={40} className="text-gray-300" />
               </div>

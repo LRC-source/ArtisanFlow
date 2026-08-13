@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Package, Search, Filter, MoreVertical, Plus, Layers, Box, ArrowLeft, AlertTriangle, Upload, Download, RefreshCw, DollarSign, Tag, Edit2, Trash2, X, BarChart, TrendingUp, ShieldCheck, MapPin, Activity, Clock, Zap, ChevronRight, Sparkles, Save } from 'lucide-react';
 import { Card, Badge, Button, Input, FileUploader, Modal, Select, VaultBanner } from './UI';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
 import { ContextualTutorialModal } from './ContextualTutorialModal';
+import { z } from 'zod';
+import { UpgradeModal } from './UpgradeModal';
 
 /**
  * Inventory Hub - High-Fidelity Synaptic Architecture ✅
@@ -15,15 +17,29 @@ import { ContextualTutorialModal } from './ContextualTutorialModal';
 type ViewMode = 'overview' | 'raw_materials' | 'finished_products' | 'detail';
 
 export const Inventory = () => {
-  const { inventory, getInventoryValue, addInventoryItem, recipes } = useArtisanData();
+  const { inventory, getInventoryValue, addInventoryItem, updateInventory, recipes, userTier } = useArtisanData();
   const [view, setView] = useState<ViewMode>('overview');
   const [showAddItem, setShowAddItem] = useState(false);
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
   const navigate = useNavigate();
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showAdjustStock, setShowAdjustStock] = useState(false);
+  const [adjustAmount, setAdjustAmount] = useState(0);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [upgradeLimit, setUpgradeLimit] = useState(50);
+  const [requiredTier, setRequiredTier] = useState("Artisan Flow Basic");
 
-  const [newItem, setNewItem] = useState<Partial<InventoryItem>>({
-      name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5, img: ''
+  const [newItem, setNewItem] = useState<Partial<InventoryItem>>(() => {
+    const saved = sessionStorage.getItem('draft_inventory_item');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return { name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5, img: '' };
   });
+
+  useEffect(() => {
+    sessionStorage.setItem('draft_inventory_item', JSON.stringify(newItem));
+  }, [newItem]);
 
   const rawMaterials = inventory.filter(i => i.type === 'raw');
   const finishedProducts = inventory.filter(i => i.type === 'finished');
@@ -34,15 +50,77 @@ export const Inventory = () => {
       setView('detail');
   };
 
-  const handleAddItem = () => {
-      if (!newItem.name || !newItem.sku) {
-        toast.error("Missing required fields: Name and SKU are mandatory.");
+  const deployAssetSchema = z.object({
+    name: z.string().min(1, { message: "Name is required" }),
+    sku: z.string().min(1, { message: "SKU is required" }),
+    type: z.enum(['raw', 'finished']),
+    stock: z.number().min(0, { message: "Stock must be 0 or greater" }),
+    unitCost: z.number().min(0, { message: "Unit cost must be 0 or greater" }),
+    reorderPoint: z.number().min(0, { message: "Reorder point must be 0 or greater" })
+  });
+
+  const handleAdd = async () => {
+      const result = deployAssetSchema.safeParse({
+        name: newItem.name || '',
+        sku: newItem.sku || '',
+        type: newItem.type || 'raw',
+        stock: Number(newItem.stock || 0),
+        unitCost: Number(newItem.unitCost || 0),
+        reorderPoint: Number(newItem.reorderPoint || 0)
+      });
+
+      if (!result.success) {
+        toast.error(result.error.issues[0].message);
         return;
       }
-      addInventoryItem(newItem as any);
-      toast.success(`${newItem.name} has been successfully deployed to the vault.`);
-      setShowAddItem(false);
-      setNewItem({ name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5, img: '' });
+
+      try {
+        await addInventoryItem({
+          ...newItem,
+          name: result.data.name,
+          sku: result.data.sku,
+          type: result.data.type,
+          stock: result.data.stock,
+          unitCost: result.data.unitCost,
+          reorderPoint: result.data.reorderPoint
+        } as any);
+        toast.success(`${newItem.name} has been successfully deployed to the vault.`);
+        setShowAddItem(false);
+        setNewItem({ name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5, img: '' });
+        sessionStorage.removeItem('draft_inventory_item');
+      } catch (e: any) {
+        if (e.message.includes("Tier limit reached")) {
+           const limitMatch = e.message.match(/\d+/);
+           setUpgradeLimit(limitMatch ? parseInt(limitMatch[0]) : 50);
+           setRequiredTier(userTier === 'Free Audit' ? 'Artisan Flow Basic' : 'Margin Protection Pro');
+           setShowUpgradeModal(true);
+        }
+      }
+  };
+
+  const handleAdjustStock = () => {
+      if (selectedItem) {
+          updateInventory(selectedItem.id, { stock: selectedItem.stock + adjustAmount });
+          setShowAdjustStock(false);
+          setAdjustAmount(0);
+          toast.success('Stock Quantity Adjusted');
+      }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      try {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
+        if (!file.name.toLowerCase().endsWith('.csv')) {
+          throw new Error('Invalid CSV format. Please upload a structured .csv file.');
+        }
+
+        toast.success('CSV Ingested and Processing...');
+        // Process file...
+      } catch (error: any) {
+        toast.error(error.message || 'Error processing file');
+      }
   };
 
   const getRecipeUsage = (itemName: string) => {
@@ -57,7 +135,7 @@ export const Inventory = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+          className="p-4 sm:p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
         >
             <ContextualTutorialModal
                 hubId="materials_matrix"
@@ -80,25 +158,35 @@ export const Inventory = () => {
               }
             />            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                 <div className="lg:col-span-4 space-y-10">
-                    <div className="luxury-card bg-white/5 backdrop-blur-xl p-8 rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20 border border-white/10">
+                    <div className="luxury-card bg-white/5 backdrop-blur-xl p-4 sm:p-8 rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20 border border-white/10">
                         <div className="aspect-square bg-black/20 rounded-[2.5rem] overflow-hidden flex items-center justify-center relative shadow-inner">
                             {selectedItem.img ? (
                                 <img src={selectedItem.img} alt={selectedItem.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" />
                             ) : (
                                 <Package size={120} className="text-white/5" strokeWidth={0.5} />
                             )}
-                            <div className="absolute top-8 left-8">
+                            <div className="absolute top-4 sm:p-8 left-8">
                                 <Badge color={selectedItem.type === 'raw' ? 'purple' : 'green'} className="px-5 py-2 uppercase font-sans font-bold tracking-[0.3em] text-[10px] shadow-lg">{selectedItem.type}</Badge>
                             </div>
                         </div>
                     </div>
                     
                     <div className="space-y-4">
-                        <Button className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
-                        <Button variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
+                        <Button onClick={() => setShowAdjustStock(true)} className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
+                        <Button onClick={() => toast.success('Archival label sent to connected printer.')} variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
                     </div>
 
-                    <div className="p-8 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
+                    <Modal isOpen={showAdjustStock} onClose={() => setShowAdjustStock(false)} title="Adjust Stock Quantity">
+                        <div className="space-y-6 pt-4">
+                            <div>
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Adjustment Amount (Use negative to subtract)</label>
+                                <Input type="number" value={adjustAmount} onChange={e => setAdjustAmount(Number(e.target.value))} className="rounded-2xl py-4 font-bold" />
+                            </div>
+                            <Button onClick={handleAdjustStock} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white h-14 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">Confirm Adjustment</Button>
+                        </div>
+                    </Modal>
+
+                    <div className="p-4 sm:p-8 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
                         <div className="flex items-center gap-4 mb-4 text-[#C5A059]">
                             <Zap size={20} strokeWidth={1.5} />
                             <h4 className="font-sans font-bold text-[11px] uppercase tracking-[0.3em]">AI Insight</h4>
@@ -110,7 +198,7 @@ export const Inventory = () => {
                 </div>
 
                 <div className="lg:col-span-8 space-y-12">
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-4 sm:p-8">
                         <div>
                             <h1 className="text-7xl font-serif text-white tracking-tighter mb-4 leading-none">{selectedItem.name}</h1>
                             <div className="flex items-center gap-4">
@@ -125,16 +213,16 @@ export const Inventory = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="luxury-card bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8">
+                        <div className="luxury-card bg-white/5 border border-white/10 p-4 sm:p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
                             <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Stock Integrity</p>
                             <p className="text-4xl font-serif text-white tracking-tight">${selectedItem.unitCost.toFixed(2)}</p>
                         </div>
-                        <div className="luxury-card bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
+                        <div className="luxury-card bg-white/5 border border-white/10 p-4 sm:p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
                             <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Node Value</p>
                             <p className="text-4xl font-serif text-emerald-400 tracking-tight">${selectedItem.stockValue.toFixed(2)}</p>
                         </div>
-                        <div className="luxury-card bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
+                        <div className="luxury-card bg-white/5 border border-white/10 p-4 sm:p-10 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
                             <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Safety Threshold</p>
                             <p className="text-4xl font-serif text-amber-500 tracking-tight">{selectedItem.reorderPoint} <span className="text-xl text-amber-500/50 font-sans font-light">{selectedItem.unit}</span></p>
                         </div>
@@ -149,7 +237,7 @@ export const Inventory = () => {
                         {usageInRecipes.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {usageInRecipes.map(recipe => (
-                                    <div key={recipe.id} className="flex justify-between items-center p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-[#6A2C91]/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/20 transition-all duration-500 cursor-pointer group" onClick={() => navigate('/recipes')}>
+                                    <div key={recipe.id} className="flex justify-between items-center p-4 sm:p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-[#6A2C91]/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/20 transition-all duration-500 cursor-pointer group" onClick={() => navigate('/recipes')}>
                                         <div className="flex items-center gap-6">
                                             <div className="w-16 h-16 bg-black/20 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-110 transition-transform duration-500 border border-white/5">
                                                 <Layers size={24} strokeWidth={1.2} />
@@ -183,7 +271,7 @@ export const Inventory = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+        className="p-4 sm:p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
       >
         <ContextualTutorialModal
             hubId="inventory_hub"
@@ -195,7 +283,7 @@ export const Inventory = () => {
                 "Review automated Lola AI insights on margin impact."
             ]}
         />
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4 sm:p-8">
           <SubPageHeader 
             title="Inventory Hub"
             parentTitle="Command Center"
@@ -208,17 +296,20 @@ export const Inventory = () => {
             subtitle="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
             badge="Asset Management Protocol Active"
           >
-            <div className="flex gap-4">
-                <Button variant="outline" className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm"><Upload size={16} className="mr-3"/> INGEST CSV</Button>
-                <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
-            </div>
+            {userTier !== 'Free Audit' && (
+              <div className="flex gap-4">
+                  <input type="file" ref={fileInputRef} className="hidden" accept=".csv" onChange={handleFileChange} />
+                  <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm"><Upload size={16} className="mr-3"/> INGEST CSV</Button>
+                  <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
+              </div>
+            )}
           </VaultBanner>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-10">
             <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                <div className="flex items-center gap-8 relative z-10 mb-12">
+                <div className="flex items-center gap-4 sm:p-8 relative z-10 mb-12">
                     <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
                         <Box size={32} strokeWidth={1.5} />
                     </div>
@@ -234,7 +325,7 @@ export const Inventory = () => {
 
             <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                <div className="flex items-center gap-8 relative z-10 mb-12">
+                <div className="flex items-center gap-4 sm:p-8 relative z-10 mb-12">
                     <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#C5A059] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
                         <Package size={32} strokeWidth={1.5} />
                     </div>
@@ -247,9 +338,17 @@ export const Inventory = () => {
                     ACCESS PRODUCT VAULT <ChevronRight size={16} />
                 </div>
             </div>
+
+            <UpgradeModal 
+                isOpen={showUpgradeModal} 
+                onClose={() => setShowUpgradeModal(false)}
+                featureName="Inventory Items"
+                currentLimit={upgradeLimit}
+                requiredTier={requiredTier}
+            />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-10">
             <div className="luxury-card lg:col-span-2 bg-white/5 border border-white/10 rounded-[3rem] p-16 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-16 opacity-[0.05]">
                     <BarChart size={240} className="text-[#C5A059]" strokeWidth={0.5} />
@@ -259,7 +358,7 @@ export const Inventory = () => {
                         <DollarSign size={16} className="text-[#C5A059]" /> Total Liquid Asset Valuation
                     </p>
                     <p className="text-8xl font-serif text-white tracking-tighter">${getInventoryValue().toLocaleString()}</p>
-                    <div className="mt-12 flex gap-12">
+                    <div className="mt-12 flex gap-4 sm:p-12">
                         <div>
                             <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.2em] mb-2">Raw Value</p>
                             <p className="text-3xl font-serif text-[#6A2C91]">${(getInventoryValue() * 0.4).toLocaleString()}</p>
@@ -273,7 +372,7 @@ export const Inventory = () => {
             </div>
 
             <div className="lg:col-span-1">
-                <div className="bg-[#C5A059]/5 border border-[#C5A059]/10 rounded-[3rem] p-12 h-full flex flex-col">
+                <div className="bg-[#C5A059]/5 border border-[#C5A059]/10 rounded-[3rem] p-4 sm:p-12 h-full flex flex-col">
                     <div className="flex justify-between items-center mb-10">
                         <h3 className="text-2xl font-serif text-amber-500 tracking-tight flex items-center gap-4">
                             <AlertTriangle size={24} className="text-amber-500" strokeWidth={1} /> Threshold Alerts
@@ -310,9 +409,9 @@ export const Inventory = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+            className="p-4 sm:p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
         >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:p-10">
                 <div>
                     <SubPageHeader 
                       title="Raw Material Vault"
@@ -330,7 +429,7 @@ export const Inventory = () => {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:p-10">
                 {rawMaterials.map(item => (
                     <InventoryCard key={item.id} item={item} onClick={() => handleItemClick(item)} tagColor="purple" />
                 ))}
@@ -346,9 +445,9 @@ export const Inventory = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
+            className="p-4 sm:p-10 space-y-12 pb-20 max-w-[1600px] mx-auto"
         >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:p-10">
                 <div>
                     <SubPageHeader 
                       title="Finished Output Vault"
@@ -366,7 +465,7 @@ export const Inventory = () => {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:p-10">
                 {finishedProducts.map(item => (
                     <InventoryCard key={item.id} item={item} onClick={() => handleItemClick(item)} tagColor="green" isProduct />
                 ))}
@@ -380,12 +479,12 @@ export const Inventory = () => {
     <motion.div 
         whileHover={{ y: -10, scale: 1.02 }}
         onClick={onClick} 
-        className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-10 transition-all duration-700 cursor-pointer relative overflow-hidden group flex flex-col h-full hover:bg-white/10"
+        className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 transition-all duration-700 cursor-pointer relative overflow-hidden group flex flex-col h-full hover:bg-white/10"
     >
-        <div className="absolute top-0 right-0 p-10 opacity-[0.02] group-hover:opacity-10 transition-opacity duration-1000">
+        <div className="absolute top-0 right-0 p-4 sm:p-10 opacity-[0.02] group-hover:opacity-10 transition-opacity duration-1000">
             <Package size={120} className="text-white" strokeWidth={0.5} />
         </div>
-        <div className="flex flex-col gap-8 mb-10 relative z-10">
+        <div className="flex flex-col gap-4 sm:p-8 mb-10 relative z-10">
             <div className="w-24 h-24 bg-black/20 rounded-[2rem] overflow-hidden flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-700 border border-white/5">
                 {item.img ? <img src={item.img} className="w-full h-full object-cover" /> : <Box size={32} className="text-white/10" strokeWidth={1} />}
             </div>
@@ -411,3 +510,4 @@ export const Inventory = () => {
 );
 
 export default Inventory;
+

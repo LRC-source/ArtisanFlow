@@ -30,7 +30,7 @@ export const QualityControl = () => {
     : 100;
 
   return (
-    <div className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20">
+    <div className="p-4 sm:p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20">
       <Modal isOpen={showAdd} onClose={() => setShowAdd(false)} title="Initialize Integrity Inspection">
           <div className="space-y-6 p-4">
               <Select value={newCheck.productName} onChange={e => setNewCheck({...newCheck, productName: e.target.value})} className="h-14 rounded-full bg-white/5 border-white/10 text-white font-sans text-sm">
@@ -52,7 +52,7 @@ export const QualityControl = () => {
           </div>
       </Modal>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 sm:p-8">
         <SubPageHeader 
           title="Trapped Cash Audit & QC"
           parentTitle="Operations"
@@ -88,9 +88,9 @@ export const QualityControl = () => {
               <Button onClick={() => setShowAdd(true)} className="mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">INITIALIZE AUDIT</Button>
           </div>
       ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8">
               {qualityChecks.map(check => (
-                  <div key={check.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 hover:shadow-2xl hover:border-[#C5A059]/50 transition-all group relative overflow-hidden">
+                  <div key={check.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#C5A059]/50 transition-all group relative overflow-hidden">
                       <div className="flex justify-between items-start mb-8 relative z-10">
                           <div className="flex items-center gap-6">
                               <div className={`w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center ${check.status === 'Passed' ? 'text-emerald-400' : 'text-amber-400'} shadow-inner group-hover:bg-white/10 transition-colors`}>
@@ -126,7 +126,7 @@ export const QualityControl = () => {
 };
 
 const StatBox = ({ label, val, color, icon: Icon }: any) => (
-    <div className="luxury-card bg-black/40 backdrop-blur-xl p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#C5A059]/30 transition-all">
+    <div className="luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#C5A059]/30 transition-all">
         <div className={`p-4 bg-white/5 border border-white/10 rounded-2xl mb-6 text-white/50 group-hover:text-[#C5A059] group-hover:scale-110 transition-all`}><Icon size={24} /></div>
         <p className="text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
         <p className={`text-4xl font-serif tracking-tight ${color}`}>{val}</p>

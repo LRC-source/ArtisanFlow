@@ -99,7 +99,7 @@ export const LockedNode: React.FC<{ children: React.ReactNode; isLocked?: boolea
       <div className="blur-[6px] pointer-events-none transition-all duration-700 group-hover:blur-[8px]">
         {children}
       </div>
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[4px] flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-700">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-[4px] flex flex-col items-center justify-center p-4 sm:p-8 text-center animate-in fade-in duration-700">
         <div className="w-16 h-16 bg-white/10 text-white rounded-2xl flex items-center justify-center mb-6 shadow-2xl border border-white/10">
            <Lock size={28} strokeWidth={1.5} />
         </div>
@@ -175,7 +175,7 @@ export const VaultBanner: React.FC<{
       </div>
 
       {/* Static Decorative Elements */}
-      <div className="absolute top-10 left-20 w-32 h-32 border border-[#C5A059]/10 rounded-2xl rotate-12"></div>
+      <div className="absolute top-4 sm:p-10 left-20 w-32 h-32 border border-[#C5A059]/10 rounded-2xl rotate-12"></div>
       <div className="absolute bottom-10 right-20 w-48 h-48 border border-[#6A2C91]/10 rounded-full"></div>
     </div>
   );
@@ -228,7 +228,7 @@ export const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: stri
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-xl z-50 flex items-center justify-center p-6 animate-in fade-in duration-500">
       <div className="luxury-card bg-[#0A0A0A] border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden relative animate-in zoom-in-95 slide-up-5 duration-700">
-        <div className="flex justify-between items-center p-10 pb-6">
+        <div className="flex justify-between items-center p-4 sm:p-10 pb-6">
           <h3 className="font-serif text-3xl text-white tracking-tight">{title}</h3>
           <button 
             onClick={onClose} 
@@ -238,7 +238,7 @@ export const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: stri
             <X size={24} strokeWidth={1.5} />
           </button>
         </div>
-        <div className="p-10 pt-4 max-h-[80vh] overflow-y-auto scrollbar-hide">
+        <div className="p-4 sm:p-10 pt-4 max-h-[80vh] overflow-y-auto scrollbar-hide">
             {children}
         </div>
       </div>
@@ -399,3 +399,12 @@ export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: bo
         </Modal>
     );
 };
+
+export const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => (
+  <div onClick={onClick} className="luxury-card bg-[#1A1A1A] border border-white/5 p-8 rounded-[2rem] hover:border-[#C5A059]/30 transition-all cursor-pointer group">
+    <div className={"$color mb-6"}><Icon size={32} /></div>
+    <h3 className="text-lg font-bold font-playfair text-white mb-2">{title}</h3>
+    <p className="text-xs text-white/50 font-sans leading-relaxed">{desc}</p>
+  </div>
+);
+
