@@ -367,34 +367,27 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
     setIsProcessing(true);
 
     try {
-      const dbUrl = (import.meta as any).env.VITE_GAS_DATABASE_URL;
-      if (dbUrl) {
-        // Send payment verification to backend
-        const response = await fetch(dbUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            action: 'processPayment',
-            payload: {
-              userId: email,
-              customerName: formData.name,
-              paymentToken: token, // Sent from Square
-              amount: tier === 'Margin Protection Pro' ? 149.00 : 49.00,
-              tier: tier
-            }
-          })
-        });
-        
-        // Wait for backend to confirm Square actually charged the card
-        const result = await response.json();
-        
-        if (!result || result.success === false) {
-           throw new Error(result.error || "Payment declined by backend.");
-        }
-      }
+      if (!token) throw new Error("Missing payment token");
       
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sourceId: token,
+          amount: tier === 'Margin Protection Pro' ? 14900 : 4900, // in cents
+          currency: 'USD'
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Payment authorization was declined by the gateway.');
+      }
+
+      // Payment successfully captured by Square backend! Proceed with granting access.
       setIsProcessing(false);
-      onSuccess(); // Only proceed if backend successfully processed the payment
+      onSuccess();
     } catch (error: any) {
       console.error("Payment error:", error);
       setIsProcessing(false);
