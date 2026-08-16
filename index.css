@@ -445,6 +445,21 @@ body::after {
 }
 
 /* Parallax & Scrollbar utilities */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 160, 89, 0.5); /* LRC gold hover */
+}
+
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .parallax-container {
   perspective: 10px;
