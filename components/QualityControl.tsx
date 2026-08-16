@@ -81,9 +81,7 @@ export const QualityControl = () => {
 
       {qualityChecks.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-24 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
-              <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-white/20 mb-6 shadow-inner border border-white/10">
-                  <ClipboardCheck size={40} />
-              </div>
+              <GlassHaloIcon icon={ClipboardCheck} color="cyan" size="xl" className="mb-6 shadow-inner" />
               <h3 className="text-3xl font-serif tracking-tight text-white/50 mb-2">Vault Empty</h3>
               <p className="text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1">No inspection history detected.</p>
               <Button onClick={() => setShowAdd(true)} className="mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">INITIALIZE AUDIT</Button>

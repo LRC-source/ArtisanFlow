@@ -7,6 +7,7 @@ import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, CartesianGrid, Li
 import { motion, AnimatePresence } from 'framer-motion';
 import { useArtisanData } from './DataContext';
 import { SubPageHeader } from './SubPageHeader';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 // Fallback Mock Data if no operations exist
 const ANALYTICS_DATA = [
@@ -255,14 +256,12 @@ export const Forecasting = () => {
                  className="space-y-8"
              >
                 <h3 className="text-3xl font-serif text-white font-bold flex items-center gap-4">
-                    <div className="p-3 bg-[#C5A059]/10 rounded-xl"><HistoryIcon className="text-[#C5A059]" size={24} /></div> Historical Synthesis
+                    <GlassHaloIcon icon={HistoryIcon} color="gold" size="md" /> Historical Synthesis
                 </h3>
                 <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity"><RefreshCw size={120} className="animate-spin-slow"/></div>
                     <div className="flex items-center gap-4 sm:p-8 relative z-10">
-                        <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:bg-white/10 transition-all duration-700">
-                            <RefreshCw size={28} />
-                        </div>
+                        <GlassHaloIcon icon={RefreshCw} color="purple" size="xl" className="group-hover:scale-105 transition-all duration-700" />
                         <div>
                             <div className="flex items-center gap-4 mb-3">
                                 <h4 className="text-2xl font-serif text-white tracking-tight group-hover:text-[#C5A059] transition-colors">Active Projection: Q4 Protocol</h4>
@@ -276,9 +275,7 @@ export const Forecasting = () => {
                              <p className="text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
                              <p className="text-4xl font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]">$1,976.70</p>
                          </div>
-                         <div className="p-4 bg-white/5 text-white/30 rounded-2xl shadow-inner border border-white/5 group-hover:text-[#C5A059] group-hover:bg-white/10 transition-colors">
-                            <ChevronRight size={24} />
-                         </div>
+                         <GlassHaloIcon icon={ChevronRight} color="gold" size="md" className="group-hover:bg-white/10 transition-colors" />
                     </div>
                 </div>
              </motion.div>

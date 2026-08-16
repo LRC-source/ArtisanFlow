@@ -4,6 +4,7 @@ import { X, Send, Paperclip, CheckCircle, HelpCircle } from 'lucide-react';
 import { Button, Card } from './UI';
 import { useArtisanData } from './DataContext';
 import { toast } from 'sonner';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 interface SupportModalProps {
     isOpen: boolean;
@@ -86,9 +87,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                         <Card className="bg-[#111111] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
                             <div className="p-6 border-b border-white/5 flex items-center justify-between bg-black/20">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059]">
-                                        <HelpCircle size={20} />
-                                    </div>
+                                    <GlassHaloIcon icon={HelpCircle} color="gold" size="md" />
                                     <h3 className="text-xl font-bold text-white font-serif">ArtisanFlow Support Node</h3>
                                 </div>
                                 <button onClick={onClose} className="text-white/50 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5">

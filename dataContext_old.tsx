@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth, db } from '../services/firebase';
 import { 
   signInWithEmailAndPassword, 
@@ -355,96 +355,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   
   const [systemUsers, setSystemUsers] = useState<SystemUser[]>([]);
 
-  const [integrations, setIntegrations] = useState<Integration[]>([
-    { 
-      id: 'shopify', 
-      name: 'Shopify', 
-      category: 'E-commerce', 
-      status: 'Connected', 
-      logo: 'https://logo.clearbit.com/shopify.com', 
-      description: 'Unified storefront commerce logic.',
-      aiCapability: 'Predictive Stock Reconciliation',
-      features: ['Real-time Order Ingestion', 'Inventory Sync'],
-      lastSync: 'Today, 09:12 AM'
-    },
-    { 
-      id: 'woocommerce', 
-      name: 'WooCommerce', 
-      category: 'Wholesale', 
-      status: 'Connected', 
-      logo: 'https://logo.clearbit.com/woocommerce.com', 
-      description: 'Daily metadata sync active.',
-      aiCapability: 'Profit Margin Shield',
-      features: ['Daily Metadata Sync', 'Bidirectional Stock Push'],
-      lastSync: 'Today, 04:12 AM'
-    },
-    { 
-      id: 'etsy', 
-      name: 'Etsy', 
-      category: 'Marketplace', 
-      status: 'Connect', 
-      logo: 'https://logo.clearbit.com/etsy.com', 
-      description: 'Artisanal marketplace integration.',
-      aiCapability: 'SEO Tag Synthesizer',
-      features: ['Automated Listing Sync', 'Review Sentiment Analysis'],
-      lastSync: undefined
-    },
-    {
-      id: 'square',
-      name: 'Square SDK',
-      category: 'POS',
-      status: 'Connect',
-      logo: 'https://logo.clearbit.com/squareup.com',
-      description: 'Physical storefront reconciliation.',
-      aiCapability: 'Foot Traffic & Sales Forecasting',
-      features: ['Omnichannel Inventory', 'Location-based Analytics'],
-      lastSync: undefined
-    },
-    {
-      id: 'firebase_auth',
-      name: 'Firebase Auth',
-      category: 'System',
-      status: 'Connected',
-      logo: 'https://logo.clearbit.com/firebase.google.com',
-      description: 'Secure user identity and session management.',
-      aiCapability: 'Anomaly Login Detection',
-      features: ['Google OAuth', 'JWT Session Management'],
-      lastSync: 'Today, 08:00 AM'
-    },
-    {
-      id: 'email_smtp',
-      name: 'Email / SMTP',
-      category: 'System',
-      status: 'Connected',
-      logo: 'https://logo.clearbit.com/sendgrid.com',
-      description: 'Transactional email routing.',
-      aiCapability: 'Smart Bounce Handling',
-      features: ['Automated Receipts', 'Supplier Comms'],
-      lastSync: 'Today, 10:15 AM'
-    },
-    {
-      id: 'api_login_cards',
-      name: 'API Login Cards',
-      category: 'System',
-      status: 'Connect',
-      logo: 'https://logo.clearbit.com/auth0.com',
-      description: 'Single sign-on provider cards.',
-      aiCapability: 'Adaptive MFA',
-      features: ['Social Logins', 'Passwordless Flow'],
-      lastSync: undefined
-    },
-    {
-      id: 'csv_importer',
-      name: 'CSV Importer',
-      category: 'System',
-      status: 'Connect',
-      logo: 'https://logo.clearbit.com/microsoft.com',
-      description: 'Bulk data ingestion tool.',
-      aiCapability: 'Automated Column Mapping',
-      features: ['Inventory Import', 'Legacy Data Migration'],
-      lastSync: undefined
-    }
-  ]);
+  const [integrations, setIntegrations] = useState<Integration[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {

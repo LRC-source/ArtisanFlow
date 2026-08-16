@@ -138,7 +138,7 @@ export const Orders = () => {
               { label: 'Shipped', val: shippedCount, icon: Truck, color: 'emerald' }
             ].map((stat, i) => (
               <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
-                <GlassHaloIcon icon={stat.icon} color={stat.color as any} size="lg" className="mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
+                <GlassHaloIcon icon={stat.icon} color={stat.color as any} size="xl" className="mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
                 <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{stat.label}</p>
                 <p className="text-4xl font-serif text-white tracking-tighter">{stat.val}</p>
               </div>

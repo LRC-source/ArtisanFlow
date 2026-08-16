@@ -318,7 +318,7 @@ const FinanceCard = ({ title, value, trend, positive, icon: Icon }: any) => (
         </div>
         <div className="flex justify-between items-start mb-6">
             <span className="text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]">{title}</span>
-            <GlassHaloIcon icon={Icon} color="gold" size="md" className="group-hover:scale-110 transition-all duration-500 z-10" />
+            <GlassHaloIcon icon={Icon} color="gold" size="xl" className="group-hover:scale-110 transition-all duration-500 z-10" />
         </div>
         <div className="text-4xl font-serif text-white tracking-tighter mb-4 relative z-10">{value}</div>
         <div className="flex items-center gap-2 relative z-10">

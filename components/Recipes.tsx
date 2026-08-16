@@ -122,9 +122,9 @@ export const Recipes = () => {
   );
 };
 
-const StatBox = ({ label, val, color, icon: Icon }: any) => (
+const StatBox = ({ label, val, color, icon: Icon, haloColor }: any) => (
     <div className="luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#6A2C91]/30 transition-all">
-        <div className={`p-4 bg-white/5 border border-white/10 rounded-2xl mb-6 text-white/50 group-hover:text-[#6A2C91] group-hover:scale-110 transition-all`}><Icon size={24} /></div>
+        <GlassHaloIcon icon={Icon} color={haloColor || 'gold'} size="md" className="mb-6 group-hover:scale-110 transition-all" />
         <p className="text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
         <p className={`text-4xl font-serif tracking-tight ${color}`}>{val}</p>
     </div>
