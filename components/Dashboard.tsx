@@ -79,15 +79,17 @@ export const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 1 }}
-            className="lg:col-span-2 luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-12 rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20"
+            className="lg:col-span-2 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(168,85,247,0.2)]"
         >
+          <div className="luxury-card bg-[#0A0A0A] border-none p-4 sm:p-12 rounded-[3rem] relative overflow-hidden group w-full h-full">
           <div className="flex justify-between items-center mb-12">
               <div>
                   <h3 className="text-3xl font-serif text-white tracking-tight">Revenue Trajectory</h3>
                   <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mt-2">7-Day rolling performance audit</p>
               </div>
-              <div className="p-4 bg-white/5 text-[#C5A059] rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-500 border border-white/5">
-                  <TrendingUp size={28} strokeWidth={1.5} />
+              <div className="relative inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.4)] group-hover:scale-110 transition-transform duration-500">
+                  <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-40 blur-md"></span>
+                  <TrendingUp size={28} strokeWidth={1.5} className="text-[#C5A059] relative z-10" />
               </div>
           </div>
           <div className="w-full h-[400px]">
@@ -123,8 +125,9 @@ export const Dashboard = () => {
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6A2C91]/20 to-transparent rounded-bl-full opacity-30 -mr-16 -mt-16"></div>
           <div>
               <div className="flex items-center gap-5 mb-10 relative z-10">
-                <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-[#C5A059] backdrop-blur-md group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                    <Zap size={24} strokeWidth={1.5} />
+                <div className="relative inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:scale-110 transition-transform duration-500">
+                    <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-40 blur-md"></span>
+                    <Zap size={24} strokeWidth={1.5} className="text-[#C5A059] relative z-10" />
                 </div>
                 <h3 className="text-3xl font-serif text-white tracking-tight">Synaptic Insights</h3>
               </div>

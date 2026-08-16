@@ -42,35 +42,44 @@ export const LolaChat: React.FC = () => {
     return ( 
       <button 
         onClick={() => setIsOpen(true)} 
-        className="fixed bottom-6 right-6 w-14 h-14 bg-[#FFD700] rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors z-50 animate-float"
+        className="fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center transition-all z-50 animate-float p-[1.5px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_50px_rgba(168,85,247,0.6)] hover:scale-105"
       >
-         <MessageSquare size={24} className="text-black" />
+         <div className="w-full h-full bg-[#0A0A0A] rounded-full flex items-center justify-center relative overflow-hidden">
+            <span className="absolute inset-0 bg-gradient-to-r from-[#06B6D4] to-[#C5A059] opacity-20 blur-md"></span>
+            <MessageSquare size={24} className="text-white relative z-10" />
+         </div>
       </button> 
     ); 
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-[#0A0A0A] border border-gray-800 rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10">
-      <div className="bg-gradient-to-r from-gray-900 to-black p-4 border-b border-white/10 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></div>
-            <h3 className="font-bold text-white tracking-widest">LOLA AI</h3>
+    <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-black/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+      <div className="bg-white/5 p-5 border-b border-white/10 flex justify-between items-center">
+        <div className="flex items-center gap-3">
+            <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/10 border border-white/20">
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-50 blur-sm animate-pulse"></span>
+                <Sparkles size={14} className="text-white relative z-10" />
+            </div>
+            <div>
+                <h3 className="font-serif font-bold text-white tracking-tight text-lg leading-tight">Lola AI</h3>
+                <p className="text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-[#06B6D4]">Systems Architect</p>
+            </div>
         </div>
         <div className="flex space-x-2">
-            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors">
-                <Minimize2 size={18} />
+            <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
+                <Minimize2 size={16} />
             </button>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-5 space-y-5">
         {messages.map((msg, idx) => (
           <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
+            <div className={`max-w-[80%] p-4 rounded-[1.5rem] text-[13px] font-sans leading-relaxed ${
               msg.role === 'user' 
-                ? 'bg-[#FFD700] text-black rounded-br-none' 
-                : 'bg-white/10 text-white rounded-bl-none border border-white/10'
+                ? 'bg-gradient-to-r from-[#06B6D4] to-[#A855F7] text-white rounded-br-sm shadow-[0_0_15px_rgba(6,182,212,0.3)]' 
+                : 'bg-white/5 text-white/90 rounded-bl-sm border border-white/10 backdrop-blur-md shadow-inner'
             }`}>
               {msg.text}
             </div>
@@ -78,8 +87,10 @@ export const LolaChat: React.FC = () => {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white/5 text-gray-400 p-3 rounded-lg text-xs italic">
-              Lola is thinking...
+            <div className="bg-white/5 text-white/40 p-4 rounded-[1.5rem] rounded-bl-sm border border-white/10 text-xs italic font-sans flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#06B6D4] animate-bounce"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#A855F7] animate-bounce delay-75"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-bounce delay-150"></span>
             </div>
           </div>
         )}
@@ -87,22 +98,24 @@ export const LolaChat: React.FC = () => {
       </div>
       
       {/* Input */}
-      <div className="p-4 border-t border-white/10">
-        <div className="flex items-center space-x-2">
+      <div className="p-4 border-t border-white/10 bg-white/5">
+        <div className="flex items-center gap-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Ask about inventory..."
-            className="flex-1 bg-black border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus:border-[#FFD700] outline-none"
+            placeholder="Ask Lola about inventory..."
+            className="flex-1 bg-black/50 border border-white/10 rounded-full px-5 py-3 text-white text-[13px] font-sans focus:border-[#06B6D4]/50 focus:shadow-[0_0_10px_rgba(6,182,212,0.2)] outline-none transition-all placeholder:text-white/30"
           />
           <button 
             onClick={handleSend}
             disabled={isLoading}
-            className="p-2 bg-[#FFD700] rounded-md hover:bg-white transition-colors disabled:opacity-50"
+            className="w-12 h-12 rounded-full flex items-center justify-center p-[1px] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] disabled:opacity-50 hover:scale-105 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)]"
           >
-            <Send size={18} className="text-black" />
+            <div className="w-full h-full bg-[#0A0A0A] rounded-full flex items-center justify-center">
+                <Send size={16} className="text-white ml-1" />
+            </div>
           </button>
         </div>
       </div>

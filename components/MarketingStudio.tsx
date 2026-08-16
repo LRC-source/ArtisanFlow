@@ -9,7 +9,7 @@ export const MarketingStudio = () => {
   return (
     <div className="p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20">
       <div className="flex flex-col gap-8">
-        <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-gray-400 hover:text-[#1A1A1A] font-sans font-medium text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
+        <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-medium text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Command Center
         </button>
         
@@ -19,48 +19,72 @@ export const MarketingStudio = () => {
           badge="Creative Engine Online"
         >
           <div className="flex gap-4">
-            <Button onClick={() => toast.info('Initializing Strategy Node...')} className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all">
+            <Button onClick={() => toast.info('Initializing Strategy Node...')} className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-white font-sans font-bold text-[11px] tracking-[0.3em] h-16 px-10 rounded-[2rem] shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all uppercase border-none hover:scale-105">
                 <Sparkles size={16} className="mr-3"/> GENERATE STRATEGY
             </Button>
           </div>
         </VaultBanner>
       </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
-            <div className="flex items-center gap-3 mb-4">
-                <Sparkles className="text-amber-500" size={20} />
-                <h3 className="font-bold text-white">Campaign Generator</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <Sparkles size={120} className="text-[#C5A059]" />
             </div>
-            <p className="text-gray-500 text-sm mb-4">Generate comprehensive strategies based on inventory levels.</p>
-            <button onClick={() => toast.info('Initializing Strategy Node...')} className="w-full py-2 bg-purple-600 text-white font-bold rounded hover:bg-purple-700 transition-colors shadow-sm">Generate Strategy</button>
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.2)] group-hover:scale-110 transition-all duration-500`}>
+                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-30 blur-md`}></span>
+                    <Sparkles size={20} className="text-[#C5A059] relative z-10" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-serif text-2xl text-white tracking-tight">Campaign Generator</h3>
+            </div>
+            <p className="text-white/40 font-sans font-light mb-8 relative z-10">Generate comprehensive strategies based on inventory levels.</p>
+            <button onClick={() => toast.info('Initializing Strategy Node...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Generate Strategy</button>
         </div>
 
-        <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
-            <div className="flex items-center gap-3 mb-4">
-                <Type className="text-purple-600" size={20} />
-                <h3 className="font-bold text-white">Copywriter</h3>
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <Type size={120} className="text-[#06B6D4]" />
             </div>
-            <p className="text-gray-500 text-sm mb-4">Create blog posts, emails, and social captions.</p>
-            <button onClick={() => toast.info('Opening Email Editor...')} className="w-full py-2 border border-gray-300 text-gray-700 hover:border-purple-500 hover:text-purple-700 rounded transition-colors">Open Editor</button>
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(6,182,212,0.2)] group-hover:scale-110 transition-all duration-500`}>
+                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#06B6D4] to-[#6A2C91] opacity-30 blur-md`}></span>
+                    <Type size={20} className="text-[#06B6D4] relative z-10" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-serif text-2xl text-white tracking-tight">Copywriter</h3>
+            </div>
+            <p className="text-white/40 font-sans font-light mb-8 relative z-10">Create blog posts, emails, and social captions.</p>
+            <button onClick={() => toast.info('Opening Email Editor...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Open Editor</button>
         </div>
 
-        <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
-            <div className="flex items-center gap-3 mb-4">
-                <Camera className="text-blue-500" size={20} />
-                <h3 className="font-bold text-white">Visual Studio</h3>
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <Camera size={120} className="text-[#D946EF]" />
             </div>
-            <p className="text-gray-500 text-sm mb-4">AI image generation for product showcases.</p>
-            <button onClick={() => toast.info('Spinning up Image Generation Node...')} className="w-full py-2 border border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 rounded transition-colors">Create Images</button>
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(217,70,239,0.2)] group-hover:scale-110 transition-all duration-500`}>
+                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#D946EF] to-[#A855F7] opacity-30 blur-md`}></span>
+                    <Camera size={20} className="text-[#D946EF] relative z-10" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-serif text-2xl text-white tracking-tight">Visual Studio</h3>
+            </div>
+            <p className="text-white/40 font-sans font-light mb-8 relative z-10">AI image generation for product showcases.</p>
+            <button onClick={() => toast.info('Spinning up Image Generation Node...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Create Images</button>
         </div>
 
-        <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
-            <div className="flex items-center gap-3 mb-4">
-                <Video className="text-red-500" size={20} />
-                <h3 className="font-bold text-white">Video Scripts</h3>
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <Video size={120} className="text-[#A855F7]" />
             </div>
-            <p className="text-gray-500 text-sm mb-4">Generate scripts for TikTok and Reels.</p>
-            <button onClick={() => toast.info('Script Generation AI Activating...')} className="w-full py-2 border border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-600 rounded transition-colors">Write Script</button>
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(168,85,247,0.2)] group-hover:scale-110 transition-all duration-500`}>
+                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#A855F7] to-[#06B6D4] opacity-30 blur-md`}></span>
+                    <Video size={20} className="text-[#A855F7] relative z-10" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-serif text-2xl text-white tracking-tight">Video Scripts</h3>
+            </div>
+            <p className="text-white/40 font-sans font-light mb-8 relative z-10">Generate scripts for TikTok and Reels.</p>
+            <button onClick={() => toast.info('Script Generation AI Activating...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Write Script</button>
         </div>
     </div>
   </div>

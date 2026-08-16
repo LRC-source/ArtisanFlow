@@ -80,7 +80,16 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
           <div className="sidebar-brand-block flex items-center justify-center relative">
               <div className="flex items-center justify-center w-full py-2">
-                  <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-[90px] w-auto object-contain mx-auto" />
+                <div className="flex items-center cursor-pointer group" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
+                    <span className="text-xl md:text-2xl tracking-tight flex items-center font-extrabold">
+                        {/* LRC Prefix */}
+                        <span className="text-white mr-2">LRC</span>
+                        
+                        {/* Artisan (White) + Flow (Electric Ombré Gradient) fused together */}
+                        <span className="text-white">Artisan</span>
+                        <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
+                    </span>
+                </div>
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />
@@ -182,7 +191,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       {/* Main Content Area */}
       <main className={`flex-1 overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-0' : 'md:ml-[280px]'}`}>
         {/* TOP BAR: SYNAPTIC HEADER */}
-        <header className="sticky top-0 z-30 w-full bg-black/40 backdrop-blur-xl border-b border-white/5 px-4 md:px-10 py-3 md:py-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 md:gap-4 sm:p-12 transition-all duration-500">
+        <header className="sticky top-0 z-30 w-full border-b border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md px-4 md:px-10 py-3 md:py-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 md:gap-4 sm:p-12 transition-all duration-500">
             <div className="flex items-center gap-4 md:gap-4 sm:p-8">
               <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white/60 hover:text-white">
                 <Menu size={24} />
@@ -195,7 +204,13 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
 
               {/* Mobile/Collapsed Logo */}
               <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
-                 <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-[40px] w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')} />
+                 <div className="flex items-center cursor-pointer group" onClick={() => navigate('/')}>
+                     <span className="text-xl tracking-tight flex items-center font-extrabold">
+                         <span className="text-white mr-2">LRC</span>
+                         <span className="text-white">Artisan</span>
+                         <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
+                     </span>
+                 </div>
               </div>
 
               {/* Breadcrumbs - Path Navigator */}

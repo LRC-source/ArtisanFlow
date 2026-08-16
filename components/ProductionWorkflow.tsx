@@ -60,7 +60,8 @@ export const ProductionWorkflow = () => {
           ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {recipes.map(recipe => (
-                      <div key={recipe.id} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col justify-between">
+                      <div key={recipe.id} className="p-[1.5px] rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_15px_rgba(6,182,212,0.15)] flex flex-col justify-between">
+                          <div className="bg-[#0A0A0A] backdrop-blur-3xl border-none p-6 rounded-[1.5rem] flex flex-col justify-between h-full">
                           <div>
                               <div className="flex justify-between items-start mb-4">
                                   <div>
@@ -100,6 +101,7 @@ export const ProductionWorkflow = () => {
                           >
                               Commit Batch to Production
                           </Button>
+                          </div>
                       </div>
                   ))}
               </div>

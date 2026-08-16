@@ -170,7 +170,13 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                 transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="relative mb-8"
               >
-                <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="w-[350px] h-auto object-contain mx-auto" />
+                 <div className="flex items-center justify-center cursor-pointer group">
+                     <span className="text-4xl sm:text-5xl tracking-tight flex items-center font-extrabold">
+                         <span className="text-white mr-3">LRC</span>
+                         <span className="text-white">Artisan</span>
+                         <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
+                     </span>
+                 </div>
               </motion.div>
               <motion.p 
                 initial={{ opacity: 0 }}

@@ -1577,7 +1577,14 @@ function Layout({ children }) {
     ) }),
     /* @__PURE__ */ jsxs("aside", { className: `artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? "translate-x-0" : isSidebarCollapsed ? "-translate-x-[120%]" : "-translate-x-[120%] md:translate-x-0"}`, children: [
       /* @__PURE__ */ jsxs("div", { className: "sidebar-brand-block flex items-center justify-center relative", children: [
-        /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center w-full py-2", children: /* @__PURE__ */ jsx("img", { src: "/LOGO%20Official-Trans.png", alt: "ArtisanFlow Logo", className: "h-[90px] w-auto object-contain mx-auto" }) }),
+        /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center w-full py-2", children: /* @__PURE__ */ jsx("div", { className: "flex items-center cursor-pointer group", onClick: () => {
+          navigate("/");
+          setIsMobileMenuOpen(false);
+        }, children: /* @__PURE__ */ jsxs("span", { className: "text-xl md:text-2xl tracking-tight flex items-center font-extrabold", children: [
+          /* @__PURE__ */ jsx("span", { className: "text-white mr-2", children: "LRC" }),
+          /* @__PURE__ */ jsx("span", { className: "text-white", children: "Artisan" }),
+          /* @__PURE__ */ jsx("span", { className: "font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "Flow" })
+        ] }) }) }),
         /* @__PURE__ */ jsx("button", { onClick: () => setIsMobileMenuOpen(false), className: "md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors", children: /* @__PURE__ */ jsx(X, { size: 20 }) }),
         /* @__PURE__ */ jsx("button", { onClick: () => setIsSidebarCollapsed(true), className: "hidden md:block absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors", children: /* @__PURE__ */ jsx(Menu, { size: 20 }) })
       ] }),
@@ -1701,11 +1708,15 @@ function Layout({ children }) {
       ] })
     ] }),
     /* @__PURE__ */ jsxs("main", { className: `flex-1 overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? "md:ml-0" : "md:ml-[280px]"}`, children: [
-      /* @__PURE__ */ jsxs("header", { className: "sticky top-0 z-30 w-full bg-black/40 backdrop-blur-xl border-b border-white/5 px-4 md:px-10 py-3 md:py-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 md:gap-4 sm:p-12 transition-all duration-500", children: [
+      /* @__PURE__ */ jsxs("header", { className: "sticky top-0 z-30 w-full border-b border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md px-4 md:px-10 py-3 md:py-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 md:gap-4 sm:p-12 transition-all duration-500", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 md:gap-4 sm:p-8", children: [
           /* @__PURE__ */ jsx("button", { onClick: () => setIsMobileMenuOpen(true), className: "md:hidden p-2 -ml-2 text-white/60 hover:text-white", children: /* @__PURE__ */ jsx(Menu, { size: 24 }) }),
           isSidebarCollapsed && /* @__PURE__ */ jsx("button", { onClick: () => setIsSidebarCollapsed(false), className: "hidden md:block p-2 -ml-2 text-white/60 hover:text-[#C5A059] transition-colors", children: /* @__PURE__ */ jsx(Menu, { size: 24 }) }),
-          /* @__PURE__ */ jsx("div", { className: `transition-all duration-300 ${!isSidebarCollapsed ? "md:hidden" : ""}`, children: /* @__PURE__ */ jsx("img", { src: "/LOGO%20Official-Trans.png", alt: "ArtisanFlow Logo", className: "h-[40px] w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity", onClick: () => navigate("/") }) }),
+          /* @__PURE__ */ jsx("div", { className: `transition-all duration-300 ${!isSidebarCollapsed ? "md:hidden" : ""}`, children: /* @__PURE__ */ jsx("div", { className: "flex items-center cursor-pointer group", onClick: () => navigate("/"), children: /* @__PURE__ */ jsxs("span", { className: "text-xl tracking-tight flex items-center font-extrabold", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-white mr-2", children: "LRC" }),
+            /* @__PURE__ */ jsx("span", { className: "text-white", children: "Artisan" }),
+            /* @__PURE__ */ jsx("span", { className: "font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "Flow" })
+          ] }) }) }),
           /* @__PURE__ */ jsxs("nav", { className: "hidden md:flex items-center space-x-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/30", children: [
             /* @__PURE__ */ jsxs("span", { className: "hover:text-[#C5A059] cursor-pointer transition-colors flex items-center gap-1", onClick: () => navigate("/"), children: [
               /* @__PURE__ */ jsx(Hexagon, { size: 10, className: "text-[#C5A059]/40" }),
@@ -4016,7 +4027,11 @@ const AuthGateway = ({ initialView = "login", selectedTier: propSelectedTier, on
                     animate: { opacity: 1, scale: 1 },
                     transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
                     className: "relative mb-8",
-                    children: /* @__PURE__ */ jsx("img", { src: "/LOGO%20Official-Trans.png", alt: "ArtisanFlow Logo", className: "w-[350px] h-auto object-contain mx-auto" })
+                    children: /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center cursor-pointer group", children: /* @__PURE__ */ jsxs("span", { className: "text-4xl sm:text-5xl tracking-tight flex items-center font-extrabold", children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-white mr-3", children: "LRC" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white", children: "Artisan" }),
+                      /* @__PURE__ */ jsx("span", { className: "font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "Flow" })
+                    ] }) })
                   }
                 ),
                 /* @__PURE__ */ jsx(
@@ -5984,7 +5999,10 @@ const Inventory = () => {
             /* @__PURE__ */ jsxs("div", { onClick: () => setView("raw_materials"), className: "luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10", children: [
               /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000" }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 sm:p-8 relative z-10 mb-12", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5", children: /* @__PURE__ */ jsx(Box, { size: 32, strokeWidth: 1.5 }) }),
+                /* @__PURE__ */ jsxs("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(106,44,145,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10", children: [
+                  /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-40 blur-md" }),
+                  /* @__PURE__ */ jsx(Box, { className: "text-[#06B6D4] relative z-10", size: 32, strokeWidth: 1.5 })
+                ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h3", { className: "text-4xl font-serif text-white tracking-tight mb-2", children: "Materials Matrix" }),
                   /* @__PURE__ */ jsxs("p", { className: "text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]", children: [
@@ -6001,7 +6019,10 @@ const Inventory = () => {
             /* @__PURE__ */ jsxs("div", { onClick: () => setView("finished_products"), className: "luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10", children: [
               /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000" }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 sm:p-8 relative z-10 mb-12", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#C5A059] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5", children: /* @__PURE__ */ jsx(Package, { size: 32, strokeWidth: 1.5 }) }),
+                /* @__PURE__ */ jsxs("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10", children: [
+                  /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-40 blur-md" }),
+                  /* @__PURE__ */ jsx(Package, { className: "text-[#C5A059] relative z-10", size: 32, strokeWidth: 1.5 })
+                ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h3", { className: "text-4xl font-serif text-white tracking-tight mb-2", children: "Finished Output" }),
                   /* @__PURE__ */ jsxs("p", { className: "text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]", children: [
@@ -6056,7 +6077,7 @@ const Inventory = () => {
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "lg:col-span-1", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#C5A059]/5 border border-[#C5A059]/10 rounded-[3rem] p-4 sm:p-12 h-full flex flex-col", children: [
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-1 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(6,182,212,0.2)]", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0A0A0A] border-none backdrop-blur-3xl rounded-[3rem] p-4 sm:p-12 h-full flex flex-col", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-10", children: [
                 /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-serif text-amber-500 tracking-tight flex items-center gap-4", children: [
                   /* @__PURE__ */ jsx(AlertTriangle, { size: 24, className: "text-amber-500", strokeWidth: 1 }),
@@ -6585,7 +6606,7 @@ const ProductionWorkflow = () => {
       recipes.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]", children: [
         /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Clock, { size: 32, className: "text-gray-400" }) }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-500", children: "No active production formulas found. Create one in Recipes." })
-      ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: recipes.map((recipe) => /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col justify-between", children: [
+      ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: recipes.map((recipe) => /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_15px_rgba(6,182,212,0.15)] flex flex-col justify-between", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0A0A0A] backdrop-blur-3xl border-none p-6 rounded-[1.5rem] flex flex-col justify-between h-full", children: [
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-4", children: [
             /* @__PURE__ */ jsxs("div", { children: [
@@ -6634,7 +6655,7 @@ const ProductionWorkflow = () => {
             children: "Commit Batch to Production"
           }
         )
-      ] }, recipe.id)) })
+      ] }) }, recipe.id)) })
     ] })
   ] });
 };
@@ -7394,109 +7415,114 @@ const WarehouseView = () => {
   const pendingOrders = 5;
   const activeBatches = 2;
   const rawMaterials = 14;
-  return /* @__PURE__ */ jsxs("div", { className: "p-6 space-y-6 animate-in fade-in h-screen flex flex-col bg-stone-50", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("button", { onClick: () => navigate("/operations"), className: "flex items-center gap-2 text-gray-500 hover:text-[#6A2C91] mb-2 font-medium", children: [
-          /* @__PURE__ */ jsx(ArrowLeft, { size: 18 }),
-          " Back to Operations"
-        ] }),
-        /* @__PURE__ */ jsxs("h1", { className: "text-3xl font-bold text-white flex items-center gap-3", children: [
-          /* @__PURE__ */ jsx(MapPin, { className: "text-[#C5A059]", size: 32 }),
-          " Warehouse Command Center",
-          /* @__PURE__ */ jsx(Badge, { color: "gold", children: "Beta" })
-        ] }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-500", children: "Real-time visualization of inventory flow and zones." })
+  return /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-10 space-y-12 max-w-[1600px] mx-auto animate-in fade-in h-screen flex flex-col pb-20", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 sm:p-8", children: [
+      /* @__PURE__ */ jsxs("button", { onClick: () => navigate("/operations"), className: "flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { size: 16, className: "group-hover:-translate-x-2 transition-transform" }),
+        " Back to Operations"
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
-        /* @__PURE__ */ jsx(Badge, { color: "green", children: "Systems Online" }),
-        /* @__PURE__ */ jsx(Badge, { color: "purple", children: "Warehouse A" })
+      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-end", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsxs("h1", { className: "text-4xl font-serif text-white tracking-tight flex items-center gap-4", children: [
+            /* @__PURE__ */ jsx(MapPin, { className: "text-[#C5A059]", size: 36 }),
+            " Warehouse Command Center",
+            /* @__PURE__ */ jsx(Badge, { color: "gold", className: "text-[10px] uppercase font-sans font-bold tracking-[0.3em]", children: "Beta" })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/50 font-sans font-light italic mt-2", children: "Real-time visualization of inventory flow and zones." })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+          /* @__PURE__ */ jsx(Badge, { color: "green", className: "text-[10px] uppercase font-sans font-bold tracking-[0.3em] border-emerald-500/30 bg-emerald-500/10 text-emerald-400", children: "Systems Online" }),
+          /* @__PURE__ */ jsx(Badge, { color: "purple", className: "text-[10px] uppercase font-sans font-bold tracking-[0.3em] border-[#6A2C91]/30 bg-[#6A2C91]/10 text-[#6A2C91]", children: "Warehouse A" })
+        ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "flex-1 bg-white border border-gray-200 rounded-2xl shadow-lg relative overflow-hidden p-4 sm:p-8", children: [
-      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-30" }),
+    /* @__PURE__ */ jsxs("div", { className: "flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] shadow-2xl relative overflow-hidden p-4 sm:p-8", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-96 h-96 bg-purple-500/5 rounded-bl-full -mr-20 -mt-20 pointer-events-none" }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-12 grid-rows-6 gap-6 h-full relative z-10", children: [
-        /* @__PURE__ */ jsxs("div", { className: "col-span-3 row-span-6 bg-amber-50/80 border-2 border-dashed border-amber-200 rounded-xl p-4 flex flex-col relative group hover:bg-amber-50 transition-colors", children: [
-          /* @__PURE__ */ jsxs("div", { className: "absolute -top-3 left-4 bg-amber-100 text-amber-800 px-3 py-1 text-xs font-bold uppercase rounded border border-amber-200 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "col-span-3 row-span-6 bg-black/40 border border-white/10 rounded-[2.5rem] p-6 flex flex-col relative group hover:border-[#C5A059]/30 transition-all shadow-inner", children: [
+          /* @__PURE__ */ jsxs("div", { className: "absolute -top-4 left-6 bg-black border border-[#C5A059]/50 text-[#C5A059] px-4 py-1.5 text-[10px] font-sans font-bold uppercase tracking-[0.3em] rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(197,160,89,0.2)]", children: [
             /* @__PURE__ */ jsx(Truck, { size: 14 }),
             " Receiving & Raw Mat."
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "bg-white p-3 rounded-lg shadow-sm border border-amber-100", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 uppercase", children: "Incoming" }),
-              /* @__PURE__ */ jsx("p", { className: "font-bold text-gray-900", children: "2 Shipments" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-amber-600 mt-1", children: "Expected 2:00 PM" })
+          /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]", children: "Incoming" }),
+              /* @__PURE__ */ jsx("p", { className: "font-serif text-2xl text-white mt-1", children: "2 Shipments" }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-[#C5A059] font-sans font-bold uppercase tracking-widest mt-2", children: "Expected 2:00 PM" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-white p-3 rounded-lg shadow-sm border border-amber-100", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 uppercase", children: "Raw Stock" }),
-              /* @__PURE__ */ jsxs("p", { className: "font-bold text-gray-900", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]", children: "Raw Stock" }),
+              /* @__PURE__ */ jsxs("p", { className: "font-serif text-2xl text-white mt-1", children: [
                 rawMaterials,
                 " Items"
               ] }),
-              /* @__PURE__ */ jsxs(Badge, { color: "red", className: "mt-1 w-fit flex gap-1 items-center", children: [
+              /* @__PURE__ */ jsxs(Badge, { color: "red", className: "mt-3 w-fit flex gap-2 items-center text-[9px] uppercase tracking-widest", children: [
                 /* @__PURE__ */ jsx(AlertCircle, { size: 10 }),
                 " 1 Low Stock"
               ] })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "col-span-6 row-span-4 bg-purple-50/80 border-2 border-dashed border-purple-200 rounded-xl p-4 relative hover:bg-purple-50 transition-colors", children: [
-          /* @__PURE__ */ jsxs("div", { className: "absolute -top-3 left-4 bg-purple-100 text-purple-800 px-3 py-1 text-xs font-bold uppercase rounded border border-purple-200 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "col-span-6 row-span-4 bg-[#6A2C91]/10 border border-[#6A2C91]/20 rounded-[2.5rem] p-6 relative hover:border-[#6A2C91]/40 transition-all shadow-inner", children: [
+          /* @__PURE__ */ jsxs("div", { className: "absolute -top-4 left-6 bg-black border border-[#6A2C91]/50 text-[#6A2C91] px-4 py-1.5 text-[10px] font-sans font-bold uppercase tracking-[0.3em] rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(106,44,145,0.4)]", children: [
             /* @__PURE__ */ jsx(Layers, { size: 14 }),
             " Production Floor"
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex h-full items-center justify-center gap-4 sm:p-8 mt-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex h-full items-center justify-center gap-8 sm:p-8 mt-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md border border-purple-100 mx-auto mb-2 animate-pulse", children: /* @__PURE__ */ jsx(Layers, { className: "text-purple-600", size: 32 }) }),
-              /* @__PURE__ */ jsxs("p", { className: "font-bold text-gray-900", children: [
+              /* @__PURE__ */ jsxs("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_20px_rgba(106,44,145,0.3)] mx-auto mb-4 animate-pulse z-10", children: [
+                /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#6A2C91] to-transparent opacity-40 blur-md" }),
+                /* @__PURE__ */ jsx(Layers, { className: "text-[#6A2C91] relative z-10", size: 32, strokeWidth: 1.5 })
+              ] }),
+              /* @__PURE__ */ jsxs("p", { className: "font-serif text-2xl text-white", children: [
                 activeBatches,
                 " Batches Active"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500", children: "Mixing Station" })
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-[#6A2C91] mt-2", children: "Mixing Station" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "h-px w-20 bg-purple-300 border-t border-dashed" }),
+            /* @__PURE__ */ jsx("div", { className: "h-px w-24 bg-white/20 border-t border-dashed" }),
             /* @__PURE__ */ jsxs("div", { className: "text-center opacity-50", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm border border-gray-200 mx-auto mb-2", children: /* @__PURE__ */ jsx(Package, { className: "text-gray-400", size: 32 }) }),
-              /* @__PURE__ */ jsx("p", { className: "font-bold text-gray-900", children: "Packaging" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500", children: "Idle" })
+              /* @__PURE__ */ jsx("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-black/40 border border-white/10 backdrop-blur-xl mx-auto mb-4 z-10", children: /* @__PURE__ */ jsx(Package, { className: "text-white/40 relative z-10", size: 32, strokeWidth: 1.5 }) }),
+              /* @__PURE__ */ jsx("p", { className: "font-serif text-2xl text-white/50", children: "Packaging" }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-2", children: "Idle" })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "col-span-3 row-span-6 bg-blue-50/80 border-2 border-dashed border-blue-200 rounded-xl p-4 relative hover:bg-blue-50 transition-colors", children: [
-          /* @__PURE__ */ jsxs("div", { className: "absolute -top-3 left-4 bg-blue-100 text-blue-800 px-3 py-1 text-xs font-bold uppercase rounded border border-blue-200 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "col-span-3 row-span-6 bg-black/40 border border-white/10 rounded-[2.5rem] p-6 relative hover:border-[#06B6D4]/30 transition-all shadow-inner group", children: [
+          /* @__PURE__ */ jsxs("div", { className: "absolute -top-4 left-6 bg-black border border-[#06B6D4]/50 text-[#06B6D4] px-4 py-1.5 text-[10px] font-sans font-bold uppercase tracking-[0.3em] rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.3)]", children: [
             /* @__PURE__ */ jsx(Box, { size: 14 }),
             " Shipping & Fulfillment"
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "bg-white p-3 rounded-lg shadow-sm border border-blue-100", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 uppercase", children: "Pending Orders" }),
-              /* @__PURE__ */ jsx("p", { className: "font-bold text-gray-900", children: pendingOrders }),
-              /* @__PURE__ */ jsx("div", { className: "w-full bg-gray-100 h-1.5 rounded-full mt-2 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "bg-blue-500 h-full w-2/3" }) })
+          /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]", children: "Pending Orders" }),
+              /* @__PURE__ */ jsx("p", { className: "font-serif text-2xl text-white mt-1", children: pendingOrders }),
+              /* @__PURE__ */ jsx("div", { className: "w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "bg-[#06B6D4] h-full w-2/3 shadow-[0_0_10px_#06B6D4]" }) })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-white p-3 rounded-lg shadow-sm border border-blue-100", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 uppercase", children: "Ready to Ship" }),
-              /* @__PURE__ */ jsx("p", { className: "font-bold text-gray-900", children: "12 Parcels" }),
-              /* @__PURE__ */ jsx(Button, { onClick: () => toast.success("Labels sent to printer queue."), variant: "primary", className: "w-full mt-2 text-xs py-1 h-8 bg-blue-600 hover:bg-blue-700", children: "Print Labels" })
+            /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]", children: "Ready to Ship" }),
+              /* @__PURE__ */ jsx("p", { className: "font-serif text-2xl text-white mt-1 mb-3", children: "12 Parcels" }),
+              /* @__PURE__ */ jsx(Button, { onClick: () => toast.success("Labels sent to printer queue."), className: "w-full h-10 rounded-xl bg-white/10 hover:bg-[#06B6D4] text-white border-none font-sans font-bold text-[9px] uppercase tracking-widest transition-colors", children: "Print Labels" })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "col-span-6 row-span-2 bg-emerald-50/80 border-2 border-dashed border-emerald-200 rounded-xl p-4 relative hover:bg-emerald-50 transition-colors flex items-center justify-between px-8", children: [
-          /* @__PURE__ */ jsxs("div", { className: "absolute -top-3 left-4 bg-emerald-100 text-emerald-800 px-3 py-1 text-xs font-bold uppercase rounded border border-emerald-200 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "col-span-6 row-span-2 bg-emerald-500/10 border border-emerald-500/20 rounded-[2.5rem] p-6 relative hover:border-emerald-500/40 transition-all shadow-inner flex items-center justify-between px-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "absolute -top-4 left-6 bg-black border border-emerald-500/50 text-emerald-400 px-4 py-1.5 text-[10px] font-sans font-bold uppercase tracking-[0.3em] rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(52,211,153,0.3)]", children: [
             /* @__PURE__ */ jsx(Package, { size: 14 }),
             " Finished Goods Storage"
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-gray-900", children: inventoryCount }),
-            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 uppercase font-bold", children: "Total Units" })
+            /* @__PURE__ */ jsx("p", { className: "text-5xl font-serif text-white tracking-tighter", children: inventoryCount }),
+            /* @__PURE__ */ jsx("p", { className: "text-[10px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] mt-2", children: "Total Units" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex gap-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-              /* @__PURE__ */ jsx("p", { className: "font-bold text-gray-800", children: "98%" }),
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-gray-500", children: "Capacity" })
+              /* @__PURE__ */ jsx("p", { className: "font-serif text-3xl text-white", children: "98%" }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/40 mt-1", children: "Capacity" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-              /* @__PURE__ */ jsx("p", { className: "font-bold text-gray-800", children: "$7.1k" }),
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-gray-500", children: "Value" })
+              /* @__PURE__ */ jsx("p", { className: "font-serif text-3xl text-white", children: "$7.1k" }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/40 mt-1", children: "Value" })
             ] })
           ] })
         ] })
@@ -7761,7 +7787,10 @@ const CRM = () => {
           { label: "Synaptic Health", val: "98%", icon: TrendingUp, color: "text-emerald-400", bg: "bg-emerald-500/20", border: "border-emerald-500/30" },
           { label: "At Risk", val: "0", icon: ShoppingCart, color: "text-amber-500", bg: "bg-amber-500/20", border: "border-amber-500/30" }
         ].map((kpi, i) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl", children: [
-          /* @__PURE__ */ jsx("div", { className: `p-4 ${kpi.bg} ${kpi.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${kpi.border}`, children: /* @__PURE__ */ jsx(kpi.icon, { size: 24 }) }),
+          /* @__PURE__ */ jsxs("div", { className: `relative inline-flex items-center justify-center w-16 h-16 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10`, children: [
+            /* @__PURE__ */ jsx("span", { className: `absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-white/10 to-white/5 opacity-40 blur-md ${kpi.bg}` }),
+            /* @__PURE__ */ jsx(kpi.icon, { size: 24, className: `${kpi.color} relative z-10`, strokeWidth: 1.5 })
+          ] }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2", children: kpi.label }),
           /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white tracking-tighter", children: kpi.val })
         ] }, i)) }),
@@ -8084,59 +8113,59 @@ const ProfitGuardPage = () => {
         ),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "lg:col-span-1 space-y-6", children: [
-            /* @__PURE__ */ jsxs(Card, { className: "p-4 sm:p-8 border-none shadow-sm bg-white rounded-3xl", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-sm font-sans font-bold uppercase tracking-widest text-white mb-8", children: "Production Inputs" }),
+            /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 border border-white/10 p-4 sm:p-8 shadow-sm rounded-3xl", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-sm font-sans font-bold uppercase tracking-widest text-white/50 mb-8", children: "Production Inputs" }),
               /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest mb-3", children: "Total Material Cost" }),
+                  /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-bold text-white/40 uppercase tracking-widest mb-3", children: "Total Material Cost" }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 font-serif text-xl", children: "$" }),
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-serif text-xl", children: "$" }),
                     /* @__PURE__ */ jsx(
                       Input,
                       {
                         type: "number",
                         value: materialCost,
                         onChange: (e) => setMaterialCost(Number(e.target.value)),
-                        className: "pl-10 h-14 bg-stone-50/50 border-stone-100 rounded-2xl font-serif text-2xl focus:ring-purple-500/10"
+                        className: "pl-10 h-14 bg-black/40 border-white/10 rounded-2xl font-serif text-white text-2xl focus:border-[#6A2C91]"
                       }
                     )
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest mb-3", children: "Batch Units" }),
+                  /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-bold text-white/40 uppercase tracking-widest mb-3", children: "Batch Units" }),
                   /* @__PURE__ */ jsx(
                     Input,
                     {
                       type: "number",
                       value: units,
                       onChange: (e) => setUnits(Number(e.target.value)),
-                      className: "h-14 bg-stone-50/50 border-stone-100 rounded-2xl font-serif text-2xl focus:ring-purple-500/10"
+                      className: "h-14 bg-black/40 border-white/10 rounded-2xl font-serif text-white text-2xl focus:border-[#6A2C91]"
                     }
                   )
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest mb-3", children: "Proposed Price" }),
+                  /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-bold text-white/40 uppercase tracking-widest mb-3", children: "Proposed Price" }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 font-serif text-xl", children: "$" }),
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-serif text-xl", children: "$" }),
                     /* @__PURE__ */ jsx(
                       Input,
                       {
                         type: "number",
                         value: plannedPrice,
                         onChange: (e) => setPlannedPrice(Number(e.target.value)),
-                        className: "pl-10 h-14 bg-stone-50/50 border-stone-100 rounded-2xl font-serif text-2xl focus:ring-purple-500/10"
+                        className: "pl-10 h-14 bg-black/40 border-white/10 rounded-2xl font-serif text-white text-2xl focus:border-[#6A2C91]"
                       }
                     )
                   ] })
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs(Card, { className: `p-8 border-none shadow-sm rounded-3xl transition-colors duration-500 ${isWarning ? "bg-amber-50" : "bg-emerald-50"}`, children: [
+            /* @__PURE__ */ jsxs("div", { className: `p-8 border border-white/10 shadow-sm rounded-3xl transition-colors duration-500 ${isWarning ? "bg-amber-500/10" : "bg-emerald-500/10"}`, children: [
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-6", children: [
-                /* @__PURE__ */ jsx("div", { className: `p-3 rounded-2xl ${isWarning ? "bg-amber-100 text-amber-600" : "bg-emerald-100 text-emerald-600"}`, children: isWarning ? /* @__PURE__ */ jsx(AlertTriangle, { size: 20 }) : /* @__PURE__ */ jsx(ShieldCheck, { size: 20 }) }),
-                /* @__PURE__ */ jsx("h4", { className: `font-serif text-xl ${isWarning ? "text-amber-900" : "text-emerald-900"}`, children: isWarning ? "Margin Risk Detected" : "Profitability Secure" })
+                /* @__PURE__ */ jsx("div", { className: `p-3 rounded-2xl ${isWarning ? "bg-amber-500/20 text-amber-400" : "bg-emerald-500/20 text-emerald-400"}`, children: isWarning ? /* @__PURE__ */ jsx(AlertTriangle, { size: 20 }) : /* @__PURE__ */ jsx(ShieldCheck, { size: 20 }) }),
+                /* @__PURE__ */ jsx("h4", { className: `font-serif text-xl ${isWarning ? "text-amber-400" : "text-emerald-400"}`, children: isWarning ? "Margin Risk Detected" : "Profitability Secure" })
               ] }),
-              /* @__PURE__ */ jsx("p", { className: `text-sm font-sans font-light leading-relaxed ${isWarning ? "text-amber-700/80" : "text-emerald-700/80"}`, children: isWarning ? "Your current markup is below the 2.2x artisanal benchmark. Consider optimizing material sourcing or adjusting wholesale positioning." : "Your margins are healthy and aligned with premium brand standards. This batch is cleared for high-efficiency production." })
+              /* @__PURE__ */ jsx("p", { className: `text-sm font-sans font-light leading-relaxed ${isWarning ? "text-amber-400/80" : "text-emerald-400/80"}`, children: isWarning ? "Your current markup is below the 2.2x artisanal benchmark. Consider optimizing material sourcing or adjusting wholesale positioning." : "Your margins are healthy and aligned with premium brand standards. This batch is cleared for high-efficiency production." })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2 space-y-8", children: [
@@ -8179,21 +8208,21 @@ const ProfitGuardPage = () => {
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxs(Card, { className: "p-4 sm:p-10 border-none shadow-sm bg-white rounded-[2.5rem] relative overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.2)]", children: /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-10 border-none shadow-sm bg-[#0A0A0A] rounded-[3rem] relative overflow-hidden", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:p-8 relative z-10", children: [
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-sm font-sans font-bold uppercase tracking-widest text-white mb-2", children: "Total Batch Profitability" }),
-                  /* @__PURE__ */ jsxs("p", { className: "text-6xl font-serif text-stone-900 tracking-tighter", children: [
+                  /* @__PURE__ */ jsx("h3", { className: "text-sm font-sans font-bold uppercase tracking-widest text-white/50 mb-2", children: "Total Batch Profitability" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-6xl font-serif text-white tracking-tighter", children: [
                     "$",
                     totalProfit.toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-end", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-emerald-600 font-sans font-bold text-xs uppercase tracking-widest mb-2", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-emerald-400 font-sans font-bold text-xs uppercase tracking-widest mb-2", children: [
                     /* @__PURE__ */ jsx(ArrowUpRight, { size: 14 }),
                     " Healthy Yield"
                   ] }),
-                  /* @__PURE__ */ jsx("div", { className: "h-2 w-48 bg-stone-100 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(
+                  /* @__PURE__ */ jsx("div", { className: "h-2 w-48 bg-white/10 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(
                     "div",
                     {
                       className: `h-full transition-all duration-1000 ${isWarning ? "bg-amber-400" : "bg-emerald-500"}`,
@@ -8202,28 +8231,28 @@ const ProfitGuardPage = () => {
                   ) })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "mt-12 pt-8 border-t border-stone-50 grid grid-cols-3 gap-4 sm:p-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "mt-12 pt-8 border-t border-white/10 grid grid-cols-3 gap-4 sm:p-8", children: [
                 /* @__PURE__ */ jsx(StatMini, { label: "Markup", value: `${currentMultiplier.toFixed(2)}x` }),
                 /* @__PURE__ */ jsx(StatMini, { label: "Break Even", value: `${Math.ceil(materialCost / plannedPrice)} Units` }),
                 /* @__PURE__ */ jsx(StatMini, { label: "ROI", value: `${(totalProfit / materialCost * 100).toFixed(0)}%` })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-8 bg-white/50 rounded-[2rem] border border-stone-100", children: [
-              /* @__PURE__ */ jsx("h6", { className: "text-[10px] font-sans font-bold text-white uppercase tracking-[0.3em] mb-4", children: "Strategic Recommendations" }),
-              /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-sm font-sans font-light text-stone-600", children: [
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-8 bg-white/5 rounded-[2rem] border border-white/10", children: [
+              /* @__PURE__ */ jsx("h6", { className: "text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em] mb-4", children: "Strategic Recommendations" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-sm font-sans font-light text-white/70", children: [
                 /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                  /* @__PURE__ */ jsx("div", { className: `w-1.5 h-1.5 rounded-full mt-1.5 ${isWarning ? "bg-amber-500" : "bg-emerald-500"}` }),
+                  /* @__PURE__ */ jsx("div", { className: `w-1.5 h-1.5 rounded-full mt-1.5 ${isWarning ? "bg-amber-400" : "bg-emerald-400"}` }),
                   isWarning ? "Consider reducing raw material waste or renegotiating supplier contracts to lower unit cost." : "Current margin is healthy. Consider scaling production to leverage economies of scale."
                 ] }),
                 /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                  /* @__PURE__ */ jsx("div", { className: `w-1.5 h-1.5 rounded-full mt-1.5 ${isWarning ? "bg-amber-500" : "bg-emerald-500"}` }),
+                  /* @__PURE__ */ jsx("div", { className: `w-1.5 h-1.5 rounded-full mt-1.5 ${isWarning ? "bg-amber-400" : "bg-emerald-400"}` }),
                   isWarning ? "Target price adjustment recommended to reach 2.2x multiplier for sustainable growth." : "Explore premium positioning to further increase markup without volume loss."
                 ] })
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
-              /* @__PURE__ */ jsx(Button, { onClick: () => toast.success("Exporting financial report..."), className: "flex-1 h-16 bg-[#1A1A1A] text-white rounded-2xl font-sans font-bold text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all shadow-lg shadow-black/5", children: "Commit Batch to Production" }),
-              /* @__PURE__ */ jsx(Button, { onClick: () => toast.info("Syncing with Square financials..."), variant: "outline", className: "h-16 px-10 border-stone-200 rounded-2xl font-sans font-bold text-[11px] uppercase tracking-widest hover:bg-stone-50 transition-all", children: "Export Diagnostic" })
+              /* @__PURE__ */ jsx(Button, { onClick: () => toast.success("Exporting financial report..."), className: "flex-1 h-16 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-white rounded-[2rem] font-sans font-bold text-[11px] uppercase tracking-[0.3em] hover:opacity-90 transition-all shadow-2xl", children: "Commit Batch to Production" }),
+              /* @__PURE__ */ jsx(Button, { onClick: () => toast.info("Syncing with Square financials..."), variant: "outline", className: "h-16 px-10 border-white/20 bg-white/5 rounded-[2rem] font-sans font-bold text-white text-[11px] uppercase tracking-[0.3em] hover:bg-white/10 transition-all", children: "Export Diagnostic" })
             ] })
           ] })
         ] })
@@ -8231,17 +8260,20 @@ const ProfitGuardPage = () => {
     }
   );
 };
-const AnalysisCard = ({ title, value, subtitle, icon: Icon, highlight }) => /* @__PURE__ */ jsxs("div", { className: `p-8 rounded-3xl border border-stone-100 transition-all duration-500 hover:shadow-md ${highlight ? "bg-purple-50/30 border-purple-100" : "bg-white"}`, children: [
+const AnalysisCard = ({ title, value, subtitle, icon: Icon, highlight }) => /* @__PURE__ */ jsxs("div", { className: `p-8 rounded-3xl border transition-all duration-500 hover:shadow-2xl ${highlight ? "bg-gradient-to-br from-[#6A2C91]/20 to-transparent border-[#6A2C91]/30" : "bg-white/5 border-white/10"}`, children: [
   /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
-    /* @__PURE__ */ jsx("div", { className: `p-3 rounded-2xl ${highlight ? "bg-purple-100 text-[#6A2C91]" : "bg-stone-50 text-stone-400"}`, children: /* @__PURE__ */ jsx(Icon, { size: 20, strokeWidth: 1.5 }) }),
-    /* @__PURE__ */ jsx("span", { className: "text-[10px] font-sans font-bold uppercase tracking-widest text-stone-400", children: subtitle })
+    /* @__PURE__ */ jsxs("div", { className: `relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] z-10`, children: [
+      /* @__PURE__ */ jsx("span", { className: `absolute inset-0 rounded-[1rem] bg-gradient-to-r from-white/10 to-white/5 opacity-40 blur-md` }),
+      /* @__PURE__ */ jsx(Icon, { size: 20, className: `${highlight ? "text-[#C5A059]" : "text-white/70"} relative z-10`, strokeWidth: 1.5 })
+    ] }),
+    /* @__PURE__ */ jsx("span", { className: "text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/40", children: subtitle })
   ] }),
-  /* @__PURE__ */ jsx("h4", { className: "text-sm font-sans font-medium text-white font-bold mb-1", children: title }),
-  /* @__PURE__ */ jsx("p", { className: `text-3xl font-serif tracking-tight ${highlight ? "text-[#6A2C91]" : "text-stone-900"}`, children: value })
+  /* @__PURE__ */ jsx("h4", { className: "text-sm font-sans font-bold text-white mb-1", children: title }),
+  /* @__PURE__ */ jsx("p", { className: `text-4xl font-serif tracking-tighter ${highlight ? "text-[#C5A059]" : "text-white"}`, children: value })
 ] });
 const StatMini = ({ label, value }) => /* @__PURE__ */ jsxs("div", { children: [
-  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold uppercase tracking-widest text-stone-400 mb-1", children: label }),
-  /* @__PURE__ */ jsx("p", { className: "text-xl font-serif text-stone-900", children: value })
+  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/40 mb-1", children: label }),
+  /* @__PURE__ */ jsx("p", { className: "text-2xl font-serif text-white", children: value })
 ] });
 const CATEGORIES = [
   "What type of maker are you? Click here",
@@ -9825,9 +9857,9 @@ const FinanceHub = () => {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12", children: [
           /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2 space-y-12", children: [
-            /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-12 rounded-[3rem] shadow-2xl", children: [
-              /* @__PURE__ */ jsx("div", { className: "mb-10", children: /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white tracking-tight", children: "Interconnected Flow Ledger" }) }),
-              /* @__PURE__ */ jsx("div", { className: "h-96 w-full", children: /* @__PURE__ */ jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxs(AreaChart, { data: [
+            /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-[3.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.2)]", children: /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-[#0A0A0A] p-4 sm:p-12 rounded-[3.5rem] relative overflow-hidden", children: [
+              /* @__PURE__ */ jsx("div", { className: "mb-10 relative z-10", children: /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white tracking-tight", children: "Interconnected Flow Ledger" }) }),
+              /* @__PURE__ */ jsx("div", { className: "h-96 w-full relative z-10", children: /* @__PURE__ */ jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxs(AreaChart, { data: [
                 { month: "Jul", rev: 4500, exp: 2800 },
                 { month: "Aug", rev: 5200, exp: 3100 },
                 { month: "Sep", rev: 4800, exp: 2900 },
@@ -9837,8 +9869,8 @@ const FinanceHub = () => {
               ], children: [
                 /* @__PURE__ */ jsxs("defs", { children: [
                   /* @__PURE__ */ jsxs("linearGradient", { id: "colorRev", x1: "0", y1: "0", x2: "0", y2: "1", children: [
-                    /* @__PURE__ */ jsx("stop", { offset: "5%", stopColor: "#6A2C91", stopOpacity: 0.4 }),
-                    /* @__PURE__ */ jsx("stop", { offset: "95%", stopColor: "#6A2C91", stopOpacity: 0 })
+                    /* @__PURE__ */ jsx("stop", { offset: "5%", stopColor: "#06B6D4", stopOpacity: 0.4 }),
+                    /* @__PURE__ */ jsx("stop", { offset: "95%", stopColor: "#06B6D4", stopOpacity: 0 })
                   ] }),
                   /* @__PURE__ */ jsxs("linearGradient", { id: "colorExp", x1: "0", y1: "0", x2: "0", y2: "1", children: [
                     /* @__PURE__ */ jsx("stop", { offset: "5%", stopColor: "#C5A059", stopOpacity: 0.4 }),
@@ -9856,12 +9888,12 @@ const FinanceHub = () => {
                     labelStyle: { color: "rgba(255,255,255,0.4)", fontFamily: "Inter", fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em" }
                   }
                 ),
-                /* @__PURE__ */ jsx(Area, { type: "monotone", dataKey: "rev", stroke: "#6A2C91", strokeWidth: 4, fill: "url(#colorRev)", name: "Revenue" }),
+                /* @__PURE__ */ jsx(Area, { type: "monotone", dataKey: "rev", stroke: "#06B6D4", strokeWidth: 4, fill: "url(#colorRev)", name: "Revenue" }),
                 /* @__PURE__ */ jsx(Area, { type: "monotone", dataKey: "exp", stroke: "#C5A059", strokeWidth: 4, fill: "url(#colorExp)", name: "Expenses" })
               ] }) }) }),
-              /* @__PURE__ */ jsxs("div", { className: "flex gap-4 sm:p-8 mt-10 justify-center", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-4 sm:p-8 mt-10 justify-center relative z-10", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-3 h-3 bg-[#6A2C91] rounded-full shadow-[0_0_10px_#6A2C91]" }),
+                  /* @__PURE__ */ jsx("div", { className: "w-3 h-3 bg-[#06B6D4] rounded-full shadow-[0_0_10px_#06B6D4]" }),
                   " ",
                   /* @__PURE__ */ jsx("span", { className: "text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40", children: "Omnichannel Revenue" })
                 ] }),
@@ -9871,7 +9903,7 @@ const FinanceHub = () => {
                   /* @__PURE__ */ jsx("span", { className: "text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40", children: "Operational Expenses" })
                 ] })
               ] })
-            ] }),
+            ] }) }),
             /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-[#1A1A1A] border border-[#C5A059]/20 p-4 sm:p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(197,160,89,0.05)] relative overflow-hidden group", children: [
               /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#C5A059]/10 to-transparent rounded-bl-full opacity-50 -mr-20 -mt-20 pointer-events-none" }),
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10", children: [
@@ -9988,13 +10020,16 @@ const FinanceHub = () => {
   );
 };
 const FinanceCard = ({ title, value, trend, positive, icon: Icon }) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-8 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500", children: [
-  /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700", children: /* @__PURE__ */ jsx(Icon, { size: 64, className: "text-[#6A2C91]" }) }),
+  /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700", children: /* @__PURE__ */ jsx(Icon, { size: 64, className: "text-white" }) }),
   /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
     /* @__PURE__ */ jsx("span", { className: "text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]", children: title }),
-    /* @__PURE__ */ jsx("div", { className: `p-3 rounded-xl bg-white/5 text-[#C5A059] border border-white/5 group-hover:bg-[#C5A059]/20 group-hover:border-[#C5A059]/30 transition-all shadow-inner`, children: /* @__PURE__ */ jsx(Icon, { size: 20, strokeWidth: 1.5 }) })
+    /* @__PURE__ */ jsxs("div", { className: `relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-all duration-500 z-10`, children: [
+      /* @__PURE__ */ jsx("span", { className: `absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#06B6D4] to-[#C5A059] opacity-30 blur-md` }),
+      /* @__PURE__ */ jsx(Icon, { size: 20, className: "text-white relative z-10", strokeWidth: 1.5 })
+    ] })
   ] }),
-  /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white tracking-tighter mb-4", children: value }),
-  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+  /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white tracking-tighter mb-4 relative z-10", children: value }),
+  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 relative z-10", children: [
     positive ? /* @__PURE__ */ jsx(ArrowUpRight, { className: "text-emerald-400", size: 16 }) : /* @__PURE__ */ jsx(ArrowDownRight, { className: "text-red-400", size: 16 }),
     /* @__PURE__ */ jsx("span", { className: `${positive ? "text-emerald-400" : "text-red-400"} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`, children: trend })
   ] })

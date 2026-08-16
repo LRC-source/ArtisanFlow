@@ -18,8 +18,8 @@ export const MarginGuard = () => {
     const isWarning = currentMultiplier < 2.0;
 
     return (
-        <Card title="Margin Guard™ Protection" className="luxury-card mb-16 shadow-2xl shadow-black/20 overflow-hidden relative rounded-[3rem] border-none bg-black/40 backdrop-blur-xl p-4 sm:p-10">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#6A2C91] to-[#C5A059]"></div>
+        <div className="mb-16 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+        <Card title="Margin Guard™ Protection" className="luxury-card shadow-2xl shadow-black/20 overflow-hidden relative rounded-[3rem] border-none bg-[#0A0A0A] backdrop-blur-3xl p-4 sm:p-10 w-full h-full">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
                 <div className="space-y-10">
                     <div className={`p-8 rounded-[2rem] transition-all duration-700 border ${isWarning ? 'bg-amber-500/5 border-amber-500/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
@@ -111,6 +111,7 @@ export const MarginGuard = () => {
                 </div>
             </div>
         </Card>
+        </div>
     );
 };
 
@@ -175,8 +176,9 @@ const HubNode = ({ icon: Icon, title, desc, color = "text-[#6A2C91]", bg = "bg-w
     className={`luxury-card ${bg} p-12 rounded-[3rem] hover:-translate-y-2 transition-all duration-700 cursor-pointer group flex flex-col h-full relative overflow-hidden shadow-2xl shadow-black/20`}
   >
       <div className="absolute top-0 right-0 w-48 h-48 bg-white opacity-[0.05] rounded-bl-full -mr-12 -mt-12 group-hover:opacity-10 transition-opacity duration-700"></div>
-      <div className="w-20 h-20 bg-white/5 rounded-[1.5rem] flex items-center justify-center mb-10 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-700 shadow-inner relative z-10 border border-white/5">
-          <Icon className={color} size={32} strokeWidth={1.2} />
+      <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-110 transition-transform duration-700 mb-10 z-10">
+          <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-40 blur-md"></span>
+          <Icon className="text-[#06B6D4] relative z-10" size={32} strokeWidth={1.5} />
       </div>
       <h3 className="text-3xl font-serif text-white mb-4 tracking-tight relative z-10 leading-none">{title}</h3>
       <p className="text-base text-white/50 font-sans font-light leading-relaxed relative z-10">{desc}</p>

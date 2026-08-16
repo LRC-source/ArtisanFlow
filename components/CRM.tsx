@@ -257,8 +257,9 @@ export const CRM = () => {
               { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' }
             ].map((kpi, i) => (
               <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
-                <div className={`p-4 ${kpi.bg} ${kpi.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${kpi.border}`}>
-                    <kpi.icon size={24} />
+                <div className={`relative inline-flex items-center justify-center w-16 h-16 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10`}>
+                    <span className={`absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-white/10 to-white/5 opacity-40 blur-md ${kpi.bg}`}></span>
+                    <kpi.icon size={24} className={`${kpi.color} relative z-10`} strokeWidth={1.5} />
                 </div>
                 <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
                 <p className="text-4xl font-serif text-white tracking-tighter">{kpi.val}</p>

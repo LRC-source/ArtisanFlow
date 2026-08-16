@@ -310,8 +310,9 @@ export const Inventory = () => {
             <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                 <div className="flex items-center gap-4 sm:p-8 relative z-10 mb-12">
-                    <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
-                        <Box size={32} strokeWidth={1.5} />
+                    <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(106,44,145,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10">
+                        <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-40 blur-md"></span>
+                        <Box className="text-[#06B6D4] relative z-10" size={32} strokeWidth={1.5} />
                     </div>
                     <div>
                         <h3 className="text-4xl font-serif text-white tracking-tight mb-2">Materials Matrix</h3>
@@ -326,8 +327,9 @@ export const Inventory = () => {
             <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                 <div className="flex items-center gap-4 sm:p-8 relative z-10 mb-12">
-                    <div className="w-20 h-20 bg-black/20 rounded-[1.5rem] flex items-center justify-center text-[#C5A059] shadow-inner group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 border border-white/5">
-                        <Package size={32} strokeWidth={1.5} />
+                    <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10">
+                        <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-40 blur-md"></span>
+                        <Package className="text-[#C5A059] relative z-10" size={32} strokeWidth={1.5} />
                     </div>
                     <div>
                         <h3 className="text-4xl font-serif text-white tracking-tight mb-2">Finished Output</h3>
@@ -371,8 +373,8 @@ export const Inventory = () => {
                 </div>
             </div>
 
-            <div className="lg:col-span-1">
-                <div className="bg-[#C5A059]/5 border border-[#C5A059]/10 rounded-[3rem] p-4 sm:p-12 h-full flex flex-col">
+            <div className="lg:col-span-1 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                <div className="bg-[#0A0A0A] border-none backdrop-blur-3xl rounded-[3rem] p-4 sm:p-12 h-full flex flex-col">
                     <div className="flex justify-between items-center mb-10">
                         <h3 className="text-2xl font-serif text-amber-500 tracking-tight flex items-center gap-4">
                             <AlertTriangle size={24} className="text-amber-500" strokeWidth={1} /> Threshold Alerts

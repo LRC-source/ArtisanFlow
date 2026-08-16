@@ -140,46 +140,48 @@ export const FinanceHub: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12">
                 {/* Main Cash Flow Visualizer */}
                 <div className="lg:col-span-2 space-y-12">
-                    <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-12 rounded-[3rem] shadow-2xl">
-                        <div className="mb-10">
-                            <h3 className="text-3xl font-serif text-white tracking-tight">Interconnected Flow Ledger</h3>
-                        </div>
-                        <div className="h-96 w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={[
-                                    { month: 'Jul', rev: 4500, exp: 2800 },
-                                    { month: 'Aug', rev: 5200, exp: 3100 },
-                                    { month: 'Sep', rev: 4800, exp: 2900 },
-                                    { month: 'Oct', rev: 6100, exp: 3400 },
-                                    { month: 'Nov', rev: 7200, exp: 4100 },
-                                    { month: 'Dec', rev: 8900, exp: 4800 },
-                                ]}>
-                                    <defs>
-                                        <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#6A2C91" stopOpacity={0.4}/>
-                                            <stop offset="95%" stopColor="#6A2C91" stopOpacity={0}/>
-                                        </linearGradient>
-                                        <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#C5A059" stopOpacity={0.4}/>
-                                            <stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
-                                        </linearGradient>
-                                    </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
-                                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill:'rgba(255,255,255,0.4)', fontSize: 11, fontFamily: 'Inter', fontWeight: 600}} dy={10}/>
-                                    <YAxis hide />
-                                    <Tooltip 
-                                        contentStyle={{ backgroundColor: '#1A1A1A', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.1)' }}
-                                        itemStyle={{ color: '#fff', fontFamily: 'Inter', fontWeight: 600 }}
-                                        labelStyle={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em' }}
-                                    />
-                                    <Area type="monotone" dataKey="rev" stroke="#6A2C91" strokeWidth={4} fill="url(#colorRev)" name="Revenue" />
-                                    <Area type="monotone" dataKey="exp" stroke="#C5A059" strokeWidth={4} fill="url(#colorExp)" name="Expenses" />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
-                        <div className="flex gap-4 sm:p-8 mt-10 justify-center">
-                            <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#6A2C91] rounded-full shadow-[0_0_10px_#6A2C91]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Omnichannel Revenue</span></div>
-                            <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#C5A059] rounded-full shadow-[0_0_10px_#C5A059]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Operational Expenses</span></div>
+                    <div className="p-[1.5px] rounded-[3.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                        <div className="luxury-card bg-[#0A0A0A] p-4 sm:p-12 rounded-[3.5rem] relative overflow-hidden">
+                            <div className="mb-10 relative z-10">
+                                <h3 className="text-3xl font-serif text-white tracking-tight">Interconnected Flow Ledger</h3>
+                            </div>
+                            <div className="h-96 w-full relative z-10">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={[
+                                        { month: 'Jul', rev: 4500, exp: 2800 },
+                                        { month: 'Aug', rev: 5200, exp: 3100 },
+                                        { month: 'Sep', rev: 4800, exp: 2900 },
+                                        { month: 'Oct', rev: 6100, exp: 3400 },
+                                        { month: 'Nov', rev: 7200, exp: 4100 },
+                                        { month: 'Dec', rev: 8900, exp: 4800 },
+                                    ]}>
+                                        <defs>
+                                            <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.4}/>
+                                                <stop offset="95%" stopColor="#06B6D4" stopOpacity={0}/>
+                                            </linearGradient>
+                                            <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#C5A059" stopOpacity={0.4}/>
+                                                <stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
+                                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill:'rgba(255,255,255,0.4)', fontSize: 11, fontFamily: 'Inter', fontWeight: 600}} dy={10}/>
+                                        <YAxis hide />
+                                        <Tooltip 
+                                            contentStyle={{ backgroundColor: '#1A1A1A', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.1)' }}
+                                            itemStyle={{ color: '#fff', fontFamily: 'Inter', fontWeight: 600 }}
+                                            labelStyle={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em' }}
+                                        />
+                                        <Area type="monotone" dataKey="rev" stroke="#06B6D4" strokeWidth={4} fill="url(#colorRev)" name="Revenue" />
+                                        <Area type="monotone" dataKey="exp" stroke="#C5A059" strokeWidth={4} fill="url(#colorExp)" name="Expenses" />
+                                    </AreaChart>
+                                </ResponsiveContainer>
+                            </div>
+                            <div className="flex gap-4 sm:p-8 mt-10 justify-center relative z-10">
+                                <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#06B6D4] rounded-full shadow-[0_0_10px_#06B6D4]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Omnichannel Revenue</span></div>
+                                <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#C5A059] rounded-full shadow-[0_0_10px_#C5A059]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Operational Expenses</span></div>
+                            </div>
                         </div>
                     </div>
 
@@ -311,16 +313,17 @@ export const FinanceHub: React.FC = () => {
 const FinanceCard = ({ title, value, trend, positive, icon: Icon }: any) => (
     <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-8 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
         <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
-            <Icon size={64} className="text-[#6A2C91]" />
+            <Icon size={64} className="text-white" />
         </div>
         <div className="flex justify-between items-start mb-6">
             <span className="text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]">{title}</span>
-            <div className={`p-3 rounded-xl bg-white/5 text-[#C5A059] border border-white/5 group-hover:bg-[#C5A059]/20 group-hover:border-[#C5A059]/30 transition-all shadow-inner`}>
-                <Icon size={20} strokeWidth={1.5} />
+            <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-all duration-500 z-10`}>
+                <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#06B6D4] to-[#C5A059] opacity-30 blur-md`}></span>
+                <Icon size={20} className="text-white relative z-10" strokeWidth={1.5} />
             </div>
         </div>
-        <div className="text-4xl font-serif text-white tracking-tighter mb-4">{value}</div>
-        <div className="flex items-center gap-2">
+        <div className="text-4xl font-serif text-white tracking-tighter mb-4 relative z-10">{value}</div>
+        <div className="flex items-center gap-2 relative z-10">
             {positive ? <ArrowUpRight className="text-emerald-400" size={16} /> : <ArrowDownRight className="text-red-400" size={16} />}
             <span className={`${positive ? 'text-emerald-400' : 'text-red-400'} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`}>{trend}</span>
         </div>
