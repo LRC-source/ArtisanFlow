@@ -8304,13 +8304,11 @@ const LandingPage = () => {
       "VIP Launch: September 1st"
     ] }),
     /* @__PURE__ */ jsxs("nav", { className: "w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 cursor-pointer group", children: [
-        /* @__PURE__ */ jsx("span", { className: "bg-white/10 border border-white/20 text-[#E2C792] font-mono font-bold text-[11px] tracking-wider px-2 py-0.5 rounded-md mr-1 backdrop-blur-md shadow-[0_0_10px_rgba(197,160,89,0.2)]", children: "LRC" }),
-        /* @__PURE__ */ jsxs("span", { className: "text-xl tracking-tight flex items-center", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-extrabold text-white", children: "Artisan" }),
-          /* @__PURE__ */ jsx("span", { className: "font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text ml-1.5", children: "Flow" })
-        ] })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "flex items-center cursor-pointer group", children: /* @__PURE__ */ jsxs("span", { className: "text-2xl tracking-tight flex items-center font-extrabold", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-white mr-2", children: "LRC" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white", children: "Artisan" }),
+        /* @__PURE__ */ jsx("span", { className: "font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "Flow" })
+      ] }) }),
       /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setView("login"), className: "h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase", children: "Sign In" }) })
     ] }),
     /* @__PURE__ */ jsxs("main", { className: "flex-1 flex flex-col items-center justify-start p-6 z-10 mt-12 relative w-full max-w-7xl mx-auto", children: [
