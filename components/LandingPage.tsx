@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Card, Button, Input } from './UI';
 import { useArtisanData } from './DataContext';
-import { Lock, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
+import { Lock, ArrowRight, Sparkles, CheckCircle, ChevronDown, Activity, Shield, Cpu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AuthGateway } from './Auth';
 
@@ -36,6 +36,7 @@ export const LandingPage = () => {
     const [view, setView] = useState<'hero' | 'login'>('hero');
     const [formData, setFormData] = useState({ fullName: '', email: '', businessType: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     
     const formRef = useRef<HTMLDivElement>(null);
 
@@ -43,10 +44,12 @@ export const LandingPage = () => {
         e.preventDefault();
         setIsSubmitting(true);
         if (submitVIPWaitlist) {
-             await submitVIPWaitlist(formData);
+             const success = await submitVIPWaitlist(formData);
+             if (success) {
+                 setIsSubmitted(true);
+             }
         }
         setIsSubmitting(false);
-        setFormData({ fullName: '', email: '', businessType: '' });
     };
 
     const scrollToForm = () => {
@@ -94,51 +97,72 @@ export const LandingPage = () => {
 
                         {/* Waitlist Form */}
                         <div ref={formRef} className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl">
-                            <h3 className="text-xl font-bold text-white mb-4">Secure Your VIP Spot</h3>
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                <div>
-                                    <Input 
-                                        type="text" 
-                                        placeholder="Full Name" 
-                                        required 
-                                        value={formData.fullName}
-                                        onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                                        className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
-                                    />
+                            {isSubmitted ? (
+                                <div className="text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500">
+                                    <CheckCircle size={48} className="text-[#C5A059] mx-auto mb-4" />
+                                    <h3 className="text-2xl font-black text-white">You're Officially on the VIP List!</h3>
+                                    <p className="text-gray-400 text-sm max-w-sm mx-auto leading-relaxed">
+                                        We've reserved your priority spot. Keep an eye on your inbox for exclusive behind-the-scenes previews before doors open September 1st @ 10:00 AM EST.
+                                    </p>
                                 </div>
-                                <div>
-                                    <Input 
-                                        type="email" 
-                                        placeholder="Email Address" 
-                                        required 
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                        className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
-                                    />
-                                </div>
-                                <div>
-                                    <select 
-                                        required
-                                        value={formData.businessType}
-                                        onChange={(e) => setFormData({...formData, businessType: e.target.value})}
-                                        className="w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none"
-                                    >
-                                        {CATEGORIES.map((cat, index) => (
-                                            <option key={cat} value={index === 0 ? "" : cat} disabled={index === 0} hidden={index === 0}>
-                                                {cat}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <Button 
-                                    variant="primary" 
-                                    type="submit" 
-                                    disabled={isSubmitting}
-                                    className="w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 border-none"
-                                >
-                                    {isSubmitting ? 'JOINING...' : 'JOIN VIP WAITLIST'} <ArrowRight size={18} className="ml-2" />
-                                </Button>
-                            </form>
+                            ) : (
+                                <>
+                                    <div className="mb-6">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest">🔒 VIP Spots Claimed: 74 / 100</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-[#C5A059] to-[#E2C792] rounded-full" style={{ width: '74%' }}></div>
+                                        </div>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-4">Secure Your VIP Spot</h3>
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div>
+                                            <Input 
+                                                type="text" 
+                                                placeholder="Full Name" 
+                                                required 
+                                                value={formData.fullName}
+                                                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                                                className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
+                                            />
+                                        </div>
+                                        <div>
+                                            <Input 
+                                                type="email" 
+                                                placeholder="Email Address" 
+                                                required 
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                                className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
+                                            />
+                                        </div>
+                                        <div className="relative">
+                                            <select 
+                                                required
+                                                value={formData.businessType}
+                                                onChange={(e) => setFormData({...formData, businessType: e.target.value})}
+                                                className="w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none pr-10"
+                                            >
+                                                {CATEGORIES.map((cat, index) => (
+                                                    <option key={cat} value={index === 0 ? "" : cat} disabled={index === 0} hidden={index === 0}>
+                                                        {cat}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#C5A059] pointer-events-none" />
+                                        </div>
+                                        <Button 
+                                            variant="primary" 
+                                            type="submit" 
+                                            disabled={isSubmitting}
+                                            className="w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none"
+                                        >
+                                            {isSubmitting ? 'JOINING...' : 'JOIN VIP WAITLIST'} <ArrowRight size={18} className="ml-2" />
+                                        </Button>
+                                    </form>
+                                </>
+                            )}
                         </div>
                     </div>
 
@@ -151,6 +175,30 @@ export const LandingPage = () => {
                             alt="Artisan Flow Dashboard Mockup" 
                             className="relative z-10 w-full max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700" 
                         />
+                    </div>
+                </div>
+
+                {/* Platform Feature Nodes Section */}
+                <div className="mt-32 w-full max-w-6xl relative z-10">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Built For Industrial Manufacturing Precision</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left">
+                            <Activity size={32} className="text-[#C5A059] mb-4" />
+                            <h3 className="text-xl font-bold text-white mb-2">Operations & Recipe Builder</h3>
+                            <p className="text-sm text-gray-400 leading-relaxed">Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers.</p>
+                        </div>
+                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left">
+                            <Shield size={32} className="text-[#C5A059] mb-4" />
+                            <h3 className="text-xl font-bold text-white mb-2">Finance Hub & Profit Guard™</h3>
+                            <p className="text-sm text-gray-400 leading-relaxed">Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins.</p>
+                        </div>
+                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left">
+                            <Cpu size={32} className="text-[#C5A059] mb-4" />
+                            <h3 className="text-xl font-bold text-white mb-2">Lola AI Marketing Co-Pilot</h3>
+                            <p className="text-sm text-gray-400 leading-relaxed">Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -192,7 +240,7 @@ export const LandingPage = () => {
                     <div className="mt-16 flex justify-center">
                         <Button 
                             onClick={scrollToForm}
-                            className="h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 border-none rounded-full"
+                            className="h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all"
                         >
                             JOIN VIP WAITLIST <ArrowRight size={18} className="ml-2" />
                         </Button>
@@ -204,7 +252,7 @@ export const LandingPage = () => {
 };
 
 const LTDCert = ({ title, features, isFeatured }: { title: string, features: string[], isFeatured?: boolean }) => (
-    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${isFeatured ? 'border-[#C5A059] shadow-[0_0_40px_rgba(197,160,89,0.15)] scale-105 z-10' : 'border-white/10 hover:border-white/30'}`}>
+    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all duration-500 bg-white/[0.02] backdrop-blur-xl hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] ${isFeatured ? 'border-[#C5A059] shadow-[0_0_40px_rgba(197,160,89,0.15)] scale-105 z-10' : 'border-white/10 hover:border-[#C5A059]/40'}`}>
         {isFeatured && (
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
                 Most Popular

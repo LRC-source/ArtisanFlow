@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { useNavigate, useLocation, useParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
+import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, ChevronDown, Shield, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert } from "lucide-react";
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, Tooltip, Area, LineChart, Line, YAxis, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend, Bar } from "recharts";
 import { toast, Toaster } from "sonner";
 import { initializeApp } from "firebase/app";
@@ -8273,15 +8273,18 @@ const LandingPage = () => {
   const [view, setView] = useState("hero");
   const [formData, setFormData] = useState({ fullName: "", email: "", businessType: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const formRef = useRef(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     if (submitVIPWaitlist) {
-      await submitVIPWaitlist(formData);
+      const success = await submitVIPWaitlist(formData);
+      if (success) {
+        setIsSubmitted(true);
+      }
     }
     setIsSubmitting(false);
-    setFormData({ fullName: "", email: "", businessType: "" });
   };
   const scrollToForm = () => {
     var _a;
@@ -8311,7 +8314,15 @@ const LandingPage = () => {
             /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-[#C5A059] to-[#E2C792]", children: "For Artisanal Brands" })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 font-medium max-w-xl leading-relaxed", children: "Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access." }),
-          /* @__PURE__ */ jsxs("div", { ref: formRef, className: "mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl", children: [
+          /* @__PURE__ */ jsx("div", { ref: formRef, className: "mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl", children: isSubmitted ? /* @__PURE__ */ jsxs("div", { className: "text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500", children: [
+            /* @__PURE__ */ jsx(CheckCircle, { size: 48, className: "text-[#C5A059] mx-auto mb-4" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white", children: "You're Officially on the VIP List!" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm max-w-sm mx-auto leading-relaxed", children: "We've reserved your priority spot. Keep an eye on your inbox for exclusive behind-the-scenes previews before doors open September 1st @ 10:00 AM EST." })
+          ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
+              /* @__PURE__ */ jsx("div", { className: "flex justify-between items-center mb-2", children: /* @__PURE__ */ jsx("span", { className: "text-xs font-bold text-[#C5A059] uppercase tracking-widest", children: "🔒 VIP Spots Claimed: 74 / 100" }) }),
+              /* @__PURE__ */ jsx("div", { className: "h-1 w-full bg-white/10 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "h-full bg-gradient-to-r from-[#C5A059] to-[#E2C792] rounded-full", style: { width: "74%" } }) })
+            ] }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-4", children: "Secure Your VIP Spot" }),
             /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
               /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(
@@ -8336,23 +8347,26 @@ const LandingPage = () => {
                   className: "bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
                 }
               ) }),
-              /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(
-                "select",
-                {
-                  required: true,
-                  value: formData.businessType,
-                  onChange: (e) => setFormData({ ...formData, businessType: e.target.value }),
-                  className: "w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none",
-                  children: CATEGORIES.map((cat, index) => /* @__PURE__ */ jsx("option", { value: index === 0 ? "" : cat, disabled: index === 0, hidden: index === 0, children: cat }, cat))
-                }
-              ) }),
+              /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsx(
+                  "select",
+                  {
+                    required: true,
+                    value: formData.businessType,
+                    onChange: (e) => setFormData({ ...formData, businessType: e.target.value }),
+                    className: "w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none pr-10",
+                    children: CATEGORIES.map((cat, index) => /* @__PURE__ */ jsx("option", { value: index === 0 ? "" : cat, disabled: index === 0, hidden: index === 0, children: cat }, cat))
+                  }
+                ),
+                /* @__PURE__ */ jsx(ChevronDown, { size: 18, className: "absolute right-4 top-1/2 -translate-y-1/2 text-[#C5A059] pointer-events-none" })
+              ] }),
               /* @__PURE__ */ jsxs(
                 Button,
                 {
                   variant: "primary",
                   type: "submit",
                   disabled: isSubmitting,
-                  className: "w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 border-none",
+                  className: "w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none",
                   children: [
                     isSubmitting ? "JOINING..." : "JOIN VIP WAITLIST",
                     " ",
@@ -8361,7 +8375,7 @@ const LandingPage = () => {
                 }
               )
             ] })
-          ] })
+          ] }) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "relative w-full flex justify-center lg:justify-end items-center z-10", children: [
           /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#C5A059]/10 blur-[80px] rounded-full pointer-events-none" }),
@@ -8373,6 +8387,26 @@ const LandingPage = () => {
               className: "relative z-10 w-full max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700"
             }
           )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-32 w-full max-w-6xl relative z-10", children: [
+        /* @__PURE__ */ jsx("div", { className: "text-center mb-16", children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }) }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx(Activity, { size: 32, className: "text-[#C5A059] mb-4" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Operations & Recipe Builder" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx(Shield, { size: 32, className: "text-[#C5A059] mb-4" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Finance Hub & Profit Guard™" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx(Cpu, { size: 32, className: "text-[#C5A059] mb-4" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Lola AI Marketing Co-Pilot" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice." })
+          ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mt-32 w-full max-w-6xl relative z-10 mb-20", children: [
@@ -8420,7 +8454,7 @@ const LandingPage = () => {
           Button,
           {
             onClick: scrollToForm,
-            className: "h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 border-none rounded-full",
+            className: "h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all",
             children: [
               "JOIN VIP WAITLIST ",
               /* @__PURE__ */ jsx(ArrowRight, { size: 18, className: "ml-2" })
@@ -8431,7 +8465,7 @@ const LandingPage = () => {
     ] })
   ] });
 };
-const LTDCert = ({ title, features, isFeatured }) => /* @__PURE__ */ jsxs("div", { className: `group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${isFeatured ? "border-[#C5A059] shadow-[0_0_40px_rgba(197,160,89,0.15)] scale-105 z-10" : "border-white/10 hover:border-white/30"}`, children: [
+const LTDCert = ({ title, features, isFeatured }) => /* @__PURE__ */ jsxs("div", { className: `group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all duration-500 bg-white/[0.02] backdrop-blur-xl hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] ${isFeatured ? "border-[#C5A059] shadow-[0_0_40px_rgba(197,160,89,0.15)] scale-105 z-10" : "border-white/10 hover:border-[#C5A059]/40"}`, children: [
   isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg", children: "Most Popular" }),
   /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
     /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white tracking-tight mb-6", children: title }),
