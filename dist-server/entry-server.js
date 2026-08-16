@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { useNavigate, useLocation, useParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, ChevronDown, Shield, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert } from "lucide-react";
+import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, Tooltip, Area, LineChart, Line, YAxis, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend, Bar } from "recharts";
 import { toast, Toaster } from "sonner";
 import { initializeApp } from "firebase/app";
@@ -8296,7 +8296,7 @@ const LandingPage = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#0d0d0d] relative overflow-hidden flex flex-col font-sans", children: [
     /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
     /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
-    /* @__PURE__ */ jsxs("div", { className: "w-full bg-gradient-to-r from-[#06B6D4]/15 via-[#A855F7]/15 to-[#C5A059]/15 border-b border-white/10 text-center flex items-center justify-center gap-2 text-sm font-semibold tracking-wide py-2.5 px-6 z-50 relative text-[#C5A059]", children: [
+    /* @__PURE__ */ jsxs("div", { className: "w-full bg-gradient-to-r from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 backdrop-blur-md border-b border-white/15 text-center flex items-center justify-center gap-2 text-white font-bold tracking-wide text-sm py-3 px-6 z-50 relative", children: [
       /* @__PURE__ */ jsx(Sparkles, { size: 16 }),
       " VIP Launch: September 1st"
     ] }),
@@ -8446,21 +8446,30 @@ const LandingPage = () => {
       /* @__PURE__ */ jsxs("div", { className: "mt-20 w-full max-w-6xl relative z-10", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
           /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }),
-          /* @__PURE__ */ jsx("span", { className: "inline-block mt-2 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-white/[0.05] border border-[#C5A059]/40 text-[#C5A059] shadow-sm", children: "Designed by a Maker, Built for Makers" })
+          /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block", children: /* @__PURE__ */ jsx("span", { className: "block bg-[#0d0d0d] rounded-full py-2 px-6 text-[#E2C792] text-sm font-black uppercase tracking-widest", children: "Designed by a Maker, Built for Makers" }) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx("div", { className: "bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20", children: /* @__PURE__ */ jsx(Activity, { size: 24, className: "text-[#C5A059]" }) }),
+          /* @__PURE__ */ jsxs("div", { className: "group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsxs("div", { className: "relative w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" }),
+              /* @__PURE__ */ jsx(FlaskConical, { size: 24, className: "text-[#06B6D4] relative z-10" })
+            ] }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Operations & Recipe Builder" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx("div", { className: "bg-[#A855F7]/10 p-3 rounded-xl mb-4 border border-[#A855F7]/20", children: /* @__PURE__ */ jsx(Cpu, { size: 24, className: "text-[#A855F7]" }) }),
+          /* @__PURE__ */ jsxs("div", { className: "group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsxs("div", { className: "relative w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" }),
+              /* @__PURE__ */ jsx(Bot, { size: 24, className: "text-[#A855F7] relative z-10" })
+            ] }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Lola AI Marketing Co-Pilot" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx("div", { className: "bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20", children: /* @__PURE__ */ jsx(Shield, { size: 24, className: "text-[#C5A059]" }) }),
+          /* @__PURE__ */ jsxs("div", { className: "group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsxs("div", { className: "relative w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" }),
+              /* @__PURE__ */ jsx(ShieldCheck, { size: 24, className: "text-[#C5A059] relative z-10" })
+            ] }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Finance Hub & Profit Guard™" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins." })
           ] })

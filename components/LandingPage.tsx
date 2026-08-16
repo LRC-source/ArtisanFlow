@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Card, Button, Input } from './UI';
 import { useArtisanData } from './DataContext';
-import { Lock, ArrowRight, Sparkles, CheckCircle, ChevronDown, Activity, Shield, Cpu } from 'lucide-react';
+import { Lock, ArrowRight, Sparkles, CheckCircle, ChevronDown, Activity, Shield, Cpu, FlaskConical, Bot, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AuthGateway } from './Auth';
 
@@ -68,7 +68,7 @@ export const LandingPage = () => {
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
             
             {/* Top VIP Announcement Banner */}
-            <div className="w-full bg-gradient-to-r from-[#06B6D4]/15 via-[#A855F7]/15 to-[#C5A059]/15 border-b border-white/10 text-center flex items-center justify-center gap-2 text-sm font-semibold tracking-wide py-2.5 px-6 z-50 relative text-[#C5A059]">
+            <div className="w-full bg-gradient-to-r from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 backdrop-blur-md border-b border-white/15 text-center flex items-center justify-center gap-2 text-white font-bold tracking-wide text-sm py-3 px-6 z-50 relative">
                 <Sparkles size={16} /> VIP Launch: September 1st
             </div>
 
@@ -216,31 +216,36 @@ export const LandingPage = () => {
                 <div className="mt-20 w-full max-w-6xl relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Built For Industrial Manufacturing Precision</h2>
-                        <span className="inline-block mt-2 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-white/[0.05] border border-[#C5A059]/40 text-[#C5A059] shadow-sm">
-                           Designed by a Maker, Built for Makers
-                        </span>
+                        <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block">
+                            <span className="block bg-[#0d0d0d] rounded-full py-2 px-6 text-[#E2C792] text-sm font-black uppercase tracking-widest">
+                               Designed by a Maker, Built for Makers
+                            </span>
+                        </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {/* Recipe Builder */}
-                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
-                            <div className="bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20">
-                                <Activity size={24} className="text-[#C5A059]" />
+                        <div className="group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
+                            <div className="relative w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
+                                <FlaskConical size={24} className="text-[#06B6D4] relative z-10" />
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">Operations & Recipe Builder</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers.</p>
                         </div>
                         {/* Lola AI */}
-                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
-                            <div className="bg-[#A855F7]/10 p-3 rounded-xl mb-4 border border-[#A855F7]/20">
-                                <Cpu size={24} className="text-[#A855F7]" />
+                        <div className="group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
+                            <div className="relative w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
+                                <Bot size={24} className="text-[#A855F7] relative z-10" />
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">Lola AI Marketing Co-Pilot</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice.</p>
                         </div>
                         {/* Profit Guard */}
-                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
-                            <div className="bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20">
-                                <Shield size={24} className="text-[#C5A059]" />
+                        <div className="group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
+                            <div className="relative w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
+                                <ShieldCheck size={24} className="text-[#C5A059] relative z-10" />
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">Finance Hub & Profit Guard™</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins.</p>
