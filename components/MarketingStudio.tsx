@@ -28,52 +28,52 @@ export const MarketingStudio = () => {
       </div>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-[#C5A059]/50 hover:bg-[#C5A059]/5 hover:shadow-[0_0_40px_rgba(197,160,89,0.15)] transition-all duration-500">
             <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
                 <Sparkles size={120} className="text-[#C5A059]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <GlassHaloIcon icon={Sparkles} color="gold" size="md" className="group-hover:scale-110 transition-all duration-500" />
+                <GlassHaloIcon icon={Sparkles} color="gold" size="xl" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Campaign Generator</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">Generate comprehensive strategies based on inventory levels.</p>
-            <button onClick={() => toast.info('Initializing Strategy Node...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Generate Strategy</button>
+            <button onClick={() => toast.info('Initializing Strategy Node...')} className="w-full py-4 bg-[#C5A059]/10 hover:bg-[#C5A059]/20 text-[#C5A059] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#C5A059]/30 relative z-10">Generate Strategy</button>
         </div>
 
-        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] transition-all duration-500">
             <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
                 <Type size={120} className="text-[#06B6D4]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <GlassHaloIcon icon={Type} color="cyan" size="md" className="group-hover:scale-110 transition-all duration-500" />
+                <GlassHaloIcon icon={Type} color="cyan" size="xl" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Copywriter</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">Create blog posts, emails, and social captions.</p>
-            <button onClick={() => toast.info('Opening Email Editor...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Open Editor</button>
+            <button onClick={() => toast.info('Opening Email Editor...')} className="w-full py-4 bg-[#06B6D4]/10 hover:bg-[#06B6D4]/20 text-[#06B6D4] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#06B6D4]/30 relative z-10">Open Editor</button>
         </div>
 
-        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-[#D946EF]/50 hover:bg-[#D946EF]/5 hover:shadow-[0_0_40px_rgba(217,70,239,0.15)] transition-all duration-500">
             <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
                 <Camera size={120} className="text-[#D946EF]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <GlassHaloIcon icon={Camera} color="magenta" size="md" className="group-hover:scale-110 transition-all duration-500" />
+                <GlassHaloIcon icon={Camera} color="magenta" size="xl" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Visual Studio</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">AI image generation for product showcases.</p>
-            <button onClick={() => toast.info('Spinning up Image Generation Node...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Create Images</button>
+            <button onClick={() => toast.info('Spinning up Image Generation Node...')} className="w-full py-4 bg-[#D946EF]/10 hover:bg-[#D946EF]/20 text-[#D946EF] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#D946EF]/30 relative z-10">Create Images</button>
         </div>
 
-        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
+        <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden group hover:border-[#A855F7]/50 hover:bg-[#A855F7]/5 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all duration-500">
             <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
                 <Video size={120} className="text-[#A855F7]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <GlassHaloIcon icon={Video} color="purple" size="md" className="group-hover:scale-110 transition-all duration-500" />
+                <GlassHaloIcon icon={Video} color="purple" size="xl" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Video Scripts</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">Generate scripts for TikTok and Reels.</p>
-            <button onClick={() => toast.info('Script Generation AI Activating...')} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-white/10 relative z-10">Write Script</button>
+            <button onClick={() => toast.info('Script Generation AI Activating...')} className="w-full py-4 bg-[#A855F7]/10 hover:bg-[#A855F7]/20 text-[#A855F7] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#A855F7]/30 relative z-10">Write Script</button>
         </div>
     </div>
   </div>

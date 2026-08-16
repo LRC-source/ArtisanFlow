@@ -130,19 +130,33 @@ export const Orders = () => {
         </VaultBanner>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:p-8">
             {[
               { label: 'Total Orders', val: orders.length, icon: ShoppingCart, color: 'purple' },
               { label: 'Revenue', val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: 'gold' },
               { label: 'Pending', val: pendingCount, icon: Package, color: 'magenta' },
               { label: 'Shipped', val: shippedCount, icon: Truck, color: 'emerald' }
-            ].map((stat, i) => (
-              <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
-                <GlassHaloIcon icon={stat.icon} color={stat.color as any} size="xl" className="mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
-                <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{stat.label}</p>
-                <p className="text-4xl font-serif text-white tracking-tighter">{stat.val}</p>
+            ].map((stat, i) => {
+              const glowColors: any = {
+                  cyan: 'hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)]',
+                  magenta: 'hover:border-[#D946EF]/50 hover:bg-[#D946EF]/5 hover:shadow-[0_0_40px_rgba(217,70,239,0.15)]',
+                  emerald: 'hover:border-[#10B981]/50 hover:bg-[#10B981]/5 hover:shadow-[0_0_40px_rgba(16,185,129,0.15)]',
+                  gold: 'hover:border-[#C5A059]/50 hover:bg-[#C5A059]/5 hover:shadow-[0_0_40px_rgba(197,160,89,0.15)]',
+                  purple: 'hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/5 hover:shadow-[0_0_40px_rgba(106,44,145,0.15)]'
+              };
+
+              return (
+              <div key={i} className={`luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group transition-all duration-500 flex flex-col justify-between ${glowColors[stat.color]}`}>
+                  <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                      <stat.icon size={120} className={`text-${stat.color === 'emerald' ? 'emerald-400' : stat.color === 'cyan' ? '[#06B6D4]' : stat.color === 'magenta' ? '[#D946EF]' : stat.color === 'purple' ? '[#6A2C91]' : '[#C5A059]'}`} />
+                  </div>
+                  <div className="flex justify-between items-start mb-12">
+                      <span className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] max-w-[60%] leading-relaxed">{stat.label}</span>
+                      <GlassHaloIcon icon={stat.icon} color={stat.color as any} size="lg" className="group-hover:scale-110 transition-transform duration-500 z-10 shrink-0" />
+                  </div>
+                  <p className="text-4xl lg:text-5xl font-serif text-white tracking-tighter relative z-10">{stat.val}</p>
               </div>
-            ))}
+            )})}
         </div>
 
         {/* Orders Table Container */}

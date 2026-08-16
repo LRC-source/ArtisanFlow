@@ -131,11 +131,11 @@ export const FinanceHub: React.FC = () => {
             </div>
 
             {/* Financial Stat Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
-                <FinanceCard title="Gross Revenue" value={`$${revenue.toFixed(2)}`} trend="+12.4%" positive icon={DollarSign} />
-                <FinanceCard title="COGS (Interconnected)" value={`$${estimatedCOGS.toFixed(2)}`} trend="-2.1%" positive icon={Package} />
-                <FinanceCard title="Net Profit" value={`$${grossProfit.toFixed(2)}`} trend="+8.5%" positive icon={TrendingUp} />
-                <FinanceCard title="Avg. Margin" value={`${margin.toFixed(1)}%`} trend="Stable" positive icon={Target} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:p-8">
+                <FinanceCard title="Gross Revenue" value={`$${revenue.toFixed(2)}`} trend="+12.4%" positive icon={DollarSign} color="cyan" />
+                <FinanceCard title="COGS (Interconnected)" value={`$${estimatedCOGS.toFixed(2)}`} trend="-2.1%" positive icon={Package} color="magenta" />
+                <FinanceCard title="Net Profit" value={`$${grossProfit.toFixed(2)}`} trend="+8.5%" positive icon={TrendingUp} color="emerald" />
+                <FinanceCard title="Avg. Margin" value={`${margin.toFixed(1)}%`} trend="Stable" positive icon={Target} color="gold" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12">
@@ -311,35 +311,44 @@ export const FinanceHub: React.FC = () => {
     );
 };
 
-const FinanceCard = ({ title, value, trend, positive, icon: Icon }: any) => (
-    <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-8 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500">
-        <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
-            <Icon size={64} className="text-white" />
+const FinanceCard = ({ title, value, trend, positive, icon: Icon, color = 'gold' }: any) => {
+    const glowColors: any = {
+        cyan: 'hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)]',
+        magenta: 'hover:border-[#D946EF]/50 hover:bg-[#D946EF]/5 hover:shadow-[0_0_40px_rgba(217,70,239,0.15)]',
+        emerald: 'hover:border-[#10B981]/50 hover:bg-[#10B981]/5 hover:shadow-[0_0_40px_rgba(16,185,129,0.15)]',
+        gold: 'hover:border-[#C5A059]/50 hover:bg-[#C5A059]/5 hover:shadow-[0_0_40px_rgba(197,160,89,0.15)]',
+        purple: 'hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/5 hover:shadow-[0_0_40px_rgba(106,44,145,0.15)]'
+    };
+    
+    return (
+    <div className={`luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group transition-all duration-500 flex flex-col justify-between ${glowColors[color]}`}>
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+            <Icon size={120} className={`text-${color === 'emerald' ? 'emerald-400' : color === 'cyan' ? '[#06B6D4]' : color === 'magenta' ? '[#D946EF]' : color === 'purple' ? '[#6A2C91]' : '[#C5A059]'}`} />
         </div>
-        <div className="flex justify-between items-start mb-6">
-            <span className="text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]">{title}</span>
-            <GlassHaloIcon icon={Icon} color="gold" size="xl" className="group-hover:scale-110 transition-all duration-500 z-10" />
+        <div className="flex justify-between items-start mb-12">
+            <span className="text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em] max-w-[60%] leading-relaxed">{title}</span>
+            <GlassHaloIcon icon={Icon} color={color} size="lg" className="group-hover:scale-110 transition-all duration-500 z-10 shrink-0" />
         </div>
-        <div className="text-4xl font-serif text-white tracking-tighter mb-4 relative z-10">{value}</div>
-        <div className="flex items-center gap-2 relative z-10">
-            {positive ? <ArrowUpRight className="text-emerald-400" size={16} /> : <ArrowDownRight className="text-red-400" size={16} />}
-            <span className={`${positive ? 'text-emerald-400' : 'text-red-400'} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`}>{trend}</span>
+        <div>
+            <div className="text-4xl lg:text-5xl font-serif text-white tracking-tighter mb-4 relative z-10">{value}</div>
+            <div className="flex items-center gap-2 relative z-10">
+                {positive ? <ArrowUpRight className="text-emerald-400" size={16} /> : <ArrowDownRight className="text-red-400" size={16} />}
+                <span className={`${positive ? 'text-emerald-400' : 'text-red-400'} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`}>{trend}</span>
+            </div>
         </div>
     </div>
-);
+)};
 
 const ReportButton = ({ label, icon: Icon, onClick }: any) => (
     <button 
         onClick={onClick}
-        className="w-full flex items-center justify-between p-6 bg-black/40 rounded-3xl border border-white/5 hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/10 transition-all group overflow-hidden relative"
+        className="w-full flex items-center justify-between p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/10 hover:shadow-[0_0_30px_rgba(106,44,145,0.2)] transition-all group overflow-hidden relative"
     >
         <div className="flex items-center gap-4 relative z-10">
-            <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/40 group-hover:text-[#6A2C91] group-hover:bg-[#6A2C91]/20 transition-all">
-                <Icon size={18} />
-            </div>
-            <span className="text-sm font-sans font-light text-white/70 group-hover:text-white transition-colors tracking-wide">{label}</span>
+            <GlassHaloIcon icon={Icon} color="purple" size="md" className="group-hover:scale-110 transition-transform duration-500" />
+            <span className="text-sm font-sans font-bold text-white/70 group-hover:text-white transition-colors tracking-widest uppercase">{label}</span>
         </div>
-        <Download className="text-white/20 group-hover:text-white relative z-10 transition-colors" size={20} />
+        <Download className="text-white/20 group-hover:text-[#6A2C91] relative z-10 transition-colors" size={20} />
     </button>
 );
 
