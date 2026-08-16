@@ -8293,10 +8293,9 @@ const LandingPage = () => {
   if (view === "login") {
     return /* @__PURE__ */ jsx(AuthGateway, { initialView: "login", onBack: () => setView("hero") });
   }
-  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#09090b] relative overflow-hidden flex flex-col font-sans", children: [
-    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#06B6D4]/10 rounded-full blur-[140px] pointer-events-none z-0" }),
-    /* @__PURE__ */ jsx("div", { className: "absolute top-[30%] left-[-10%] w-[700px] h-[700px] bg-[#A855F7]/10 rounded-full blur-[140px] pointer-events-none z-0" }),
-    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#C5A059]/10 rounded-full blur-[140px] pointer-events-none z-0" }),
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#0d0d0d] relative overflow-hidden flex flex-col font-sans", children: [
+    /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
     /* @__PURE__ */ jsxs("nav", { className: "w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0", children: [
       /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx("img", { src: "/LOGO%20Official-Trans.png", alt: "ArtisanFlow Logo", className: "h-16 w-auto object-contain" }) }),
       /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setView("login"), className: "h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase", children: "Sign In" }) })
@@ -8312,7 +8311,7 @@ const LandingPage = () => {
             "Precision Manufacturing ",
             /* @__PURE__ */ jsx("br", {}),
             " ",
-            /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-transparent bg-clip-text", children: "For Artisanal Brands" })
+            /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#C5A059] to-[#E2C792] text-transparent bg-clip-text", children: "For Artisanal Brands" })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 font-medium max-w-xl leading-relaxed", children: "Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access." }),
           /* @__PURE__ */ jsx("div", { ref: formRef, className: "mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl", children: isSubmitted ? /* @__PURE__ */ jsxs("div", { className: "text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500", children: [
@@ -8396,32 +8395,32 @@ const LandingPage = () => {
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg max-w-2xl mx-auto", children: "Why artisans are ditching legacy inventory sheets for automated precision." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
-          /* @__PURE__ */ jsxs("div", { className: "bg-red-950/10 border border-red-500/20 p-8 rounded-[2rem] flex flex-col items-center text-center text-gray-400 opacity-80 transition-all", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.01] border border-white/5 p-8 rounded-[2rem] flex flex-col items-center text-center text-gray-400 opacity-70 transition-all", children: [
             /* @__PURE__ */ jsx("h3", { className: "text-red-400 font-bold uppercase tracking-widest text-sm mb-6", children: "Legacy Craftybase & Spreadsheets" }),
             /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-sm w-full text-left", children: [
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+                /* @__PURE__ */ jsx("span", { className: "text-red-400/80 font-bold text-lg leading-none", children: "×" }),
                 " Manual batch math & spreadsheet errors"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+                /* @__PURE__ */ jsx("span", { className: "text-red-400/80 font-bold text-lg leading-none", children: "×" }),
                 " Silent cost increases eating margins"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+                /* @__PURE__ */ jsx("span", { className: "text-red-400/80 font-bold text-lg leading-none", children: "×" }),
                 " Zero marketing or sales tools"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+                /* @__PURE__ */ jsx("span", { className: "text-red-400/80 font-bold text-lg leading-none", children: "×" }),
                 " Clunky 2012 interface"
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.03] border-2 border-[#A855F7]/40 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.03] border-2 border-[#C5A059]/40 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.1)] transition-all", children: [
             /* @__PURE__ */ jsx("h3", { className: "text-white font-bold uppercase tracking-widest text-sm mb-6 relative z-10", children: "Artisan Flow Modern OS" }),
             /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-200 text-sm w-full text-left relative z-10", children: [
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#10B981] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
                 " Automated batch deduction & stock ledgers"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
@@ -8429,11 +8428,11 @@ const LandingPage = () => {
                 " Profit Guard™ real-time margin alerts"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#10B981] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
                 " Lola AI multi-channel marketing engine"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#10B981] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
                 " Next-gen dark mode interface"
               ] })
             ] })
@@ -8443,17 +8442,17 @@ const LandingPage = () => {
       /* @__PURE__ */ jsxs("div", { className: "mt-20 w-full max-w-6xl relative z-10", children: [
         /* @__PURE__ */ jsx("div", { className: "text-center mb-16", children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }) }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-emerald-500/30 p-6 rounded-2xl hover:border-cyan-400/60 hover:shadow-[0_0_30px_rgba(6,182,212,0.1)] transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx("div", { className: "bg-[#06B6D4]/10 p-3 rounded-xl mb-4 border border-[#06B6D4]/20", children: /* @__PURE__ */ jsx(Activity, { size: 24, className: "text-[#06B6D4]" }) }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx("div", { className: "bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20", children: /* @__PURE__ */ jsx(Activity, { size: 24, className: "text-[#C5A059]" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Operations & Recipe Builder" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-purple-500/30 p-6 rounded-2xl hover:border-fuchsia-400/60 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all flex flex-col items-start text-left", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
             /* @__PURE__ */ jsx("div", { className: "bg-[#A855F7]/10 p-3 rounded-xl mb-4 border border-[#A855F7]/20", children: /* @__PURE__ */ jsx(Cpu, { size: 24, className: "text-[#A855F7]" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Lola AI Marketing Co-Pilot" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-amber-500/30 p-6 rounded-2xl hover:border-yellow-400/60 hover:shadow-[0_0_30px_rgba(197,160,89,0.1)] transition-all flex flex-col items-start text-left", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
             /* @__PURE__ */ jsx("div", { className: "bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20", children: /* @__PURE__ */ jsx(Shield, { size: 24, className: "text-[#C5A059]" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Finance Hub & Profit Guard™" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins." })
@@ -8470,7 +8469,6 @@ const LandingPage = () => {
             LTDCert,
             {
               title: "Starter Maker LTD",
-              variant: "emerald",
               features: [
                 "Precision Bill of Materials (BOM) Recipe Costing",
                 "Automated Batch Inventory Deduction",
@@ -8485,7 +8483,6 @@ const LandingPage = () => {
             {
               title: "Artisan Pro LTD",
               isFeatured: true,
-              variant: "gradient",
               features: [
                 "Everything in Starter Maker, PLUS:",
                 "Lola AI Marketing Suite (Social, Blogs, Scripts)",
@@ -8499,7 +8496,6 @@ const LandingPage = () => {
             LTDCert,
             {
               title: "Master Formulator LTD",
-              variant: "gold",
               features: [
                 "Everything in Artisan Pro, PLUS:",
                 "Profit Guard™ Real-Time Margin Protection",
@@ -8525,21 +8521,10 @@ const LandingPage = () => {
     ] })
   ] });
 };
-const LTDCert = ({ title, features, isFeatured, variant = "gold" }) => {
-  let containerClasses = "";
-  let checkColor = "";
-  if (variant === "gradient" || isFeatured) {
-    containerClasses = "p-[1px] bg-gradient-to-b from-[#06B6D4] via-[#A855F7] to-[#C5A059] shadow-[0_0_50px_rgba(168,85,247,0.2)] scale-105 z-10 rounded-[2rem]";
-    checkColor = "text-[#A855F7]";
-  } else if (variant === "emerald") {
-    containerClasses = "border border-emerald-500/30 hover:border-[#06B6D4]/50 shadow-[0_0_30px_rgba(6,182,212,0.1)] rounded-[2rem] bg-white/[0.02]";
-    checkColor = "text-[#10B981]";
-  } else {
-    containerClasses = "border border-amber-500/30 hover:border-yellow-400/60 shadow-[0_0_30px_rgba(197,160,89,0.1)] rounded-[2rem] bg-white/[0.02]";
-    checkColor = "text-[#C5A059]";
-  }
-  return /* @__PURE__ */ jsx("div", { className: `group relative flex flex-col h-full transition-all duration-500 backdrop-blur-xl ${containerClasses}`, children: /* @__PURE__ */ jsxs("div", { className: `flex flex-col h-full p-8 rounded-[2rem] ${variant === "gradient" || isFeatured ? "bg-[#09090b]" : ""}`, children: [
-    isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg", children: "Most Popular" }),
+const LTDCert = ({ title, features, isFeatured }) => {
+  const containerClasses = isFeatured ? "border border-[#C5A059] shadow-[0_0_35px_rgba(197,160,89,0.15)] scale-105 z-10" : "border border-white/10 hover:border-white/30";
+  return /* @__PURE__ */ jsxs("div", { className: `group relative flex flex-col h-full rounded-[2rem] p-8 transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`, children: [
+    isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg", children: "Most Popular" }),
     /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
       /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white tracking-tight mb-6", children: title }),
       /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-xl bg-black/40 border border-white/5 p-4 flex items-center justify-center min-h-[100px]", children: [
@@ -8551,10 +8536,10 @@ const LTDCert = ({ title, features, isFeatured, variant = "gold" }) => {
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "space-y-4 mb-8 flex-1 mt-6", children: features.map((f) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
-      /* @__PURE__ */ jsx(CheckCircle, { size: 18, className: `${checkColor} shrink-0 mt-0.5` }),
+      /* @__PURE__ */ jsx(CheckCircle, { size: 18, className: "text-[#C5A059] shrink-0 mt-0.5" }),
       /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-gray-300", children: f })
     ] }, f)) })
-  ] }) });
+  ] });
 };
 const AIAssistant = () => {
   const navigate = useNavigate();

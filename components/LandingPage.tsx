@@ -61,12 +61,11 @@ export const LandingPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#09090b] relative overflow-hidden flex flex-col font-sans">
+        <div className="min-h-screen bg-[#0d0d0d] relative overflow-hidden flex flex-col font-sans">
             
             {/* Ambient luxury lighting */}
-            <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#06B6D4]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
-            <div className="absolute top-[30%] left-[-10%] w-[700px] h-[700px] bg-[#A855F7]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
-            <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#C5A059]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
             
             {/* Nav */}
             <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
@@ -90,7 +89,7 @@ export const LandingPage = () => {
                             <Sparkles size={14} /> VIP Launch: September 1st
                         </div>
                         <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
-                            Precision Manufacturing <br/> <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-transparent bg-clip-text">For Artisanal Brands</span>
+                            Precision Manufacturing <br/> <span className="bg-gradient-to-r from-[#C5A059] to-[#E2C792] text-transparent bg-clip-text">For Artisanal Brands</span>
                         </h1>
                         <p className="text-lg text-gray-400 font-medium max-w-xl leading-relaxed">
                             Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access.
@@ -187,23 +186,23 @@ export const LandingPage = () => {
                     </div>
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* Legacy */}
-                        <div className="bg-red-950/10 border border-red-500/20 p-8 rounded-[2rem] flex flex-col items-center text-center text-gray-400 opacity-80 transition-all">
+                        <div className="bg-white/[0.01] border border-white/5 p-8 rounded-[2rem] flex flex-col items-center text-center text-gray-400 opacity-70 transition-all">
                             <h3 className="text-red-400 font-bold uppercase tracking-widest text-sm mb-6">Legacy Craftybase & Spreadsheets</h3>
                             <ul className="space-y-4 text-sm w-full text-left">
-                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Manual batch math & spreadsheet errors</li>
-                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Silent cost increases eating margins</li>
-                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Zero marketing or sales tools</li>
-                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Clunky 2012 interface</li>
+                                <li className="flex items-start gap-3"><span className="text-red-400/80 font-bold text-lg leading-none">×</span> Manual batch math & spreadsheet errors</li>
+                                <li className="flex items-start gap-3"><span className="text-red-400/80 font-bold text-lg leading-none">×</span> Silent cost increases eating margins</li>
+                                <li className="flex items-start gap-3"><span className="text-red-400/80 font-bold text-lg leading-none">×</span> Zero marketing or sales tools</li>
+                                <li className="flex items-start gap-3"><span className="text-red-400/80 font-bold text-lg leading-none">×</span> Clunky 2012 interface</li>
                             </ul>
                         </div>
                         {/* Artisan Flow */}
-                        <div className="bg-white/[0.03] border-2 border-[#A855F7]/40 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all">
+                        <div className="bg-white/[0.03] border-2 border-[#C5A059]/40 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.1)] transition-all">
                             <h3 className="text-white font-bold uppercase tracking-widest text-sm mb-6 relative z-10">Artisan Flow Modern OS</h3>
                             <ul className="space-y-4 text-gray-200 text-sm w-full text-left relative z-10">
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#10B981] shrink-0 mt-0.5" /> Automated batch deduction & stock ledgers</li>
+                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Automated batch deduction & stock ledgers</li>
                                 <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Profit Guard™ real-time margin alerts</li>
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#10B981] shrink-0 mt-0.5" /> Lola AI multi-channel marketing engine</li>
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#10B981] shrink-0 mt-0.5" /> Next-gen dark mode interface</li>
+                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Lola AI multi-channel marketing engine</li>
+                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Next-gen dark mode interface</li>
                             </ul>
                         </div>
                     </div>
@@ -216,15 +215,15 @@ export const LandingPage = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {/* Recipe Builder */}
-                        <div className="bg-white/[0.02] border border-emerald-500/30 p-6 rounded-2xl hover:border-cyan-400/60 hover:shadow-[0_0_30px_rgba(6,182,212,0.1)] transition-all flex flex-col items-start text-left">
-                            <div className="bg-[#06B6D4]/10 p-3 rounded-xl mb-4 border border-[#06B6D4]/20">
-                                <Activity size={24} className="text-[#06B6D4]" />
+                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
+                            <div className="bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20">
+                                <Activity size={24} className="text-[#C5A059]" />
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">Operations & Recipe Builder</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers.</p>
                         </div>
                         {/* Lola AI */}
-                        <div className="bg-white/[0.02] border border-purple-500/30 p-6 rounded-2xl hover:border-fuchsia-400/60 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all flex flex-col items-start text-left">
+                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
                             <div className="bg-[#A855F7]/10 p-3 rounded-xl mb-4 border border-[#A855F7]/20">
                                 <Cpu size={24} className="text-[#A855F7]" />
                             </div>
@@ -232,7 +231,7 @@ export const LandingPage = () => {
                             <p className="text-sm text-gray-400 leading-relaxed">Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice.</p>
                         </div>
                         {/* Profit Guard */}
-                        <div className="bg-white/[0.02] border border-amber-500/30 p-6 rounded-2xl hover:border-yellow-400/60 hover:shadow-[0_0_30px_rgba(197,160,89,0.1)] transition-all flex flex-col items-start text-left">
+                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
                             <div className="bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20">
                                 <Shield size={24} className="text-[#C5A059]" />
                             </div>
@@ -252,7 +251,6 @@ export const LandingPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <LTDCert 
                             title="Starter Maker LTD"
-                            variant="emerald"
                             features={[
                                 "Precision Bill of Materials (BOM) Recipe Costing",
                                 "Automated Batch Inventory Deduction",
@@ -264,7 +262,6 @@ export const LandingPage = () => {
                         <LTDCert 
                             title="Artisan Pro LTD"
                             isFeatured
-                            variant="gradient"
                             features={[
                                 "Everything in Starter Maker, PLUS:",
                                 "Lola AI Marketing Suite (Social, Blogs, Scripts)",
@@ -275,7 +272,6 @@ export const LandingPage = () => {
                         />
                         <LTDCert 
                             title="Master Formulator LTD"
-                            variant="gold"
                             features={[
                                 "Everything in Artisan Pro, PLUS:",
                                 "Profit Guard™ Real-Time Margin Protection",
@@ -300,51 +296,39 @@ export const LandingPage = () => {
     );
 };
 
-const LTDCert = ({ title, features, isFeatured, variant = 'gold' }: { title: string, features: string[], isFeatured?: boolean, variant?: 'emerald' | 'gradient' | 'gold' }) => {
-    let containerClasses = "";
-    let checkColor = "";
-    
-    if (variant === 'gradient' || isFeatured) {
-        containerClasses = "p-[1px] bg-gradient-to-b from-[#06B6D4] via-[#A855F7] to-[#C5A059] shadow-[0_0_50px_rgba(168,85,247,0.2)] scale-105 z-10 rounded-[2rem]";
-        checkColor = "text-[#A855F7]";
-    } else if (variant === 'emerald') {
-        containerClasses = "border border-emerald-500/30 hover:border-[#06B6D4]/50 shadow-[0_0_30px_rgba(6,182,212,0.1)] rounded-[2rem] bg-white/[0.02]";
-        checkColor = "text-[#10B981]";
-    } else {
-        containerClasses = "border border-amber-500/30 hover:border-yellow-400/60 shadow-[0_0_30px_rgba(197,160,89,0.1)] rounded-[2rem] bg-white/[0.02]";
-        checkColor = "text-[#C5A059]";
-    }
+const LTDCert = ({ title, features, isFeatured }: { title: string, features: string[], isFeatured?: boolean }) => {
+    const containerClasses = isFeatured 
+        ? "border border-[#C5A059] shadow-[0_0_35px_rgba(197,160,89,0.15)] scale-105 z-10" 
+        : "border border-white/10 hover:border-white/30";
 
     return (
-        <div className={`group relative flex flex-col h-full transition-all duration-500 backdrop-blur-xl ${containerClasses}`}>
-            <div className={`flex flex-col h-full p-8 rounded-[2rem] ${variant === 'gradient' || isFeatured ? 'bg-[#09090b]' : ''}`}>
-                {isFeatured && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
-                        Most Popular
-                    </div>
-                )}
-                <div className="mb-6">
-                    <h3 className="text-2xl font-black text-white tracking-tight mb-6">{title}</h3>
-                    
-                    {/* Locked Price UI */}
-                    <div className="relative overflow-hidden rounded-xl bg-black/40 border border-white/5 p-4 flex items-center justify-center min-h-[100px]">
-                        <div className="absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center">
-                            <div className="bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                                <Lock size={12} /> VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST
-                            </div>
-                        </div>
-                        <span className="text-4xl font-black text-white/10 blur-sm">$???</span>
-                    </div>
+        <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`}>
+            {isFeatured && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
+                    Most Popular
                 </div>
+            )}
+            <div className="mb-6">
+                <h3 className="text-2xl font-black text-white tracking-tight mb-6">{title}</h3>
                 
-                <div className="space-y-4 mb-8 flex-1 mt-6">
-                    {features.map((f: string) => (
-                        <div key={f} className="flex items-start gap-3">
-                            <CheckCircle size={18} className={`${checkColor} shrink-0 mt-0.5`} />
-                            <span className="text-sm font-medium text-gray-300">{f}</span>
+                {/* Locked Price UI */}
+                <div className="relative overflow-hidden rounded-xl bg-black/40 border border-white/5 p-4 flex items-center justify-center min-h-[100px]">
+                    <div className="absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center">
+                        <div className="bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                            <Lock size={12} /> VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST
                         </div>
-                    ))}
+                    </div>
+                    <span className="text-4xl font-black text-white/10 blur-sm">$???</span>
                 </div>
+            </div>
+            
+            <div className="space-y-4 mb-8 flex-1 mt-6">
+                {features.map((f: string) => (
+                    <div key={f} className="flex items-start gap-3">
+                        <CheckCircle size={18} className="text-[#C5A059] shrink-0 mt-0.5" />
+                        <span className="text-sm font-medium text-gray-300">{f}</span>
+                    </div>
+                ))}
             </div>
         </div>
     );
