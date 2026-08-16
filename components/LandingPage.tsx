@@ -78,13 +78,16 @@ export const LandingPage = () => {
 
             {/* Nav */}
             <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
-                <div className="flex items-center gap-2.5 cursor-pointer group">
-                    <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/20 backdrop-blur-xl flex items-center justify-center p-2 shadow-[0_0_15px_rgba(168,85,247,0.3)] group-hover:border-white/40 transition-all">
-                        <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[#06B6D4] to-[#D946EF] shadow-[0_0_8px_#D946EF]" />
-                    </div>
-                    <span className="text-xl tracking-tight">
+                <div className="flex items-center gap-1.5 cursor-pointer group">
+                    {/* LRC Enterprise Pill Badge */}
+                    <span className="bg-white/10 border border-white/20 text-[#E2C792] font-mono font-bold text-[11px] tracking-wider px-2 py-0.5 rounded-md mr-1 backdrop-blur-md shadow-[0_0_10px_rgba(197,160,89,0.2)]">
+                        LRC
+                    </span>
+                    
+                    {/* Typographic Wordmark */}
+                    <span className="text-xl tracking-tight flex items-center">
                         <span className="font-extrabold text-white">Artisan</span>
-                        <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text ml-1">Flow</span>
+                        <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text ml-1.5">Flow</span>
                     </span>
                 </div>
                 <div>
