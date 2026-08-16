@@ -8431,19 +8431,19 @@ const LandingPage = () => {
             /* @__PURE__ */ jsx("h3", { className: "text-white font-bold uppercase tracking-widest text-sm mb-6 relative z-10", children: "Artisan Flow Modern OS" }),
             /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-200 text-sm w-full text-left relative z-10", children: [
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx("span", { className: "relative flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/20 shrink-0 mt-0.5 shadow-[0_0_10px_rgba(6,182,212,0.25)]", children: /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "text-[#06B6D4] relative z-10" }) }),
                 " Automated batch deduction & stock ledgers"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx("span", { className: "relative flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/20 shrink-0 mt-0.5 shadow-[0_0_10px_rgba(6,182,212,0.25)]", children: /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "text-[#06B6D4] relative z-10" }) }),
                 " Profit Guard™ real-time margin alerts"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx("span", { className: "relative flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/20 shrink-0 mt-0.5 shadow-[0_0_10px_rgba(6,182,212,0.25)]", children: /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "text-[#06B6D4] relative z-10" }) }),
                 " Lola AI multi-channel marketing engine"
               ] }),
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#C5A059] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx("span", { className: "relative flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/20 shrink-0 mt-0.5 shadow-[0_0_10px_rgba(6,182,212,0.25)]", children: /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "text-[#06B6D4] relative z-10" }) }),
                 " Next-gen dark mode interface"
               ] })
             ] })
@@ -8549,17 +8549,17 @@ const LTDCert = ({ title, features, isFeatured }) => {
   return /* @__PURE__ */ jsx("div", { className: `group relative flex flex-col h-full rounded-[2rem] transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`, children: /* @__PURE__ */ jsxs("div", { className: `flex flex-col h-full relative ${isFeatured ? "bg-[#0d0d0d] rounded-[calc(2rem-2px)] p-8" : ""}`, children: [
     isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg", children: "Most Popular" }),
     /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
-      /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white tracking-tight mb-6", children: title }),
-      /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-xl p-4 flex items-center justify-center min-h-[100px]", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2", children: [
-          /* @__PURE__ */ jsx(Lock, { size: 12 }),
+      /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white tracking-tight mb-6 text-center", children: title }),
+      /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-2xl p-4 flex items-center justify-center min-h-[100px] w-full", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center", children: /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.35)]", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0d0d0d]/90 backdrop-blur-md text-[#E2C792] px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2", children: [
+          /* @__PURE__ */ jsx(Lock, { size: 12, className: "text-[#06B6D4]" }),
           " VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST"
-        ] }) }),
+        ] }) }) }),
         /* @__PURE__ */ jsx("span", { className: "text-4xl font-black text-white/10 blur-sm", children: "$???" })
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "space-y-4 mb-8 flex-1 mt-6", children: features.map((f) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
-      /* @__PURE__ */ jsx(CheckCircle, { size: 18, className: "text-[#C5A059] shrink-0 mt-0.5" }),
+      /* @__PURE__ */ jsx("span", { className: "relative flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/20 shrink-0 mt-0.5 shadow-[0_0_10px_rgba(6,182,212,0.25)]", children: /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "text-[#06B6D4] relative z-10" }) }),
       /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-gray-300", children: f })
     ] }, f)) })
   ] }) });
