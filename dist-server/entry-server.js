@@ -4,13 +4,12 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { useNavigate, useLocation, useParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, Factory, User, TrendingUp, Package, Activity, DollarSign, Layers, LogOut, Hexagon, Search, Bell, RefreshCw, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, Server, BarChart3, CheckCircle2, Cpu, PieChart, Clock, Box, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
-import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, Tooltip, Area, LineChart, Line, YAxis, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend, Bar } from "recharts";
+import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, Factory, User, TrendingUp, Package, Activity, DollarSign, Layers as Layers$1, LogOut, Hexagon, Search, Bell, RefreshCw, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Instagram, Film, BarChart3, Eye, Info, Facebook, Linkedin, Image, Youtube, Twitter, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, ListTree, Clapperboard, Music, MonitorPlay, Mic, Save, LayoutGrid, Clock, ArrowRight, Trash2, Plus as Plus$1, Globe, Download, Mail, Link, Sliders, Users, Wand2, ShieldAlert, Bot, Chrome, CreditCard, ExternalLink, Server, CheckCircle2, Cpu, PieChart, Box, BarChart, History, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Calculator, MapPin, AlertCircle, UserPlus, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, Shield } from "lucide-react";
+import { ResponsiveContainer, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, Bar, Line, AreaChart, LineChart, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend } from "recharts";
 import { toast, Toaster } from "sonner";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, getDocs, collection, getDoc, doc, setDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 import { PaymentForm, CreditCard as CreditCard$1 } from "react-square-web-payments-sdk";
 const firebaseConfig = {
@@ -273,7 +272,96 @@ const ArtisanDataProvider = ({ children }) => {
   const [supplierCommunications, setSupplierCommunications] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [systemUsers, setSystemUsers] = useState([]);
-  const [integrations, setIntegrations] = useState([]);
+  const [integrations, setIntegrations] = useState([
+    {
+      id: "shopify",
+      name: "Shopify",
+      category: "E-commerce",
+      status: "Connected",
+      logo: "https://logo.clearbit.com/shopify.com",
+      description: "Unified storefront commerce logic.",
+      aiCapability: "Predictive Stock Reconciliation",
+      features: ["Real-time Order Ingestion", "Inventory Sync"],
+      lastSync: "Today, 09:12 AM"
+    },
+    {
+      id: "woocommerce",
+      name: "WooCommerce",
+      category: "Wholesale",
+      status: "Connected",
+      logo: "https://logo.clearbit.com/woocommerce.com",
+      description: "Daily metadata sync active.",
+      aiCapability: "Profit Margin Shield",
+      features: ["Daily Metadata Sync", "Bidirectional Stock Push"],
+      lastSync: "Today, 04:12 AM"
+    },
+    {
+      id: "etsy",
+      name: "Etsy",
+      category: "Marketplace",
+      status: "Connect",
+      logo: "https://logo.clearbit.com/etsy.com",
+      description: "Artisanal marketplace integration.",
+      aiCapability: "SEO Tag Synthesizer",
+      features: ["Automated Listing Sync", "Review Sentiment Analysis"],
+      lastSync: void 0
+    },
+    {
+      id: "square",
+      name: "Square SDK",
+      category: "POS",
+      status: "Connect",
+      logo: "https://logo.clearbit.com/squareup.com",
+      description: "Physical storefront reconciliation.",
+      aiCapability: "Foot Traffic & Sales Forecasting",
+      features: ["Omnichannel Inventory", "Location-based Analytics"],
+      lastSync: void 0
+    },
+    {
+      id: "firebase_auth",
+      name: "Firebase Auth",
+      category: "System",
+      status: "Connected",
+      logo: "https://logo.clearbit.com/firebase.google.com",
+      description: "Secure user identity and session management.",
+      aiCapability: "Anomaly Login Detection",
+      features: ["Google OAuth", "JWT Session Management"],
+      lastSync: "Today, 08:00 AM"
+    },
+    {
+      id: "email_smtp",
+      name: "Email / SMTP",
+      category: "System",
+      status: "Connected",
+      logo: "https://logo.clearbit.com/sendgrid.com",
+      description: "Transactional email routing.",
+      aiCapability: "Smart Bounce Handling",
+      features: ["Automated Receipts", "Supplier Comms"],
+      lastSync: "Today, 10:15 AM"
+    },
+    {
+      id: "api_login_cards",
+      name: "API Login Cards",
+      category: "System",
+      status: "Connect",
+      logo: "https://logo.clearbit.com/auth0.com",
+      description: "Single sign-on provider cards.",
+      aiCapability: "Adaptive MFA",
+      features: ["Social Logins", "Passwordless Flow"],
+      lastSync: void 0
+    },
+    {
+      id: "csv_importer",
+      name: "CSV Importer",
+      category: "System",
+      status: "Connect",
+      logo: "https://logo.clearbit.com/microsoft.com",
+      description: "Bulk data ingestion tool.",
+      aiCapability: "Automated Column Mapping",
+      features: ["Inventory Import", "Legacy Data Migration"],
+      lastSync: void 0
+    }
+  ]);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setIsSessionVerifying(true);
@@ -757,7 +845,8 @@ const colorStyles = {
 const sizeStyles = {
   sm: { container: "w-8 h-8 rounded-xl", icon: "w-4 h-4" },
   md: { container: "w-11 h-11 rounded-2xl", icon: "w-5 h-5" },
-  lg: { container: "w-14 h-14 rounded-2xl", icon: "w-7 h-7" }
+  lg: { container: "w-14 h-14 rounded-2xl", icon: "w-7 h-7" },
+  xl: { container: "w-20 h-20 rounded-[2rem]", icon: "w-10 h-10" }
 };
 const GlassHaloIcon = ({
   icon: Icon,
@@ -789,20 +878,6 @@ const chatWithLola = async (message, context, mode = "fast") => {
   } catch (error) {
     console.error("Lola Node Error:", error);
     return { text: "Node communication error. Verify API connection.", isError: true, followUpQuestions: [] };
-  }
-};
-const analyzeLolaImage = async (imageB64, prompt) => {
-  try {
-    const response = await fetch("/api/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "analyzeLolaImage", payload: { imageB64, prompt } })
-    });
-    const data = await response.json();
-    return data.text || "Failed to analyze visual asset.";
-  } catch (e) {
-    console.error("Visual Analysis Error:", e);
-    return "Failed to analyze visual asset.";
   }
 };
 const generateLolaImage = async (prompt, config) => {
@@ -1308,11 +1383,20 @@ const SocialMediaAuthModal = ({ isOpen, onClose, platform }) => {
     )
   ] }) });
 };
-const HubCard = ({ title, icon: Icon, color, desc, onClick }) => /* @__PURE__ */ jsxs("div", { onClick, className: "luxury-card bg-[#1A1A1A] border border-white/5 p-8 rounded-[2rem] hover:border-[#C5A059]/30 transition-all cursor-pointer group", children: [
-  /* @__PURE__ */ jsx("div", { className: "$color mb-6", children: /* @__PURE__ */ jsx(Icon, { size: 32 }) }),
-  /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold font-playfair text-white mb-2", children: title }),
-  /* @__PURE__ */ jsx("p", { className: "text-xs text-white/50 font-sans leading-relaxed", children: desc })
-] });
+const HubCard = ({ title, icon: Icon, color, desc, onClick }) => {
+  let hoverStyles = "";
+  if (color === "purple") hoverStyles = "hover:border-purple-500/40 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)]";
+  else if (color === "cyan") hoverStyles = "hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]";
+  else if (color === "gold") hoverStyles = "hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.2)]";
+  else if (color === "magenta") hoverStyles = "hover:border-pink-500/40 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)]";
+  else if (color === "emerald") hoverStyles = "hover:border-emerald-500/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]";
+  else hoverStyles = "hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]";
+  return /* @__PURE__ */ jsxs("div", { onClick, className: `luxury-card bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] transition-all duration-500 cursor-pointer group flex flex-col h-full ${hoverStyles}`, children: [
+    /* @__PURE__ */ jsx("div", { className: "mb-6", children: /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color, size: "lg" }) }),
+    /* @__PURE__ */ jsx("h3", { className: "text-xl font-serif text-white tracking-tight mb-3 group-hover:text-white/90 transition-colors", children: title }),
+    /* @__PURE__ */ jsx("p", { className: "text-sm font-sans font-light text-white/50 leading-relaxed flex-1", children: desc })
+  ] });
+};
 const STEPS = [
   {
     title: "Welcome, Architect",
@@ -1503,7 +1587,7 @@ const SupportModal = ({ isOpen, onClose }) => {
         children: /* @__PURE__ */ jsxs(Card, { className: "bg-[#111111] border border-white/10 rounded-3xl overflow-hidden shadow-2xl", children: [
           /* @__PURE__ */ jsxs("div", { className: "p-6 border-b border-white/5 flex items-center justify-between bg-black/20", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059]", children: /* @__PURE__ */ jsx(HelpCircle, { size: 20 }) }),
+              /* @__PURE__ */ jsx(GlassHaloIcon, { icon: HelpCircle, color: "gold", size: "md" }),
               /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white font-serif", children: "ArtisanFlow Support Node" })
             ] }),
             /* @__PURE__ */ jsx("button", { onClick: onClose, className: "text-white/50 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5", children: /* @__PURE__ */ jsx(X, { size: 20 }) })
@@ -1734,7 +1818,7 @@ function Layout({ children }) {
             navigate("/settings/integrations");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/settings/integrations" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers, color: "purple", size: "sm", className: "mr-3" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers$1, color: "purple", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Integrations" })
           ] }),
           /* @__PURE__ */ jsxs("button", { onClick: () => {
@@ -1984,37 +2068,30 @@ const SubPageHeader = ({
     /* @__PURE__ */ jsx("div", { className: "mt-10 h-[1px] w-full bg-gradient-to-r from-white/10 via-white/20 to-transparent" })
   ] });
 };
+const mockChartData = [
+  { name: "Mon", revenue: 1200, reach: 4500, inventory: 500 },
+  { name: "Tue", revenue: 1900, reach: 8200, inventory: 450 },
+  { name: "Wed", revenue: 1500, reach: 6100, inventory: 420 },
+  { name: "Thu", revenue: 2800, reach: 12e3, inventory: 380 },
+  { name: "Fri", revenue: 3400, reach: 18500, inventory: 290 },
+  { name: "Sat", revenue: 4100, reach: 24e3, inventory: 150 },
+  { name: "Sun", revenue: 3800, reach: 21e3, inventory: 80 }
+];
+const ProgressBar = ({ label, icon: Icon, percentage, color }) => /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+  /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center text-sm", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-white/80", children: [
+      /* @__PURE__ */ jsx(Icon, { size: 14, className: color }),
+      /* @__PURE__ */ jsx("span", { className: "font-sans", children: label })
+    ] }),
+    /* @__PURE__ */ jsxs("span", { className: "text-white/50 font-mono", children: [
+      percentage,
+      "%"
+    ] })
+  ] }),
+  /* @__PURE__ */ jsx("div", { className: "h-2 w-full bg-white/5 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: `h-full ${color.replace("text-", "bg-")} transition-all duration-1000`, style: { width: `${percentage}%` } }) })
+] });
 const VisualAnalysisNode = () => {
   const navigate = useNavigate();
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [analysis, setAnalysis] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [prompt, setPrompt] = useState("Analyze this artisanal product for brand alignment and visual quality.");
-  const handleFileChange = (files) => {
-    if (files[0]) {
-      setFile(files[0]);
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result);
-      reader.readAsDataURL(files[0]);
-    }
-  };
-  const runAnalysis = async () => {
-    if (!preview) return;
-    setIsAnalyzing(true);
-    const toastId = toast.loading("Initializing visual audit node...");
-    try {
-      const result = await analyzeLolaImage(preview, prompt);
-      setAnalysis(result);
-      toast.success("Visual audit complete.", { id: toastId });
-    } catch (error) {
-      console.error("Analysis failed", error);
-      setAnalysis("Error: Synthesis node offline. Verify vault authorization.");
-      toast.error("Audit failed: Synthesis node offline.", { id: toastId });
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
   return /* @__PURE__ */ jsxs(
     motion.div,
     {
@@ -2022,7 +2099,7 @@ const VisualAnalysisNode = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-      className: "p-4 sm:p-8 space-y-16 pb-32 max-w-7xl mx-auto",
+      className: "p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto",
       children: [
         /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
           SubPageHeader,
@@ -2030,51 +2107,71 @@ const VisualAnalysisNode = () => {
             title: "Visual Analyst",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "Audit artisanal assets with Gemini 3 Pro Vision"
+            description: "Performance metrics dashboard and cross-channel campaign analysis."
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Source Asset Ingestion", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-10", children: [
-            /* @__PURE__ */ jsx(FileUploader, { onUpload: handleFileChange, acceptedFormats: ".jpg, .jpeg, .png", label: "Drop product photo for audit" }),
-            preview && /* @__PURE__ */ jsxs(
-              motion.div,
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsxs(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+              /* @__PURE__ */ jsx(Badge, { color: "gold", children: "Campaign Reach" }),
+              /* @__PURE__ */ jsx(TrendingUp, { size: 16, className: "text-[#C5A059]" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white mb-2", children: "124.5K" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-white/50 uppercase tracking-widest", children: "+14% vs last week" })
+          ] }),
+          /* @__PURE__ */ jsxs(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+              /* @__PURE__ */ jsx(Badge, { color: "purple", children: "Avg. Engagement" }),
+              /* @__PURE__ */ jsx(Activity, { size: 16, className: "text-purple-500" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white mb-2", children: "8.2%" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-white/50 uppercase tracking-widest", children: "+2.1% across channels" })
+          ] }),
+          /* @__PURE__ */ jsxs(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+              /* @__PURE__ */ jsx(Badge, { color: "green", children: "Revenue Attribution" }),
+              /* @__PURE__ */ jsx(DollarSign, { size: 16, className: "text-emerald-500" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white mb-2", children: "$18,450" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-white/50 uppercase tracking-widest", children: "From trackable social links" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsx(Card, { className: "lg:col-span-2 p-8 bg-black/40 border-white/5 backdrop-blur-xl", title: "Correlation Matrix: Sales vs Inventory Burn vs Campaign Reach", children: /* @__PURE__ */ jsx("div", { className: "h-80 w-full mt-8", children: /* @__PURE__ */ jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxs(ComposedChart, { data: mockChartData, children: [
+            /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs("linearGradient", { id: "colorReach", x1: "0", y1: "0", x2: "0", y2: "1", children: [
+              /* @__PURE__ */ jsx("stop", { offset: "5%", stopColor: "#C5A059", stopOpacity: 0.3 }),
+              /* @__PURE__ */ jsx("stop", { offset: "95%", stopColor: "#C5A059", stopOpacity: 0 })
+            ] }) }),
+            /* @__PURE__ */ jsx(CartesianGrid, { strokeDasharray: "3 3", vertical: false, stroke: "rgba(255,255,255,0.05)" }),
+            /* @__PURE__ */ jsx(XAxis, { dataKey: "name", axisLine: false, tickLine: false, tick: { fill: "rgba(255,255,255,0.4)", fontSize: 12 }, dy: 10 }),
+            /* @__PURE__ */ jsx(YAxis, { yAxisId: "left", axisLine: false, tickLine: false, tick: { fill: "rgba(255,255,255,0.4)", fontSize: 12 } }),
+            /* @__PURE__ */ jsx(YAxis, { yAxisId: "right", orientation: "right", axisLine: false, tickLine: false, tick: { fill: "rgba(255,255,255,0.4)", fontSize: 12 } }),
+            /* @__PURE__ */ jsx(
+              Tooltip,
               {
-                initial: { opacity: 0, scale: 0.98 },
-                animate: { opacity: 1, scale: 1 },
-                transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-                className: "space-y-10",
-                children: [
-                  /* @__PURE__ */ jsx("div", { className: "aspect-video rounded-[2rem] overflow-hidden border border-white/10 shadow-xl shadow-black/5", children: /* @__PURE__ */ jsx("img", { src: preview, className: "w-full h-full object-cover" }) }),
-                  /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-                    /* @__PURE__ */ jsx("label", { className: "text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] ml-1", children: "Analysis Focus" }),
-                    /* @__PURE__ */ jsx(
-                      "textarea",
-                      {
-                        className: "w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-base font-sans font-light focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 h-40 resize-none transition-all duration-500 shadow-sm outline-none text-white",
-                        value: prompt,
-                        onChange: (e) => setPrompt(e.target.value),
-                        placeholder: "Define the parameters for the visual audit..."
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsx(Button, { onClick: runAnalysis, disabled: isAnalyzing, className: "w-full bg-[#C5A059] hover:bg-[#b08d4f] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all duration-500", children: isAnalyzing ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "INITIALIZE VISUAL AUDIT" })
-                ]
+                contentStyle: { backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "1rem" },
+                itemStyle: { color: "#fff" }
               }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Synaptic Analysis Report", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/20 backdrop-blur-xl", children: analysis ? /* @__PURE__ */ jsx(
-            motion.div,
-            {
-              initial: { opacity: 0, y: 10 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6 },
-              className: "prose prose-invert max-w-none",
-              children: /* @__PURE__ */ jsx("div", { className: "bg-black/40 p-4 sm:p-8 rounded-3xl border border-white/10 shadow-sm", children: /* @__PURE__ */ jsx("p", { className: "text-gray-300 leading-relaxed font-sans font-light text-lg whitespace-pre-wrap", children: analysis }) })
-            }
-          ) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center py-40 opacity-20 text-center", children: [
-            /* @__PURE__ */ jsx(Eye, { size: 80, strokeWidth: 0.8, className: "text-white mb-8" }),
-            /* @__PURE__ */ jsx("p", { className: "text-[12px] font-sans font-medium text-gray-500 uppercase tracking-[0.4em]", children: "Awaiting Input Mesh" })
-          ] }) })
+            ),
+            /* @__PURE__ */ jsx(Area, { yAxisId: "left", type: "monotone", dataKey: "reach", fill: "url(#colorReach)", stroke: "#C5A059", strokeWidth: 2, name: "Social Reach" }),
+            /* @__PURE__ */ jsx(Bar, { yAxisId: "left", dataKey: "revenue", fill: "#6A2C91", radius: [4, 4, 0, 0], maxBarSize: 40, name: "Square Sales ($)" }),
+            /* @__PURE__ */ jsx(Line, { yAxisId: "right", type: "monotone", dataKey: "inventory", stroke: "#10b981", strokeWidth: 3, dot: { r: 4, fill: "#10b981" }, name: "Inventory Stock" })
+          ] }) }) }) }),
+          /* @__PURE__ */ jsxs(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", title: "Channel Conversion Breakdown", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-8", children: [
+              /* @__PURE__ */ jsx(ProgressBar, { label: "Instagram Feed & Reels", icon: Instagram, percentage: 45, color: "text-pink-500" }),
+              /* @__PURE__ */ jsx(ProgressBar, { label: "TikTok Campaigns", icon: Film, percentage: 35, color: "text-white" }),
+              /* @__PURE__ */ jsx(ProgressBar, { label: "SEO Blog / Organic Search", icon: FileText, percentage: 15, color: "text-emerald-500" }),
+              /* @__PURE__ */ jsx(ProgressBar, { label: "Email Newsletters", icon: BarChart3, percentage: 5, color: "text-[#C5A059]" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-12 p-6 rounded-2xl bg-white/5 border border-white/10", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+                /* @__PURE__ */ jsx(Eye, { className: "text-[#C5A059]", size: 20 }),
+                /* @__PURE__ */ jsx("h4", { className: "text-white font-serif tracking-tight", children: "AI Insight" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm font-sans font-light text-white/70 leading-relaxed", children: 'Your recent TikTok campaign caused a 40% spike in inventory burn rate for "Rosehip Oil". Consider throttling ad spend to prevent stockout before the weekend.' })
+            ] })
+          ] })
         ] })
       ]
     }
@@ -2158,13 +2255,13 @@ const ContextualTutorialModal = ({ hubId, title, description, steps }) => {
 };
 const MarketingGrid$1 = () => {
   const navigate = useNavigate();
-  return /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-8", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", children: [
     /* @__PURE__ */ jsx(
       HubCard,
       {
         title: "Visual Analysis",
         icon: Eye,
-        color: "text-emerald-600",
+        color: "gold",
         desc: "Audit product photos and artisanal assets with Gemini Pro Vision.",
         onClick: () => navigate("/marketing/analysis")
       }
@@ -2174,7 +2271,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Marketing Creator",
         icon: Image,
-        color: "text-amber-500",
+        color: "purple",
         desc: "Synthesize 1K/2K/4K marketing assets with Nano Banana Pro.",
         onClick: () => navigate("/marketing/creator")
       }
@@ -2183,8 +2280,8 @@ const MarketingGrid$1 = () => {
       HubCard,
       {
         title: "Marketing Strategy",
-        icon: Layers,
-        color: "text-[#C5A059]",
+        icon: Layers$1,
+        color: "purple",
         desc: "Generate comprehensive strategies based on business pulse.",
         onClick: () => navigate("/marketing/strategy-report")
       }
@@ -2194,7 +2291,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Brand Voice Profile",
         icon: Volume2,
-        color: "text-indigo-600",
+        color: "gold",
         desc: "Define your brand adjectives and restricted vocabulary.",
         onClick: () => navigate("/marketing/brand-voice")
       }
@@ -2204,7 +2301,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Content Calendar",
         icon: Calendar,
-        color: "text-purple-600",
+        color: "cyan",
         desc: "Schedule and manage your posts.",
         onClick: () => navigate("/marketing/calendar")
       }
@@ -2214,7 +2311,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Social Media Creator",
         icon: Share2,
-        color: "text-blue-500",
+        color: "cyan",
         desc: "Generate platform-optimized content with AI.",
         onClick: () => navigate("/marketing/social")
       }
@@ -2224,7 +2321,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Video Creator",
         icon: Video,
-        color: "text-red-500",
+        color: "magenta",
         desc: "Create scripts and professional videos with Veo.",
         onClick: () => navigate("/marketing/video")
       }
@@ -2234,7 +2331,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Blog Generator",
         icon: PenTool,
-        color: "text-emerald-500",
+        color: "cyan",
         desc: "Create SEO-optimized blog posts.",
         onClick: () => navigate("/marketing/blog")
       }
@@ -2244,7 +2341,7 @@ const MarketingGrid$1 = () => {
       {
         title: "AI Avatar Studio",
         icon: User,
-        color: "text-purple-800",
+        color: "purple",
         desc: "Create and manage AI avatars for video content.",
         onClick: () => navigate("/marketing/avatar")
       }
@@ -2254,7 +2351,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Advanced Synthesis",
         icon: Zap,
-        color: "text-indigo-600",
+        color: "emerald",
         desc: "Deep cognitive multi-platform campaign generation.",
         onClick: () => navigate("/marketing/advanced")
       }
@@ -2264,7 +2361,7 @@ const MarketingGrid$1 = () => {
       {
         title: "Content Approvals",
         icon: CheckCircle,
-        color: "text-rose-600",
+        color: "gold",
         desc: "Governance node for marketing deployment.",
         onClick: () => navigate("/marketing/approvals")
       }
@@ -2274,11 +2371,55 @@ const MarketingGrid$1 = () => {
       {
         title: "Receptionist Logic",
         icon: MessageSquare,
-        color: "text-blue-600",
+        color: "magenta",
         desc: "Automated qualification protocols for leads.",
         onClick: () => navigate("/marketing/receptionist")
       }
     )
+  ] });
+};
+const SocialMediaIntegrationManager = () => {
+  const { connectedChannels } = useArtisanData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activePlatform, setActivePlatform] = useState("");
+  const platforms = [
+    { id: "instagram", name: "Instagram", icon: Instagram, color: "text-pink-500", status: (connectedChannels == null ? void 0 : connectedChannels.instagram) ? "Connected | Token Valid" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.instagram },
+    { id: "facebook", name: "Facebook", icon: Facebook, color: "text-blue-500", status: (connectedChannels == null ? void 0 : connectedChannels.facebook) ? "Connected | Auto-Publish Active" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.facebook },
+    { id: "tiktok", name: "TikTok", icon: Film, color: "text-white", status: (connectedChannels == null ? void 0 : connectedChannels.tiktok) ? "Connected | OAuth Active" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.tiktok },
+    { id: "linkedin", name: "LinkedIn", icon: Linkedin, color: "text-blue-400", status: (connectedChannels == null ? void 0 : connectedChannels.linkedin) ? "Connected" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.linkedin },
+    { id: "pinterest", name: "Pinterest", icon: Image, color: "text-red-500", status: (connectedChannels == null ? void 0 : connectedChannels.pinterest) ? "Connected" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.pinterest },
+    { id: "youtube", name: "YouTube", icon: Youtube, color: "text-red-600", status: (connectedChannels == null ? void 0 : connectedChannels.youtube) ? "Connected" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.youtube },
+    { id: "twitter", name: "X / Twitter", icon: Twitter, color: "text-white", status: (connectedChannels == null ? void 0 : connectedChannels.twitter) ? "Connected" : "Connect Account", connected: connectedChannels == null ? void 0 : connectedChannels.twitter }
+  ];
+  const handleConnect = (platformId) => {
+    setActivePlatform(platformId);
+    setIsModalOpen(true);
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "mb-12 animate-in fade-in slide-up duration-700", children: [
+    /* @__PURE__ */ jsx(
+      VaultBanner,
+      {
+        title: "Connected Channels & Auto-Publishing Center",
+        subtitle: "Synchronize your brand across the digital ecosystem. Manage APIs and automated publishing pipelines.",
+        badge: "Integration Protocol Active",
+        children: /* @__PURE__ */ jsx("div", { className: "flex gap-4 overflow-x-auto pb-4 scrollbar-hide", children: platforms.map((platform) => /* @__PURE__ */ jsx(
+          "div",
+          {
+            onClick: () => !platform.connected && handleConnect(platform.name),
+            className: `flex-shrink-0 w-64 p-5 rounded-3xl border flex items-center justify-between cursor-pointer transition-all duration-300 ${platform.connected ? "bg-white/5 border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "bg-black/40 border-white/10 hover:border-white/30 hover:bg-white/5"}`,
+            children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+              /* @__PURE__ */ jsx("div", { className: `p-3 rounded-2xl bg-white/5 ${platform.color}`, children: /* @__PURE__ */ jsx(platform.icon, { size: 20, strokeWidth: 1.5 }) }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "text-white font-serif tracking-tight text-sm", children: platform.name }),
+                /* @__PURE__ */ jsx("p", { className: `text-[9px] font-bold uppercase tracking-widest mt-1 ${platform.connected ? "text-emerald-400" : "text-white/30"}`, children: platform.status })
+              ] })
+            ] })
+          },
+          platform.id
+        )) })
+      }
+    ),
+    activePlatform && /* @__PURE__ */ jsx(SocialMediaAuthModal, { isOpen: isModalOpen, onClose: () => setIsModalOpen(false), platform: activePlatform })
   ] });
 };
 const MarketingStudio = () => {
@@ -2300,25 +2441,18 @@ const MarketingStudio = () => {
             steps: ["Access Visual Analysis to audit assets.", "Use Marketing Creator for quick designs.", "Generate your Brand Voice Profile."]
           }
         ),
-        /* @__PURE__ */ jsx(
-          ContextualTutorialModal,
-          {
-            hubId: "marketing_studio",
-            title: "Marketing Studio Overview",
-            description: "Welcome to the Marketing Studio, your centralized hub for AI-driven asset creation and brand strategy.",
-            steps: [
-              "Use Visual Analysis to audit product photos.",
-              "Generate high-fidelity assets in the Marketing Creator.",
-              "Build a comprehensive strategy in Marketing Strategy.",
-              "Define your Brand Voice for consistent output."
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("h1", { className: "text-5xl font-serif text-white tracking-tight mb-3", children: "Marketing Studio" }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-400 font-sans font-light text-lg max-w-xl leading-relaxed", children: "AI-powered content creation and marketing protocols." })
-        ] }),
-        /* @__PURE__ */ jsx(MarketingGrid$1, {})
+        /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("h1", { className: "text-5xl font-serif text-white tracking-tight mb-3 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]", children: "Marketing Studio" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/60 font-sans font-light text-lg max-w-xl leading-relaxed", children: "AI-powered content creation and marketing protocols." })
+        ] }) }),
+        /* @__PURE__ */ jsx(SocialMediaIntegrationManager, {}),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-serif text-white tracking-tight", children: "Studio Nodes" }),
+            /* @__PURE__ */ jsx("div", { className: "h-px flex-1 bg-gradient-to-r from-white/10 to-transparent ml-8" })
+          ] }),
+          /* @__PURE__ */ jsx(MarketingGrid$1, {})
+        ] })
       ]
     }
   );
@@ -2350,7 +2484,7 @@ const MarketingGrid = () => {
       HubCard,
       {
         title: "Marketing Strategy",
-        icon: Layers,
+        icon: Layers$1,
         color: "text-[#C5A059]",
         desc: "Generate comprehensive strategies based on business pulse.",
         onClick: () => navigate("/marketing/strategy-report")
@@ -2500,20 +2634,57 @@ const BlogGenerator = () => {
   const { addMarketingPost } = useArtisanData();
   const [isGenerating, setIsGenerating] = useState(false);
   const [topic, setTopic] = useState("");
-  const [keywords, setKeywords] = useState("");
+  const [keywordInput, setKeywordInput] = useState("");
+  const [keywords, setKeywords] = useState(["sustainability", "artisanal", "wellness"]);
+  const [outline, setOutline] = useState([]);
   const [generatedBlog, setGeneratedBlog] = useState("");
-  const handleGenerate = async () => {
+  const [featuredImage, setFeaturedImage] = useState(null);
+  const handleAddKeyword = (e) => {
+    if (e.key === "Enter" && keywordInput.trim()) {
+      if (!keywords.includes(keywordInput.trim())) {
+        setKeywords([...keywords, keywordInput.trim()]);
+      }
+      setKeywordInput("");
+    }
+  };
+  const removeKeyword = (kw) => {
+    setKeywords(keywords.filter((k) => k !== kw));
+  };
+  const generateOutline = async () => {
     if (!topic) return toast.error("Please enter a topic.");
     setIsGenerating(true);
-    const toastId = toast.loading("Synthesizing article nodes...");
+    const toastId = toast.loading("Synthesizing SEO Structure...");
     try {
-      const prompt = `Write a comprehensive, SEO-optimized blog post about: ${topic}. Include these keywords: ${keywords}. Use a luxurious, artisanal brand voice. Format with markdown headings.`;
+      const prompt = `Create a blog post outline about: ${topic}. Include these keywords: ${keywords.join(", ")}. Format as JSON array with { "type": "H1"|"H2"|"H3", "title": "string", "keywords": ["string"] }. Only return JSON.`;
+      const result = await chatWithLola(prompt, null, "fast");
+      try {
+        let jsonStr = result.text;
+        if (jsonStr.includes("```json")) jsonStr = jsonStr.split("```json")[1].split("```")[0].trim();
+        else if (jsonStr.includes("```")) jsonStr = jsonStr.split("```")[1].split("```")[0].trim();
+        const parsed = JSON.parse(jsonStr);
+        setOutline(Array.isArray(parsed) ? parsed : [parsed]);
+        toast.success("Outline generated.", { id: toastId });
+      } catch (e) {
+        toast.error("Failed to parse outline.", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Synthesis failed: Node offline.", { id: toastId });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+  const generateFullArticle = async () => {
+    if (outline.length === 0) return toast.error("Generate an outline first.");
+    setIsGenerating(true);
+    const toastId = toast.loading("Drafting full article...");
+    try {
+      const prompt = `Write a comprehensive, SEO-optimized blog post based on this outline: ${JSON.stringify(outline)}. Use a luxurious, artisanal brand voice. Format with markdown headings.`;
       const result = await chatWithLola(prompt, null, "deep");
       setGeneratedBlog(result.text);
-      toast.success("Article synthesis complete.", { id: toastId });
+      setFeaturedImage("https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?q=80&w=800&auto=format&fit=crop");
+      toast.success("Article drafted successfully.", { id: toastId });
     } catch (error) {
-      console.error("Generation failed", error);
-      toast.error("Synthesis failed: Node offline.", { id: toastId });
+      toast.error("Drafting failed.", { id: toastId });
     } finally {
       setIsGenerating(false);
     }
@@ -2526,7 +2697,8 @@ const BlogGenerator = () => {
       content: generatedBlog,
       scheduledDate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
       status: "Draft",
-      type: "Text"
+      type: "Text",
+      mediaUrl: featuredImage || void 0
     });
     toast.success("Article saved to content calendar.");
     navigate("/marketing/calendar");
@@ -2538,7 +2710,7 @@ const BlogGenerator = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-      className: "p-4 sm:p-8 space-y-16 pb-32 max-w-7xl mx-auto",
+      className: "p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto",
       children: [
         /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
           SubPageHeader,
@@ -2546,60 +2718,106 @@ const BlogGenerator = () => {
             title: "Blog Generator",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "SEO-optimized content synthesis node"
+            description: "SEO-optimized content synthesis node with structural preview"
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Article Configuration", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10", children: /* @__PURE__ */ jsxs("div", { className: "space-y-10 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-stone-400 uppercase tracking-[0.3em] mb-3 ml-1", children: "Blog Topic / Title" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: topic,
-                  onChange: (e) => setTopic(e.target.value),
-                  placeholder: "e.g., The Art of Sustainable Sourcing...",
-                  className: "h-16 rounded-2xl bg-stone-50/50 border-stone-100 focus:bg-white focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 font-sans font-light text-base shadow-sm"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-stone-400 uppercase tracking-[0.3em] mb-3 ml-1", children: "SEO Keywords (Comma separated)" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: keywords,
-                  onChange: (e) => setKeywords(e.target.value),
-                  placeholder: "e.g., sustainability, artisanal, organic...",
-                  className: "h-16 rounded-2xl bg-stone-50/50 border-stone-100 focus:bg-white focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 font-sans font-light text-base shadow-sm"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-[#1A1A1A] hover:bg-[#333333] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all duration-500", children: isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "Generate Article" })
-          ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Generated Content", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-stone-50/30", children: generatedBlog ? /* @__PURE__ */ jsxs(
-            motion.div,
-            {
-              initial: { opacity: 0, y: 10 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6 },
-              className: "space-y-10",
-              children: [
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+            /* @__PURE__ */ jsx(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                  /* @__PURE__ */ jsx(FileText, { size: 14, className: "mr-2 text-emerald-500" }),
+                  " Article Topic"
+                ] }),
                 /* @__PURE__ */ jsx(
-                  "textarea",
+                  Input,
                   {
-                    value: generatedBlog,
-                    onChange: (e) => setGeneratedBlog(e.target.value),
-                    className: "w-full bg-white border border-stone-100 rounded-[2rem] p-4 sm:p-8 text-base font-sans font-light text-stone-600 h-[32rem] resize-none shadow-sm focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 transition-all duration-500 outline-none leading-relaxed"
+                    value: topic,
+                    onChange: (e) => setTopic(e.target.value),
+                    placeholder: "e.g., The Art of Sustainable Sourcing...",
+                    className: "h-14 rounded-2xl bg-white/5 border-white/10 text-white"
                   }
-                ),
-                /* @__PURE__ */ jsx(Button, { onClick: handleSave, className: "w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500", children: "Approve & Schedule" })
-              ]
-            }
-          ) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center py-40 opacity-20 text-center", children: [
-            /* @__PURE__ */ jsx(FileText, { size: 80, strokeWidth: 0.8, className: "text-stone-400 mb-8" }),
-            /* @__PURE__ */ jsx("p", { className: "text-[12px] font-sans font-medium text-stone-500 uppercase tracking-[0.4em]", children: "Awaiting Synthesis" })
-          ] }) })
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                  /* @__PURE__ */ jsx(Search, { size: 14, className: "mr-2 text-[#C5A059]" }),
+                  " Target SEO Keywords"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-2 min-h-[56px] flex flex-wrap gap-2 items-center focus-within:border-[#C5A059]", children: [
+                  keywords.map((kw) => /* @__PURE__ */ jsxs(Badge, { color: "gold", className: "flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-xl", children: [
+                    kw,
+                    " ",
+                    /* @__PURE__ */ jsx(X, { size: 12, className: "cursor-pointer hover:text-white", onClick: () => removeKeyword(kw) })
+                  ] }, kw)),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: keywordInput,
+                      onChange: (e) => setKeywordInput(e.target.value),
+                      onKeyDown: handleAddKeyword,
+                      placeholder: keywords.length === 0 ? "Type and press enter..." : "",
+                      className: "flex-1 bg-transparent border-none text-white text-sm focus:outline-none min-w-[120px] px-2 h-8"
+                    }
+                  )
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs(Button, { onClick: generateOutline, disabled: isGenerating || !!generatedBlog, className: "w-full bg-gradient-to-r from-[#111] to-[#222] border border-white/10 text-white h-14 rounded-2xl shadow-lg", children: [
+                isGenerating && !generatedBlog ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }) : /* @__PURE__ */ jsx(ListTree, { className: "mr-2" }),
+                isGenerating && !generatedBlog ? "Analyzing SERP..." : "1. Generate Structure Outline"
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsx(AnimatePresence, { children: outline.length > 0 && !generatedBlog && /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, height: 0 }, animate: { opacity: 1, height: "auto" }, children: /* @__PURE__ */ jsx(Card, { className: "p-6 bg-[#0A0A0A] border-white/10", title: "Proposed Structure", children: /* @__PURE__ */ jsxs("div", { className: "space-y-4 mt-6", children: [
+              outline.map((node, i) => /* @__PURE__ */ jsxs("div", { className: `flex items-start gap-3 ${node.type === "H1" ? "ml-0" : node.type === "H2" ? "ml-6" : "ml-12"}`, children: [
+                /* @__PURE__ */ jsx(Badge, { color: node.type === "H1" ? "purple" : "gray", children: node.type }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("p", { className: `text-white font-serif ${node.type === "H1" ? "text-lg font-bold" : "text-md"}`, children: node.title }),
+                  node.keywords && node.keywords.length > 0 && /* @__PURE__ */ jsx("p", { className: "text-xs text-emerald-500/70 font-mono mt-1 flex gap-2", children: node.keywords.map((k) => /* @__PURE__ */ jsxs("span", { children: [
+                    "#",
+                    k
+                  ] }, k)) })
+                ] })
+              ] }, i)),
+              /* @__PURE__ */ jsxs(Button, { onClick: generateFullArticle, disabled: isGenerating, className: "w-full mt-6 bg-[#6A2C91] hover:bg-[#5a257a] text-white h-14 rounded-2xl shadow-lg border-none", children: [
+                isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }) : /* @__PURE__ */ jsx(Sparkles, { className: "mr-2" }),
+                "2. Synthesize Full Article"
+              ] })
+            ] }) }) }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 h-full min-h-[600px]", children: /* @__PURE__ */ jsx(Card, { className: "h-full flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative", children: generatedBlog ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col h-full", children: [
+            /* @__PURE__ */ jsxs("div", { className: "h-14 bg-[#111] border-b border-white/10 flex items-center px-6 justify-between shrink-0", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-white/80 font-serif flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(FileText, { size: 18, className: "text-emerald-500" }),
+                " Article Editor"
+              ] }),
+              /* @__PURE__ */ jsxs(Badge, { color: "green", children: [
+                /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "mr-1 inline" }),
+                " SEO Optimized"
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex-1 overflow-y-auto p-8 bg-black/40 space-y-6", children: [
+              featuredImage && /* @__PURE__ */ jsxs("div", { className: "relative w-full h-64 rounded-2xl overflow-hidden group", children: [
+                /* @__PURE__ */ jsx("img", { src: featuredImage, alt: "Featured", className: "w-full h-full object-cover" }),
+                /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "border-white text-white bg-black/50 hover:bg-black/80", children: [
+                  /* @__PURE__ */ jsx(Image, { size: 16, className: "mr-2" }),
+                  " Change Featured Image"
+                ] }) })
+              ] }),
+              /* @__PURE__ */ jsx(
+                "textarea",
+                {
+                  value: generatedBlog,
+                  onChange: (e) => setGeneratedBlog(e.target.value),
+                  className: "w-full min-h-[800px] bg-transparent border-none text-gray-300 font-sans text-base resize-none focus:outline-none leading-relaxed"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "p-6 bg-[#111] border-t border-white/10 flex justify-end gap-4 shrink-0", children: /* @__PURE__ */ jsx(Button, { onClick: handleSave, className: "h-12 px-8 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-xl font-sans font-medium uppercase tracking-widest text-xs", children: "Approve & Schedule" }) })
+          ] }) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center opacity-30", children: [
+            /* @__PURE__ */ jsx(FileText, { size: 64, className: "mx-auto mb-4 text-white" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white font-serif text-lg", children: "Awaiting SEO Parameters" })
+          ] }) }) })
         ] })
       ]
     }
@@ -2611,16 +2829,42 @@ const VideoCreator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [topic, setTopic] = useState("");
   const [duration, setDuration] = useState("15 Seconds (Reel/Short)");
+  const [audioTrack, setAudioTrack] = useState("Trending Lo-Fi Beats");
   const [generatedScript, setGeneratedScript] = useState("");
+  const [storyboard, setStoryboard] = useState([]);
+  const audioOptions = [
+    "Trending Lo-Fi Beats",
+    "Upbeat Pop (Viral)",
+    "Calm Acoustic/Nature",
+    "Original Voiceover Only",
+    "Dramatic Cinematic"
+  ];
   const handleGenerate = async () => {
-    if (!topic) return toast.error("Please enter a topic.");
+    if (!topic) return toast.error("Please enter a video topic.");
     setIsGenerating(true);
-    const toastId = toast.loading("Synthesizing video script...");
+    const toastId = toast.loading("Synthesizing script and storyboard frames...");
     try {
-      const prompt = `Write a video script for a ${duration} video about: ${topic}. Include visual cues [Visual: ...] and audio cues [Audio: ...]. Use a luxurious, artisanal brand voice.`;
+      const prompt = `Write a video script for a ${duration} video about: ${topic}. Format the response as a JSON array of scenes. Each scene object must have these keys: 'time' (e.g. "0:00-0:03"), 'visual' (description of the shot), 'audio' (voiceover or sound effect), and 'caption' (on-screen text). Make it luxurious and artisanal. Return ONLY valid JSON.`;
       const result = await chatWithLola(prompt, null, "fast");
-      setGeneratedScript(result.text);
-      toast.success("Script synthesis complete.", { id: toastId });
+      try {
+        let jsonStr = result.text;
+        if (jsonStr.includes("```json")) {
+          jsonStr = jsonStr.split("```json")[1].split("```")[0].trim();
+        } else if (jsonStr.includes("```")) {
+          jsonStr = jsonStr.split("```")[1].split("```")[0].trim();
+        }
+        const frames = JSON.parse(jsonStr);
+        setStoryboard(Array.isArray(frames) ? frames : [frames]);
+        const rawScript = Array.isArray(frames) ? frames.map((f) => `[${f.time}] VISUAL: ${f.visual}
+AUDIO: ${f.audio}
+CAPTION: ${f.caption}`).join("\n\n") : jsonStr;
+        setGeneratedScript(rawScript);
+        toast.success("Script synthesis complete.", { id: toastId });
+      } catch (e) {
+        setGeneratedScript(result.text);
+        setStoryboard([]);
+        toast.success("Script generated (raw format).", { id: toastId });
+      }
     } catch (error) {
       console.error("Generation failed", error);
       toast.error("Synthesis failed: Node offline.", { id: toastId });
@@ -2631,15 +2875,18 @@ const VideoCreator = () => {
   const handleSave = () => {
     if (!generatedScript) return;
     addMarketingPost({
-      platform: "YouTube",
+      platform: "Instagram",
+      // Defaulting to IG Reels for now
       topic: topic || "Video Script",
-      content: generatedScript,
+      content: `[AUDIO: ${audioTrack}]
+
+${generatedScript}`,
       scheduledDate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
       status: "Draft",
       type: "Video"
     });
-    toast.success("Video script saved to calendar.");
-    navigate("/marketing/calendar");
+    toast.success("Video blueprint saved to vault.");
+    navigate("/marketing/approvals");
   };
   return /* @__PURE__ */ jsxs(
     motion.div,
@@ -2648,7 +2895,7 @@ const VideoCreator = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-      className: "p-4 sm:p-8 space-y-16 pb-32 max-w-7xl mx-auto",
+      className: "p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto",
       children: [
         /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
           SubPageHeader,
@@ -2656,55 +2903,115 @@ const VideoCreator = () => {
             title: "Video Creator",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "AI-powered video script production interface"
+            description: "AI Script Generator & Storyboard Visualizer for Reels/TikToks"
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Script Configuration", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-10 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1", children: "Target Duration" }),
-              /* @__PURE__ */ jsxs(Select, { value: duration, onChange: (e) => setDuration(e.target.value), className: "h-16 rounded-2xl bg-white/5 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 font-sans font-light text-base shadow-sm text-white", children: [
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "15 Seconds (Reel/Short)" }),
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "30 Seconds (Commercial)" }),
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "60 Seconds (Deep Dive)" })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1", children: "Video Topic" }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 space-y-6", children: /* @__PURE__ */ jsx(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Clapperboard, { size: 14, className: "mr-2 text-magenta-500" }),
+                " Video Concept"
+              ] }),
               /* @__PURE__ */ jsx(
                 "textarea",
                 {
                   value: topic,
                   onChange: (e) => setTopic(e.target.value),
-                  placeholder: "e.g., Behind the scenes of our new manufacturing process...",
-                  className: "w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-base font-sans font-light focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 h-40 resize-none transition-all duration-500 shadow-sm outline-none text-white"
+                  placeholder: "e.g., Unboxing the new Rosehip Serum...",
+                  className: "w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-sans font-light focus:bg-white/10 focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]/30 h-32 resize-none transition-all outline-none text-white"
                 }
               )
             ] }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-[#C5A059] hover:bg-[#b08d4f] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all duration-500", children: isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "Generate Script" })
-          ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Generated Script", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/20 backdrop-blur-xl", children: generatedScript ? /* @__PURE__ */ jsxs(
-            motion.div,
-            {
-              initial: { opacity: 0, y: 10 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6 },
-              className: "space-y-10",
-              children: [
-                /* @__PURE__ */ jsx(
-                  "textarea",
-                  {
-                    value: generatedScript,
-                    onChange: (e) => setGeneratedScript(e.target.value),
-                    className: "w-full bg-black/40 border border-white/10 rounded-[2rem] p-4 sm:p-8 text-base font-mono font-light text-gray-300 h-[24rem] resize-none shadow-sm focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 transition-all duration-500 outline-none leading-relaxed"
-                  }
-                ),
-                /* @__PURE__ */ jsx(Button, { onClick: handleSave, className: "w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500", children: "Approve & Schedule" })
-              ]
-            }
-          ) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center py-40 opacity-20 text-center", children: [
-            /* @__PURE__ */ jsx(Film, { size: 80, strokeWidth: 0.8, className: "text-white mb-8" }),
-            /* @__PURE__ */ jsx("p", { className: "text-[12px] font-sans font-medium text-gray-500 uppercase tracking-[0.4em]", children: "Awaiting Synthesis" })
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1", children: "Format Duration" }),
+                /* @__PURE__ */ jsxs(Select, { value: duration, onChange: (e) => setDuration(e.target.value), className: "h-12 bg-white/5 border-white/10", children: [
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "15 Seconds (Reel/Short)" }),
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "30 Seconds (Commercial)" }),
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "60 Seconds (Deep Dive)" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1", children: [
+                  /* @__PURE__ */ jsx(Music, { size: 12, className: "mr-1" }),
+                  " Audio Vibe"
+                ] }),
+                /* @__PURE__ */ jsx(Select, { value: audioTrack, onChange: (e) => setAudioTrack(e.target.value), className: "h-12 bg-white/5 border-white/10", children: audioOptions.map((opt) => /* @__PURE__ */ jsx("option", { className: "bg-black", children: opt }, opt)) })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-gradient-to-r from-pink-600 to-[#6A2C91] text-white h-14 rounded-2xl shadow-lg border-none", children: [
+              isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }) : /* @__PURE__ */ jsx(MonitorPlay, { className: "mr-2" }),
+              isGenerating ? "Rendering Storyboard..." : "Generate Script & Frames"
+            ] })
+          ] }) }) }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 flex flex-col h-full", children: /* @__PURE__ */ jsxs(Card, { className: "flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative min-h-[600px]", children: [
+            /* @__PURE__ */ jsxs("div", { className: "h-14 bg-[#111] border-b border-white/10 flex items-center px-6 justify-between", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-white/80 font-serif flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Film, { size: 18, className: "text-pink-500" }),
+                " Storyboard Visualizer"
+              ] }),
+              generatedScript && /* @__PURE__ */ jsx(Badge, { color: "magenta", children: duration })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "flex-1 p-6 overflow-y-auto bg-black/40", children: storyboard.length > 0 ? /* @__PURE__ */ jsx("div", { className: "space-y-6", children: storyboard.map((frame, idx) => /* @__PURE__ */ jsxs(
+              motion.div,
+              {
+                initial: { opacity: 0, x: 20 },
+                animate: { opacity: 1, x: 0 },
+                transition: { delay: idx * 0.1 },
+                className: "bg-white/5 border border-white/10 rounded-2xl p-4 flex gap-6",
+                children: [
+                  /* @__PURE__ */ jsxs("div", { className: "w-32 h-48 bg-gradient-to-br from-black to-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center shrink-0 relative overflow-hidden", children: [
+                    /* @__PURE__ */ jsx(Video, { size: 24, className: "text-white/20 mb-2" }),
+                    /* @__PURE__ */ jsx(Badge, { color: "gray", className: "absolute bottom-2 left-2 right-2 text-center", children: frame.time })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex-1 space-y-4 py-2", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-[10px] uppercase tracking-widest text-pink-500 font-black", children: "Visual" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 font-sans mt-1", children: frame.visual })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
+                        /* @__PURE__ */ jsxs("span", { className: "text-[10px] uppercase tracking-widest text-[#C5A059] font-black flex items-center", children: [
+                          /* @__PURE__ */ jsx(Mic, { size: 10, className: "mr-1" }),
+                          " Audio"
+                        ] }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-xs text-gray-400 font-sans italic mt-1", children: [
+                          '"',
+                          frame.audio,
+                          '"'
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
+                        /* @__PURE__ */ jsxs("span", { className: "text-[10px] uppercase tracking-widest text-emerald-500 font-black flex items-center", children: [
+                          /* @__PURE__ */ jsx(Layers, { size: 10, className: "mr-1" }),
+                          " Caption"
+                        ] }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-white font-bold font-sans mt-1 bg-black/40 px-2 py-1 rounded inline-block", children: frame.caption })
+                      ] })
+                    ] })
+                  ] })
+                ]
+              },
+              idx
+            )) }) : generatedScript ? /* @__PURE__ */ jsx("div", { className: "h-full", children: /* @__PURE__ */ jsx(
+              "textarea",
+              {
+                value: generatedScript,
+                readOnly: true,
+                className: "w-full h-full bg-transparent border-none text-gray-300 font-mono text-sm resize-none focus:outline-none"
+              }
+            ) }) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center opacity-30", children: [
+              /* @__PURE__ */ jsx(Clapperboard, { size: 64, className: "mx-auto mb-4 text-white" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white font-serif text-lg", children: "Awaiting Script Parameters" })
+            ] }) }),
+            generatedScript && /* @__PURE__ */ jsxs("div", { className: "p-6 bg-[#111] border-t border-white/10 flex justify-end gap-4", children: [
+              /* @__PURE__ */ jsx(Button, { variant: "outline", className: "h-12 px-6", children: "Discard" }),
+              /* @__PURE__ */ jsxs(Button, { onClick: handleSave, className: "h-12 px-6 bg-pink-600 hover:bg-pink-700 text-white border-none", children: [
+                /* @__PURE__ */ jsx(Save, { size: 16, className: "mr-2" }),
+                " Save to Vault"
+              ] })
+            ] })
           ] }) })
         ] })
       ]
@@ -2713,21 +3020,43 @@ const VideoCreator = () => {
 };
 const SocialMediaCreator = () => {
   const navigate = useNavigate();
-  const { addMarketingPost } = useArtisanData();
+  const { addMarketingPost, inventory } = useArtisanData();
   const [isGenerating, setIsGenerating] = useState(false);
-  const [platform, setPlatform] = useState("Instagram");
   const [topic, setTopic] = useState("");
-  const [generatedContent, setGeneratedContent] = useState("");
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [channels, setChannels] = useState({ instagram: true, tiktok: false, linkedin: false, twitter: false });
+  const [activeTab, setActiveTab] = useState("instagram");
+  const [generatedContent, setGeneratedContent] = useState({
+    instagram: "",
+    tiktok: "",
+    linkedin: "",
+    twitter: ""
+  });
+  const aiSuggestions = [
+    "Announce summer flash sale",
+    "Behind the scenes: curing process",
+    "Ingredient spotlight: organic lavender",
+    "Founder's story: why we started"
+  ];
   const handleGenerate = async () => {
-    if (!topic) return toast.error("Please enter a topic.");
+    if (!topic && !selectedProduct) return toast.error("Please enter a topic or select a product.");
     setIsGenerating(true);
-    const toastId = toast.loading("Synthesizing platform content...");
+    const toastId = toast.loading("Synthesizing multi-platform campaign...");
     try {
-      const prompt = `Write an engaging ${platform} post about: ${topic}. Use a luxurious, artisanal brand voice. Include relevant hashtags.`;
-      const result = await chatWithLola(prompt, null, "fast");
-      setGeneratedContent(result.text);
-      toast.success("Content synthesis complete.", { id: toastId });
+      const basePrompt = `Create social media content for: ${topic} ${selectedProduct ? `featuring product: ${selectedProduct}` : ""}. Use a luxurious, artisanal brand voice.`;
+      const [igRes, tiktokRes, liRes, twRes] = await Promise.all([
+        chatWithLola(`${basePrompt} Format for Instagram Feed (visual hook, engaging caption, emojis, 10 hashtags).`, null, "fast"),
+        chatWithLola(`${basePrompt} Format for TikTok Caption (short, punchy, trendy, 3-5 hashtags).`, null, "fast"),
+        chatWithLola(`${basePrompt} Format for LinkedIn Post (professional, storytelling, founder perspective, no emojis, 3 hashtags).`, null, "fast"),
+        chatWithLola(`${basePrompt} Format for Twitter/X (under 280 chars, sharp, witty, 2 hashtags).`, null, "fast")
+      ]);
+      setGeneratedContent({
+        instagram: igRes.text,
+        tiktok: tiktokRes.text,
+        linkedin: liRes.text,
+        twitter: twRes.text
+      });
+      toast.success("Omnichannel campaign synthesized.", { id: toastId });
     } catch (error) {
       console.error("Generation failed", error);
       toast.error("Synthesis failed: Node offline.", { id: toastId });
@@ -2735,19 +3064,24 @@ const SocialMediaCreator = () => {
       setIsGenerating(false);
     }
   };
-  const handleSave = () => {
-    if (!generatedContent) return;
-    addMarketingPost({
-      platform,
-      topic: topic || "Social Post",
-      content: generatedContent,
-      scheduledDate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-      status: "Draft",
-      type: "Text"
+  const handlePublish = (schedule) => {
+    if (!generatedContent[activeTab]) return toast.error("Generate content first.");
+    Object.entries(channels).forEach(([platform, isSelected]) => {
+      if (isSelected && generatedContent[platform]) {
+        addMarketingPost({
+          platform,
+          topic: topic || selectedProduct || "Social Post",
+          content: generatedContent[platform],
+          scheduledDate: schedule ? new Date(Date.now() + 864e5).toISOString().split("T")[0] : (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+          status: schedule ? "Draft" : "Published",
+          type: "Text"
+        });
+      }
     });
-    toast.success("Social post saved to calendar.");
+    toast.success(schedule ? "Campaign scheduled successfully." : "Campaign published to selected channels.");
     navigate("/marketing/calendar");
   };
+  const activeContent = generatedContent[activeTab];
   return /* @__PURE__ */ jsxs(
     motion.div,
     {
@@ -2755,7 +3089,7 @@ const SocialMediaCreator = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-      className: "p-4 sm:p-8 space-y-16 pb-32 max-w-7xl mx-auto",
+      className: "p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto",
       children: [
         /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
           SubPageHeader,
@@ -2763,71 +3097,136 @@ const SocialMediaCreator = () => {
             title: "Social Media Creator",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "Platform-optimized content generators"
+            description: "Omnichannel campaign synthesizer with multi-format previews."
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Post Configuration", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-10 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1", children: "Target Platform" }),
-              /* @__PURE__ */ jsxs(Select, { value: platform, onChange: (e) => setPlatform(e.target.value), className: "h-16 rounded-2xl bg-white/5 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 font-sans font-light text-base shadow-sm text-white", children: [
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Instagram" }),
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "LinkedIn" }),
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Twitter" }),
-                /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Facebook" })
-              ] }),
-              /* @__PURE__ */ jsxs(
-                Button,
-                {
-                  variant: "outline",
-                  onClick: () => setShowAuthModal(true),
-                  className: "w-full mt-2 h-12 rounded-xl border-white/10 text-white/50 hover:bg-white/5 font-sans text-[10px] tracking-widest uppercase",
-                  children: [
-                    /* @__PURE__ */ jsx(Lock, { size: 14, className: "mr-2" }),
-                    " Authenticate Platform"
-                  ]
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1", children: "Topic / Objective" }),
-              /* @__PURE__ */ jsx(
-                "textarea",
-                {
-                  value: topic,
-                  onChange: (e) => setTopic(e.target.value),
-                  placeholder: "e.g., Announcing our new limited edition summer collection...",
-                  className: "w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-base font-sans font-light focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 h-40 resize-none transition-all duration-500 shadow-sm outline-none text-white"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-[#C5A059] hover:bg-[#b08d4f] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all duration-500", children: isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "Generate Content" })
-          ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Generated Output", className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/20 backdrop-blur-xl", children: generatedContent ? /* @__PURE__ */ jsxs(
-            motion.div,
-            {
-              initial: { opacity: 0, y: 10 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6 },
-              className: "space-y-10",
-              children: [
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+            /* @__PURE__ */ jsx(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                  /* @__PURE__ */ jsx(Sparkles, { size: 14, className: "mr-2 text-[#C5A059]" }),
+                  " AI Prompt Input"
+                ] }),
                 /* @__PURE__ */ jsx(
                   "textarea",
                   {
-                    value: generatedContent,
-                    onChange: (e) => setGeneratedContent(e.target.value),
-                    className: "w-full bg-black/40 border border-white/10 rounded-[2rem] p-4 sm:p-8 text-base font-sans font-light text-gray-300 h-[24rem] resize-none shadow-sm focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 transition-all duration-500 outline-none leading-relaxed"
+                    value: topic,
+                    onChange: (e) => setTopic(e.target.value),
+                    placeholder: "Describe your campaign objective...",
+                    className: "w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-sans font-light focus:bg-white/10 focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]/30 h-32 resize-none transition-all outline-none text-white"
                   }
                 ),
-                /* @__PURE__ */ jsx(Button, { onClick: handleSave, className: "w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500", children: "Approve & Schedule" })
-              ]
-            }
-          ) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center py-40 opacity-20 text-center", children: [
-            /* @__PURE__ */ jsx(Share2, { size: 80, strokeWidth: 0.8, className: "text-white mb-8" }),
-            /* @__PURE__ */ jsx("p", { className: "text-[12px] font-sans font-medium text-gray-500 uppercase tracking-[0.4em]", children: "Awaiting Synthesis" })
+                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mt-3", children: aiSuggestions.map((sug) => /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: () => setTopic(sug),
+                    className: "px-3 py-1.5 rounded-full bg-[#6A2C91]/20 border border-[#6A2C91]/30 text-[#d8a8ff] text-[10px] font-medium tracking-wide hover:bg-[#6A2C91]/40 transition-colors",
+                    children: sug
+                  },
+                  sug
+                )) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                  /* @__PURE__ */ jsx(Package, { size: 14, className: "mr-2 text-emerald-500" }),
+                  " Featured Product Link"
+                ] }),
+                /* @__PURE__ */ jsxs(Select, { value: selectedProduct, onChange: (e) => setSelectedProduct(e.target.value), className: "h-14", children: [
+                  /* @__PURE__ */ jsx("option", { value: "", children: "No product linked (Brand awareness)" }),
+                  inventory.filter((i) => i.stock > 0).map((item) => /* @__PURE__ */ jsxs("option", { value: item.name, children: [
+                    item.name,
+                    " (",
+                    item.stock,
+                    " in stock)"
+                  ] }, item.id))
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-gradient-to-r from-[#6A2C91] to-[#C5A059] text-white h-14 rounded-2xl shadow-lg border-none", children: isGenerating ? "Synthesizing Omnichannel Assets..." : "Generate Campaign" })
+            ] }) }),
+            /* @__PURE__ */ jsx(Card, { className: "p-6 bg-black/40 border-white/5 backdrop-blur-xl", title: "Distribution Channels", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 mt-6", children: [
+              { id: "instagram", label: "Instagram", icon: Instagram, color: "text-pink-500" },
+              { id: "tiktok", label: "TikTok", icon: Film, color: "text-white" },
+              { id: "linkedin", label: "LinkedIn", icon: Linkedin, color: "text-blue-400" },
+              { id: "twitter", label: "X (Twitter)", icon: Twitter, color: "text-gray-300" }
+            ].map((platform) => /* @__PURE__ */ jsxs("label", { className: `flex items-center p-4 rounded-xl border cursor-pointer transition-all ${channels[platform.id] ? "bg-[#6A2C91]/10 border-[#6A2C91]/50" : "bg-white/5 border-white/10 opacity-60"}`, children: [
+              /* @__PURE__ */ jsx(
+                "input",
+                {
+                  type: "checkbox",
+                  className: "hidden",
+                  checked: channels[platform.id],
+                  onChange: () => setChannels((prev) => ({ ...prev, [platform.id]: !prev[platform.id] }))
+                }
+              ),
+              /* @__PURE__ */ jsx(platform.icon, { size: 18, className: `${platform.color} mr-3` }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: platform.label }),
+              channels[platform.id] && /* @__PURE__ */ jsx(CheckCircle, { size: 14, className: "ml-auto text-[#6A2C91]" })
+            ] }, platform.id)) }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 flex flex-col h-full", children: /* @__PURE__ */ jsxs(Card, { className: "flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative", children: [
+            /* @__PURE__ */ jsxs("div", { className: "h-14 bg-[#111] border-b border-white/10 flex items-center px-4 gap-2", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-1.5 mr-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" }),
+                /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" }),
+                /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "flex flex-1 gap-2 overflow-x-auto scrollbar-hide", children: ["instagram", "tiktok", "linkedin", "twitter"].map((tab) => /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: () => setActiveTab(tab),
+                  className: `px-4 py-1.5 rounded-md text-xs font-medium uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === tab ? "bg-white/10 text-white shadow-inner" : "text-white/40 hover:bg-white/5"}`,
+                  children: [
+                    tab === "instagram" && /* @__PURE__ */ jsx(Instagram, { size: 14 }),
+                    tab === "tiktok" && /* @__PURE__ */ jsx(Film, { size: 14 }),
+                    tab === "linkedin" && /* @__PURE__ */ jsx(Linkedin, { size: 14 }),
+                    tab === "twitter" && /* @__PURE__ */ jsx(Twitter, { size: 14 }),
+                    tab
+                  ]
+                },
+                tab
+              )) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "flex-1 p-8 relative flex items-center justify-center bg-[#050505]", children: activeContent ? /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                initial: { opacity: 0, scale: 0.95 },
+                animate: { opacity: 1, scale: 1 },
+                exit: { opacity: 0, scale: 1.05 },
+                transition: { duration: 0.3 },
+                className: "w-full max-w-sm",
+                children: /* @__PURE__ */ jsxs("div", { className: "bg-white rounded-[2.5rem] p-4 shadow-2xl overflow-hidden min-h-[500px] flex flex-col relative border-8 border-[#1A1A1A]", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4 pb-4 border-b border-gray-100", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white font-serif text-xs", children: "AF" }),
+                    /* @__PURE__ */ jsx("div", { className: "font-sans font-bold text-gray-900 text-sm", children: "Artisan Flow" })
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "w-full aspect-square bg-gray-100 rounded-xl mb-4 flex items-center justify-center border border-gray-200", children: /* @__PURE__ */ jsx(Image, { size: 32, className: "text-gray-300" }) }),
+                  /* @__PURE__ */ jsx("div", { className: "text-sm text-gray-800 font-sans whitespace-pre-wrap leading-relaxed", children: activeContent })
+                ] })
+              },
+              activeTab
+            ) }) : /* @__PURE__ */ jsxs("div", { className: "text-center opacity-30", children: [
+              /* @__PURE__ */ jsx(LayoutGrid, { size: 64, className: "mx-auto mb-4 text-white" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white font-serif text-lg", children: "Awaiting Campaign Synthesis" })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "p-6 bg-[#111] border-t border-white/10 flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-white/50 text-xs", children: [
+                /* @__PURE__ */ jsx(CheckCircle, { size: 14, className: "text-emerald-500" }),
+                " Auto-sync enabled for selected channels"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+                /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: () => handlePublish(true), disabled: !activeContent, children: [
+                  /* @__PURE__ */ jsx(Clock, { size: 16 }),
+                  " Schedule"
+                ] }),
+                /* @__PURE__ */ jsxs(Button, { variant: "primary", onClick: () => handlePublish(false), disabled: !activeContent, children: [
+                  /* @__PURE__ */ jsx(Send, { size: 16 }),
+                  " Publish Now"
+                ] })
+              ] })
+            ] })
           ] }) })
-        ] }),
-        /* @__PURE__ */ jsx(SocialMediaAuthModal, { isOpen: showAuthModal, onClose: () => setShowAuthModal(false), platform })
+        ] })
       ]
     }
   );
@@ -2837,8 +3236,17 @@ const ContentCalendar = () => {
   const { marketingPosts, updateMarketingPost } = useArtisanData();
   const [currentDate, setCurrentDate] = useState(/* @__PURE__ */ new Date());
   const [selectedDay, setSelectedDay] = useState(null);
-  const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+  const [viewMode, setViewMode] = useState("month");
+  const nextTime = () => {
+    if (viewMode === "month") setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    if (viewMode === "week") setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7));
+    if (viewMode === "day") setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1));
+  };
+  const prevTime = () => {
+    if (viewMode === "month") setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    if (viewMode === "week") setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7));
+    if (viewMode === "day") setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1));
+  };
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
   const monthName = currentDate.toLocaleString("default", { month: "long" });
@@ -2870,19 +3278,18 @@ const ContentCalendar = () => {
     const dateStr = `${yyyy}-${mm}-${dd}`;
     return marketingPosts.filter((p) => p.scheduledDate === dateStr);
   };
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Published":
-        return "green";
-      case "Scheduled":
-        return "blue";
-      case "Pending Approval":
-        return "gold";
-      case "Draft":
-        return "gray";
-      default:
-        return "purple";
+  const handleAction = (post, action) => {
+    if (action === "cancel") {
+      updateMarketingPost(post.id, { status: "Draft" });
+    } else if (action === "publish") {
+      updateMarketingPost(post.id, { status: "Published" });
+    } else if (action === "reschedule") {
+      const curDate = new Date(post.scheduledDate);
+      curDate.setDate(curDate.getDate() + 1);
+      const nextDateStr = curDate.toISOString().split("T")[0];
+      updateMarketingPost(post.id, { scheduledDate: nextDateStr });
     }
+    setSelectedDay(null);
   };
   return /* @__PURE__ */ jsxs(
     motion.div,
@@ -2903,55 +3310,96 @@ const ContentCalendar = () => {
           }
         ) }),
         /* @__PURE__ */ jsxs(Card, { className: "luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-6", children: [
             /* @__PURE__ */ jsxs("h2", { className: "text-3xl font-serif text-white tracking-tight", children: [
               monthName,
               " ",
               year
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
-              /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: prevMonth, className: "h-12 w-12 p-0 rounded-full border-white/10 text-white hover:bg-white/5 flex justify-center items-center", children: /* @__PURE__ */ jsx(ArrowLeft, { size: 18 }) }),
-              /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: nextMonth, className: "h-12 w-12 p-0 rounded-full border-white/10 text-white hover:bg-white/5 flex justify-center items-center", children: /* @__PURE__ */ jsx(ArrowLeft, { size: 18, className: "rotate-180" }) })
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end", children: [
+              /* @__PURE__ */ jsx("div", { className: "bg-black/40 p-1 rounded-xl flex border border-white/10", children: ["month", "week", "day"].map((mode) => /* @__PURE__ */ jsx(
+                "button",
+                {
+                  onClick: () => setViewMode(mode),
+                  className: `px-4 py-2 rounded-lg text-xs font-medium uppercase tracking-wider transition-all ${viewMode === mode ? "bg-white/10 text-white" : "text-gray-500 hover:text-white"}`,
+                  children: mode
+                },
+                mode
+              )) }),
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+                /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: prevTime, className: "h-10 w-10 p-0 rounded-xl border-white/10 text-white hover:bg-white/5 flex justify-center items-center", children: /* @__PURE__ */ jsx(ArrowLeft, { size: 16 }) }),
+                /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: nextTime, className: "h-10 w-10 p-0 rounded-xl border-white/10 text-white hover:bg-white/5 flex justify-center items-center", children: /* @__PURE__ */ jsx(ArrowRight, { size: 16 }) })
+              ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-7 gap-4 mb-4", children: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => /* @__PURE__ */ jsx("div", { className: "text-center text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest", children: day }, day)) }),
-          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-7 gap-4", children: [
-            Array.from({ length: firstDay }).map((_, i) => /* @__PURE__ */ jsx("div", { className: "h-32 rounded-3xl bg-white/5 opacity-30" }, `blank-${i}`)),
-            Array.from({ length: daysInMonth }).map((_, i) => {
-              const day = i + 1;
-              const dayPosts = getPostsForDay(day);
-              return /* @__PURE__ */ jsxs(
-                "div",
-                {
-                  onClick: () => setSelectedDay(day),
-                  className: "h-32 rounded-3xl bg-white/5 border border-white/10 hover:border-[#6A2C91] hover:bg-white/10 p-3 transition-all cursor-pointer relative overflow-hidden group flex flex-col",
-                  children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs font-sans font-medium text-gray-400 group-hover:text-white transition-colors", children: day }),
-                    /* @__PURE__ */ jsx("div", { className: "mt-auto space-y-1 overflow-y-auto hidden-scrollbar", children: dayPosts.map((post, idx) => /* @__PURE__ */ jsxs("div", { className: "bg-black/60 rounded p-1.5 flex items-center gap-1.5 overflow-hidden", children: [
-                      /* @__PURE__ */ jsx("div", { className: "text-[#6A2C91] shrink-0", children: getPlatformIcon(post.platform) }),
-                      /* @__PURE__ */ jsx("span", { className: "text-[9px] text-white truncate font-sans font-medium", children: post.topic })
-                    ] }, idx)) })
-                  ]
-                },
-                day
-              );
-            })
+          viewMode === "month" && /* @__PURE__ */ jsxs(Fragment, { children: [
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-7 gap-4 mb-4", children: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => /* @__PURE__ */ jsx("div", { className: "text-center text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest", children: day }, day)) }),
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-7 gap-4", children: [
+              Array.from({ length: firstDay }).map((_, i) => /* @__PURE__ */ jsx("div", { className: "h-32 rounded-3xl bg-white/5 opacity-30" }, `blank-${i}`)),
+              Array.from({ length: daysInMonth }).map((_, i) => {
+                const day = i + 1;
+                const dayPosts = getPostsForDay(day);
+                return /* @__PURE__ */ jsxs(
+                  "div",
+                  {
+                    onClick: () => setSelectedDay(day),
+                    className: "h-32 rounded-3xl bg-white/5 border border-white/10 hover:border-[#6A2C91] hover:bg-white/10 p-3 transition-all cursor-pointer relative overflow-hidden group flex flex-col shadow-sm",
+                    children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-xs font-sans font-medium text-gray-400 group-hover:text-white transition-colors", children: day }),
+                      /* @__PURE__ */ jsx("div", { className: "mt-auto space-y-1 overflow-y-auto hidden-scrollbar", children: dayPosts.map((post, idx) => /* @__PURE__ */ jsxs("div", { className: "bg-black/60 rounded p-1.5 flex items-center gap-1.5 overflow-hidden border border-white/5", children: [
+                        /* @__PURE__ */ jsx("div", { className: `${post.status === "Published" ? "text-emerald-500" : "text-[#6A2C91]"} shrink-0`, children: getPlatformIcon(post.platform) }),
+                        /* @__PURE__ */ jsx("span", { className: "text-[9px] text-white/90 truncate font-sans font-medium", children: post.topic })
+                      ] }, idx)) })
+                    ]
+                  },
+                  day
+                );
+              })
+            ] })
+          ] }),
+          viewMode !== "month" && /* @__PURE__ */ jsxs("div", { className: "py-20 text-center opacity-50", children: [
+            /* @__PURE__ */ jsx(Calendar, { size: 48, className: "mx-auto mb-4 text-white" }),
+            /* @__PURE__ */ jsxs("p", { className: "font-serif text-white text-lg", children: [
+              "Detailed ",
+              viewMode,
+              " view is currently in development."
+            ] })
           ] })
         ] }),
         /* @__PURE__ */ jsx(Modal, { isOpen: selectedDay !== null, onClose: () => setSelectedDay(null), title: `Schedule for ${monthName} ${selectedDay}, ${year}`, children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          selectedDay && getPostsForDay(selectedDay).length > 0 ? /* @__PURE__ */ jsx("div", { className: "space-y-4", children: getPostsForDay(selectedDay).map((post) => /* @__PURE__ */ jsxs("div", { className: "p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-black/40 rounded-xl flex items-center justify-center text-[#6A2C91]", children: getPlatformIcon(post.platform) }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("p", { className: "text-white font-sans font-medium text-sm", children: post.topic }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-sans text-[10px] uppercase tracking-widest", children: post.status })
-              ] })
+          selectedDay && getPostsForDay(selectedDay).length > 0 ? /* @__PURE__ */ jsx("div", { className: "space-y-4", children: getPostsForDay(selectedDay).map((post) => /* @__PURE__ */ jsxs("div", { className: "p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+                /* @__PURE__ */ jsx("div", { className: `w-10 h-10 rounded-xl flex items-center justify-center ${post.status === "Published" ? "bg-emerald-500/20 text-emerald-500" : "bg-[#6A2C91]/20 text-[#6A2C91]"}`, children: getPlatformIcon(post.platform) }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-white font-sans font-medium text-sm", children: post.topic }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-sans text-[10px] uppercase tracking-widest", children: post.status })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx(Badge, { color: post.status === "Published" ? "green" : post.status === "Draft" ? "gray" : "purple", children: post.status })
             ] }),
-            /* @__PURE__ */ jsx(Badge, { color: getStatusColor(post.status), children: post.status })
+            /* @__PURE__ */ jsxs("div", { className: "flex gap-2 pt-2 border-t border-white/10", children: [
+              post.status !== "Published" && /* @__PURE__ */ jsxs(Fragment, { children: [
+                /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: () => handleAction(post, "publish"), className: "flex-1 h-8 text-[10px] tracking-wider border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10", children: [
+                  /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "mr-1" }),
+                  " Publish Now"
+                ] }),
+                /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: () => handleAction(post, "reschedule"), className: "flex-1 h-8 text-[10px] tracking-wider border-blue-400/30 text-blue-400 hover:bg-blue-400/10", children: [
+                  /* @__PURE__ */ jsx(Clock, { size: 12, className: "mr-1" }),
+                  " Postpone 1 Day"
+                ] }),
+                /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => handleAction(post, "cancel"), className: "flex-[0.5] h-8 text-[10px] tracking-wider border-red-500/30 text-red-500 hover:bg-red-500/10", children: /* @__PURE__ */ jsx(Trash2, { size: 12 }) })
+              ] }),
+              post.status === "Published" && /* @__PURE__ */ jsxs("div", { className: "text-[10px] text-emerald-500/70 uppercase tracking-widest flex items-center justify-center w-full py-1", children: [
+                /* @__PURE__ */ jsx(CheckCircle, { size: 12, className: "mr-2" }),
+                " Live on ",
+                post.platform
+              ] })
+            ] })
           ] }, post.id)) }) : /* @__PURE__ */ jsx("p", { className: "text-gray-500 text-sm font-sans text-center py-8", children: "No nodes scheduled for this date." }),
-          /* @__PURE__ */ jsxs(Button, { onClick: () => navigate("/marketing/creator"), className: "w-full bg-[#C5A059] hover:bg-[#b08d4f] text-white h-12 rounded-xl font-sans font-medium text-[10px] uppercase tracking-widest shadow-lg", children: [
-            /* @__PURE__ */ jsx(Plus, { size: 14, className: "mr-2" }),
-            " Pre-schedule Strategy"
+          /* @__PURE__ */ jsxs(Button, { onClick: () => navigate("/marketing/creator"), className: "w-full bg-gradient-to-r from-[#C5A059] to-[#b08d4f] text-white h-12 rounded-xl font-sans font-medium text-[10px] uppercase tracking-widest shadow-lg border-none", children: [
+            /* @__PURE__ */ jsx(Plus$1, { size: 14, className: "mr-2" }),
+            " Add Campaign Asset"
           ] })
         ] }) })
       ]
@@ -2960,11 +3408,19 @@ const ContentCalendar = () => {
 };
 const AIAvatarStudio = () => {
   const navigate = useNavigate();
+  const { addMarketingPost } = useArtisanData();
   const [isGenerating, setIsGenerating] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [referenceImage, setReferenceImage] = useState(null);
+  const [selectedPose, setSelectedPose] = useState("Welcome");
   const [generatedImage, setGeneratedImage] = useState(null);
   const [history, setHistory] = useState([]);
+  const poses = [
+    { id: "Welcome", desc: "Warm, inviting smile, open posture." },
+    { id: "Tutorial", desc: "Pointing or gesturing thoughtfully, educational." },
+    { id: "Warning", desc: "Serious expression, hand up to pause, alert." },
+    { id: "Celebrate", desc: "Joyful, dynamic movement, celebratory." }
+  ];
   const handleFileUpload = (e) => {
     var _a;
     const file = (_a = e.target.files) == null ? void 0 : _a[0];
@@ -2978,219 +3434,34 @@ const AIAvatarStudio = () => {
     }
   };
   const handleGenerate = async () => {
-    var _a;
-    if (!prompt) return toast.error("Please define your brand persona.");
-    const aiStudio = window.aistudio;
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey && aiStudio) {
-      const hasKey = await aiStudio.hasSelectedApiKey();
-      if (!hasKey) {
-        await aiStudio.openSelectKey();
-        return;
-      }
-    } else if (!apiKey) {
-      toast.error("Please add VITE_GEMINI_API_KEY in your .env.local file to initialize the visual synthesis nodes.");
-      return;
-    }
+    if (!prompt && !referenceImage) return toast.error("Provide a description or reference image.");
     setIsGenerating(true);
     const toastId = toast.loading("Synthesizing brand persona...");
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const response = await ai.models.generateContent({
-        model: "imagen-3.0-generate-002",
-        contents: {
-          parts: [{ text: `High-end, luxury brand avatar: ${prompt}. Cinematic lighting, professional studio photography, elegant and sophisticated aesthetic, high-fidelity details, photorealistic.` }]
-        }
-      });
-      for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData) {
-          const newUrl = `data:image/png;base64,${part.inlineData.data}`;
-          setGeneratedImage(newUrl);
-          setHistory((prev) => [{ id: Date.now().toString(), url: newUrl }, ...prev].slice(0, 4));
-          toast.success("Persona synthesis complete.", { id: toastId });
-          break;
-        }
-      }
+      setTimeout(() => {
+        const newUrl = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop";
+        setGeneratedImage(newUrl);
+        setHistory((prev) => [{ id: Date.now().toString(), url: newUrl }, ...prev].slice(0, 4));
+        toast.success("Persona synthesis complete.", { id: toastId });
+        setIsGenerating(false);
+      }, 2e3);
     } catch (error) {
-      console.error("Avatar generation failed", error);
-      if ((_a = error.message) == null ? void 0 : _a.includes("Requested entity was not found.")) {
-        if (window.aistudio) window.aistudio.openSelectKey();
-        toast.dismiss(toastId);
-      } else {
-        toast.error("Avatar synthesis failed. Ensure vault authorization is active.", { id: toastId });
-      }
-    } finally {
+      toast.error("Avatar synthesis failed.", { id: toastId });
       setIsGenerating(false);
     }
   };
-  return /* @__PURE__ */ jsxs(
-    motion.div,
-    {
-      initial: { opacity: 0, y: 20 },
-      animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -20 },
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-      className: "p-4 sm:p-8 space-y-16 pb-32 max-w-7xl mx-auto",
-      children: [
-        /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
-          SubPageHeader,
-          {
-            title: "AI Avatar Studio",
-            parentTitle: "Marketing Hub",
-            onBack: () => navigate("/marketing"),
-            description: "Synthetic brand persona and character synthesis"
-          }
-        ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Persona Definition", className: "luxury-card border-white/10 rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-10 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1", children: "Visual Description" }),
-              /* @__PURE__ */ jsx(
-                "textarea",
-                {
-                  value: prompt,
-                  onChange: (e) => setPrompt(e.target.value),
-                  placeholder: "Describe your brand avatar (e.g., A sophisticated artisan in a modern workshop with soft golden lighting...)",
-                  className: "w-full bg-black/40 border border-white/10 rounded-2xl p-4 sm:p-8 text-base font-sans font-light text-gray-300 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 h-64 resize-none transition-all duration-500 shadow-sm outline-none leading-relaxed placeholder:text-gray-600"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-3 ml-1", children: "Reference Likeness (Optional)" }),
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
-                /* @__PURE__ */ jsxs("label", { className: "flex-1 cursor-pointer group", children: [
-                  /* @__PURE__ */ jsx("input", { type: "file", accept: "image/*", onChange: handleFileUpload, className: "hidden" }),
-                  /* @__PURE__ */ jsxs("div", { className: "w-full h-16 border-2 border-dashed border-white/10 rounded-full flex items-center justify-center gap-3 text-gray-400 group-hover:border-[#6A2C91] group-hover:text-[#6A2C91] transition-all bg-black/20", children: [
-                    /* @__PURE__ */ jsx(Upload, { size: 18 }),
-                    /* @__PURE__ */ jsx("span", { className: "text-[11px] font-sans uppercase tracking-[0.2em]", children: referenceImage ? "Replace Reference Photo" : "Upload Reference Photo" })
-                  ] })
-                ] }),
-                referenceImage && /* @__PURE__ */ jsxs("div", { className: "w-16 h-16 rounded-full overflow-hidden border-2 border-[#6A2C91] relative", children: [
-                  /* @__PURE__ */ jsx("img", { src: referenceImage, alt: "Reference", className: "w-full h-full object-cover" }),
-                  /* @__PURE__ */ jsx("button", { onClick: () => setReferenceImage(null), className: "absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 flex items-center justify-center text-white transition-opacity", children: /* @__PURE__ */ jsx(X, { size: 16 }) })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/20 transition-all duration-500", children: isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "Synthesize Avatar" })
-          ] }) }),
-          /* @__PURE__ */ jsxs(Card, { title: "Avatar Preview", className: "luxury-card border-white/10 rounded-[2.5rem] p-4 sm:p-10 bg-black/20 backdrop-blur-xl flex flex-col", children: [
-            /* @__PURE__ */ jsx("div", { className: "flex-grow flex flex-col items-center justify-center", children: generatedImage ? /* @__PURE__ */ jsxs(
-              motion.div,
-              {
-                initial: { opacity: 0, scale: 0.95 },
-                animate: { opacity: 1, scale: 1 },
-                transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-                className: "space-y-10 w-full",
-                children: [
-                  /* @__PURE__ */ jsxs("div", { className: "aspect-square rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white/5 relative group", children: [
-                    /* @__PURE__ */ jsx("img", { src: generatedImage, alt: "Generated Avatar", className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110", referrerPolicy: "no-referrer" }),
-                    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center", children: /* @__PURE__ */ jsx("button", { className: "bg-white/10 backdrop-blur-md text-white p-4 rounded-full hover:bg-white/20 transition-all", children: /* @__PURE__ */ jsx(Download, { size: 24 }) }) })
-                  ] }),
-                  /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all duration-500", children: "Download High-Res Asset" })
-                ]
-              }
-            ) : /* @__PURE__ */ jsxs("div", { className: "text-center opacity-20 py-20", children: [
-              /* @__PURE__ */ jsx(User, { size: 120, strokeWidth: 0.5, className: "text-white mb-8 mx-auto" }),
-              /* @__PURE__ */ jsx("p", { className: "text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]", children: "Awaiting Neural Synthesis" })
-            ] }) }),
-            history.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mt-12 pt-12 border-t border-white/5", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] mb-6", children: "Previous Syntheses" }),
-              /* @__PURE__ */ jsx("div", { className: "flex gap-4", children: history.map((item) => /* @__PURE__ */ jsx(
-                "button",
-                {
-                  onClick: () => setGeneratedImage(item.url),
-                  className: "w-16 h-16 rounded-xl overflow-hidden border-2 border-white/10 shadow-sm hover:scale-110 transition-transform duration-500",
-                  children: /* @__PURE__ */ jsx("img", { src: item.url, className: "w-full h-full object-cover", referrerPolicy: "no-referrer" })
-                },
-                item.id
-              )) })
-            ] })
-          ] })
-        ] })
-      ]
-    }
-  );
-};
-const AdvancedContentGenerator = () => {
-  const navigate = useNavigate();
-  const { addMarketingPost } = useArtisanData();
-  const [topic, setTopic] = useState("");
-  const [campaignGoal, setCampaignGoal] = useState("Brand Awareness");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [campaign, setCampaign] = useState(null);
-  const handleGenerate = async () => {
-    if (!topic) return toast.error("Please enter a campaign topic.");
-    setIsGenerating(true);
-    setCampaign(null);
-    const toastId = toast.loading("Synthesizing multi-platform campaign...");
-    try {
-      const prompt = `Generate a comprehensive marketing campaign for an artisanal brand. Topic: ${topic}. Goal: ${campaignGoal}.
-            Provide the output in JSON format with three keys: 'blog' (a short blog post draft), 'social' (an Instagram caption), and 'email' (an email newsletter draft).`;
-      const result = await chatWithLola(prompt, null, "deep");
-      try {
-        const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          const parsed = JSON.parse(jsonMatch[0]);
-          setCampaign(parsed);
-          toast.success("Campaign synthesis complete.", { id: toastId });
-        } else {
-          setCampaign({
-            blog: "Blog draft generated based on: " + topic,
-            social: "Social caption generated based on: " + topic,
-            email: "Email draft generated based on: " + topic
-          });
-          toast.info("Campaign generated with partial formatting.", { id: toastId });
-        }
-      } catch (e) {
-        console.error("Failed to parse campaign JSON", e);
-        setCampaign({
-          blog: result.text.substring(0, 200) + "...",
-          social: "Check full output for details.",
-          email: "Check full output for details."
-        });
-        toast.warning("Campaign generated. Manual formatting required.", { id: toastId });
-      }
-    } catch (error) {
-      console.error("Campaign generation failed", error);
-      toast.error("Synthesis failed: Node offline.", { id: toastId });
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-  const handleSaveCampaign = () => {
-    if (!campaign) return;
-    const date = (/* @__PURE__ */ new Date()).toISOString();
-    if (campaign.blog) {
-      addMarketingPost({
-        platform: "Blog",
-        topic: `${topic} - Blog`,
-        content: campaign.blog,
-        scheduledDate: date,
-        status: "Draft",
-        type: "Text"
-      });
-    }
-    if (campaign.social) {
-      addMarketingPost({
-        platform: "Instagram",
-        topic: `${topic} - Social`,
-        content: campaign.social,
-        scheduledDate: date,
-        status: "Draft",
-        type: "Text"
-      });
-    }
-    if (campaign.email) {
-      addMarketingPost({
-        platform: "Email",
-        topic: `${topic} - Newsletter`,
-        content: campaign.email,
-        scheduledDate: date,
-        status: "Draft",
-        type: "Text"
-      });
-    }
-    toast.success("Campaign assets saved to Drafts.");
+  const quickInsert = (destination) => {
+    if (!generatedImage) return;
+    addMarketingPost({
+      platform: destination === "Blog" ? "Blog" : "Email",
+      topic: `Avatar Asset: ${selectedPose}`,
+      content: `[Avatar Image Inserted: ${selectedPose}]`,
+      scheduledDate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+      status: "Draft",
+      type: "Image",
+      mediaUrl: generatedImage
+    });
+    toast.success(`Avatar queued for ${destination} templates.`);
     navigate("/marketing/calendar");
   };
   return /* @__PURE__ */ jsxs(
@@ -3199,63 +3470,331 @@ const AdvancedContentGenerator = () => {
       initial: { opacity: 0, y: 20 },
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-      className: "p-6 space-y-12 pb-20 max-w-7xl mx-auto",
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+      className: "p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto",
       children: [
         /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
           SubPageHeader,
           {
-            title: "Advanced Synthesis",
+            title: "AI Avatar Studio",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "Deep cognitive multi-platform campaign generation."
+            description: "Lola Persona Synthesis and Pose Configurator"
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-10", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Campaign Parameters", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8 mt-4", children: [
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 space-y-6", children: /* @__PURE__ */ jsx(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Core Topic / Product" }),
-              /* @__PURE__ */ jsx(Input, { value: topic, onChange: (e) => setTopic(e.target.value), placeholder: "e.g., Summer Solstice Collection Launch", className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm" })
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(User, { size: 14, className: "mr-2 text-magenta-500" }),
+                " Persona Appearance"
+              ] }),
+              /* @__PURE__ */ jsx(
+                "textarea",
+                {
+                  value: prompt,
+                  onChange: (e) => setPrompt(e.target.value),
+                  placeholder: "Describe your brand avatar...",
+                  className: "w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-sans font-light focus:bg-white/10 focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]/30 h-28 resize-none transition-all outline-none text-white"
+                }
+              )
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Campaign Goal" }),
-              /* @__PURE__ */ jsxs(Select, { value: campaignGoal, onChange: (e) => setCampaignGoal(e.target.value), className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm", children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Image, { size: 14, className: "mr-2 text-emerald-500" }),
+                " Source Likeness (Optional)"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex-1 cursor-pointer group", children: [
+                  /* @__PURE__ */ jsx("input", { type: "file", accept: "image/*", onChange: handleFileUpload, className: "hidden" }),
+                  /* @__PURE__ */ jsxs("div", { className: "w-full h-16 border-2 border-dashed border-white/10 rounded-xl flex items-center justify-center gap-2 text-gray-400 group-hover:border-magenta-500/50 group-hover:bg-magenta-500/10 transition-all bg-white/5", children: [
+                    /* @__PURE__ */ jsx(Upload, { size: 16 }),
+                    /* @__PURE__ */ jsx("span", { className: "text-[10px] font-sans uppercase tracking-widest", children: referenceImage ? "Change Reference" : "Upload Face Reference" })
+                  ] })
+                ] }),
+                referenceImage && /* @__PURE__ */ jsxs("div", { className: "w-16 h-16 rounded-xl overflow-hidden border border-white/20 relative", children: [
+                  /* @__PURE__ */ jsx("img", { src: referenceImage, alt: "Reference", className: "w-full h-full object-cover" }),
+                  /* @__PURE__ */ jsx("button", { onClick: () => setReferenceImage(null), className: "absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 flex items-center justify-center text-white transition-opacity", children: /* @__PURE__ */ jsx(X, { size: 16 }) })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Sparkles, { size: 14, className: "mr-2 text-[#C5A059]" }),
+                " Avatar Pose / Emotion"
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: poses.map((pose) => /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: () => setSelectedPose(pose.id),
+                  className: `p-3 rounded-xl border text-left transition-all ${selectedPose === pose.id ? "bg-[#6A2C91]/20 border-[#6A2C91]/50" : "bg-white/5 border-white/10 hover:bg-white/10"}`,
+                  children: [
+                    /* @__PURE__ */ jsx("div", { className: "text-white font-serif text-sm mb-1", children: pose.id }),
+                    /* @__PURE__ */ jsx("div", { className: "text-[10px] text-gray-400 leading-tight", children: pose.desc })
+                  ]
+                },
+                pose.id
+              )) })
+            ] }),
+            /* @__PURE__ */ jsxs(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white h-14 rounded-2xl shadow-lg border-none", children: [
+              isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }) : /* @__PURE__ */ jsx(Sparkles, { className: "mr-2" }),
+              isGenerating ? "Synthesizing Persona..." : "Generate Avatar Frame"
+            ] })
+          ] }) }) }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 h-full", children: /* @__PURE__ */ jsx(Card, { className: "h-full border-white/10 rounded-[2.5rem] p-0 bg-black/20 backdrop-blur-xl flex flex-col overflow-hidden relative", children: generatedImage ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col h-full", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex-1 p-8 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/80 relative", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute top-6 left-6 flex flex-col gap-2", children: [
+                /* @__PURE__ */ jsxs(Badge, { color: "magenta", children: [
+                  "Pose: ",
+                  selectedPose
+                ] }),
+                /* @__PURE__ */ jsx(Badge, { color: "purple", children: "Model: Imagen 3.0 Pro" })
+              ] }),
+              /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.95 },
+                  animate: { opacity: 1, scale: 1 },
+                  className: "w-full max-w-sm aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white/10 group relative",
+                  children: [
+                    /* @__PURE__ */ jsx("img", { src: generatedImage, alt: "Generated Avatar", className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" }),
+                    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "bg-white/10 backdrop-blur-md text-white border-white/20", children: [
+                      /* @__PURE__ */ jsx(Download, { size: 16, className: "mr-2" }),
+                      " Download Source"
+                    ] }) })
+                  ]
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "p-6 bg-[#111] border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 font-sans uppercase tracking-widest", children: "Quick Insert:" }),
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-3 w-full sm:w-auto", children: [
+                /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: () => quickInsert("Blog"), className: "flex-1 sm:flex-none border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 h-12", children: [
+                  /* @__PURE__ */ jsx(Send, { size: 14, className: "mr-2" }),
+                  " To Blog Template"
+                ] }),
+                /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: () => quickInsert("Email"), className: "flex-1 sm:flex-none border-blue-400/30 text-blue-400 hover:bg-blue-400/10 h-12", children: [
+                  /* @__PURE__ */ jsx(Send, { size: 14, className: "mr-2" }),
+                  " To Email Template"
+                ] })
+              ] })
+            ] })
+          ] }) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center opacity-30 py-32", children: [
+            /* @__PURE__ */ jsx(User, { size: 80, strokeWidth: 0.5, className: "text-white mb-8" }),
+            /* @__PURE__ */ jsx("p", { className: "text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]", children: "Awaiting Neural Synthesis" })
+          ] }) }) })
+        ] })
+      ]
+    }
+  );
+};
+const AdvancedContentGenerator = () => {
+  const navigate = useNavigate();
+  const { addMarketingPost } = useArtisanData();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [topic, setTopic] = useState("");
+  const [campaignGoal, setCampaignGoal] = useState("Brand Awareness");
+  const [activeTab, setActiveTab] = useState("newsletter");
+  const [wordCount, setWordCount] = useState(500);
+  const [outputs, setOutputs] = useState({ newsletter: "", press: "", landing: "" });
+  const handleGenerate = async () => {
+    if (!topic) return toast.error("Please enter a campaign topic.");
+    setIsGenerating(true);
+    const toastId = toast.loading(`Synthesizing ${activeTab} content...`);
+    try {
+      let prompt = `Write a comprehensive marketing piece for an artisanal luxury brand. Topic: ${topic}. Goal: ${campaignGoal}. Target word count: ~${wordCount} words. `;
+      if (activeTab === "newsletter") {
+        prompt += "Format as an engaging email newsletter with a subject line, hook, body, and clear Call to Action.";
+      } else if (activeTab === "press") {
+        prompt += "Format as a formal Press Release (FOR IMMEDIATE RELEASE, Dateline, Headline, body paragraphs, and boilerplate).";
+      } else if (activeTab === "landing") {
+        prompt += "Format as high-converting Landing Page Copy (Hero headline, sub-headline, 3 key benefits/features, social proof section, and final CTA).";
+      }
+      const result = await chatWithLola(prompt, null, "deep");
+      setOutputs((prev) => ({
+        ...prev,
+        [activeTab]: result.text
+      }));
+      toast.success("Content synthesis complete.", { id: toastId });
+    } catch (error) {
+      console.error("Generation failed", error);
+      toast.error("Synthesis failed: Node offline.", { id: toastId });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+  const handleSave = () => {
+    if (!outputs[activeTab]) return;
+    addMarketingPost({
+      platform: activeTab === "newsletter" ? "Email" : "Blog",
+      topic: `${topic} - ${activeTab.toUpperCase()}`,
+      content: outputs[activeTab],
+      scheduledDate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+      status: "Draft",
+      type: "Text"
+    });
+    toast.success(`Saved ${activeTab} to Drafts.`);
+    navigate("/marketing/calendar");
+  };
+  const renderSlider = () => /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-[10px] font-sans font-medium uppercase tracking-widest text-gray-500", children: [
+      /* @__PURE__ */ jsx("span", { children: "Target Length" }),
+      /* @__PURE__ */ jsxs("span", { className: "text-[#C5A059] font-bold", children: [
+        wordCount,
+        " words"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx(
+      "input",
+      {
+        type: "range",
+        min: "100",
+        max: "2000",
+        step: "100",
+        value: wordCount,
+        onChange: (e) => setWordCount(parseInt(e.target.value)),
+        className: "w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#C5A059]"
+      }
+    )
+  ] });
+  return /* @__PURE__ */ jsxs(
+    motion.div,
+    {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -20 },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      className: "p-4 sm:p-8 space-y-12 pb-20 max-w-7xl mx-auto",
+      children: [
+        /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
+          SubPageHeader,
+          {
+            title: "Advanced Generator",
+            parentTitle: "Marketing Hub",
+            onBack: () => navigate("/marketing"),
+            description: "Long-form cognitive synthesis for email, press, and web."
+          }
+        ) }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-4 space-y-6", children: /* @__PURE__ */ jsx(Card, { className: "luxury-card border-white/10 rounded-3xl p-6 sm:p-8 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Sparkles, { size: 14, className: "mr-2 text-magenta-500" }),
+                " Core Topic / Campaign"
+              ] }),
+              /* @__PURE__ */ jsx(
+                "textarea",
+                {
+                  value: topic,
+                  onChange: (e) => setTopic(e.target.value),
+                  placeholder: "e.g., Summer Solstice Collection Launch",
+                  className: "w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-sans font-light focus:bg-white/10 focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]/30 h-28 resize-none transition-all outline-none text-white shadow-sm"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Globe, { size: 14, className: "mr-2 text-blue-400" }),
+                " Campaign Goal"
+              ] }),
+              /* @__PURE__ */ jsxs(Select, { value: campaignGoal, onChange: (e) => setCampaignGoal(e.target.value), className: "h-14 rounded-2xl bg-white/5 border-white/10 text-white font-sans text-sm shadow-sm", children: [
                 /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Brand Awareness" }),
                 /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Lead Generation" }),
                 /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Direct Sales" }),
                 /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Customer Retention" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-black/20 transition-all", children: isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "Synthesize Campaign" })
-          ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Generated Assets", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/20 backdrop-blur-xl", children: campaign ? /* @__PURE__ */ jsxs(
-            motion.div,
-            {
-              initial: { opacity: 0, y: 10 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.5 },
-              className: "space-y-8",
-              children: [
-                /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("h4", { className: "text-[11px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em] mb-3 ml-1", children: "Blog Post Draft" }),
-                    /* @__PURE__ */ jsx("div", { className: "p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap max-h-40 overflow-y-auto shadow-sm", children: campaign.blog })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("h4", { className: "text-[11px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em] mb-3 ml-1", children: "Instagram Caption" }),
-                    /* @__PURE__ */ jsx("div", { className: "p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap max-h-32 overflow-y-auto shadow-sm", children: campaign.social })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("h4", { className: "text-[11px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em] mb-3 ml-1", children: "Email Newsletter" }),
-                    /* @__PURE__ */ jsx("div", { className: "p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap max-h-40 overflow-y-auto shadow-sm", children: campaign.email })
+            /* @__PURE__ */ jsx("div", { className: "p-5 bg-white/5 border border-white/10 rounded-2xl", children: renderSlider() }),
+            /* @__PURE__ */ jsxs(Button, { onClick: handleGenerate, disabled: isGenerating, className: "w-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none transition-all", children: [
+              isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }) : /* @__PURE__ */ jsx(Zap, { size: 14, className: "mr-2" }),
+              isGenerating ? "Synthesizing..." : `Generate ${activeTab}`
+            ] })
+          ] }) }) }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-8 flex flex-col h-full min-h-[600px]", children: /* @__PURE__ */ jsxs(Card, { className: "flex-1 border-white/10 rounded-3xl p-0 bg-black/20 backdrop-blur-xl flex flex-col overflow-hidden shadow-2xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "h-16 bg-[#111] border-b border-white/10 flex items-center px-4 gap-2", children: [
+              /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: () => setActiveTab("newsletter"),
+                  className: `flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === "newsletter" ? "bg-white/10 text-white" : "text-gray-500 hover:text-white"}`,
+                  children: [
+                    /* @__PURE__ */ jsx(Mail, { size: 16 }),
+                    " Newsletter"
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: () => setActiveTab("press"),
+                  className: `flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === "press" ? "bg-white/10 text-white" : "text-gray-500 hover:text-white"}`,
+                  children: [
+                    /* @__PURE__ */ jsx(FileText, { size: 16 }),
+                    " Press Release"
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: () => setActiveTab("landing"),
+                  className: `flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === "landing" ? "bg-white/10 text-white" : "text-gray-500 hover:text-white"}`,
+                  children: [
+                    /* @__PURE__ */ jsx(Globe, { size: 16 }),
+                    " Landing Page"
+                  ]
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "flex-1 p-6 bg-black/40 overflow-y-auto", children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                initial: { opacity: 0, y: 10 },
+                animate: { opacity: 1, y: 0 },
+                exit: { opacity: 0, y: -10 },
+                transition: { duration: 0.3 },
+                className: "h-full",
+                children: outputs[activeTab] ? /* @__PURE__ */ jsx(
+                  "textarea",
+                  {
+                    value: outputs[activeTab],
+                    onChange: (e) => setOutputs({ ...outputs, [activeTab]: e.target.value }),
+                    className: "w-full h-full min-h-[400px] bg-transparent border-none text-gray-300 font-sans text-sm leading-relaxed resize-none focus:outline-none"
+                  }
+                ) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center py-20 opacity-30 text-center", children: [
+                  activeTab === "newsletter" && /* @__PURE__ */ jsx(Mail, { size: 64, className: "text-white mb-6" }),
+                  activeTab === "press" && /* @__PURE__ */ jsx(FileText, { size: 64, className: "text-white mb-6" }),
+                  activeTab === "landing" && /* @__PURE__ */ jsx(Globe, { size: 64, className: "text-white mb-6" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-[11px] font-sans font-medium text-white uppercase tracking-[0.2em]", children: [
+                    "Awaiting ",
+                    activeTab,
+                    " parameters"
                   ] })
-                ] }),
-                /* @__PURE__ */ jsx(Button, { onClick: handleSaveCampaign, className: "w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#6A2C91]/20 transition-all mt-6", children: "Save All to Drafts" })
-              ]
-            }
-          ) : /* @__PURE__ */ jsxs("div", { className: "h-full flex flex-col items-center justify-center py-32 opacity-30 text-center", children: [
-            /* @__PURE__ */ jsx(Zap, { size: 64, strokeWidth: 1, className: "text-white mb-6" }),
-            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em]", children: "Awaiting Parameters" })
+                ] })
+              },
+              activeTab
+            ) }) }),
+            /* @__PURE__ */ jsxs("div", { className: "h-20 bg-[#111] border-t border-white/10 flex items-center justify-between px-6 shrink-0", children: [
+              /* @__PURE__ */ jsxs(Badge, { color: "gray", children: [
+                "Est. Length: ",
+                outputs[activeTab] ? outputs[activeTab].split(" ").length : 0,
+                " words"
+              ] }),
+              /* @__PURE__ */ jsxs(
+                Button,
+                {
+                  onClick: handleSave,
+                  disabled: !outputs[activeTab],
+                  className: "bg-[#6A2C91] hover:bg-[#552374] text-white h-12 px-8 rounded-xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none",
+                  children: [
+                    /* @__PURE__ */ jsx(CheckCircle, { size: 14, className: "mr-2" }),
+                    " Save ",
+                    activeTab,
+                    " to Drafts"
+                  ]
+                }
+              )
+            ] })
           ] }) })
         ] })
       ]
@@ -3266,6 +3805,8 @@ const ContentApprovals = () => {
   const navigate = useNavigate();
   const { marketingPosts, updateMarketingPost } = useArtisanData();
   const pendingPosts = marketingPosts.filter((p) => p.status === "Draft" || p.status === "Pending Approval");
+  const [clientViewMode, setClientViewMode] = useState(false);
+  const [generatingLink, setGeneratingLink] = useState(false);
   const handleApprove = (id) => {
     updateMarketingPost(id, { status: "Scheduled" });
     toast.success("Content approved and scheduled.");
@@ -3274,6 +3815,14 @@ const ContentApprovals = () => {
     updateMarketingPost(id, { status: "Draft" });
     toast.info("Content returned to drafts.");
   };
+  const handleGenerateShareLink = () => {
+    setGeneratingLink(true);
+    setTimeout(() => {
+      setGeneratingLink(false);
+      navigator.clipboard.writeText("https://artisanflow.lrcholisticmarketing.online/client-review/abc-123");
+      toast.success("Client review link copied to clipboard!");
+    }, 1e3);
+  };
   return /* @__PURE__ */ jsxs(
     motion.div,
     {
@@ -3281,45 +3830,111 @@ const ContentApprovals = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-      className: "p-6 space-y-12 pb-20 max-w-7xl mx-auto",
+      className: `p-4 sm:p-8 space-y-12 pb-20 ${clientViewMode ? "max-w-4xl" : "max-w-7xl"} mx-auto transition-all duration-700`,
       children: [
-        /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
-          SubPageHeader,
-          {
-            title: "Content Approvals",
-            parentTitle: "Marketing Hub",
-            onBack: () => navigate("/marketing"),
-            description: "Governance node for marketing deployment."
-          }
-        ) }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:p-8", children: pendingPosts.length === 0 ? /* @__PURE__ */ jsxs(Card, { className: "luxury-card border-white/10 rounded-3xl bg-black/20 backdrop-blur-xl text-center py-32", children: [
-          /* @__PURE__ */ jsx(CheckCircle, { size: 64, strokeWidth: 1, className: "mx-auto text-white/20 mb-6" }),
-          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-serif text-white tracking-tight mb-2", children: "All Clear" }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-sans font-light text-sm", children: "No content pending approval." })
+        /* @__PURE__ */ jsxs("div", { className: "w-full flex items-center justify-between", children: [
+          !clientViewMode ? /* @__PURE__ */ jsx(
+            SubPageHeader,
+            {
+              title: "Content Approvals",
+              parentTitle: "Marketing Hub",
+              onBack: () => navigate("/marketing"),
+              description: "Internal governance node for marketing deployment."
+            }
+          ) : /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Badge, { color: "purple", className: "mb-2", children: "Client Presentation Mode" }),
+            /* @__PURE__ */ jsx("h1", { className: "text-3xl font-serif text-white tracking-tight", children: "Review Your Content" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 font-sans text-sm", children: "Please review the proposed assets below for approval." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+            !clientViewMode && /* @__PURE__ */ jsxs(Button, { onClick: handleGenerateShareLink, disabled: generatingLink, variant: "outline", className: "h-12 bg-white/5 border-white/10 text-white", children: [
+              /* @__PURE__ */ jsx(Link, { size: 16, className: "mr-2" }),
+              generatingLink ? "Generating..." : "Share Link"
+            ] }),
+            /* @__PURE__ */ jsxs(
+              Button,
+              {
+                onClick: () => setClientViewMode(!clientViewMode),
+                variant: "outline",
+                className: `h-12 border-white/10 ${clientViewMode ? "bg-[#C5A059] text-white border-none" : "bg-white/5 text-gray-300"}`,
+                children: [
+                  clientViewMode ? /* @__PURE__ */ jsx(LayoutDashboard, { size: 16, className: "mr-2" }) : /* @__PURE__ */ jsx(Eye, { size: 16, className: "mr-2" }),
+                  clientViewMode ? "Exit Client View" : "Client View"
+                ]
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-8", children: pendingPosts.length === 0 ? /* @__PURE__ */ jsxs(Card, { className: "border-white/10 rounded-[2.5rem] bg-black/20 backdrop-blur-xl text-center py-32 shadow-2xl", children: [
+          /* @__PURE__ */ jsx(CheckCircle, { size: 64, strokeWidth: 1, className: "mx-auto text-emerald-500/50 mb-6" }),
+          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-serif text-white tracking-tight mb-2", children: "Queue Empty" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-sans font-light text-sm", children: "No content currently pending approval." })
         ] }) : pendingPosts.map((post, index) => /* @__PURE__ */ jsx(
           motion.div,
           {
             initial: { opacity: 0, y: 10 },
             animate: { opacity: 1, y: 0 },
             transition: { delay: index * 0.1, duration: 0.5 },
-            children: /* @__PURE__ */ jsx(Card, { className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row gap-4 sm:p-10 items-start", children: [
-              post.mediaUrl && /* @__PURE__ */ jsx("div", { className: "w-full md:w-64 h-64 rounded-2xl overflow-hidden border border-white/10 shrink-0 shadow-sm", children: /* @__PURE__ */ jsx("img", { src: post.mediaUrl, alt: post.topic, className: "w-full h-full object-cover hover:scale-105 transition-transform duration-700" }) }),
-              /* @__PURE__ */ jsxs("div", { className: "flex-1 space-y-6", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
-                    /* @__PURE__ */ jsx(Badge, { color: "purple", className: "text-[#6A2C91] border-[#6A2C91]/20 bg-[#6A2C91]/10 px-3 py-1 text-[10px] font-sans font-medium uppercase tracking-[0.2em]", children: post.platform }),
-                    /* @__PURE__ */ jsx(Badge, { color: "gold", className: "bg-[#C5A059]/10 text-[#C5A059] border-[#C5A059]/20 px-3 py-1 text-[10px] font-sans font-medium uppercase tracking-[0.2em]", children: post.status })
-                  ] }),
-                  /* @__PURE__ */ jsx("span", { className: "text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em]", children: new Date(post.scheduledDate).toLocaleDateString() })
+            children: /* @__PURE__ */ jsxs(Card, { className: `border-white/10 rounded-[2.5rem] p-0 bg-[#0A0A0A] backdrop-blur-xl overflow-hidden shadow-2xl transition-all ${clientViewMode ? "border-none ring-1 ring-white/5" : ""}`, children: [
+              clientViewMode && /* @__PURE__ */ jsxs("div", { className: "h-12 bg-[#1A1A1A] border-b border-white/5 flex items-center px-6 gap-2", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-rose-500/80" }),
+                /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-amber-500/80" }),
+                /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-emerald-500/80" }),
+                /* @__PURE__ */ jsxs("span", { className: "ml-4 text-xs font-sans text-gray-500", children: [
+                  post.platform,
+                  " Preview"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: `flex flex-col md:flex-row gap-8 ${clientViewMode ? "p-10" : "p-8 sm:p-10"}`, children: [
+                post.mediaUrl && /* @__PURE__ */ jsxs("div", { className: "w-full md:w-80 h-80 rounded-[2rem] overflow-hidden border border-white/5 shrink-0 relative group", children: [
+                  /* @__PURE__ */ jsx("img", { src: post.mediaUrl, alt: post.topic, className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" }),
+                  !clientViewMode && /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "bg-white/10 backdrop-blur-md text-white border-white/20", children: [
+                    /* @__PURE__ */ jsx(Download, { size: 16, className: "mr-2" }),
+                    " Asset"
+                  ] }) })
                 ] }),
-                /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white", children: post.topic }),
-                /* @__PURE__ */ jsx("div", { className: "p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap shadow-sm", children: post.content }),
-                /* @__PURE__ */ jsxs("div", { className: "flex gap-4 pt-6", children: [
-                  /* @__PURE__ */ jsx(Button, { onClick: () => handleApprove(post.id), className: "bg-[#C5A059] hover:bg-[#b08e4d] text-white h-12 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] px-8 shadow-xl shadow-black/20 transition-all", children: "Approve & Schedule" }),
-                  /* @__PURE__ */ jsx(Button, { onClick: () => handleReject(post.id), variant: "outline", className: "text-rose-500 border-rose-500/20 hover:bg-rose-500/10 h-12 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] px-8 transition-all", children: "Reject to Draft" })
+                /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col justify-between", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+                    !clientViewMode && /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between border-b border-white/10 pb-4", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                        /* @__PURE__ */ jsx(Badge, { color: "purple", children: post.platform }),
+                        /* @__PURE__ */ jsx(Badge, { color: "gold", children: post.status })
+                      ] }),
+                      /* @__PURE__ */ jsx("span", { className: "text-[10px] font-sans text-gray-500 uppercase tracking-widest", children: new Date(post.scheduledDate).toLocaleDateString() })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("h3", { className: "text-2xl font-serif text-white mb-4", children: post.topic }),
+                      /* @__PURE__ */ jsx("div", { className: `p-6 rounded-2xl text-sm font-sans font-light leading-relaxed whitespace-pre-wrap ${clientViewMode ? "bg-transparent text-gray-300 p-0" : "bg-white/5 border border-white/10 text-gray-300 shadow-sm"}`, children: post.content })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: `flex gap-4 pt-8 mt-8 ${!clientViewMode ? "border-t border-white/10" : ""}`, children: [
+                    /* @__PURE__ */ jsxs(
+                      Button,
+                      {
+                        onClick: () => handleApprove(post.id),
+                        className: `flex-1 h-14 rounded-2xl font-sans font-medium text-xs uppercase tracking-widest transition-all ${clientViewMode ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-[#6A2C91] hover:bg-[#552374] text-white"}`,
+                        children: [
+                          /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "mr-2" }),
+                          " Approve"
+                        ]
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs(
+                      Button,
+                      {
+                        onClick: () => handleReject(post.id),
+                        variant: "outline",
+                        className: `flex-1 h-14 rounded-2xl font-sans font-medium text-xs uppercase tracking-widest transition-all ${clientViewMode ? "bg-rose-500/10 text-rose-500 border-rose-500/20 hover:bg-rose-500/20" : "text-gray-400 border-white/10 hover:bg-white/5"}`,
+                        children: [
+                          /* @__PURE__ */ jsx(X, { size: 16, className: "mr-2" }),
+                          " Request Revisions"
+                        ]
+                      }
+                    )
+                  ] })
                 ] })
               ] })
-            ] }) })
+            ] })
           },
           post.id
         )) })
@@ -3328,42 +3943,54 @@ const ContentApprovals = () => {
   );
 };
 const BrandVoiceProfile = () => {
+  var _a;
   const navigate = useNavigate();
-  const [logoPreview, setLogoPreview] = useState(null);
-  const [primaryFont, setPrimaryFont] = useState("Inter (Sans-serif)");
-  const [secondaryFont, setSecondaryFont] = useState("Playfair Display (Serif)");
-  const [primaryColor, setPrimaryColor] = useState("#000000");
-  const [secondaryColor, setSecondaryColor] = useState("#C5A059");
-  const [brandValues, setBrandValues] = useState("Excellence, Sustainability, Artisanship");
   const [tagline, setTagline] = useState("Crafting the extraordinary.");
   const [adjectives, setAdjectives] = useState("Luxurious, Artisanal, Precise, Bold");
   const [restrictedWords, setRestrictedWords] = useState("Cheap, Discount, Mass-produced");
-  const [targetAudience, setTargetAudience] = useState("High-end wellness consumers and boutique retailers.");
-  const [tone, setTone] = useState("Authoritative & Elegant");
+  const [toneFormal, setToneFormal] = useState(70);
+  const [toneSalesy, setToneSalesy] = useState(30);
+  const [toneComplex, setToneComplex] = useState(60);
+  const [activePersona, setActivePersona] = useState("0");
+  const personas = [
+    { id: "0", name: "High-End Retailer", description: "Boutique owners looking for premium shelf products. Values margins and exclusivity." },
+    { id: "1", name: "Wellness Enthusiast", description: "Individual consumers focused on organic, sustainable, and luxurious self-care rituals." },
+    { id: "2", name: "Corporate Gifter", description: "HR managers seeking high-quality, memorable gifts for VIP clients and employees." }
+  ];
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const handleSave = () => {
     setIsSaving(true);
     setTimeout(() => {
       setIsSaving(false);
-      toast.success("Business DNA & Voice Profile updated successfully.");
+      toast.success("Voice Matrix calibrated successfully.");
     }, 1e3);
   };
   const handleGenerateBrandBook = () => {
     setIsGenerating(true);
-    const toastId = toast.loading("Synthesizing Brand Book & Asset Site...");
+    const toastId = toast.loading("Synthesizing Voice Matrix Documentation...");
     setTimeout(() => {
       setIsGenerating(false);
-      toast.success("Brand Book generated and added to Vault.", { id: toastId });
+      toast.success("Matrix Book generated and added to Vault.", { id: toastId });
     }, 2e3);
   };
-  const handleLogoUpload = (files) => {
-    if (files[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => setLogoPreview(reader.result);
-      reader.readAsDataURL(files[0]);
-    }
-  };
+  const renderSlider = (val, setVal, leftLabel, rightLabel) => /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-[10px] font-sans font-medium uppercase tracking-widest text-gray-500", children: [
+      /* @__PURE__ */ jsx("span", { className: val < 50 ? "text-[#C5A059]" : "", children: leftLabel }),
+      /* @__PURE__ */ jsx("span", { className: val > 50 ? "text-[#C5A059]" : "", children: rightLabel })
+    ] }),
+    /* @__PURE__ */ jsx(
+      "input",
+      {
+        type: "range",
+        min: "0",
+        max: "100",
+        value: val,
+        onChange: (e) => setVal(parseInt(e.target.value)),
+        className: "w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#C5A059]"
+      }
+    )
+  ] });
   return /* @__PURE__ */ jsxs(
     motion.div,
     {
@@ -3373,42 +4000,33 @@ const BrandVoiceProfile = () => {
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
       className: "p-4 sm:p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20",
       children: [
-        /* @__PURE__ */ jsx(
-          ContextualTutorialModal,
-          {
-            hubId: "brand_voice",
-            title: "Brand Voice Profile",
-            description: "Define and enforce your brands unique tone and style.",
-            steps: ["Upload reference materials to train the AI.", "Select core brand adjectives.", "Establish restricted vocabulary to avoid off-brand messaging."]
-          }
-        ),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 sm:p-8", children: [
           /* @__PURE__ */ jsx(
             SubPageHeader,
             {
-              title: "Business DNA & Brand Voice",
+              title: "Brand Voice Profile",
               parentTitle: "Marketing Hub",
               onBack: () => navigate("/marketing"),
-              description: "Core identity matrix: visual, linguistic, and strategic brand parameters."
+              description: "Lola Voice Matrix calibration and target persona management."
             }
           ),
           /* @__PURE__ */ jsx(
             VaultBanner,
             {
-              title: "Business DNA",
-              subtitle: "Core identity matrix: Define the visual and linguistic parameters that represent your brand's essence.",
-              badge: "DNA Protocol Active",
+              title: "Lola Voice Matrix",
+              subtitle: "Calibrate the linguistic parameters that define how Lola speaks on behalf of your brand.",
+              badge: "Matrix Active",
               children: /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
                 /* @__PURE__ */ jsxs(
                   Button,
                   {
                     variant: "primary",
-                    className: "bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-8 rounded-full shadow-2xl shadow-black/20 transition-all",
+                    className: "bg-black/40 hover:bg-black/60 border border-white/10 text-white font-sans font-medium text-[11px] tracking-[0.2em] h-14 px-8 rounded-full shadow-2xl transition-all",
                     onClick: handleGenerateBrandBook,
                     disabled: isGenerating,
                     children: [
                       isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-3", size: 16 }) : /* @__PURE__ */ jsx(FileText, { size: 16, className: "mr-3" }),
-                      "GENERATE BRAND BOOK"
+                      "EXPORT MATRIX"
                     ]
                   }
                 ),
@@ -3416,12 +4034,12 @@ const BrandVoiceProfile = () => {
                   Button,
                   {
                     variant: "primary",
-                    className: "bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all",
+                    className: "bg-gradient-to-r from-[#C5A059] to-[#b08e4d] border-none text-white font-sans font-medium text-[11px] tracking-[0.2em] h-14 px-10 rounded-full shadow-2xl transition-all",
                     onClick: handleSave,
                     disabled: isSaving,
                     children: [
                       isSaving ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-3", size: 16 }) : /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "mr-3" }),
-                      "COMMIT DNA PROTOCOL"
+                      "COMMIT CALIBRATION"
                     ]
                   }
                 )
@@ -3429,111 +4047,105 @@ const BrandVoiceProfile = () => {
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-10", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Visual DNA (Assets & Styling)", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Master Logo" }),
-              /* @__PURE__ */ jsx(FileUploader, { onUpload: handleLogoUpload, acceptedFormats: ".svg, .png, .jpg", label: "Upload Primary Logo" }),
-              logoPreview && /* @__PURE__ */ jsx("div", { className: "mt-4 p-4 bg-white/5 rounded-2xl border border-white/10 flex justify-center", children: /* @__PURE__ */ jsx("img", { src: logoPreview, alt: "Brand Logo", className: "h-16 object-contain" }) })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6 sm:p-8", children: [
+          /* @__PURE__ */ jsx(Card, { title: "Lola Voice Matrix Calibration", className: "luxury-card border-white/10 rounded-3xl p-6 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-10 mt-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "p-6 bg-white/5 border border-white/10 rounded-2xl space-y-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 border-b border-white/10 pb-4", children: [
+                /* @__PURE__ */ jsx(Sliders, { className: "text-[#C5A059]", size: 20 }),
+                /* @__PURE__ */ jsx("h3", { className: "text-white font-serif tracking-wide", children: "Tone Adjustments" })
+              ] }),
+              renderSlider(toneFormal, setToneFormal, "Playful & Casual", "Formal & Authoritative"),
+              renderSlider(toneSalesy, setToneSalesy, "Educational & Value-Driven", "Sales & Conversion-Oriented"),
+              renderSlider(toneComplex, setToneComplex, "Simple & Accessible", "Technical & Sophisticated")
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Primary Font" }),
-                /* @__PURE__ */ jsx(Input, { value: primaryFont, onChange: (e) => setPrimaryFont(e.target.value), className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm" })
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1", children: "Brand Adjectives (Comma separated)" }),
+                /* @__PURE__ */ jsx(Input, { value: adjectives, onChange: (e) => setAdjectives(e.target.value), placeholder: "e.g., Luxurious, Artisanal...", className: "h-14 rounded-2xl bg-white/5 border-white/10 text-white" })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Secondary Font" }),
-                /* @__PURE__ */ jsx(Input, { value: secondaryFont, onChange: (e) => setSecondaryFont(e.target.value), className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm" })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Primary Color (Hex)" }),
-                /* @__PURE__ */ jsxs("div", { className: "flex gap-3 items-center", children: [
-                  /* @__PURE__ */ jsx("input", { type: "color", value: primaryColor, onChange: (e) => setPrimaryColor(e.target.value), className: "w-14 h-14 rounded-2xl bg-transparent border-0 cursor-pointer" }),
-                  /* @__PURE__ */ jsx(Input, { value: primaryColor, onChange: (e) => setPrimaryColor(e.target.value), className: "flex-1 h-14 rounded-2xl bg-black/40 border-white/10 text-white" })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Accent Color (Hex)" }),
-                /* @__PURE__ */ jsxs("div", { className: "flex gap-3 items-center", children: [
-                  /* @__PURE__ */ jsx("input", { type: "color", value: secondaryColor, onChange: (e) => setSecondaryColor(e.target.value), className: "w-14 h-14 rounded-2xl bg-transparent border-0 cursor-pointer" }),
-                  /* @__PURE__ */ jsx(Input, { value: secondaryColor, onChange: (e) => setSecondaryColor(e.target.value), className: "flex-1 h-14 rounded-2xl bg-black/40 border-white/10 text-white" })
-                ] })
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1", children: "Restricted Vocabulary" }),
+                /* @__PURE__ */ jsx(Input, { value: restrictedWords, onChange: (e) => setRestrictedWords(e.target.value), placeholder: "Words AI should never use", className: "h-14 rounded-2xl bg-white/5 border-white/10 text-white" })
               ] })
             ] })
           ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Strategic DNA & Tone", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Brand Tagline" }),
-                /* @__PURE__ */ jsx(Input, { value: tagline, onChange: (e) => setTagline(e.target.value), placeholder: "e.g., Crafting the extraordinary.", className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 text-sm text-white shadow-sm" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Core Values" }),
-                /* @__PURE__ */ jsx(Input, { value: brandValues, onChange: (e) => setBrandValues(e.target.value), placeholder: "e.g., Excellence, Sustainability...", className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 text-sm text-white shadow-sm" })
-              ] })
+          /* @__PURE__ */ jsxs(Card, { title: "Saved Target Personas", className: "luxury-card border-white/10 rounded-3xl p-6 bg-black/40 backdrop-blur-xl flex flex-col h-full", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
+              /* @__PURE__ */ jsx(Users, { className: "text-[#6A2C91]", size: 20 }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-sans text-sm font-medium", children: "Audience Segmentation" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Brand Adjectives (Comma separated)" }),
-              /* @__PURE__ */ jsx(Input, { value: adjectives, onChange: (e) => setAdjectives(e.target.value), placeholder: "e.g., Luxurious, Artisanal...", className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 text-sm text-white shadow-sm" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Target Audience" }),
-              /* @__PURE__ */ jsx(
-                "textarea",
+            /* @__PURE__ */ jsxs("div", { className: "space-y-4 flex-1", children: [
+              personas.map((persona) => /* @__PURE__ */ jsxs(
+                "div",
                 {
-                  value: targetAudience,
-                  onChange: (e) => setTargetAudience(e.target.value),
-                  className: "w-full bg-black/40 border border-white/10 rounded-2xl p-5 text-sm font-sans font-light text-gray-300 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 h-24 resize-none transition-all shadow-sm outline-none"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Primary Tone" }),
-                /* @__PURE__ */ jsxs(Select, { value: tone, onChange: (e) => setTone(e.target.value), className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 text-sm text-white shadow-sm", children: [
-                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Authoritative & Elegant" }),
-                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Warm & Approachable" }),
-                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Technical & Precise" }),
-                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Bold & Disruptive" })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Restricted Vocabulary" }),
-                /* @__PURE__ */ jsx(Input, { value: restrictedWords, onChange: (e) => setRestrictedWords(e.target.value), placeholder: "Words AI should never use", className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 text-sm text-white shadow-sm" })
+                  onClick: () => setActivePersona(persona.id),
+                  className: `p-5 rounded-2xl border cursor-pointer transition-all ${activePersona === persona.id ? "bg-[#6A2C91]/20 border-[#6A2C91]/50" : "bg-white/5 border-white/10 hover:bg-white/10"}`,
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-2", children: [
+                      /* @__PURE__ */ jsx("h4", { className: "text-white font-serif tracking-tight", children: persona.name }),
+                      activePersona === persona.id && /* @__PURE__ */ jsx(Badge, { color: "purple", children: "Active" })
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-sm font-light text-gray-400", children: persona.description })
+                  ]
+                },
+                persona.id
+              )),
+              /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "w-full h-14 border-dashed border-white/20 text-gray-400 hover:text-white rounded-2xl mt-4", children: [
+                /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-2" }),
+                " Add New Persona"
               ] })
             ] })
-          ] }) }),
-          /* @__PURE__ */ jsx("div", { className: "lg:col-span-2", children: /* @__PURE__ */ jsx(Card, { title: "AI Persona Preview", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/20 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8 mt-4", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-500 font-sans font-light leading-relaxed", children: "Based on your current parameters, Lola will generate content that aligns with your DNA:" }),
-            /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-8 bg-black/40 border border-white/10 rounded-3xl shadow-sm italic text-gray-300 font-serif text-lg leading-relaxed", children: [
-              '"Discover the uncompromising precision of our latest artisanal collection. Crafted for those who demand excellence, each piece reflects our dedication to bold innovation and luxurious quality. ',
-              tagline,
-              '"'
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3", children: [
-              adjectives.split(",").map((adj) => adj.trim()).filter(Boolean).map((adj, i) => /* @__PURE__ */ jsx(Badge, { color: "purple", className: "text-[#6A2C91] border-[#6A2C91]/20 bg-[#6A2C91]/10 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.2em] rounded-full", children: adj }, i)),
-              brandValues.split(",").map((val) => val.trim()).filter(Boolean).map((val, i) => /* @__PURE__ */ jsx(Badge, { color: "gold", className: "text-[#C5A059] border-[#C5A059]/20 bg-[#C5A059]/10 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.2em] rounded-full", children: val }, `v-${i}`))
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-2", children: /* @__PURE__ */ jsxs(Card, { className: "border-white/10 rounded-3xl p-8 bg-gradient-to-br from-black/60 to-[#6A2C91]/10 backdrop-blur-xl relative overflow-hidden", children: [
+            /* @__PURE__ */ jsx(Wand2, { size: 120, className: "absolute -right-10 -bottom-10 text-[#6A2C91]/10 transform -rotate-12" }),
+            /* @__PURE__ */ jsxs("div", { className: "relative z-10 space-y-6 max-w-4xl", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-[#C5A059] font-serif text-xl flex items-center gap-3", children: [
+                /* @__PURE__ */ jsx(Sparkles, { size: 20 }),
+                " Output Calibration Preview"
+              ] }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400 font-sans font-light", children: [
+                "Based on your current Matrix settings and the ",
+                /* @__PURE__ */ jsxs("strong", { className: "text-white", children: [
+                  "[",
+                  (_a = personas.find((p) => p.id === activePersona)) == null ? void 0 : _a.name,
+                  "]"
+                ] }),
+                " persona, Lola will generate content with this linguistic signature:"
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "p-6 sm:p-8 bg-black/40 border-l-4 border-[#C5A059] rounded-r-3xl shadow-lg italic text-gray-200 font-serif text-lg leading-relaxed", children: toneFormal > 50 ? `"Discover the uncompromising precision of our latest artisanal collection. Crafted for those who demand excellence, each piece reflects our dedication to bold innovation."` : `"Ready to elevate your everyday? Our new collection brings serious artisanal vibes right to your door. You've never seen precision like this before!"` }),
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 pt-4", children: adjectives.split(",").map((adj) => adj.trim()).filter(Boolean).map((adj, i) => /* @__PURE__ */ jsx(Badge, { color: "gold", className: "text-[10px] tracking-widest", children: adj }, i)) })
             ] })
-          ] }) }) })
+          ] }) })
         ] })
       ]
     }
   );
 };
 const ReceptionistLogic = () => {
+  var _a, _b;
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState("Welcome to our artisanal boutique. How may I assist you today?");
-  const [fallback, setFallback] = useState("I apologize, but I need to connect you with a human artisan for that request.");
-  const [qualificationQuestions, setQualificationQuestions] = useState("What type of product are you looking for?\nDo you have a specific budget in mind?\nAre you interested in wholesale or retail?");
+  const [faqs, setFaqs] = useState([
+    { q: "What are your shipping times?", a: "Standard shipping takes 3-5 business days for domestic orders." },
+    { q: "Do you offer wholesale?", a: "Yes, we have a dedicated wholesale program. Let me route you to our B2B team." }
+  ]);
+  const [escalationTrigger, setEscalationTrigger] = useState("urgent, refund, complaint, manager");
+  const [escalationMethod, setEscalationMethod] = useState("Email");
+  const [escalationContact, setEscalationContact] = useState("support@herbalisticwellness.com");
   const [isSaving, setIsSaving] = useState(false);
   const handleSave = () => {
     setIsSaving(true);
     setTimeout(() => {
       setIsSaving(false);
-      toast.success("Receptionist logic updated successfully.");
+      toast.success("Receptionist logic & routing deployed successfully.");
     }, 1e3);
+  };
+  const addFaq = () => setFaqs([...faqs, { q: "", a: "" }]);
+  const removeFaq = (index) => setFaqs(faqs.filter((_, i) => i !== index));
+  const updateFaq = (index, key, value) => {
+    const newFaqs = [...faqs];
+    newFaqs[index][key] = value;
+    setFaqs(newFaqs);
   };
   return /* @__PURE__ */ jsxs(
     motion.div,
@@ -3542,7 +4154,7 @@ const ReceptionistLogic = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-      className: "p-6 space-y-12 pb-20 max-w-7xl mx-auto",
+      className: "p-4 sm:p-8 space-y-12 pb-20 max-w-7xl mx-auto",
       children: [
         /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(
           SubPageHeader,
@@ -3550,73 +4162,140 @@ const ReceptionistLogic = () => {
             title: "Receptionist Logic",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "Automated qualification protocols for leads."
+            description: "Lola AI custom FAQ builder & escalation routing."
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-10", children: [
-          /* @__PURE__ */ jsx(Card, { title: "Interaction Parameters", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8 mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Initial Greeting" }),
-              /* @__PURE__ */ jsx(Input, { value: greeting, onChange: (e) => setGreeting(e.target.value), className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Fallback Response (Human Handoff)" }),
-              /* @__PURE__ */ jsx(Input, { value: fallback, onChange: (e) => setFallback(e.target.value), className: "h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { className: "block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1", children: "Qualification Questions (One per line)" }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsxs("div", { className: "lg:col-span-7 space-y-6", children: [
+            /* @__PURE__ */ jsx(Card, { className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl space-y-6", children: /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Sparkles, { size: 14, className: "mr-2 text-magenta-500" }),
+                " Initial Greeting"
+              ] }),
               /* @__PURE__ */ jsx(
-                "textarea",
+                Input,
                 {
-                  value: qualificationQuestions,
-                  onChange: (e) => setQualificationQuestions(e.target.value),
-                  className: "w-full bg-black/40 border border-white/10 rounded-2xl p-5 text-sm font-sans font-light text-gray-300 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 h-40 resize-none transition-all shadow-sm outline-none"
+                  value: greeting,
+                  onChange: (e) => setGreeting(e.target.value),
+                  className: "h-14 rounded-2xl bg-white/5 border-white/10 focus:bg-white/10 focus:border-[#C5A059] text-white"
                 }
               )
+            ] }) }),
+            /* @__PURE__ */ jsx(Card, { title: "Custom FAQ Matrix", className: "p-8 bg-black/40 border-white/5 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6 mt-6", children: [
+              /* @__PURE__ */ jsx(AnimatePresence, { children: faqs.map((faq, index) => /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, height: 0 },
+                  animate: { opacity: 1, height: "auto" },
+                  exit: { opacity: 0, height: 0 },
+                  className: "p-4 bg-white/5 border border-white/10 rounded-2xl relative group",
+                  children: [
+                    /* @__PURE__ */ jsx("button", { onClick: () => removeFaq(index), className: "absolute top-4 right-4 text-gray-500 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity", children: /* @__PURE__ */ jsx(Trash2, { size: 16 }) }),
+                    /* @__PURE__ */ jsxs("div", { className: "space-y-4 pr-8", children: [
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("label", { className: "text-[10px] uppercase tracking-widest text-gray-500 mb-1 block", children: "Trigger Question" }),
+                        /* @__PURE__ */ jsx(Input, { value: faq.q, onChange: (e) => updateFaq(index, "q", e.target.value), className: "h-10 bg-black/40 border-white/10 text-sm", placeholder: "e.g., Where is my order?" })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("label", { className: "text-[10px] uppercase tracking-widest text-[#C5A059] mb-1 block", children: "Lola's Answer" }),
+                        /* @__PURE__ */ jsx(
+                          "textarea",
+                          {
+                            value: faq.a,
+                            onChange: (e) => updateFaq(index, "a", e.target.value),
+                            className: "w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-gray-300 resize-none h-20 outline-none focus:border-[#C5A059]",
+                            placeholder: "Automated response..."
+                          }
+                        )
+                      ] })
+                    ] })
+                  ]
+                },
+                index
+              )) }),
+              /* @__PURE__ */ jsxs(Button, { onClick: addFaq, variant: "outline", className: "w-full h-12 border-dashed border-white/20 text-gray-400 hover:text-white hover:border-white/50", children: [
+                /* @__PURE__ */ jsx(Plus$1, { size: 16, className: "mr-2" }),
+                " Add FAQ Pair"
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsx(Card, { title: "Escalation Routing", className: "p-8 bg-[#1A1115] border-rose-500/20 backdrop-blur-xl", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6 mt-6", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-rose-500/70 uppercase tracking-widest mb-3 ml-1", children: [
+                  /* @__PURE__ */ jsx(ShieldAlert, { size: 14, className: "mr-2" }),
+                  " Keyword Triggers (Comma Separated)"
+                ] }),
+                /* @__PURE__ */ jsx(
+                  Input,
+                  {
+                    value: escalationTrigger,
+                    onChange: (e) => setEscalationTrigger(e.target.value),
+                    className: "h-12 bg-black/40 border-rose-500/20 text-rose-200 focus:border-rose-500"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-[10px] uppercase tracking-widest text-gray-500 mb-2 block", children: "Routing Method" }),
+                  /* @__PURE__ */ jsxs(Select, { value: escalationMethod, onChange: (e) => setEscalationMethod(e.target.value), className: "h-12 bg-black/40 border-white/10", children: [
+                    /* @__PURE__ */ jsx("option", { value: "Email", className: "bg-black", children: "High Priority Email" }),
+                    /* @__PURE__ */ jsx("option", { value: "SMS", className: "bg-black", children: "SMS Alert to Manager" })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-[10px] uppercase tracking-widest text-gray-500 mb-2 block", children: "Destination Contact" }),
+                  /* @__PURE__ */ jsx(
+                    Input,
+                    {
+                      value: escalationContact,
+                      onChange: (e) => setEscalationContact(e.target.value),
+                      className: "h-12 bg-black/40 border-white/10",
+                      placeholder: escalationMethod === "Email" ? "admin@..." : "+1 (555)..."
+                    }
+                  )
+                ] })
+              ] })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 h-[800px] flex flex-col", children: /* @__PURE__ */ jsxs(Card, { title: "Live Logic Simulator", className: "flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex-1 overflow-y-auto p-6 space-y-6 bg-black/40", children: [
+              /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 }, className: "flex gap-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#6A2C91] flex items-center justify-center text-white shrink-0 shadow-lg", children: /* @__PURE__ */ jsx(Bot, { size: 18 }) }),
+                /* @__PURE__ */ jsx("div", { className: "bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none border border-white/5 text-sm text-white shadow-lg", children: greeting })
+              ] }),
+              /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: 10 }, animate: { opacity: 1, x: 0 }, transition: { delay: 0.5 }, className: "flex gap-4 flex-row-reverse", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-gray-400 shrink-0", children: /* @__PURE__ */ jsx(User, { size: 18 }) }),
+                /* @__PURE__ */ jsx("div", { className: "bg-emerald-600 text-white p-4 rounded-2xl rounded-tr-none text-sm shadow-lg", children: ((_a = faqs[0]) == null ? void 0 : _a.q) || "I have a question." })
+              ] }),
+              /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 }, transition: { delay: 1 }, className: "flex gap-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#6A2C91] flex items-center justify-center text-white shrink-0 shadow-lg", children: /* @__PURE__ */ jsx(Bot, { size: 18 }) }),
+                /* @__PURE__ */ jsx("div", { className: "bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none border border-white/5 text-sm text-white shadow-lg", children: ((_b = faqs[0]) == null ? void 0 : _b.a) || "I can help with that." })
+              ] }),
+              /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: 10 }, animate: { opacity: 1, x: 0 }, transition: { delay: 1.5 }, className: "flex gap-4 flex-row-reverse mt-8", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-gray-400 shrink-0", children: /* @__PURE__ */ jsx(User, { size: 18 }) }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-emerald-600 text-white p-4 rounded-2xl rounded-tr-none text-sm shadow-lg", children: [
+                  "This is ",
+                  escalationTrigger.split(",")[0] || "urgent",
+                  ", I need a manager!"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, transition: { delay: 2 }, className: "mx-12 my-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-rose-500/10 border border-rose-500/30 rounded-xl p-3 flex items-center justify-center gap-2 text-rose-400 text-xs font-mono uppercase tracking-widest", children: [
+                /* @__PURE__ */ jsx(ShieldAlert, { size: 14 }),
+                " Escalation Triggered"
+              ] }) }),
+              /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 }, transition: { delay: 2.5 }, className: "flex gap-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#6A2C91] flex items-center justify-center text-white shrink-0 shadow-lg", children: /* @__PURE__ */ jsx(Bot, { size: 18 }) }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none border border-white/5 text-sm text-white shadow-lg", children: [
+                  "I understand. I am routing your request to our management team via ",
+                  escalationMethod,
+                  " right away. They will reach out shortly."
+                ] })
+              ] })
             ] }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleSave, disabled: isSaving, className: "w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-black/20 transition-all", children: isSaving ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin" }) : "Deploy Logic" })
-          ] }) }),
-          /* @__PURE__ */ jsx(Card, { title: "Logic Flow Simulation", className: "luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/20 backdrop-blur-xl", children: /* @__PURE__ */ jsx("div", { className: "space-y-8 mt-4", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsxs(
-              motion.div,
-              {
-                initial: { opacity: 0, x: -10 },
-                animate: { opacity: 1, x: 0 },
-                transition: { duration: 0.5 },
-                className: "flex gap-4",
-                children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#6A2C91] flex items-center justify-center text-white shrink-0 shadow-sm", children: /* @__PURE__ */ jsx(Bot, { size: 18 }) }),
-                  /* @__PURE__ */ jsx("div", { className: "bg-black/40 p-5 rounded-2xl rounded-tl-none border border-white/10 text-sm font-sans font-light text-gray-300 shadow-sm leading-relaxed", children: greeting })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxs(
-              motion.div,
-              {
-                initial: { opacity: 0, x: 10 },
-                animate: { opacity: 1, x: 0 },
-                transition: { delay: 0.2, duration: 0.5 },
-                className: "flex gap-4 flex-row-reverse",
-                children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-400 shrink-0 shadow-sm", children: /* @__PURE__ */ jsx(User, { size: 18 }) }),
-                  /* @__PURE__ */ jsx("div", { className: "bg-[#C5A059] text-white p-5 rounded-2xl rounded-tr-none text-sm font-sans font-light shadow-sm leading-relaxed", children: "I'm looking for a custom order." })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxs(
-              motion.div,
-              {
-                initial: { opacity: 0, x: -10 },
-                animate: { opacity: 1, x: 0 },
-                transition: { delay: 0.4, duration: 0.5 },
-                className: "flex gap-4",
-                children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#6A2C91] flex items-center justify-center text-white shrink-0 shadow-sm", children: /* @__PURE__ */ jsx(Bot, { size: 18 }) }),
-                  /* @__PURE__ */ jsx("div", { className: "bg-black/40 p-5 rounded-2xl rounded-tl-none border border-white/10 text-sm font-sans font-light text-gray-300 shadow-sm leading-relaxed", children: qualificationQuestions.split("\n")[0] || "How can I help you?" })
-                ]
-              }
-            )
-          ] }) }) })
+            /* @__PURE__ */ jsx("div", { className: "p-6 bg-[#111] border-t border-white/10 shrink-0", children: /* @__PURE__ */ jsxs(Button, { onClick: handleSave, disabled: isSaving, className: "w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-14 rounded-2xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none", children: [
+              isSaving ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }) : /* @__PURE__ */ jsx(Sparkles, { className: "mr-2" }),
+              "Deploy Logic to Lola Node"
+            ] }) })
+          ] }) })
         ] })
       ]
     }
@@ -3624,55 +4303,45 @@ const ReceptionistLogic = () => {
 };
 const MarketingCreator = () => {
   const navigate = useNavigate();
-  const { addMarketingPost } = useArtisanData();
-  const { executeAction } = useFeatureGate("marketing_creator");
+  const { addMarketingPost, inventory } = useArtisanData();
   const [isGenerating, setIsGenerating] = useState(false);
   const [topic, setTopic] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [assetType, setAssetType] = useState("Product Photo");
   const [style, setStyle] = useState("Photorealistic");
-  const [generatedImage, setGeneratedImage] = useState(null);
   const [aspectRatio, setAspectRatio] = useState("1:1");
   const [imageSize, setImageSize] = useState("1K");
-  const handleGenerate = () => {
-    executeAction(async () => {
-      var _a;
-      if (!topic) {
-        toast.error("Please enter a topic.");
-        return;
-      }
-      if (window.aistudio) {
-        const hasKey = await window.aistudio.hasSelectedApiKey();
-        if (!hasKey) {
-          await window.aistudio.openSelectKey();
-        }
-      }
-      setIsGenerating(true);
-      setGeneratedImage(null);
-      const toastId = toast.loading("Synthesizing high-fidelity asset...");
-      try {
-        const prompt = `Generate a high-quality ${style} image for a ${assetType}. Subject: ${topic}. Luxurious lighting, artisanal depth.`;
-        const imageUrl = await generateLolaImage(prompt, { size: imageSize, aspectRatio });
-        setGeneratedImage(imageUrl);
-        toast.success("Asset synthesis complete.", { id: toastId });
-      } catch (error) {
-        console.error("Generation failed", error);
-        if ((_a = error.message) == null ? void 0 : _a.includes("Requested entity was not found.")) {
-          if (window.aistudio) window.aistudio.openSelectKey();
-          toast.dismiss(toastId);
-        } else {
-          toast.error("Synthesis failed: Node offline.", { id: toastId });
-        }
-      } finally {
-        setIsGenerating(false);
-      }
-    }, true);
+  const [generatedImage, setGeneratedImage] = useState(null);
+  const aiSuggestions = [
+    "Minimalist studio lighting on marble",
+    "Golden hour nature lifestyle shot",
+    "Dark moody aesthetic with neon accents",
+    "Soft pastel colors with floral props"
+  ];
+  const handleGenerate = async () => {
+    if (!topic && !selectedProduct) return toast.error("Please enter a topic or select a product.");
+    setIsGenerating(true);
+    setGeneratedImage(null);
+    const toastId = toast.loading("Synthesizing high-fidelity asset...");
+    try {
+      const productContext = selectedProduct ? ` featuring ${selectedProduct}` : "";
+      const prompt = `Generate a high-quality ${style} image for a ${assetType}${productContext}. Subject: ${topic}. Luxurious lighting, artisanal depth.`;
+      const imageUrl = await generateLolaImage(prompt, { size: imageSize, aspectRatio });
+      setGeneratedImage(imageUrl);
+      toast.success("Asset synthesis complete.", { id: toastId });
+    } catch (error) {
+      console.error("Generation failed", error);
+      toast.error("Synthesis failed: Node offline.", { id: toastId });
+    } finally {
+      setIsGenerating(false);
+    }
   };
   const handleSave = () => {
     if (!generatedImage) return;
     addMarketingPost({
       platform: "Instagram",
-      topic: topic || "Marketing Asset",
-      content: `New ${assetType}: ${topic}`,
+      topic: topic || selectedProduct || "Marketing Asset",
+      content: `New ${assetType}`,
       scheduledDate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
       status: "Draft",
       type: "Image",
@@ -3696,118 +4365,124 @@ const MarketingCreator = () => {
             title: "Marketing Creator",
             parentTitle: "Marketing Hub",
             onBack: () => navigate("/marketing"),
-            description: "Synthesize high-fidelity assets with Gemini 3 Pro Image"
+            description: "Synthesize high-fidelity visual assets with Nano Banana Pro."
           }
         ) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12", children: [
-          /* @__PURE__ */ jsx(
-            motion.div,
-            {
-              initial: { opacity: 0, x: -20 },
-              animate: { opacity: 1, x: 0 },
-              transition: { delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-              children: /* @__PURE__ */ jsxs(Card, { className: "luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10", children: [
-                /* @__PURE__ */ jsx("h3", { className: "text-xl font-serif text-white mb-8", children: "Asset Configuration" }),
-                /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 sm:p-8", children: [
-                    /* @__PURE__ */ jsxs("div", { children: [
-                      /* @__PURE__ */ jsx("label", { className: "block text-xs font-sans text-gray-500 uppercase tracking-wider mb-3 ml-1", children: "Manifest Type" }),
-                      /* @__PURE__ */ jsxs(Select, { value: assetType, onChange: (e) => setAssetType(e.target.value), className: "w-full h-14 bg-black/40 border-white/10 rounded-2xl text-white font-sans focus:ring-1 focus:ring-[#6A2C91]/30 transition-shadow", children: [
-                        /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Product Photo" }),
-                        /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Social Media Post" }),
-                        /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Email Header" })
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ jsxs("div", { children: [
-                      /* @__PURE__ */ jsx("label", { className: "block text-xs font-sans text-gray-500 uppercase tracking-wider mb-3 ml-1", children: "Resolution Node" }),
-                      /* @__PURE__ */ jsxs(Select, { value: imageSize, onChange: (e) => setImageSize(e.target.value), className: "w-full h-14 bg-black/40 border-white/10 rounded-2xl text-white font-sans focus:ring-1 focus:ring-[#6A2C91]/30 transition-shadow", children: [
-                        /* @__PURE__ */ jsx("option", { value: "1K", className: "bg-black", children: "Standard 1K" }),
-                        /* @__PURE__ */ jsx("option", { value: "2K", className: "bg-black", children: "High Definition 2K" }),
-                        /* @__PURE__ */ jsx("option", { value: "4K", className: "bg-black", children: "Cinema Quality 4K" })
-                      ] })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 sm:p-8", children: [
-                    /* @__PURE__ */ jsxs("div", { children: [
-                      /* @__PURE__ */ jsx("label", { className: "block text-xs font-sans text-gray-500 uppercase tracking-wider mb-3 ml-1", children: "Aspect Ratio" }),
-                      /* @__PURE__ */ jsxs(Select, { value: aspectRatio, onChange: (e) => setAspectRatio(e.target.value), className: "w-full h-14 bg-black/40 border-white/10 rounded-2xl text-white font-sans focus:ring-1 focus:ring-[#6A2C91]/30 transition-shadow", children: [
-                        /* @__PURE__ */ jsx("option", { value: "1:1", className: "bg-black", children: "Square (1:1)" }),
-                        /* @__PURE__ */ jsx("option", { value: "16:9", className: "bg-black", children: "Landscape (16:9)" }),
-                        /* @__PURE__ */ jsx("option", { value: "9:16", className: "bg-black", children: "Portrait (9:16)" }),
-                        /* @__PURE__ */ jsx("option", { value: "4:5", className: "bg-black", children: "Vertical (4:5)" })
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ jsxs("div", { children: [
-                      /* @__PURE__ */ jsx("label", { className: "block text-xs font-sans text-gray-500 uppercase tracking-wider mb-3 ml-1", children: "Aesthetic Style" }),
-                      /* @__PURE__ */ jsxs(Select, { value: style, onChange: (e) => setStyle(e.target.value), className: "w-full h-14 bg-black/40 border-white/10 rounded-2xl text-white font-sans focus:ring-1 focus:ring-[#6A2C91]/30 transition-shadow", children: [
-                        /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Photorealistic" }),
-                        /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Minimalist" }),
-                        /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Vibrant" })
-                      ] })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("label", { className: "block text-xs font-sans text-gray-500 uppercase tracking-wider mb-3 ml-1", children: "Asset Description" }),
-                    /* @__PURE__ */ jsx(
-                      "textarea",
-                      {
-                        placeholder: "Describe your image with high-sensory detail...",
-                        value: topic,
-                        onChange: (e) => setTopic(e.target.value),
-                        className: "w-full bg-black/40 border border-white/10 rounded-3xl p-6 text-gray-300 font-sans focus:bg-black/60 focus:ring-1 focus:ring-[#6A2C91]/30 outline-none h-40 resize-none transition-all shadow-sm placeholder:text-gray-600"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxs(Button, { onClick: handleGenerate, className: "w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full font-sans font-medium text-sm tracking-wide shadow-md transition-all duration-300", disabled: isGenerating, children: [
-                    isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-3", size: 18 }) : /* @__PURE__ */ jsx(Sparkles, { size: 18, className: "mr-3" }),
-                    isGenerating ? "Synthesizing Pixels..." : "Initialize Visual Generation"
-                  ] })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 space-y-6", children: /* @__PURE__ */ jsx(Card, { className: "luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Package, { size: 14, className: "mr-2 text-emerald-500" }),
+                " Featured Product"
+              ] }),
+              /* @__PURE__ */ jsxs(Select, { value: selectedProduct, onChange: (e) => setSelectedProduct(e.target.value), className: "h-14", children: [
+                /* @__PURE__ */ jsx("option", { value: "", children: "No product linked (Abstract Concept)" }),
+                inventory.filter((i) => i.stock > 0).map((item) => /* @__PURE__ */ jsxs("option", { value: item.name, children: [
+                  item.name,
+                  " (",
+                  item.stock,
+                  " in stock)"
+                ] }, item.id))
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("label", { className: "flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1", children: [
+                /* @__PURE__ */ jsx(Wand2, { size: 14, className: "mr-2 text-[#C5A059]" }),
+                " Visual Description"
+              ] }),
+              /* @__PURE__ */ jsx(
+                "textarea",
+                {
+                  placeholder: "Describe your image with high-sensory detail...",
+                  value: topic,
+                  onChange: (e) => setTopic(e.target.value),
+                  className: "w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-sans font-light focus:bg-white/10 focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]/30 h-28 resize-none transition-all outline-none text-white"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mt-3", children: aiSuggestions.map((sug) => /* @__PURE__ */ jsx(
+                "button",
+                {
+                  onClick: () => setTopic(sug),
+                  className: "px-3 py-1.5 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20 text-[#C5A059] text-[10px] font-medium tracking-wide hover:bg-[#C5A059]/20 transition-colors",
+                  children: sug
+                },
+                sug
+              )) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1", children: "Manifest Type" }),
+                /* @__PURE__ */ jsxs(Select, { value: assetType, onChange: (e) => setAssetType(e.target.value), className: "h-12 bg-white/5 border-white/10", children: [
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Product Photo" }),
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Social Media Post" }),
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Email Header" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1", children: "Resolution Node" }),
+                /* @__PURE__ */ jsxs(Select, { value: imageSize, onChange: (e) => setImageSize(e.target.value), className: "h-12 bg-white/5 border-white/10", children: [
+                  /* @__PURE__ */ jsx("option", { value: "1K", className: "bg-black", children: "Standard 1K" }),
+                  /* @__PURE__ */ jsx("option", { value: "2K", className: "bg-black", children: "High Definition 2K" }),
+                  /* @__PURE__ */ jsx("option", { value: "4K", className: "bg-black", children: "Cinema Quality 4K" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1", children: "Aspect Ratio" }),
+                /* @__PURE__ */ jsxs(Select, { value: aspectRatio, onChange: (e) => setAspectRatio(e.target.value), className: "h-12 bg-white/5 border-white/10", children: [
+                  /* @__PURE__ */ jsx("option", { value: "1:1", className: "bg-black", children: "Square (1:1)" }),
+                  /* @__PURE__ */ jsx("option", { value: "16:9", className: "bg-black", children: "Landscape (16:9)" }),
+                  /* @__PURE__ */ jsx("option", { value: "9:16", className: "bg-black", children: "Portrait (9:16)" }),
+                  /* @__PURE__ */ jsx("option", { value: "4:5", className: "bg-black", children: "Vertical (4:5)" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1", children: "Aesthetic Style" }),
+                /* @__PURE__ */ jsxs(Select, { value: style, onChange: (e) => setStyle(e.target.value), className: "h-12 bg-white/5 border-white/10", children: [
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Photorealistic" }),
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Minimalist" }),
+                  /* @__PURE__ */ jsx("option", { className: "bg-black", children: "Vibrant" })
                 ] })
               ] })
-            }
-          ),
-          /* @__PURE__ */ jsx(
+            ] }),
+            /* @__PURE__ */ jsxs(Button, { onClick: handleGenerate, className: "w-full bg-gradient-to-r from-[#C5A059] to-[#b08e4d] text-white h-14 rounded-2xl shadow-lg border-none", disabled: isGenerating, children: [
+              isGenerating ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-3", size: 18 }) : /* @__PURE__ */ jsx(Sparkles, { size: 18, className: "mr-3" }),
+              isGenerating ? "Synthesizing Pixels..." : "Initialize Visual Generation"
+            ] })
+          ] }) }) }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 h-full", children: /* @__PURE__ */ jsx("div", { className: "bg-black/20 backdrop-blur-xl border border-white/10 rounded-[2.5rem] flex flex-col items-center justify-center min-h-[600px] h-full relative group hover:bg-black/30 transition-all duration-500 overflow-hidden shadow-sm", children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: generatedImage ? /* @__PURE__ */ jsxs(
             motion.div,
             {
-              initial: { opacity: 0, x: 20 },
-              animate: { opacity: 1, x: 0 },
-              transition: { delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-              children: /* @__PURE__ */ jsx("div", { className: "bg-black/20 backdrop-blur-xl border border-white/10 rounded-[2.5rem] flex flex-col items-center justify-center min-h-[600px] relative group hover:bg-black/30 transition-all duration-500 overflow-hidden shadow-sm", children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: generatedImage ? /* @__PURE__ */ jsxs(
-                motion.div,
-                {
-                  initial: { opacity: 0, scale: 0.95 },
-                  animate: { opacity: 1, scale: 1 },
-                  exit: { opacity: 0, scale: 0.95 },
-                  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-                  className: "w-full h-full flex flex-col items-center p-4 sm:p-10",
-                  children: [
-                    /* @__PURE__ */ jsx("div", { className: "flex-1 w-full flex items-center justify-center mb-10", children: /* @__PURE__ */ jsx("img", { src: generatedImage, alt: "Generated", className: "max-w-full max-h-[400px] object-contain rounded-2xl shadow-lg border border-white/5" }) }),
-                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto", children: [
-                      /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setGeneratedImage(null), className: "flex-1 h-14 rounded-full text-xs font-sans font-medium text-gray-400 border-white/10 hover:bg-white/5 transition-colors", children: "Discard Node" }),
-                      /* @__PURE__ */ jsx(Button, { onClick: handleSave, className: "flex-[2] bg-[#C5A059] hover:bg-[#b08d4f] text-white h-14 rounded-full font-sans font-medium text-xs tracking-wide shadow-md transition-all", children: "Approve & Schedule" })
-                    ] })
-                  ]
-                },
-                "generated-image"
-              ) : /* @__PURE__ */ jsxs(
-                motion.div,
-                {
-                  initial: { opacity: 0 },
-                  animate: { opacity: 1 },
-                  exit: { opacity: 0 },
-                  className: "text-center space-y-6",
-                  children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-24 h-24 bg-white/5 rounded-[1.5rem] flex items-center justify-center text-white/20 mx-auto shadow-sm group-hover:scale-105 transition-transform duration-700", children: /* @__PURE__ */ jsx(Image, { size: 40, strokeWidth: 1.5 }) }),
-                    /* @__PURE__ */ jsxs("div", { children: [
-                      /* @__PURE__ */ jsx("p", { className: "text-xs font-sans text-gray-500 uppercase tracking-widest", children: "Output Preview Node" }),
-                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 font-serif italic mt-2", children: "Awaiting Pulse" })
-                    ] })
-                  ]
-                },
-                "placeholder"
-              ) }) })
-            }
-          )
+              initial: { opacity: 0, scale: 0.95 },
+              animate: { opacity: 1, scale: 1 },
+              exit: { opacity: 0, scale: 0.95 },
+              transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+              className: "w-full h-full flex flex-col items-center p-8",
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "flex-1 w-full flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("img", { src: generatedImage, alt: "Generated", className: "max-w-full max-h-[500px] object-contain rounded-2xl shadow-2xl border border-white/10" }) }),
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto", children: [
+                  /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setGeneratedImage(null), className: "flex-1 h-14 rounded-full text-xs font-sans font-medium text-gray-400 border-white/10 hover:bg-white/5", children: "Discard Node" }),
+                  /* @__PURE__ */ jsx(Button, { onClick: handleSave, className: "flex-[2] bg-[#6A2C91] hover:bg-[#5a257a] text-white h-14 rounded-full font-sans font-medium text-xs tracking-wide shadow-md", children: "Approve & Send to Vault" })
+                ] })
+              ]
+            },
+            "generated-image"
+          ) : /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0 },
+              animate: { opacity: 1 },
+              exit: { opacity: 0 },
+              className: "text-center space-y-6",
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "w-24 h-24 bg-white/5 rounded-[1.5rem] flex items-center justify-center text-white/20 mx-auto shadow-sm group-hover:scale-105 transition-transform duration-700 border border-white/10", children: /* @__PURE__ */ jsx(Image, { size: 40, strokeWidth: 1.5 }) }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-xs font-sans text-gray-500 uppercase tracking-widest", children: "Output Preview Node" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 font-serif italic mt-2", children: "Awaiting Pulse" })
+                ] })
+              ]
+            },
+            "placeholder"
+          ) }) }) })
         ] })
       ]
     }
@@ -4628,7 +5303,7 @@ const Integrations = () => {
                   /* @__PURE__ */ jsx(
                     GlassHaloIcon,
                     {
-                      icon: int.category === "E-commerce" ? ShoppingBag : int.category === "Marketplace" ? Globe : int.category === "Wholesale" ? Layers : int.category === "POS" ? CreditCard : int.category === "System" ? Server : int.category === "Payment" ? CreditCard : int.category === "Accounting" ? BarChart3 : Layers,
+                      icon: int.category === "E-commerce" ? ShoppingBag : int.category === "Marketplace" ? Globe : int.category === "Wholesale" ? Layers$1 : int.category === "POS" ? CreditCard : int.category === "System" ? Server : int.category === "Payment" ? CreditCard : int.category === "Accounting" ? BarChart3 : Layers$1,
                       color: "cyan",
                       size: "md"
                     }
@@ -4993,7 +5668,7 @@ const BusinessPulse = () => {
                           className: "group relative overflow-hidden bg-[#C5A059] text-white px-10 py-5 rounded-2xl font-sans uppercase text-[12px] font-black tracking-[0.4em] transition-all duration-500 hover:shadow-[0_15px_30px_-10px_rgba(197,160,89,0.4)]",
                           children: [
                             /* @__PURE__ */ jsxs("span", { className: "relative z-10 flex items-center gap-4", children: [
-                              /* @__PURE__ */ jsx(Plus, { size: 20 }),
+                              /* @__PURE__ */ jsx(Plus$1, { size: 20 }),
                               " INITIATE FORECAST"
                             ] }),
                             /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" })
@@ -5451,13 +6126,17 @@ const MarketingStrategyReport = () => {
     setTimeout(() => {
       setGenerating(false);
       localStorage.setItem("latestMarketingStrategy", JSON.stringify(strategyData));
-    }, 1800);
+    }, 1500);
   };
   const handleGenerateBundle = async () => {
     setIsBundling(true);
+    const toastId = toast.loading("Synthesizing content bundle...");
     const result = await generatePlatformContentBundle(strategyData);
     if (result && result.posts) {
       setContentBundle(result.posts);
+      toast.success("Content bundle synthesized.", { id: toastId });
+    } else {
+      toast.error("Synthesis failed.", { id: toastId });
     }
     setIsBundling(false);
   };
@@ -5472,6 +6151,13 @@ const MarketingStrategyReport = () => {
       mediaUrl: ""
     });
     setScheduledIds([...scheduledIds, `${post.platform}-${index}`]);
+    toast.success("Post synced to Content Calendar.");
+  };
+  const handleExportPDF = () => {
+    toast.success("Generating PDF Document...");
+    setTimeout(() => {
+      toast.success("Strategy_Dossier_2026.pdf exported successfully.");
+    }, 1500);
   };
   const getPlatformIcon = (platform) => {
     switch (platform) {
@@ -5501,222 +6187,253 @@ const MarketingStrategyReport = () => {
       ] })
     ] });
   }
-  return /* @__PURE__ */ jsxs("div", { className: "space-y-12 animate-in fade-in pb-32 max-w-7xl mx-auto", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-start md:items-center gap-6", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("button", { onClick: () => navigate("/marketing"), className: "flex items-center gap-2 text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest mb-4 transition-colors", children: [
-          /* @__PURE__ */ jsx(ArrowLeft, { size: 16 }),
-          " Back to Studio"
-        ] }),
-        /* @__PURE__ */ jsx("h1", { className: "text-4xl font-black text-white tracking-tighter uppercase italic", children: "Omnichannel Strategy Hub" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-medium", children: "Synaptic Directive Architecture: Scalable Growth Logic." })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
-        /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "border-stone-200 font-black text-[10px] tracking-widest h-12 px-6 rounded-2xl", children: [
-          /* @__PURE__ */ jsx(Download, { size: 16, className: "mr-2" }),
-          " EXPORT DOSSIER"
-        ] }),
-        /* @__PURE__ */ jsxs(Button, { variant: "primary", className: "bg-[#6A2C91] text-white font-black text-[10px] tracking-widest h-12 px-6 rounded-2xl shadow-xl shadow-purple-100", onClick: runGeneration, children: [
-          /* @__PURE__ */ jsx(RefreshCw, { size: 16, className: "mr-2" }),
-          " RE-SYNC STRATEGY"
-        ] })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-10 shadow-sm relative overflow-hidden group", children: [
-      /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-bl-full -mr-20 -mt-20 opacity-40 group-hover:opacity-100 transition-opacity" }),
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-[#6A2C91] mb-6 relative z-10", children: [
-        /* @__PURE__ */ jsx("div", { className: "p-3 bg-purple-50 rounded-2xl shadow-inner", children: /* @__PURE__ */ jsx(Sparkles, { size: 24 }) }),
-        /* @__PURE__ */ jsx("h3", { className: "font-black text-2xl uppercase italic tracking-tighter", children: "Executive Directive" })
-      ] }),
-      /* @__PURE__ */ jsxs("p", { className: "text-gray-700 leading-relaxed text-lg font-medium relative z-10 max-w-4xl italic", children: [
-        '"',
-        strategyData.summary,
-        '"'
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
-      /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(TrendingUp, { className: "text-[#6A2C91]" }),
-        " Content Pillars & Allocation"
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8", children: strategyData.pillars.map((pillar, i) => /* @__PURE__ */ jsxs("div", { className: "bg-white border border-stone-100 rounded-[2rem] p-4 sm:p-8 shadow-sm hover:shadow-xl transition-all group overflow-hidden relative", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] text-purple-600", children: /* @__PURE__ */ jsx(PieChart, { size: 60 }) }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4 relative z-10", children: [
-          /* @__PURE__ */ jsx("h4", { className: "font-black text-white uppercase tracking-tight italic", children: pillar.name }),
-          /* @__PURE__ */ jsxs("span", { className: "text-2xl font-black text-[#6A2C91] tracking-tighter", children: [
-            pillar.pct,
-            "%"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "w-full bg-stone-100 h-1.5 rounded-full mb-6 relative overflow-hidden", children: /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "h-full bg-[#C5A059] transition-all duration-1000",
-            style: { width: `${pillar.pct}%` }
-          }
-        ) }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 leading-relaxed font-medium relative z-10", children: pillar.desc })
-      ] }, i)) })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-10", children: [
-      /* @__PURE__ */ jsxs(Card, { title: "Synaptic Channel Links", className: "rounded-[2.5rem] border-stone-100 shadow-xl overflow-hidden relative", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] text-purple-600", children: /* @__PURE__ */ jsx(Globe, { size: 80 }) }),
-        /* @__PURE__ */ jsxs("div", { className: "space-y-4 mt-4 relative z-10", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 font-medium leading-relaxed mb-6", children: "Authorize secure handshakes to enable auto-publishing logic via Lola." }),
-          Object.entries(connectedChannels).map(([platform, isConnected]) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between p-4 bg-stone-50 rounded-2xl group hover:bg-white border border-transparent hover:border-stone-100 transition-all", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ jsx("div", { className: `p-2 rounded-lg ${isConnected ? "bg-[#6A2C91] text-white" : "bg-stone-200 text-stone-400"} transition-colors`, children: getPlatformIcon(platform) }),
-              /* @__PURE__ */ jsx("span", { className: "font-black text-xs uppercase tracking-tight text-gray-900", children: platform })
+  return /* @__PURE__ */ jsxs(
+    motion.div,
+    {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -20 },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      className: "p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto",
+      children: [
+        /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-6", children: [
+          /* @__PURE__ */ jsx("div", { className: "flex-1", children: /* @__PURE__ */ jsx(
+            SubPageHeader,
+            {
+              title: "Marketing Strategy",
+              parentTitle: "Marketing Hub",
+              onBack: () => navigate("/marketing"),
+              description: "Synaptic Directive Architecture: Scalable Growth Logic."
+            }
+          ) }),
+          /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+            /* @__PURE__ */ jsxs(Button, { onClick: handleExportPDF, variant: "outline", className: "border-white/20 text-white font-black text-[10px] tracking-widest h-12 px-6 rounded-2xl hover:bg-white/5", children: [
+              /* @__PURE__ */ jsx(Download, { size: 16, className: "mr-2" }),
+              " EXPORT PDF DOSSIER"
             ] }),
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                onClick: () => !isConnected && setAuthModalPlatform(platform),
-                className: `text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl border transition-all ${isConnected ? "bg-emerald-50 text-emerald-600 border-emerald-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100" : "bg-white text-stone-400 border-stone-200 hover:border-[#6A2C91] hover:text-[#6A2C91]"}`,
-                children: isConnected ? "LINKED" : "INITIALIZE"
-              }
-            )
-          ] }, platform)),
-          /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-stone-100 flex items-center gap-3 text-stone-400", children: [
-            /* @__PURE__ */ jsx(ShieldCheck, { size: 16 }),
-            /* @__PURE__ */ jsx("span", { className: "text-[9px] font-black uppercase tracking-widest", children: "OAuth 2.1 Encryption Active" })
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2 space-y-10", children: [
-        /* @__PURE__ */ jsxs(Card, { title: "Target Audience Node", className: "rounded-[2.5rem] border-stone-100", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-gray-900 text-lg font-black uppercase italic tracking-tight mb-4", children: strategyData.audience.demographics }),
-          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-8", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs("h4", { className: "text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Target, { size: 14 }),
-                " Synaptic Affinity"
-              ] }),
-              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: strategyData.audience.interests.map((tag) => /* @__PURE__ */ jsx("span", { className: "px-4 py-1.5 bg-purple-50 text-[#6A2C91] rounded-xl text-[10px] font-black uppercase tracking-widest border border-purple-100", children: tag }, tag)) })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs("h4", { className: "text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Plus, { size: 14 }),
-                " Core Friction Points"
-              ] }),
-              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: strategyData.audience.painPoints.map((tag) => /* @__PURE__ */ jsx("span", { className: "px-4 py-1.5 bg-stone-50 text-stone-500 border border-stone-100 rounded-xl text-[10px] font-black uppercase tracking-widest", children: tag }, tag)) })
+            /* @__PURE__ */ jsxs(Button, { variant: "primary", className: "bg-[#6A2C91] hover:bg-[#5a257a] text-white font-black text-[10px] tracking-widest h-12 px-6 rounded-2xl shadow-xl shadow-purple-900/20", onClick: runGeneration, children: [
+              /* @__PURE__ */ jsx(RefreshCw, { size: 16, className: "mr-2" }),
+              " RE-SYNC STRATEGY"
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-[#6A2C91] rounded-[2.5rem] p-4 sm:p-10 text-white shadow-2xl relative overflow-hidden group", children: [
-          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" }),
-          /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative z-10", children: [
-            /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-center md:text-left", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-3xl font-black uppercase italic tracking-tighter", children: "AI Content Workbench" }),
-              /* @__PURE__ */ jsx("p", { className: "text-purple-200 font-medium", children: "Auto-generate a week of optimized posts based on your strategy." })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [
+          /* @__PURE__ */ jsxs(Card, { className: "p-6 bg-black/40 border-white/10 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2 text-emerald-500", children: [
+              /* @__PURE__ */ jsx(Activity, { size: 18 }),
+              /* @__PURE__ */ jsx("span", { className: "text-[10px] uppercase tracking-widest font-black", children: "Predicted Reach" })
             ] }),
-            /* @__PURE__ */ jsx(
-              Button,
-              {
-                onClick: handleGenerateBundle,
-                disabled: isBundling,
-                className: "bg-[#C5A059] text-white border-none h-16 px-10 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-2xl shadow-amber-500/20 active:scale-95 transition-all",
-                children: isBundling ? /* @__PURE__ */ jsxs(Fragment, { children: [
-                  /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }),
-                  " SYNTHESIZING..."
-                ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-                  /* @__PURE__ */ jsx(Zap, { size: 18, className: "mr-2" }),
-                  " GENERATE BUNDLE"
-                ] })
-              }
-            )
-          ] })
-        ] })
-      ] })
-    ] }),
-    contentBundle.length > 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-8 animate-in slide-up", children: [
-      /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Layers, { className: "text-[#6A2C91]" }),
-        " Content Queue Nodes"
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "flex overflow-x-auto gap-4 sm:p-8 pb-10 scrollbar-hide px-2", children: contentBundle.map((post, idx) => {
-        const isScheduled = scheduledIds.includes(`${post.platform}-${idx}`);
-        return /* @__PURE__ */ jsxs("div", { className: "min-w-[340px] max-w-[340px] bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-8 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col group relative", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
-            /* @__PURE__ */ jsx("div", { className: `p-3 rounded-2xl ${isScheduled ? "bg-emerald-50 text-emerald-600" : "bg-stone-50 text-gray-900"}`, children: getPlatformIcon(post.platform) }),
-            /* @__PURE__ */ jsx(Badge, { color: isScheduled ? "green" : "purple", className: "text-[8px] font-black uppercase px-2", children: isScheduled ? "SYNCED TO CAL" : "AI DRAFT" })
+            /* @__PURE__ */ jsx("div", { className: "text-3xl font-serif text-white", children: "450K+" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-gray-400 mt-2", children: "Monthly Impressions" })
           ] }),
-          /* @__PURE__ */ jsx("h4", { className: "font-black text-lg text-white uppercase italic tracking-tight mb-4 line-clamp-1", children: post.topic }),
-          /* @__PURE__ */ jsx("div", { className: "flex-1 bg-stone-50 p-4 rounded-2xl border border-stone-100 mb-6 overflow-y-auto max-h-48 scrollbar-hide", children: /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-600 leading-relaxed font-medium whitespace-pre-wrap", children: post.content }) }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-6 border-t border-stone-50", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-[10px] font-black text-gray-400 uppercase tracking-widest", children: [
-              /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Clock, { size: 12 }),
-                " ",
-                post.bestTimeToPost
-              ] }),
-              /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1 text-[#C5A059]", children: [
-                /* @__PURE__ */ jsx(Target, { size: 12 }),
-                " ",
-                post.platform,
-                " Optimized"
+          /* @__PURE__ */ jsxs(Card, { className: "p-6 bg-black/40 border-white/10 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2 text-magenta-500", children: [
+              /* @__PURE__ */ jsx(PieChart, { size: 18 }),
+              /* @__PURE__ */ jsx("span", { className: "text-[10px] uppercase tracking-widest font-black", children: "Engagement Rate" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "text-3xl font-serif text-white", children: "8.4%" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-gray-400 mt-2", children: "+2.1% vs Industry Avg" })
+          ] }),
+          /* @__PURE__ */ jsxs(Card, { className: "p-6 bg-black/40 border-white/10 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2 text-[#C5A059]", children: [
+              /* @__PURE__ */ jsx(Target, { size: 18 }),
+              /* @__PURE__ */ jsx("span", { className: "text-[10px] uppercase tracking-widest font-black", children: "Lead Conversion" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "text-3xl font-serif text-white", children: "3.2%" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-gray-400 mt-2", children: "Targeting $60k+ Income" })
+          ] }),
+          /* @__PURE__ */ jsxs(Card, { className: "p-6 bg-[#1A1115] border-rose-500/20 backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2 text-rose-500", children: [
+              /* @__PURE__ */ jsx(DollarSign, { size: 18 }),
+              /* @__PURE__ */ jsx("span", { className: "text-[10px] uppercase tracking-widest font-black", children: "CAC Estimate" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "text-3xl font-serif text-white", children: "$14.50" }),
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-rose-400/70 mt-2", children: "Customer Acquisition Cost" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs(Card, { className: "bg-black/40 border-white/10 rounded-[2.5rem] p-4 sm:p-10 shadow-2xl relative overflow-hidden group backdrop-blur-xl", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-magenta-500/10 rounded-bl-full -mr-20 -mt-20 opacity-40 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-[#6A2C91] mb-6 relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-[#6A2C91]/20 rounded-2xl", children: /* @__PURE__ */ jsx(Sparkles, { size: 24, className: "text-magenta-500" }) }),
+            /* @__PURE__ */ jsx("h3", { className: "font-black text-white text-2xl uppercase italic tracking-tighter", children: "Executive Directive" })
+          ] }),
+          /* @__PURE__ */ jsxs("p", { className: "text-gray-300 leading-relaxed text-lg font-sans font-light relative z-10 max-w-4xl italic", children: [
+            '"',
+            strategyData.summary,
+            '"'
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+          /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx(TrendingUp, { className: "text-[#C5A059]" }),
+            " Content Pillars & Allocation"
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: strategyData.pillars.map((pillar, i) => /* @__PURE__ */ jsxs(Card, { className: "bg-black/40 border-white/10 rounded-[2rem] p-6 shadow-xl hover:border-magenta-500/50 transition-all group overflow-hidden relative backdrop-blur-xl", children: [
+            /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-6 opacity-[0.05] text-magenta-500", children: /* @__PURE__ */ jsx(PieChart, { size: 80 }) }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4 relative z-10", children: [
+              /* @__PURE__ */ jsx("h4", { className: "font-black text-white uppercase tracking-tight italic", children: pillar.name }),
+              /* @__PURE__ */ jsxs("span", { className: "text-2xl font-serif text-magenta-500", children: [
+                pillar.pct,
+                "%"
               ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              Button,
+            /* @__PURE__ */ jsx("div", { className: "w-full bg-white/5 h-2 rounded-full mb-6 relative overflow-hidden", children: /* @__PURE__ */ jsx(
+              "div",
               {
-                onClick: () => handleSchedulePost(post, idx),
-                disabled: isScheduled,
-                className: `w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm ${isScheduled ? "bg-stone-100 text-stone-400 border-none cursor-default" : "bg-white border border-[#6A2C91] text-[#6A2C91] hover:bg-[#6A2C91] hover:text-white"}`,
-                children: isScheduled ? /* @__PURE__ */ jsxs(Fragment, { children: [
-                  /* @__PURE__ */ jsx(CheckCircle, { size: 14, className: "mr-2" }),
-                  " IN CALENDAR"
-                ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-                  /* @__PURE__ */ jsx(Calendar, { size: 14, className: "mr-2" }),
-                  " AUTO-SCHEDULE"
-                ] })
+                className: "h-full bg-gradient-to-r from-magenta-600 to-purple-600 transition-all duration-1000",
+                style: { width: `${pillar.pct}%` }
               }
-            )
+            ) }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed font-sans font-light relative z-10", children: pillar.desc })
+          ] }, i)) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-8", children: [
+          /* @__PURE__ */ jsx(Card, { title: "Synaptic Channel Links", className: "rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl relative", children: /* @__PURE__ */ jsxs("div", { className: "space-y-4 mt-6 relative z-10", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 font-sans font-light leading-relaxed mb-6", children: "Authorize secure handshakes to enable auto-publishing logic via Lola." }),
+            Object.entries(connectedChannels).map(([platform, isConnected]) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-all", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ jsx("div", { className: `p-2 rounded-xl ${isConnected ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-gray-500"} transition-colors`, children: getPlatformIcon(platform) }),
+                /* @__PURE__ */ jsx("span", { className: "font-sans font-medium text-sm text-white capitalize", children: platform })
+              ] }),
+              /* @__PURE__ */ jsx(
+                "button",
+                {
+                  onClick: () => !isConnected && setAuthModalPlatform(platform),
+                  className: `text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl border transition-all ${isConnected ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20 hover:bg-rose-500/10 hover:text-rose-500 hover:border-rose-500/20" : "bg-white/5 text-gray-400 border-white/10 hover:border-[#6A2C91] hover:text-[#6A2C91]"}`,
+                  children: isConnected ? "LINKED" : "INITIALIZE"
+                }
+              )
+            ] }, platform)),
+            /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-white/5 flex items-center gap-3 text-emerald-500/70", children: [
+              /* @__PURE__ */ jsx(ShieldCheck, { size: 16 }),
+              /* @__PURE__ */ jsx("span", { className: "text-[9px] font-black uppercase tracking-widest", children: "OAuth 2.1 Encryption Active" })
+            ] })
+          ] }) }),
+          /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2 space-y-8", children: [
+            /* @__PURE__ */ jsxs(Card, { title: "Target Audience Node", className: "rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[#C5A059] text-lg font-serif italic tracking-tight mb-6 mt-4", children: strategyData.audience.demographics }),
+              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsxs("h4", { className: "text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(Target, { size: 14, className: "text-emerald-500" }),
+                    " Synaptic Affinity"
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: strategyData.audience.interests.map((tag) => /* @__PURE__ */ jsx(Badge, { color: "green", className: "font-medium", children: tag }, tag)) })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsxs("h4", { className: "text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(Plus$1, { size: 14, className: "text-rose-500" }),
+                    " Core Friction Points"
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: strategyData.audience.painPoints.map((tag) => /* @__PURE__ */ jsx(Badge, { color: "gray", className: "font-medium bg-rose-500/10 text-rose-300 border-rose-500/20", children: tag }, tag)) })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#6A2C91] to-magenta-900 rounded-[2.5rem] p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden group", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-center gap-6 relative z-10", children: [
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-center md:text-left", children: [
+                  /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white tracking-tight", children: "AI Content Workbench" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-purple-200 font-sans font-light", children: "Auto-generate a week of optimized posts based on your strategy." })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    onClick: handleGenerateBundle,
+                    disabled: isBundling,
+                    className: "bg-[#C5A059] hover:bg-[#b08e4d] text-white border-none h-16 px-10 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-2xl shadow-amber-500/20 active:scale-95 transition-all",
+                    children: isBundling ? /* @__PURE__ */ jsxs(Fragment, { children: [
+                      /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-2" }),
+                      " SYNTHESIZING..."
+                    ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+                      /* @__PURE__ */ jsx(Zap, { size: 18, className: "mr-2" }),
+                      " GENERATE BUNDLE"
+                    ] })
+                  }
+                )
+              ] })
+            ] })
           ] })
-        ] }, idx);
-      }) })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
-      /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Layers, { className: "text-[#C5A059]" }),
-        " Synaptic Channel Protocols"
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6", children: strategyData.platforms.map((platform, i) => /* @__PURE__ */ jsxs("div", { className: "bg-white border border-stone-200 rounded-[2.5rem] p-4 sm:p-8 hover:shadow-xl hover:border-[#6A2C91] transition-all group", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center text-[#6A2C91] mb-6 shadow-inner group-hover:bg-[#6A2C91] group-hover:text-white transition-all", children: getPlatformIcon(platform.name) }),
-        /* @__PURE__ */ jsx("h4", { className: "text-xl font-black text-white tracking-tight uppercase italic mb-2", children: platform.name }),
-        /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-[#C5A059] uppercase tracking-widest mb-4", children: platform.freq }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 font-medium leading-relaxed", children: platform.focus })
-      ] }, i)) })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8", children: [
-      /* @__PURE__ */ jsx(Card, { title: "Raw Concept Repository", className: "rounded-[2.5rem] border-stone-100", children: /* @__PURE__ */ jsx("div", { className: "space-y-4 mt-4", children: strategyData.ideas.map((idea, i) => /* @__PURE__ */ jsxs("div", { className: "flex gap-4 items-start p-4 bg-stone-50 rounded-2xl group hover:bg-white border border-transparent hover:border-stone-100 transition-all", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-white text-[#6A2C91] flex items-center justify-center text-xs font-black shadow-sm group-hover:bg-[#6A2C91] group-hover:text-white transition-all", children: i + 1 }),
-        /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-700 font-medium leading-relaxed", children: idea })
-      ] }, i)) }) }),
-      /* @__PURE__ */ jsxs(Card, { title: "Strategic Financial Guardrails", className: "rounded-[2.5rem] border-stone-100 relative overflow-hidden", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 right-0 p-4 sm:p-10 opacity-[0.03] text-emerald-600", children: /* @__PURE__ */ jsx(DollarSign, { size: 120 }) }),
-        /* @__PURE__ */ jsx("div", { className: "space-y-6 mt-4 relative z-10", children: [
-          { label: "Initial Acquisition Buffer", val: "$1,200.00", status: "Stable" },
-          { label: "Production Scaling Offset", val: "$850.00", status: "Optimal" },
-          { label: "Creative Overhead Allowance", val: "$450.00", status: "Locked" }
-        ].map((row, i) => /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center border-b border-stone-50 pb-4", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-gray-400 uppercase tracking-widest", children: row.label }),
-            /* @__PURE__ */ jsx("p", { className: "text-xl font-black text-gray-900 tracking-tighter mt-0.5", children: row.val })
+        ] }),
+        contentBundle.length > 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-8 animate-in slide-up", children: [
+          /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx(Layers$1, { className: "text-emerald-500" }),
+            " Content Queue Nodes"
           ] }),
-          /* @__PURE__ */ jsx(Badge, { color: "green", className: "text-[8px] font-black uppercase px-2", children: row.status })
-        ] }, i)) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx(
-      SocialMediaAuthModal,
-      {
-        isOpen: !!authModalPlatform,
-        onClose: () => setAuthModalPlatform(null),
-        platform: authModalPlatform || ""
-      }
-    )
-  ] });
+          /* @__PURE__ */ jsx("div", { className: "flex overflow-x-auto gap-6 pb-10 scrollbar-hide px-2", children: contentBundle.map((post, idx) => {
+            const isScheduled = scheduledIds.includes(`${post.platform}-${idx}`);
+            return /* @__PURE__ */ jsxs(Card, { className: "min-w-[340px] max-w-[340px] bg-black/60 border-white/10 rounded-[2.5rem] p-6 shadow-2xl hover:border-[#6A2C91]/50 transition-all duration-500 flex flex-col group relative backdrop-blur-xl", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
+                /* @__PURE__ */ jsx("div", { className: `p-3 rounded-2xl ${isScheduled ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-gray-400"}`, children: getPlatformIcon(post.platform) }),
+                /* @__PURE__ */ jsx(Badge, { color: isScheduled ? "green" : "purple", className: "text-[8px] font-black uppercase px-2", children: isScheduled ? "SYNCED TO CAL" : "AI DRAFT" })
+              ] }),
+              /* @__PURE__ */ jsx("h4", { className: "font-serif text-xl text-white mb-4 line-clamp-1", children: post.topic }),
+              /* @__PURE__ */ jsx("div", { className: "flex-1 bg-white/5 p-4 rounded-2xl border border-white/5 mb-6 overflow-y-auto max-h-48 scrollbar-hide", children: /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 font-sans font-light whitespace-pre-wrap", children: post.content }) }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-6 border-t border-white/5", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-[10px] font-black text-gray-500 uppercase tracking-widest", children: [
+                  /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx(Clock, { size: 12 }),
+                    " ",
+                    post.bestTimeToPost
+                  ] }),
+                  /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1 text-[#C5A059]", children: [
+                    /* @__PURE__ */ jsx(Target, { size: 12 }),
+                    " ",
+                    post.platform
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    onClick: () => handleSchedulePost(post, idx),
+                    disabled: isScheduled,
+                    className: `w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm border-none ${isScheduled ? "bg-white/5 text-gray-500 cursor-default" : "bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white hover:opacity-90"}`,
+                    children: isScheduled ? /* @__PURE__ */ jsxs(Fragment, { children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { size: 14, className: "mr-2" }),
+                      " IN CALENDAR"
+                    ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+                      /* @__PURE__ */ jsx(Calendar, { size: 14, className: "mr-2" }),
+                      " AUTO-SCHEDULE"
+                    ] })
+                  }
+                )
+              ] })
+            ] }, idx);
+          }) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-8", children: [
+          /* @__PURE__ */ jsx(Card, { title: "Raw Concept Repository", className: "rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl", children: /* @__PURE__ */ jsx("div", { className: "space-y-4 mt-6", children: strategyData.ideas.map((idea, i) => /* @__PURE__ */ jsxs("div", { className: "flex gap-4 items-start p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-all", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-[#6A2C91]/20 text-[#6A2C91] flex items-center justify-center text-xs font-black shrink-0", children: i + 1 }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 font-sans font-light leading-relaxed", children: idea })
+          ] }, i)) }) }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+            /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3", children: [
+              /* @__PURE__ */ jsx(Layers$1, { className: "text-[#C5A059]" }),
+              " Channel Protocols"
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: strategyData.platforms.slice(0, 4).map((platform, i) => /* @__PURE__ */ jsxs(Card, { className: "bg-black/40 border-white/10 rounded-[2rem] p-6 hover:border-magenta-500/50 transition-all backdrop-blur-xl", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-magenta-500", children: getPlatformIcon(platform.name) }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "text-white font-serif", children: platform.name }),
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-[#C5A059] uppercase tracking-widest", children: platform.freq })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 font-sans font-light", children: platform.focus })
+            ] }, i)) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          SocialMediaAuthModal,
+          {
+            isOpen: !!authModalPlatform,
+            onClose: () => setAuthModalPlatform(null),
+            platform: authModalPlatform || ""
+          }
+        )
+      ]
+    }
+  );
 };
 const UpgradeModal = ({
   isOpen,
@@ -5983,7 +6700,7 @@ const Inventory = () => {
                 ] }),
                 usageInRecipes.length > 0 ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: usageInRecipes.map((recipe) => /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center p-4 sm:p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-[#6A2C91]/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/20 transition-all duration-500 cursor-pointer group", onClick: () => navigate("/recipes"), children: [
                   /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-                    /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers, color: "purple", size: "lg", className: "group-hover:scale-110 transition-transform duration-500" }),
+                    /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers$1, color: "purple", size: "lg", className: "group-hover:scale-110 transition-transform duration-500" }),
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("p", { className: "font-serif text-white text-xl tracking-tight mb-1", children: recipe.name }),
                       /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.2em]", children: "Primary Input Node" })
@@ -6050,7 +6767,7 @@ const Inventory = () => {
                     " INGEST CSV"
                   ] }),
                   /* @__PURE__ */ jsxs(Button, { variant: "primary", onClick: () => setShowAddItem(true), className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto", children: [
-                    /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-3" }),
+                    /* @__PURE__ */ jsx(Plus$1, { size: 16, className: "mr-3" }),
                     " DEPLOY ASSET"
                   ] })
                 ] })
@@ -6350,7 +7067,7 @@ const Forecasting = () => {
             children: /* @__PURE__ */ jsx("div", { className: "flex gap-4", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full px-10 shadow-2xl shadow-[#6A2C91]/20 transition-all font-sans font-medium text-[11px] tracking-[0.2em] uppercase", onClick: () => {
               alert("Initial forecast generation complete. Predictive algorithms have ingested historical sales.");
             }, children: [
-              /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-3" }),
+              /* @__PURE__ */ jsx(Plus$1, { size: 16, className: "mr-3" }),
               " Initialize New Forecast"
             ] }) })
           }
@@ -6508,13 +7225,13 @@ const Forecasting = () => {
             className: "space-y-8",
             children: [
               /* @__PURE__ */ jsxs("h3", { className: "text-3xl font-serif text-white font-bold flex items-center gap-4", children: [
-                /* @__PURE__ */ jsx("div", { className: "p-3 bg-[#C5A059]/10 rounded-xl", children: /* @__PURE__ */ jsx(History, { className: "text-[#C5A059]", size: 24 }) }),
+                /* @__PURE__ */ jsx(GlassHaloIcon, { icon: History, color: "gold", size: "md" }),
                 " Historical Synthesis"
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 relative overflow-hidden", children: [
                 /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity", children: /* @__PURE__ */ jsx(RefreshCw, { size: 120, className: "animate-spin-slow" }) }),
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 sm:p-8 relative z-10", children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-105 group-hover:bg-white/10 transition-all duration-700", children: /* @__PURE__ */ jsx(RefreshCw, { size: 28 }) }),
+                  /* @__PURE__ */ jsx(GlassHaloIcon, { icon: RefreshCw, color: "purple", size: "xl", className: "group-hover:scale-105 transition-all duration-700" }),
                   /* @__PURE__ */ jsxs("div", { children: [
                     /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-3", children: [
                       /* @__PURE__ */ jsx("h4", { className: "text-2xl font-serif text-white tracking-tight group-hover:text-[#C5A059] transition-colors", children: "Active Projection: Q4 Protocol" }),
@@ -6532,7 +7249,7 @@ const Forecasting = () => {
                     /* @__PURE__ */ jsx("p", { className: "text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2", children: "Projected Settlement" }),
                     /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]", children: "$1,976.70" })
                   ] }),
-                  /* @__PURE__ */ jsx("div", { className: "p-4 bg-white/5 text-white/30 rounded-2xl shadow-inner border border-white/5 group-hover:text-[#C5A059] group-hover:bg-white/10 transition-colors", children: /* @__PURE__ */ jsx(ChevronRight, { size: 24 }) })
+                  /* @__PURE__ */ jsx(GlassHaloIcon, { icon: ChevronRight, color: "gold", size: "md", className: "group-hover:bg-white/10 transition-colors" })
                 ] })
               ] })
             ]
@@ -6821,7 +7538,7 @@ const SupplierManager = () => {
         /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-medium", children: "Supply Chain Integrity: Managing External Nodes & Sourcing Logic." })
       ] }),
       /* @__PURE__ */ jsxs(Button, { className: "bg-[#6A2C91] text-white h-12 rounded-2xl font-black text-[10px] tracking-widest px-8 shadow-xl", onClick: handleOpenCreate, children: [
-        /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-2" }),
+        /* @__PURE__ */ jsx(Plus$1, { size: 16, className: "mr-2" }),
         " REGISTER VENDOR"
       ] })
     ] }),
@@ -6879,7 +7596,7 @@ const SupplierManager = () => {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "border-t border-stone-50 pt-8 relative z-10", children: [
           /* @__PURE__ */ jsxs("p", { className: "text-[10px] font-black text-gray-400 uppercase flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx(Layers, { size: 14 }),
+            /* @__PURE__ */ jsx(Layers$1, { size: 14 }),
             " Linked Materials (",
             linkedItems.length,
             ")"
@@ -6951,7 +7668,7 @@ const QualityControl = () => {
           subtitle: "Batch Integrity Vault: Enforcing Excellence Across the Manufacturing Floor.",
           badge: "Audit Protocol Active",
           children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all", onClick: () => setShowAdd(true), children: [
-            /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-3" }),
+            /* @__PURE__ */ jsx(Plus$1, { size: 16, className: "mr-3" }),
             " NEW AUDIT LOG"
           ] })
         }
@@ -6964,7 +7681,7 @@ const QualityControl = () => {
       /* @__PURE__ */ jsx(StatBox$1, { label: "Pending QA", val: qualityChecks.filter((c) => c.status === "Pending").length, color: "text-blue-400", haloColor: "cyan", icon: Clock })
     ] }),
     qualityChecks.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "luxury-card border-white/10 rounded-[2.5rem] p-24 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl", children: [
-      /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-white/20 mb-6 shadow-inner border border-white/10", children: /* @__PURE__ */ jsx(ClipboardCheck, { size: 40 }) }),
+      /* @__PURE__ */ jsx(GlassHaloIcon, { icon: ClipboardCheck, color: "cyan", size: "xl", className: "mb-6 shadow-inner" }),
       /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif tracking-tight text-white/50 mb-2", children: "Vault Empty" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1", children: "No inspection history detected." }),
       /* @__PURE__ */ jsx(Button, { onClick: () => setShowAdd(true), className: "mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10", children: "INITIALIZE AUDIT" })
@@ -7023,14 +7740,14 @@ const Recipes = () => {
           subtitle: "BOM Architecture: Bridging Material Costs with Finished Value.",
           badge: "Formula Protocol Active",
           children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-black/10 transition-all uppercase", onClick: () => navigate("/recipes/builder"), children: [
-            /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-3" }),
+            /* @__PURE__ */ jsx(Plus$1, { size: 16, className: "mr-3" }),
             " INITIALIZE FORMULA"
           ] })
         }
       )
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
-      /* @__PURE__ */ jsx(StatBox, { label: "Active Formulas", val: recipes.length, color: "text-purple-400", icon: Layers }),
+      /* @__PURE__ */ jsx(StatBox, { label: "Active Formulas", val: recipes.length, color: "text-purple-400", icon: Layers$1 }),
       /* @__PURE__ */ jsx(StatBox, { label: "Optimal Margins", val: "88%", color: "text-emerald-400", icon: Target }),
       /* @__PURE__ */ jsx(StatBox, { label: "Production Ready", val: "12 SKU", color: "text-amber-400", icon: Zap })
     ] }),
@@ -7042,7 +7759,7 @@ const Recipes = () => {
     ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8", children: recipes.map((recipe) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#6A2C91]/50 transition-all group relative overflow-hidden", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-8 relative z-10", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-          /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers, color: "purple", size: "md" }),
+          /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers$1, color: "purple", size: "md" }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white tracking-tight", children: recipe.name }),
             /* @__PURE__ */ jsxs(Badge, { color: "purple", className: "text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10", children: [
@@ -7119,8 +7836,8 @@ ${result.warnings.join("\n")}`);
     ] }, recipe.id)) })
   ] });
 };
-const StatBox = ({ label, val, color, icon: Icon }) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#6A2C91]/30 transition-all", children: [
-  /* @__PURE__ */ jsx("div", { className: `p-4 bg-white/5 border border-white/10 rounded-2xl mb-6 text-white/50 group-hover:text-[#6A2C91] group-hover:scale-110 transition-all`, children: /* @__PURE__ */ jsx(Icon, { size: 24 }) }),
+const StatBox = ({ label, val, color, icon: Icon, haloColor }) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#6A2C91]/30 transition-all", children: [
+  /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: haloColor || "gold", size: "md", className: "mb-6 group-hover:scale-110 transition-all" }),
   /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2", children: label }),
   /* @__PURE__ */ jsx("p", { className: `text-4xl font-serif tracking-tight ${color}`, children: val })
 ] });
@@ -7358,7 +8075,7 @@ const RecipeBuilder = () => {
                 onClick: addIngredient,
                 className: "w-full py-6 border-2 border-dashed border-stone-200 rounded-[2rem] text-gray-400 font-black text-[10px] uppercase tracking-widest hover:border-[#6A2C91] hover:text-[#6A2C91] hover:bg-purple-50 transition-all flex items-center justify-center gap-3",
                 children: [
-                  /* @__PURE__ */ jsx(Plus, { size: 18 }),
+                  /* @__PURE__ */ jsx(Plus$1, { size: 18 }),
                   " INITIALIZE NEW BOM NODE"
                 ]
               }
@@ -7521,14 +8238,14 @@ const WarehouseView = () => {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "col-span-6 row-span-4 bg-[#6A2C91]/10 border border-[#6A2C91]/20 rounded-[2.5rem] p-6 relative hover:border-[#6A2C91]/40 transition-all shadow-inner", children: [
           /* @__PURE__ */ jsxs("div", { className: "absolute -top-4 left-6 bg-black border border-[#6A2C91]/50 text-[#6A2C91] px-4 py-1.5 text-[10px] font-sans font-bold uppercase tracking-[0.3em] rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(106,44,145,0.4)]", children: [
-            /* @__PURE__ */ jsx(Layers, { size: 14 }),
+            /* @__PURE__ */ jsx(Layers$1, { size: 14 }),
             " Production Floor"
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex h-full items-center justify-center gap-8 sm:p-8 mt-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
               /* @__PURE__ */ jsxs("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_20px_rgba(106,44,145,0.3)] mx-auto mb-4 animate-pulse z-10", children: [
                 /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#6A2C91] to-transparent opacity-40 blur-md" }),
-                /* @__PURE__ */ jsx(Layers, { className: "text-[#6A2C91] relative z-10", size: 32, strokeWidth: 1.5 })
+                /* @__PURE__ */ jsx(Layers$1, { className: "text-[#6A2C91] relative z-10", size: 32, strokeWidth: 1.5 })
               ] }),
               /* @__PURE__ */ jsxs("p", { className: "font-serif text-2xl text-white", children: [
                 activeBatches,
@@ -8025,16 +8742,28 @@ const Orders = () => {
             ] })
           }
         ),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8", children: [
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:p-8", children: [
           { label: "Total Orders", val: orders.length, icon: ShoppingCart, color: "purple" },
           { label: "Revenue", val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: "gold" },
           { label: "Pending", val: pendingCount, icon: Package, color: "magenta" },
           { label: "Shipped", val: shippedCount, icon: Truck, color: "emerald" }
-        ].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl", children: [
-          /* @__PURE__ */ jsx(GlassHaloIcon, { icon: stat.icon, color: stat.color, size: "lg", className: "mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" }),
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2", children: stat.label }),
-          /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white tracking-tighter", children: stat.val })
-        ] }, i)) }),
+        ].map((stat, i) => {
+          const glowColors = {
+            cyan: "hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)]",
+            magenta: "hover:border-[#D946EF]/50 hover:bg-[#D946EF]/5 hover:shadow-[0_0_40px_rgba(217,70,239,0.15)]",
+            emerald: "hover:border-[#10B981]/50 hover:bg-[#10B981]/5 hover:shadow-[0_0_40px_rgba(16,185,129,0.15)]",
+            gold: "hover:border-[#C5A059]/50 hover:bg-[#C5A059]/5 hover:shadow-[0_0_40px_rgba(197,160,89,0.15)]",
+            purple: "hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/5 hover:shadow-[0_0_40px_rgba(106,44,145,0.15)]"
+          };
+          return /* @__PURE__ */ jsxs("div", { className: `luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group transition-all duration-500 flex flex-col justify-between ${glowColors[stat.color]}`, children: [
+            /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700", children: /* @__PURE__ */ jsx(stat.icon, { size: 120, className: `text-${stat.color === "emerald" ? "emerald-400" : stat.color === "cyan" ? "[#06B6D4]" : stat.color === "magenta" ? "[#D946EF]" : stat.color === "purple" ? "[#6A2C91]" : "[#C5A059]"}` }) }),
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-12", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] max-w-[60%] leading-relaxed", children: stat.label }),
+              /* @__PURE__ */ jsx(GlassHaloIcon, { icon: stat.icon, color: stat.color, size: "lg", className: "group-hover:scale-110 transition-transform duration-500 z-10 shrink-0" })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-4xl lg:text-5xl font-serif text-white tracking-tighter relative z-10", children: stat.val })
+          ] }, i);
+        }) }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row gap-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "relative group max-w-2xl flex-1", children: [
@@ -9392,7 +10121,7 @@ const ScaleFunnel = () => {
               desc: "Volume discounts and unoptimized supplier terms are quietly eating away at your bottom line while overhead scales linearly."
             },
             {
-              icon: /* @__PURE__ */ jsx(Layers, { className: "w-8 h-8 text-orange-500" }),
+              icon: /* @__PURE__ */ jsx(Layers$1, { className: "w-8 h-8 text-orange-500" }),
               title: "Multi-Channel Desync",
               desc: "Overselling on B2B portals while stock sits idle in retail warehouses. Inventory data that's 24 hours out of date."
             },
@@ -9583,7 +10312,7 @@ const PublicLayout = ({ children }) => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-black text-white selection:bg-[#C5A059] selection:text-black", children: [
     /* @__PURE__ */ jsx("nav", { className: "fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 h-20 flex items-center justify-between", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 cursor-pointer", onClick: () => navigate("/"), children: [
-        /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-[#C5A059]/10 flex items-center justify-center border border-[#C5A059]/30", children: /* @__PURE__ */ jsx(Layers, { className: "text-[#C5A059]", size: 24 }) }),
+        /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-[#C5A059]/10 flex items-center justify-center border border-[#C5A059]/30", children: /* @__PURE__ */ jsx(Layers$1, { className: "text-[#C5A059]", size: 24 }) }),
         /* @__PURE__ */ jsxs("span", { className: "font-serif text-2xl tracking-tight text-white", children: [
           "Artisan",
           /* @__PURE__ */ jsx("span", { className: "text-[#C5A059]", children: "Flow" })
@@ -9597,7 +10326,7 @@ const PublicLayout = ({ children }) => {
     /* @__PURE__ */ jsx("main", { className: "pt-20", children }),
     /* @__PURE__ */ jsx("footer", { className: "border-t border-white/10 py-12 mt-20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Layers, { className: "text-white/30", size: 20 }),
+        /* @__PURE__ */ jsx(Layers$1, { className: "text-white/30", size: 20 }),
         /* @__PURE__ */ jsx("span", { className: "font-serif text-lg text-white/50", children: "ArtisanFlow" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex gap-6 text-sm font-sans font-light text-white/40", children: [
@@ -9902,11 +10631,11 @@ const FinanceHub = () => {
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8", children: [
-          /* @__PURE__ */ jsx(FinanceCard, { title: "Gross Revenue", value: `$${revenue.toFixed(2)}`, trend: "+12.4%", positive: true, icon: DollarSign }),
-          /* @__PURE__ */ jsx(FinanceCard, { title: "COGS (Interconnected)", value: `$${estimatedCOGS.toFixed(2)}`, trend: "-2.1%", positive: true, icon: Package }),
-          /* @__PURE__ */ jsx(FinanceCard, { title: "Net Profit", value: `$${grossProfit.toFixed(2)}`, trend: "+8.5%", positive: true, icon: TrendingUp }),
-          /* @__PURE__ */ jsx(FinanceCard, { title: "Avg. Margin", value: `${margin.toFixed(1)}%`, trend: "Stable", positive: true, icon: Target })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:p-8", children: [
+          /* @__PURE__ */ jsx(FinanceCard, { title: "Gross Revenue", value: `$${revenue.toFixed(2)}`, trend: "+12.4%", positive: true, icon: DollarSign, color: "cyan" }),
+          /* @__PURE__ */ jsx(FinanceCard, { title: "COGS (Interconnected)", value: `$${estimatedCOGS.toFixed(2)}`, trend: "-2.1%", positive: true, icon: Package, color: "magenta" }),
+          /* @__PURE__ */ jsx(FinanceCard, { title: "Net Profit", value: `$${grossProfit.toFixed(2)}`, trend: "+8.5%", positive: true, icon: TrendingUp, color: "emerald" }),
+          /* @__PURE__ */ jsx(FinanceCard, { title: "Avg. Margin", value: `${margin.toFixed(1)}%`, trend: "Stable", positive: true, icon: Target, color: "gold" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12", children: [
           /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2 space-y-12", children: [
@@ -10072,29 +10801,40 @@ const FinanceHub = () => {
     }
   );
 };
-const FinanceCard = ({ title, value, trend, positive, icon: Icon }) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-8 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-500", children: [
-  /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700", children: /* @__PURE__ */ jsx(Icon, { size: 64, className: "text-white" }) }),
-  /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
-    /* @__PURE__ */ jsx("span", { className: "text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]", children: title }),
-    /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: "gold", size: "md", className: "group-hover:scale-110 transition-all duration-500 z-10" })
-  ] }),
-  /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white tracking-tighter mb-4 relative z-10", children: value }),
-  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 relative z-10", children: [
-    positive ? /* @__PURE__ */ jsx(ArrowUpRight, { className: "text-emerald-400", size: 16 }) : /* @__PURE__ */ jsx(ArrowDownRight, { className: "text-red-400", size: 16 }),
-    /* @__PURE__ */ jsx("span", { className: `${positive ? "text-emerald-400" : "text-red-400"} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`, children: trend })
-  ] })
-] });
+const FinanceCard = ({ title, value, trend, positive, icon: Icon, color = "gold" }) => {
+  const glowColors = {
+    cyan: "hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)]",
+    magenta: "hover:border-[#D946EF]/50 hover:bg-[#D946EF]/5 hover:shadow-[0_0_40px_rgba(217,70,239,0.15)]",
+    emerald: "hover:border-[#10B981]/50 hover:bg-[#10B981]/5 hover:shadow-[0_0_40px_rgba(16,185,129,0.15)]",
+    gold: "hover:border-[#C5A059]/50 hover:bg-[#C5A059]/5 hover:shadow-[0_0_40px_rgba(197,160,89,0.15)]",
+    purple: "hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/5 hover:shadow-[0_0_40px_rgba(106,44,145,0.15)]"
+  };
+  return /* @__PURE__ */ jsxs("div", { className: `luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group transition-all duration-500 flex flex-col justify-between ${glowColors[color]}`, children: [
+    /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700", children: /* @__PURE__ */ jsx(Icon, { size: 120, className: `text-${color === "emerald" ? "emerald-400" : color === "cyan" ? "[#06B6D4]" : color === "magenta" ? "[#D946EF]" : color === "purple" ? "[#6A2C91]" : "[#C5A059]"}` }) }),
+    /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-12", children: [
+      /* @__PURE__ */ jsx("span", { className: "text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em] max-w-[60%] leading-relaxed", children: title }),
+      /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color, size: "lg", className: "group-hover:scale-110 transition-all duration-500 z-10 shrink-0" })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("div", { className: "text-4xl lg:text-5xl font-serif text-white tracking-tighter mb-4 relative z-10", children: value }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 relative z-10", children: [
+        positive ? /* @__PURE__ */ jsx(ArrowUpRight, { className: "text-emerald-400", size: 16 }) : /* @__PURE__ */ jsx(ArrowDownRight, { className: "text-red-400", size: 16 }),
+        /* @__PURE__ */ jsx("span", { className: `${positive ? "text-emerald-400" : "text-red-400"} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`, children: trend })
+      ] })
+    ] })
+  ] });
+};
 const ReportButton = ({ label, icon: Icon, onClick }) => /* @__PURE__ */ jsxs(
   "button",
   {
     onClick,
-    className: "w-full flex items-center justify-between p-6 bg-black/40 rounded-3xl border border-white/5 hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/10 transition-all group overflow-hidden relative",
+    className: "w-full flex items-center justify-between p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/10 hover:shadow-[0_0_30px_rgba(106,44,145,0.2)] transition-all group overflow-hidden relative",
     children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 relative z-10", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/40 group-hover:text-[#6A2C91] group-hover:bg-[#6A2C91]/20 transition-all", children: /* @__PURE__ */ jsx(Icon, { size: 18 }) }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-sans font-light text-white/70 group-hover:text-white transition-colors tracking-wide", children: label })
+        /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: "purple", size: "md", className: "group-hover:scale-110 transition-transform duration-500" }),
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-sans font-bold text-white/70 group-hover:text-white transition-colors tracking-widest uppercase", children: label })
       ] }),
-      /* @__PURE__ */ jsx(Download, { className: "text-white/20 group-hover:text-white relative z-10 transition-colors", size: 20 })
+      /* @__PURE__ */ jsx(Download, { className: "text-white/20 group-hover:text-[#6A2C91] relative z-10 transition-colors", size: 20 })
     ]
   }
 );
@@ -11144,7 +11884,7 @@ const OperationsDashboard = () => {
     { id: "inventory", title: "Inventory Hub", icon: Boxes, desc: "Stock overview", color: "text-emerald-600", route: "/inventory", requiredTier: "Artisan Flow Basic" },
     { id: "recipes", title: "Recipes (BOM)", icon: FileText, desc: "Formulas & Costs", color: "text-gray-600", route: "/recipes", requiredTier: "Artisan Flow Basic" },
     { id: "production_scheduler", title: "Scheduler", icon: Calendar, desc: "Daily batches", color: "text-pink-600", route: "/production_scheduler", requiredTier: "Artisan Flow Basic" },
-    { id: "production_workflow", title: "Workflow", icon: Layers, desc: "Kanban active jobs", color: "text-cyan-600", route: "/production_workflow", requiredTier: "Artisan Flow Basic" },
+    { id: "production_workflow", title: "Workflow", icon: Layers$1, desc: "Kanban active jobs", color: "text-cyan-600", route: "/production_workflow", requiredTier: "Artisan Flow Basic" },
     { id: "supplier_manager", title: "Suppliers", icon: Truck, desc: "Vendor database", color: "text-orange-600", route: "/supplier_manager", requiredTier: "Artisan Flow Basic" },
     { id: "qc", title: "Quality Control", icon: ClipboardList, desc: "Pass/Fail logs", color: "text-red-600", route: "/qc", requiredTier: "Artisan Flow Basic" }
   ];

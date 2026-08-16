@@ -401,11 +401,21 @@ export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: bo
     );
 };
 
-export const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => (
-  <div onClick={onClick} className="luxury-card bg-[#1A1A1A] border border-white/5 p-8 rounded-[2rem] hover:border-[#C5A059]/30 transition-all cursor-pointer group">
-    <div className={"$color mb-6"}><Icon size={32} /></div>
-    <h3 className="text-lg font-bold font-playfair text-white mb-2">{title}</h3>
-    <p className="text-xs text-white/50 font-sans leading-relaxed">{desc}</p>
-  </div>
-);
+export const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => {
+  let hoverStyles = "";
+  if (color === 'purple') hoverStyles = "hover:border-purple-500/40 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)]";
+  else if (color === 'cyan') hoverStyles = "hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]";
+  else if (color === 'gold') hoverStyles = "hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.2)]";
+  else if (color === 'magenta') hoverStyles = "hover:border-pink-500/40 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)]";
+  else if (color === 'emerald') hoverStyles = "hover:border-emerald-500/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]";
+  else hoverStyles = "hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]";
+
+  return (
+    <div onClick={onClick} className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] transition-all duration-500 cursor-pointer group flex flex-col h-full ${hoverStyles}`}>
+      <div className="mb-6"><GlassHaloIcon icon={Icon} color={color} size="lg" /></div>
+      <h3 className="text-xl font-serif text-white tracking-tight mb-3 group-hover:text-white/90 transition-colors">{title}</h3>
+      <p className="text-sm font-sans font-light text-white/50 leading-relaxed flex-1">{desc}</p>
+    </div>
+  );
+};
 

@@ -1,107 +1,92 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner, SocialMediaAuthModal } from '../UI';
-import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
+import React, { useState } from 'react';
+import { Card, Button, Input, Select, Badge } from '../UI';
+import { Loader2, Zap, FileText, Globe, Mail, Sparkles, Sliders, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useArtisanData, MarketingPost } from '../DataContext';
-import { generateLolaImage, analyzeLolaImage, chatWithLola } from '../../services/geminiService';
+import { useArtisanData } from '../DataContext';
+import { chatWithLola } from '../../services/geminiService';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GoogleGenAI } from "@google/genai";
 import { SubPageHeader } from '../SubPageHeader';
 import { toast } from 'sonner';
-import { useFeatureGate } from '../../hooks/useFeatureGate';
-import { ContextualTutorialModal } from '../ContextualTutorialModal';
 
 export const AdvancedContentGenerator = () => {
     const navigate = useNavigate();
     const { addMarketingPost } = useArtisanData();
+    const [isGenerating, setIsGenerating] = useState(false);
+    
     const [topic, setTopic] = useState('');
     const [campaignGoal, setCampaignGoal] = useState('Brand Awareness');
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [campaign, setCampaign] = useState<{ blog: string, social: string, email: string } | null>(null);
+    const [activeTab, setActiveTab] = useState<'newsletter' | 'press' | 'landing'>('newsletter');
+    const [wordCount, setWordCount] = useState(500);
+    
+    const [outputs, setOutputs] = useState<{
+        newsletter: string;
+        press: string;
+        landing: string;
+    }>({ newsletter: '', press: '', landing: '' });
 
     const handleGenerate = async () => {
         if (!topic) return toast.error("Please enter a campaign topic.");
         setIsGenerating(true);
-        setCampaign(null);
-        const toastId = toast.loading("Synthesizing multi-platform campaign...");
+        const toastId = toast.loading(`Synthesizing ${activeTab} content...`);
+        
         try {
-            const prompt = `Generate a comprehensive marketing campaign for an artisanal brand. Topic: ${topic}. Goal: ${campaignGoal}.
-            Provide the output in JSON format with three keys: 'blog' (a short blog post draft), 'social' (an Instagram caption), and 'email' (an email newsletter draft).`;
+            let prompt = `Write a comprehensive marketing piece for an artisanal luxury brand. Topic: ${topic}. Goal: ${campaignGoal}. Target word count: ~${wordCount} words. `;
             
+            if (activeTab === 'newsletter') {
+                prompt += "Format as an engaging email newsletter with a subject line, hook, body, and clear Call to Action.";
+            } else if (activeTab === 'press') {
+                prompt += "Format as a formal Press Release (FOR IMMEDIATE RELEASE, Dateline, Headline, body paragraphs, and boilerplate).";
+            } else if (activeTab === 'landing') {
+                prompt += "Format as high-converting Landing Page Copy (Hero headline, sub-headline, 3 key benefits/features, social proof section, and final CTA).";
+            }
+
             const result = await chatWithLola(prompt, null, 'deep');
             
-            try {
-                // Try to parse JSON from the result
-                const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-                if (jsonMatch) {
-                    const parsed = JSON.parse(jsonMatch[0]);
-                    setCampaign(parsed);
-                    toast.success("Campaign synthesis complete.", { id: toastId });
-                } else {
-                    // Fallback if not strict JSON
-                    setCampaign({
-                        blog: "Blog draft generated based on: " + topic,
-                        social: "Social caption generated based on: " + topic,
-                        email: "Email draft generated based on: " + topic
-                    });
-                    toast.info("Campaign generated with partial formatting.", { id: toastId });
-                }
-            } catch (e) {
-                console.error("Failed to parse campaign JSON", e);
-                setCampaign({
-                    blog: result.text.substring(0, 200) + "...",
-                    social: "Check full output for details.",
-                    email: "Check full output for details."
-                });
-                toast.warning("Campaign generated. Manual formatting required.", { id: toastId });
-            }
+            setOutputs(prev => ({
+                ...prev,
+                [activeTab]: result.text
+            }));
+            
+            toast.success("Content synthesis complete.", { id: toastId });
         } catch (error) {
-            console.error("Campaign generation failed", error);
+            console.error("Generation failed", error);
             toast.error("Synthesis failed: Node offline.", { id: toastId });
         } finally {
             setIsGenerating(false);
         }
     };
 
-    const handleSaveCampaign = () => {
-        if (!campaign) return;
+    const handleSave = () => {
+        if (!outputs[activeTab]) return;
         
-        const date = new Date().toISOString();
+        addMarketingPost({
+            platform: activeTab === 'newsletter' ? 'Email' : 'Blog',
+            topic: `${topic} - ${activeTab.toUpperCase()}`,
+            content: outputs[activeTab],
+            scheduledDate: new Date().toISOString().split('T')[0],
+            status: 'Draft',
+            type: 'Text'
+        });
         
-        if (campaign.blog) {
-            addMarketingPost({
-                platform: 'Blog',
-                topic: `${topic} - Blog`,
-                content: campaign.blog,
-                scheduledDate: date,
-                status: 'Draft',
-                type: 'Text'
-            });
-        }
-        if (campaign.social) {
-            addMarketingPost({
-                platform: 'Instagram',
-                topic: `${topic} - Social`,
-                content: campaign.social,
-                scheduledDate: date,
-                status: 'Draft',
-                type: 'Text'
-            });
-        }
-        if (campaign.email) {
-            addMarketingPost({
-                platform: 'Email',
-                topic: `${topic} - Newsletter`,
-                content: campaign.email,
-                scheduledDate: date,
-                status: 'Draft',
-                type: 'Text'
-            });
-        }
-        
-        toast.success("Campaign assets saved to Drafts.");
+        toast.success(`Saved ${activeTab} to Drafts.`);
         navigate('/marketing/calendar');
     };
+
+    const renderSlider = () => (
+        <div className="space-y-3">
+            <div className="flex justify-between text-[10px] font-sans font-medium uppercase tracking-widest text-gray-500">
+                <span>Target Length</span>
+                <span className="text-[#C5A059] font-bold">{wordCount} words</span>
+            </div>
+            <input 
+                type="range" 
+                min="100" max="2000" step="100"
+                value={wordCount} 
+                onChange={(e) => setWordCount(parseInt(e.target.value))}
+                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#C5A059]"
+            />
+        </div>
+    );
 
     return (
         <motion.div 
@@ -109,80 +94,127 @@ export const AdvancedContentGenerator = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="p-6 space-y-12 pb-20 max-w-7xl mx-auto"
+            className="p-4 sm:p-8 space-y-12 pb-20 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
-                  title="Advanced Synthesis"
+                  title="Advanced Generator"
                   parentTitle="Marketing Hub"
                   onBack={() => navigate('/marketing')}
-                  description="Deep cognitive multi-platform campaign generation."
+                  description="Long-form cognitive synthesis for email, press, and web."
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-10">
-                <Card title="Campaign Parameters" className="luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/40 backdrop-blur-xl">
-                    <div className="space-y-8 mt-4">
-                        <div>
-                            <label className="block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1">Core Topic / Product</label>
-                            <Input value={topic} onChange={(e) => setTopic(e.target.value)} placeholder="e.g., Summer Solstice Collection Launch" className="h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm" />
-                        </div>
-                        <div>
-                            <label className="block text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em] mb-3 ml-1">Campaign Goal</label>
-                            <Select value={campaignGoal} onChange={(e) => setCampaignGoal(e.target.value)} className="h-14 rounded-2xl bg-black/40 border-white/10 focus:bg-black/60 focus:border-[#6A2C91] focus:ring-[#6A2C91]/20 font-sans font-light text-sm text-white shadow-sm">
-                                <option className="bg-black">Brand Awareness</option>
-                                <option className="bg-black">Lead Generation</option>
-                                <option className="bg-black">Direct Sales</option>
-                                <option className="bg-black">Customer Retention</option>
-                            </Select>
-                        </div>
-                        <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-black/20 transition-all">
-                            {isGenerating ? <Loader2 className="animate-spin" /> : 'Synthesize Campaign'}
-                        </Button>
-                    </div>
-                </Card>
-
-                <Card title="Generated Assets" className="luxury-card border-white/10 rounded-3xl p-4 sm:p-8 bg-black/20 backdrop-blur-xl">
-                    {campaign ? (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="space-y-8"
-                        >
-                            <div className="space-y-4">
-                                <div>
-                                    <h4 className="text-[11px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em] mb-3 ml-1">Blog Post Draft</h4>
-                                    <div className="p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap max-h-40 overflow-y-auto shadow-sm">
-                                        {campaign.blog}
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 className="text-[11px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em] mb-3 ml-1">Instagram Caption</h4>
-                                    <div className="p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap max-h-32 overflow-y-auto shadow-sm">
-                                        {campaign.social}
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 className="text-[11px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em] mb-3 ml-1">Email Newsletter</h4>
-                                    <div className="p-6 bg-black/40 rounded-2xl border border-white/10 text-sm font-sans font-light text-gray-300 whitespace-pre-wrap max-h-40 overflow-y-auto shadow-sm">
-                                        {campaign.email}
-                                    </div>
-                                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Configuration Panel */}
+                <div className="lg:col-span-4 space-y-6">
+                    <Card className="luxury-card border-white/10 rounded-3xl p-6 sm:p-8 bg-black/40 backdrop-blur-xl">
+                        <div className="space-y-8">
+                            <div>
+                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                    <Sparkles size={14} className="mr-2 text-magenta-500" /> Core Topic / Campaign
+                                </label>
+                                <textarea 
+                                    value={topic} 
+                                    onChange={(e) => setTopic(e.target.value)} 
+                                    placeholder="e.g., Summer Solstice Collection Launch" 
+                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-sans font-light focus:bg-white/10 focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]/30 h-28 resize-none transition-all outline-none text-white shadow-sm" 
+                                />
                             </div>
-                            <Button onClick={handleSaveCampaign} className="w-full bg-[#6A2C91] hover:bg-[#552374] text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#6A2C91]/20 transition-all mt-6">
-                                Save All to Drafts
+                            
+                            <div>
+                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                    <Globe size={14} className="mr-2 text-blue-400" /> Campaign Goal
+                                </label>
+                                <Select value={campaignGoal} onChange={(e) => setCampaignGoal(e.target.value)} className="h-14 rounded-2xl bg-white/5 border-white/10 text-white font-sans text-sm shadow-sm">
+                                    <option className="bg-black">Brand Awareness</option>
+                                    <option className="bg-black">Lead Generation</option>
+                                    <option className="bg-black">Direct Sales</option>
+                                    <option className="bg-black">Customer Retention</option>
+                                </Select>
+                            </div>
+                            
+                            <div className="p-5 bg-white/5 border border-white/10 rounded-2xl">
+                                {renderSlider()}
+                            </div>
+
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none transition-all">
+                                {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Zap size={14} className="mr-2" />}
+                                {isGenerating ? "Synthesizing..." : `Generate ${activeTab}`}
                             </Button>
-                        </motion.div>
-                    ) : (
-                        <div className="h-full flex flex-col items-center justify-center py-32 opacity-30 text-center">
-                            <Zap size={64} strokeWidth={1} className="text-white mb-6" />
-                            <p className="text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.2em]">Awaiting Parameters</p>
                         </div>
-                    )}
-                </Card>
+                    </Card>
+                </div>
+
+                {/* Output Panel */}
+                <div className="lg:col-span-8 flex flex-col h-full min-h-[600px]">
+                    <Card className="flex-1 border-white/10 rounded-3xl p-0 bg-black/20 backdrop-blur-xl flex flex-col overflow-hidden shadow-2xl">
+                        
+                        {/* Tab Headers */}
+                        <div className="h-16 bg-[#111] border-b border-white/10 flex items-center px-4 gap-2">
+                            <button 
+                                onClick={() => setActiveTab('newsletter')}
+                                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'newsletter' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
+                            >
+                                <Mail size={16} /> Newsletter
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('press')}
+                                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'press' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
+                            >
+                                <FileText size={16} /> Press Release
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('landing')}
+                                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'landing' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
+                            >
+                                <Globe size={16} /> Landing Page
+                            </button>
+                        </div>
+
+                        {/* Editor Area */}
+                        <div className="flex-1 p-6 bg-black/40 overflow-y-auto">
+                            <AnimatePresence mode="wait">
+                                <motion.div 
+                                    key={activeTab}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="h-full"
+                                >
+                                    {outputs[activeTab] ? (
+                                        <textarea 
+                                            value={outputs[activeTab]}
+                                            onChange={(e) => setOutputs({...outputs, [activeTab]: e.target.value})}
+                                            className="w-full h-full min-h-[400px] bg-transparent border-none text-gray-300 font-sans text-sm leading-relaxed resize-none focus:outline-none"
+                                        />
+                                    ) : (
+                                        <div className="h-full flex flex-col items-center justify-center py-20 opacity-30 text-center">
+                                            {activeTab === 'newsletter' && <Mail size={64} className="text-white mb-6" />}
+                                            {activeTab === 'press' && <FileText size={64} className="text-white mb-6" />}
+                                            {activeTab === 'landing' && <Globe size={64} className="text-white mb-6" />}
+                                            <p className="text-[11px] font-sans font-medium text-white uppercase tracking-[0.2em]">Awaiting {activeTab} parameters</p>
+                                        </div>
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Action Footer */}
+                        <div className="h-20 bg-[#111] border-t border-white/10 flex items-center justify-between px-6 shrink-0">
+                            <Badge color="gray">Est. Length: {outputs[activeTab] ? outputs[activeTab].split(' ').length : 0} words</Badge>
+                            <Button 
+                                onClick={handleSave} 
+                                disabled={!outputs[activeTab]}
+                                className="bg-[#6A2C91] hover:bg-[#552374] text-white h-12 px-8 rounded-xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none"
+                            >
+                                <CheckCircle size={14} className="mr-2" /> Save {activeTab} to Drafts
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
             </div>
         </motion.div>
     );
 };
-

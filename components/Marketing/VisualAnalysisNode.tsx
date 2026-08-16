@@ -1,49 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner, SocialMediaAuthModal } from '../UI';
-import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
+import React, { useState } from 'react';
+import { Card, Button, FileUploader, Badge } from '../UI';
+import { Eye, TrendingUp, BarChart3, Activity, Download, Instagram, Film, FileText, ArrowRight, DollarSign, Package } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useArtisanData, MarketingPost } from '../DataContext';
-import { generateLolaImage, analyzeLolaImage, chatWithLola } from '../../services/geminiService';
-import { motion, AnimatePresence } from 'framer-motion';
-import { GoogleGenAI } from "@google/genai";
+import { useArtisanData } from '../DataContext';
+import { motion } from 'framer-motion';
 import { SubPageHeader } from '../SubPageHeader';
-import { toast } from 'sonner';
-import { useFeatureGate } from '../../hooks/useFeatureGate';
-import { ContextualTutorialModal } from '../ContextualTutorialModal';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line, ComposedChart, Bar } from 'recharts';
+
+const mockChartData = [
+  { name: 'Mon', revenue: 1200, reach: 4500, inventory: 500 },
+  { name: 'Tue', revenue: 1900, reach: 8200, inventory: 450 },
+  { name: 'Wed', revenue: 1500, reach: 6100, inventory: 420 },
+  { name: 'Thu', revenue: 2800, reach: 12000, inventory: 380 },
+  { name: 'Fri', revenue: 3400, reach: 18500, inventory: 290 },
+  { name: 'Sat', revenue: 4100, reach: 24000, inventory: 150 },
+  { name: 'Sun', revenue: 3800, reach: 21000, inventory: 80 },
+];
+
+const ProgressBar = ({ label, icon: Icon, percentage, color }: any) => (
+  <div className="space-y-2">
+    <div className="flex justify-between items-center text-sm">
+      <div className="flex items-center gap-2 text-white/80">
+        <Icon size={14} className={color} />
+        <span className="font-sans">{label}</span>
+      </div>
+      <span className="text-white/50 font-mono">{percentage}%</span>
+    </div>
+    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+      <div className={`h-full ${color.replace('text-', 'bg-')} transition-all duration-1000`} style={{ width: `${percentage}%` }} />
+    </div>
+  </div>
+);
 
 export const VisualAnalysisNode = () => {
     const navigate = useNavigate();
-    const [file, setFile] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
-    const [analysis, setAnalysis] = useState<string | null>(null);
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [prompt, setPrompt] = useState('Analyze this artisanal product for brand alignment and visual quality.');
-
-    const handleFileChange = (files: File[]) => {
-        if (files[0]) {
-            setFile(files[0]);
-            const reader = new FileReader();
-            reader.onloadend = () => setPreview(reader.result as string);
-            reader.readAsDataURL(files[0]);
-        }
-    };
-
-    const runAnalysis = async () => {
-        if (!preview) return;
-        setIsAnalyzing(true);
-        const toastId = toast.loading("Initializing visual audit node...");
-        try {
-            const result = await analyzeLolaImage(preview, prompt);
-            setAnalysis(result);
-            toast.success("Visual audit complete.", { id: toastId });
-        } catch (error) {
-            console.error("Analysis failed", error);
-            setAnalysis("Error: Synthesis node offline. Verify vault authorization.");
-            toast.error("Audit failed: Synthesis node offline.", { id: toastId });
-        } finally {
-            setIsAnalyzing(false);
-        }
-    };
 
     return (
         <motion.div 
@@ -51,72 +41,90 @@ export const VisualAnalysisNode = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-16 pb-32 max-w-7xl mx-auto"
+            className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
                   title="Visual Analyst"
                   parentTitle="Marketing Hub"
                   onBack={() => navigate('/marketing')}
-                  description="Audit artisanal assets with Gemini 3 Pro Vision"
+                  description="Performance metrics dashboard and cross-channel campaign analysis."
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-12">
-                <Card title="Source Asset Ingestion" className="luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl">
-                    <div className="space-y-10">
-                        <FileUploader onUpload={handleFileChange} acceptedFormats=".jpg, .jpeg, .png" label="Drop product photo for audit" />
-                        {preview && (
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.98 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                className="space-y-10"
-                            >
-                                <div className="aspect-video rounded-[2rem] overflow-hidden border border-white/10 shadow-xl shadow-black/5">
-                                    <img src={preview} className="w-full h-full object-cover" />
-                                </div>
-                                <div className="space-y-4">
-                                    <label className="text-[11px] font-sans font-medium text-gray-500 uppercase tracking-[0.3em] ml-1">Analysis Focus</label>
-                                    <textarea 
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-base font-sans font-light focus:bg-black/60 focus:border-[#6A2C91] focus:ring-1 focus:ring-[#6A2C91]/10 h-40 resize-none transition-all duration-500 shadow-sm outline-none text-white"
-                                        value={prompt}
-                                        onChange={e => setPrompt(e.target.value)}
-                                        placeholder="Define the parameters for the visual audit..."
-                                    />
-                                </div>
-                                <Button onClick={runAnalysis} disabled={isAnalyzing} className="w-full bg-[#C5A059] hover:bg-[#b08d4f] text-white h-16 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all duration-500">
-                                    {isAnalyzing ? <Loader2 className="animate-spin" /> : 'INITIALIZE VISUAL AUDIT'}
-                                </Button>
-                            </motion.div>
-                        )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <div className="flex items-center justify-between mb-4">
+                        <Badge color="gold">Campaign Reach</Badge>
+                        <TrendingUp size={16} className="text-[#C5A059]" />
+                    </div>
+                    <div className="text-4xl font-serif text-white mb-2">124.5K</div>
+                    <div className="text-xs text-white/50 uppercase tracking-widest">+14% vs last week</div>
+                </Card>
+                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <div className="flex items-center justify-between mb-4">
+                        <Badge color="purple">Avg. Engagement</Badge>
+                        <Activity size={16} className="text-purple-500" />
+                    </div>
+                    <div className="text-4xl font-serif text-white mb-2">8.2%</div>
+                    <div className="text-xs text-white/50 uppercase tracking-widest">+2.1% across channels</div>
+                </Card>
+                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <div className="flex items-center justify-between mb-4">
+                        <Badge color="green">Revenue Attribution</Badge>
+                        <DollarSign size={16} className="text-emerald-500" />
+                    </div>
+                    <div className="text-4xl font-serif text-white mb-2">$18,450</div>
+                    <div className="text-xs text-white/50 uppercase tracking-widest">From trackable social links</div>
+                </Card>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <Card className="lg:col-span-2 p-8 bg-black/40 border-white/5 backdrop-blur-xl" title="Correlation Matrix: Sales vs Inventory Burn vs Campaign Reach">
+                    <div className="h-80 w-full mt-8">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <ComposedChart data={mockChartData}>
+                                <defs>
+                                    <linearGradient id="colorReach" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#C5A059" stopOpacity={0.3}/>
+                                        <stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
+                                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.4)', fontSize: 12}} dy={10} />
+                                <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.4)', fontSize: 12}} />
+                                <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.4)', fontSize: 12}} />
+                                <Tooltip 
+                                    contentStyle={{ backgroundColor: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '1rem' }}
+                                    itemStyle={{ color: '#fff' }}
+                                />
+                                <Area yAxisId="left" type="monotone" dataKey="reach" fill="url(#colorReach)" stroke="#C5A059" strokeWidth={2} name="Social Reach" />
+                                <Bar yAxisId="left" dataKey="revenue" fill="#6A2C91" radius={[4, 4, 0, 0]} maxBarSize={40} name="Square Sales ($)" />
+                                <Line yAxisId="right" type="monotone" dataKey="inventory" stroke="#10b981" strokeWidth={3} dot={{r: 4, fill: '#10b981'}} name="Inventory Stock" />
+                            </ComposedChart>
+                        </ResponsiveContainer>
                     </div>
                 </Card>
 
-                <Card title="Synaptic Analysis Report" className="luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/20 backdrop-blur-xl">
-                    {analysis ? (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="prose prose-invert max-w-none"
-                        >
-                            <div className="bg-black/40 p-4 sm:p-8 rounded-3xl border border-white/10 shadow-sm">
-                                <p className="text-gray-300 leading-relaxed font-sans font-light text-lg whitespace-pre-wrap">
-                                    {analysis}
-                                </p>
-                            </div>
-                        </motion.div>
-                    ) : (
-                        <div className="h-full flex flex-col items-center justify-center py-40 opacity-20 text-center">
-                            <Eye size={80} strokeWidth={0.8} className="text-white mb-8" />
-                            <p className="text-[12px] font-sans font-medium text-gray-500 uppercase tracking-[0.4em]">Awaiting Input Mesh</p>
+                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl" title="Channel Conversion Breakdown">
+                    <div className="mt-8 space-y-8">
+                        <ProgressBar label="Instagram Feed & Reels" icon={Instagram} percentage={45} color="text-pink-500" />
+                        <ProgressBar label="TikTok Campaigns" icon={Film} percentage={35} color="text-white" />
+                        <ProgressBar label="SEO Blog / Organic Search" icon={FileText} percentage={15} color="text-emerald-500" />
+                        <ProgressBar label="Email Newsletters" icon={BarChart3} percentage={5} color="text-[#C5A059]" />
+                    </div>
+                    
+                    <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10">
+                        <div className="flex items-center gap-3 mb-4">
+                            <Eye className="text-[#C5A059]" size={20} />
+                            <h4 className="text-white font-serif tracking-tight">AI Insight</h4>
                         </div>
-                    )}
+                        <p className="text-sm font-sans font-light text-white/70 leading-relaxed">
+                            Your recent TikTok campaign caused a 40% spike in inventory burn rate for "Rosehip Oil". Consider throttling ad spend to prevent stockout before the weekend.
+                        </p>
+                    </div>
                 </Card>
             </div>
         </motion.div>
     );
 };
-
-// --- MAIN MARKETING STUDIO HUB ---
