@@ -67,6 +67,11 @@ export const LandingPage = () => {
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
             
+            {/* Top VIP Announcement Banner */}
+            <div className="w-full bg-gradient-to-r from-[#06B6D4]/15 via-[#A855F7]/15 to-[#C5A059]/15 border-b border-white/10 text-center flex items-center justify-center gap-2 text-sm font-semibold tracking-wide py-2.5 px-6 z-50 relative text-[#C5A059]">
+                <Sparkles size={16} /> VIP Launch: September 1st
+            </div>
+
             {/* Nav */}
             <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
                 <div className="flex items-center">
@@ -85,9 +90,6 @@ export const LandingPage = () => {
                     
                     {/* Left Column: Copy & Form */}
                     <div className="text-left space-y-8 relative z-10">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20 text-[#C5A059] text-xs font-bold uppercase tracking-widest shadow-lg">
-                            <Sparkles size={14} /> VIP Launch: September 1st
-                        </div>
                         <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
                             Precision Manufacturing <br/> For <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Artisanal</span> Brands
                         </h1>
@@ -112,7 +114,7 @@ export const LandingPage = () => {
                                             <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest">🔒 VIP Spots Claimed: 74 / 100</span>
                                         </div>
                                         <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                                            <div className="h-full bg-gradient-to-r from-[#C5A059] to-[#E2C792] rounded-full" style={{ width: '74%' }}></div>
+                                            <div className="h-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_15px_rgba(168,85,247,0.4)] rounded-full" style={{ width: '74%' }}></div>
                                         </div>
                                     </div>
                                     <h3 className="text-xl font-bold text-white mb-4">Secure Your VIP Spot</h3>
@@ -181,7 +183,7 @@ export const LandingPage = () => {
                 {/* Anti-Spreadsheet Comparison Section */}
                 <div className="mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-black text-white tracking-tight uppercase mb-4">The Anti-Spreadsheet OS for Modern Makers</h2>
+                        <h2 className="text-3xl font-black text-white tracking-tight uppercase mb-4">The Anti-Spreadsheet <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">OS for Modern Makers</span></h2>
                         <p className="text-gray-400 text-lg max-w-2xl mx-auto">Why artisans are ditching legacy inventory sheets for automated precision.</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-8">
@@ -214,6 +216,9 @@ export const LandingPage = () => {
                 <div className="mt-20 w-full max-w-6xl relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Built For Industrial Manufacturing Precision</h2>
+                        <span className="inline-block mt-2 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-white/[0.05] border border-[#C5A059]/40 text-[#C5A059] shadow-sm">
+                           Designed by a Maker, Built for Makers
+                        </span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {/* Recipe Builder */}

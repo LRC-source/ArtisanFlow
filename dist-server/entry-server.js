@@ -8296,6 +8296,10 @@ const LandingPage = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#0d0d0d] relative overflow-hidden flex flex-col font-sans", children: [
     /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
     /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
+    /* @__PURE__ */ jsxs("div", { className: "w-full bg-gradient-to-r from-[#06B6D4]/15 via-[#A855F7]/15 to-[#C5A059]/15 border-b border-white/10 text-center flex items-center justify-center gap-2 text-sm font-semibold tracking-wide py-2.5 px-6 z-50 relative text-[#C5A059]", children: [
+      /* @__PURE__ */ jsx(Sparkles, { size: 16 }),
+      " VIP Launch: September 1st"
+    ] }),
     /* @__PURE__ */ jsxs("nav", { className: "w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0", children: [
       /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx("img", { src: "/LOGO%20Official-Trans.png", alt: "ArtisanFlow Logo", className: "h-16 w-auto object-contain" }) }),
       /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setView("login"), className: "h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase", children: "Sign In" }) })
@@ -8303,10 +8307,6 @@ const LandingPage = () => {
     /* @__PURE__ */ jsxs("main", { className: "flex-1 flex flex-col items-center justify-start p-6 z-10 mt-12 relative w-full max-w-7xl mx-auto", children: [
       /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-12 items-center w-full", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-left space-y-8 relative z-10", children: [
-          /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20 text-[#C5A059] text-xs font-bold uppercase tracking-widest shadow-lg", children: [
-            /* @__PURE__ */ jsx(Sparkles, { size: 14 }),
-            " VIP Launch: September 1st"
-          ] }),
           /* @__PURE__ */ jsxs("h1", { className: "text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]", children: [
             "Precision Manufacturing ",
             /* @__PURE__ */ jsx("br", {}),
@@ -8322,7 +8322,7 @@ const LandingPage = () => {
           ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
               /* @__PURE__ */ jsx("div", { className: "flex justify-between items-center mb-2", children: /* @__PURE__ */ jsx("span", { className: "text-xs font-bold text-[#C5A059] uppercase tracking-widest", children: "🔒 VIP Spots Claimed: 74 / 100" }) }),
-              /* @__PURE__ */ jsx("div", { className: "h-1 w-full bg-white/10 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "h-full bg-gradient-to-r from-[#C5A059] to-[#E2C792] rounded-full", style: { width: "74%" } }) })
+              /* @__PURE__ */ jsx("div", { className: "h-1 w-full bg-white/10 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "h-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_15px_rgba(168,85,247,0.4)] rounded-full", style: { width: "74%" } }) })
             ] }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-4", children: "Secure Your VIP Spot" }),
             /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
@@ -8392,7 +8392,10 @@ const LandingPage = () => {
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-12", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-black text-white tracking-tight uppercase mb-4", children: "The Anti-Spreadsheet OS for Modern Makers" }),
+          /* @__PURE__ */ jsxs("h2", { className: "text-3xl font-black text-white tracking-tight uppercase mb-4", children: [
+            "The Anti-Spreadsheet ",
+            /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "OS for Modern Makers" })
+          ] }),
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg max-w-2xl mx-auto", children: "Why artisans are ditching legacy inventory sheets for automated precision." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
@@ -8441,7 +8444,10 @@ const LandingPage = () => {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mt-20 w-full max-w-6xl relative z-10", children: [
-        /* @__PURE__ */ jsx("div", { className: "text-center mb-16", children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }) }),
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }),
+          /* @__PURE__ */ jsx("span", { className: "inline-block mt-2 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-white/[0.05] border border-[#C5A059]/40 text-[#C5A059] shadow-sm", children: "Designed by a Maker, Built for Makers" })
+        ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
           /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
             /* @__PURE__ */ jsx("div", { className: "bg-[#C5A059]/10 p-3 rounded-xl mb-4 border border-[#C5A059]/20", children: /* @__PURE__ */ jsx(Activity, { size: 24, className: "text-[#C5A059]" }) }),
