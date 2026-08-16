@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Button, Badge, VaultBanner } from './UI';
 import { Plus, Edit2, Trash2, Box, ArrowLeft, Layers, TrendingUp, DollarSign, Clock, ChevronRight, Zap, Target } from 'lucide-react';
 import { useArtisanData } from './DataContext';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
@@ -43,9 +44,7 @@ export const Recipes = () => {
 
       {recipes.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-24 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
-              <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-white/20 mb-6 shadow-inner border border-white/10">
-                  <Box size={40} />
-              </div>
+              <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-6" />
               <h3 className="text-3xl font-serif tracking-tight text-white/50 mb-2">Vault Empty</h3>
               <p className="text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1">Initialize your first Bill of Materials to start tracking margins.</p>
               <Button onClick={() => navigate('/recipes/builder')} className="mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">LAUNCH BUILDER</Button>
@@ -56,9 +55,7 @@ export const Recipes = () => {
                   <div key={recipe.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#6A2C91]/50 transition-all group relative overflow-hidden">
                       <div className="flex justify-between items-start mb-8 relative z-10">
                           <div className="flex items-center gap-6">
-                              <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:bg-white/10 transition-colors">
-                                  <Layers size={28} />
-                              </div>
+                              <GlassHaloIcon icon={Layers} color="purple" size="md" />
                               <div>
                                   <h3 className="text-3xl font-serif text-white tracking-tight">{recipe.name}</h3>
                                   <Badge color="purple" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">V{recipe.version} SKU: {recipe.sku}</Badge>

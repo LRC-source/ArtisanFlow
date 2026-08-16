@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Button, Badge } from './UI';
 import { Activity, TrendingUp, DollarSign, ArrowRight, Sparkles, Box, Plus, ShoppingBag, ShieldCheck, BarChart3, Package, Factory } from 'lucide-react';
 import { useArtisanData } from './DataContext';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 /**
@@ -205,8 +206,8 @@ const QuickAccessCard = ({ icon: Icon, color, title, desc, image, action }: any)
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-            <div className="absolute top-6 left-6 w-14 h-14 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <Icon className={color} size={24} strokeWidth={1.5} />
+            <div className="absolute top-6 left-6 group-hover:scale-110 transition-transform duration-500">
+                <GlassHaloIcon icon={Icon} color={color === 'text-emerald-400' ? 'emerald' : color === 'text-purple-400' ? 'purple' : color === 'text-[#C5A059]' ? 'gold' : color === 'text-blue-400' ? 'cyan' : 'cyan'} size="md" />
             </div>
         </div>
 

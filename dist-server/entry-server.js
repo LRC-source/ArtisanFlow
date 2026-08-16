@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { useNavigate, useLocation, useParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, Factory, User, TrendingUp, Package, Activity, DollarSign, Layers, LogOut, Hexagon, Search, Bell, RefreshCw, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Cpu, Server, BarChart3, PieChart, Clock, Box, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
+import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, Factory, User, TrendingUp, Package, Activity, DollarSign, Layers, LogOut, Hexagon, Search, Bell, RefreshCw, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, Server, BarChart3, CheckCircle2, Cpu, PieChart, Clock, Box, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, Tooltip, Area, LineChart, Line, YAxis, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend, Bar } from "recharts";
 import { toast, Toaster } from "sonner";
 import { initializeApp } from "firebase/app";
@@ -1867,7 +1867,7 @@ function Layout({ children }) {
         )
       ] }),
       /* @__PURE__ */ jsx("div", { className: "flex-1 p-4 sm:p-6 md:p-4 sm:p-12 max-w-7xl mx-auto relative z-10 w-full overflow-x-hidden", children }),
-      /* @__PURE__ */ jsxs("footer", { className: "w-full py-6 mt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-white/60 font-bold bg-[#0A0A0A] z-20 sticky bottom-0", children: [
+      /* @__PURE__ */ jsxs("footer", { className: "w-full py-6 mt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-white/60 font-bold bg-[#0A0A0A] z-20", children: [
         /* @__PURE__ */ jsx("span", { children: "© 2026 LRC ArtisanFlow. All rights reserved." }),
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
           /* @__PURE__ */ jsx("span", { className: "hover:text-[#C5A059] cursor-pointer transition-colors", onClick: () => navigate("/terms"), children: "Terms & Conditions" }),
@@ -4624,9 +4624,16 @@ const Integrations = () => {
             children: [
               /* @__PURE__ */ jsx("div", { className: "absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full group-hover:bg-[#6A2C91]/10 transition-colors duration-700 pointer-events-none" }),
               /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-8 relative z-10", children: [
-                /* @__PURE__ */ jsxs("div", { className: "p-6 bg-white/5 rounded-2xl border border-white/10 w-24 h-24 flex items-center justify-center group-hover:bg-white/10 group-hover:border-[#6A2C91]/30 transition-all duration-500 shadow-sm relative overflow-hidden", children: [
-                  /* @__PURE__ */ jsx("span", { className: "font-serif text-3xl text-white/80 group-hover:text-white transition-colors", children: int.name.charAt(0) }),
-                  int.status === "Connected" && /* @__PURE__ */ jsx("div", { className: "absolute -top-1 -right-1 bg-emerald-500 text-black rounded-full p-1 border-2 border-black shadow-sm animate-in zoom-in duration-300", children: /* @__PURE__ */ jsx(CheckCircle2, { size: 12 }) })
+                /* @__PURE__ */ jsxs("div", { className: "relative group-hover:scale-110 transition-transform duration-500 mb-6", children: [
+                  /* @__PURE__ */ jsx(
+                    GlassHaloIcon,
+                    {
+                      icon: int.category === "E-commerce" ? ShoppingBag : int.category === "Marketplace" ? Globe : int.category === "Wholesale" ? Layers : int.category === "POS" ? CreditCard : int.category === "System" ? Server : int.category === "Payment" ? CreditCard : int.category === "Accounting" ? BarChart3 : Layers,
+                      color: "cyan",
+                      size: "md"
+                    }
+                  ),
+                  int.status === "Connected" && /* @__PURE__ */ jsx("div", { className: "absolute -top-1 -right-1 bg-emerald-500 text-black rounded-full p-1 border-2 border-black shadow-sm animate-in zoom-in duration-300 z-20", children: /* @__PURE__ */ jsx(CheckCircle2, { size: 12 }) })
                 ] }),
                 int.status === "Connected" ? /* @__PURE__ */ jsxs(Badge, { color: "green", className: "uppercase font-sans font-bold text-[9px] tracking-widest px-3 py-1 flex items-center gap-1.5 shadow-sm border-emerald-500/20", children: [
                   /* @__PURE__ */ jsx(Activity, { size: 10, className: "animate-pulse" }),
@@ -5125,7 +5132,7 @@ const QuickAccessCard = ({ icon: Icon, color, title, desc, image, action }) => /
           }
         ),
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" }),
-        /* @__PURE__ */ jsx("div", { className: "absolute top-6 left-6 w-14 h-14 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500", children: /* @__PURE__ */ jsx(Icon, { className: color, size: 24, strokeWidth: 1.5 }) })
+        /* @__PURE__ */ jsx("div", { className: "absolute top-6 left-6 group-hover:scale-110 transition-transform duration-500", children: /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: color === "text-emerald-400" ? "emerald" : color === "text-purple-400" ? "purple" : color === "text-[#C5A059]" ? "gold" : color === "text-blue-400" ? "cyan" : "cyan", size: "md" }) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-12 flex flex-col flex-1", children: [
         /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-0 w-full h-1 bg-white/5 group-hover:bg-[#C5A059] transition-colors duration-500" }),
@@ -6653,7 +6660,7 @@ const ProductionWorkflow = () => {
     /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-xl font-bold text-white mb-6", children: "Active Formulations Ready for Production" }),
       recipes.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Clock, { size: 32, className: "text-gray-400" }) }),
+        /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Clock, color: "purple", size: "lg", className: "mb-4" }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-500", children: "No active production formulas found. Create one in Recipes." })
       ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: recipes.map((recipe) => /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_15px_rgba(6,182,212,0.15)] flex flex-col justify-between", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0A0A0A] backdrop-blur-3xl border-none p-6 rounded-[1.5rem] flex flex-col justify-between h-full", children: [
         /* @__PURE__ */ jsxs("div", { children: [
@@ -7028,14 +7035,14 @@ const Recipes = () => {
       /* @__PURE__ */ jsx(StatBox, { label: "Production Ready", val: "12 SKU", color: "text-amber-400", icon: Zap })
     ] }),
     recipes.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "luxury-card border-white/10 rounded-[2.5rem] p-24 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl", children: [
-      /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-white/20 mb-6 shadow-inner border border-white/10", children: /* @__PURE__ */ jsx(Box, { size: 40 }) }),
+      /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Box, color: "cyan", size: "lg", className: "mb-6" }),
       /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif tracking-tight text-white/50 mb-2", children: "Vault Empty" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1", children: "Initialize your first Bill of Materials to start tracking margins." }),
       /* @__PURE__ */ jsx(Button, { onClick: () => navigate("/recipes/builder"), className: "mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10", children: "LAUNCH BUILDER" })
     ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8", children: recipes.map((recipe) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#6A2C91]/50 transition-all group relative overflow-hidden", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-8 relative z-10", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:bg-white/10 transition-colors", children: /* @__PURE__ */ jsx(Layers, { size: 28 }) }),
+          /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers, color: "purple", size: "md" }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white tracking-tight", children: recipe.name }),
             /* @__PURE__ */ jsxs(Badge, { color: "purple", className: "text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10", children: [

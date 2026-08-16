@@ -326,7 +326,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
           {children}
         </div>
         
-        <footer className="w-full py-6 mt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-white/60 font-bold bg-[#0A0A0A] z-20 sticky bottom-0">
+        <footer className="w-full py-6 mt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-white/60 font-bold bg-[#0A0A0A] z-20">
             <span>© 2026 LRC ArtisanFlow. All rights reserved.</span>
             <div className="flex items-center gap-6">
                 <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>

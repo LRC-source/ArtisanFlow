@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Minimize2 } from 'lucide-react';
+import { MessageSquare, X, Send, Minimize2, Sparkles } from 'lucide-react';
 import { chatWithLola } from '../services/geminiService';
 import { COLORS } from '../constants';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';

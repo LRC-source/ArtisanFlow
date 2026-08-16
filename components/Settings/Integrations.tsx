@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { ContextualTutorialModal } from '../ContextualTutorialModal';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
 import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
+import { GlassHaloIcon } from '../ui/GlassHaloIcon';
 import { useArtisanData, Integration, UserTier } from '../DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PaymentGateway } from '../Auth';
@@ -124,10 +125,22 @@ export const Integrations = () => {
                         <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full group-hover:bg-[#6A2C91]/10 transition-colors duration-700 pointer-events-none"></div>
                         
                         <div className="flex justify-between items-start mb-8 relative z-10">
-                            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 w-24 h-24 flex items-center justify-center group-hover:bg-white/10 group-hover:border-[#6A2C91]/30 transition-all duration-500 shadow-sm relative overflow-hidden">
-                                <span className="font-serif text-3xl text-white/80 group-hover:text-white transition-colors">{int.name.charAt(0)}</span>
+                            <div className="relative group-hover:scale-110 transition-transform duration-500 mb-6">
+                                <GlassHaloIcon 
+                                    icon={
+                                        int.category === 'E-commerce' ? ShoppingBag :
+                                        int.category === 'Marketplace' ? Globe :
+                                        int.category === 'Wholesale' ? Layers :
+                                        int.category === 'POS' ? CreditCard :
+                                        int.category === 'System' ? Server :
+                                        int.category === 'Payment' ? CreditCard :
+                                        int.category === 'Accounting' ? BarChart3 : Layers
+                                    } 
+                                    color="cyan" 
+                                    size="md" 
+                                />
                                 {int.status === 'Connected' && (
-                                    <div className="absolute -top-1 -right-1 bg-emerald-500 text-black rounded-full p-1 border-2 border-black shadow-sm animate-in zoom-in duration-300">
+                                    <div className="absolute -top-1 -right-1 bg-emerald-500 text-black rounded-full p-1 border-2 border-black shadow-sm animate-in zoom-in duration-300 z-20">
                                         <CheckCircle2 size={12} />
                                     </div>
                                 )}

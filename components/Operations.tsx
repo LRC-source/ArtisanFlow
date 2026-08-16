@@ -149,7 +149,7 @@ export const Operations = () => {
           <HubNode icon={Package} title="Formula Manager" desc="High-precision BOM management and proprietary recipe encryption." delay={0.4} />
           
           <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => {}}>
-             <HubNode icon={Crown} title="Strategic Intel" desc="AI-driven market positioning and competitor margin diagnostics." color="text-[#C5A059]" bg="bg-white/5" delay={0.5} />
+             <HubNode icon={Crown} title="Strategic Intel" desc="AI-driven market positioning and competitor margin diagnostics." color="gold" bg="bg-white/5" delay={0.5} />
           </LockedNode>
       </div>
 
