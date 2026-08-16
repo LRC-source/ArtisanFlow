@@ -8310,8 +8310,9 @@ const LandingPage = () => {
           /* @__PURE__ */ jsxs("h1", { className: "text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]", children: [
             "Precision Manufacturing ",
             /* @__PURE__ */ jsx("br", {}),
-            " ",
-            /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#C5A059] to-[#E2C792] text-transparent bg-clip-text", children: "For Artisanal Brands" })
+            " For ",
+            /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "Artisanal" }),
+            " Brands"
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 font-medium max-w-xl leading-relaxed", children: "Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access." }),
           /* @__PURE__ */ jsx("div", { ref: formRef, className: "mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl", children: isSubmitted ? /* @__PURE__ */ jsxs("div", { className: "text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500", children: [
@@ -8366,7 +8367,7 @@ const LandingPage = () => {
                   variant: "primary",
                   type: "submit",
                   disabled: isSubmitting,
-                  className: "w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none",
+                  className: "w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none",
                   children: [
                     isSubmitting ? "JOINING..." : "JOIN VIP WAITLIST",
                     " ",
@@ -8416,7 +8417,7 @@ const LandingPage = () => {
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.03] border-2 border-[#C5A059]/40 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.1)] transition-all", children: [
+          /* @__PURE__ */ jsx("div", { className: "p-[2px] rounded-[2rem] relative overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059]", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0d0d0d] w-full h-full p-8 rounded-[calc(2rem-2px)] flex flex-col items-center text-center", children: [
             /* @__PURE__ */ jsx("h3", { className: "text-white font-bold uppercase tracking-widest text-sm mb-6 relative z-10", children: "Artisan Flow Modern OS" }),
             /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-200 text-sm w-full text-left relative z-10", children: [
               /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
@@ -8436,7 +8437,7 @@ const LandingPage = () => {
                 " Next-gen dark mode interface"
               ] })
             ] })
-          ] })
+          ] }) })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mt-20 w-full max-w-6xl relative z-10", children: [
@@ -8510,7 +8511,7 @@ const LandingPage = () => {
           Button,
           {
             onClick: scrollToForm,
-            className: "h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all",
+            className: "h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all",
             children: [
               "JOIN VIP WAITLIST ",
               /* @__PURE__ */ jsx(ArrowRight, { size: 18, className: "ml-2" })
@@ -8522,12 +8523,12 @@ const LandingPage = () => {
   ] });
 };
 const LTDCert = ({ title, features, isFeatured }) => {
-  const containerClasses = isFeatured ? "border border-[#C5A059] shadow-[0_0_35px_rgba(197,160,89,0.15)] scale-105 z-10" : "border border-white/10 hover:border-white/30";
-  return /* @__PURE__ */ jsxs("div", { className: `group relative flex flex-col h-full rounded-[2rem] p-8 transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`, children: [
-    isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg", children: "Most Popular" }),
+  const containerClasses = isFeatured ? "p-[2px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_35px_rgba(168,85,247,0.15)] scale-105 z-10" : "border border-white/10 hover:border-white/30 p-8";
+  return /* @__PURE__ */ jsx("div", { className: `group relative flex flex-col h-full rounded-[2rem] transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`, children: /* @__PURE__ */ jsxs("div", { className: `flex flex-col h-full relative ${isFeatured ? "bg-[#0d0d0d] rounded-[calc(2rem-2px)] p-8" : ""}`, children: [
+    isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg", children: "Most Popular" }),
     /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
       /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white tracking-tight mb-6", children: title }),
-      /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-xl bg-black/40 border border-white/5 p-4 flex items-center justify-center min-h-[100px]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-xl p-4 flex items-center justify-center min-h-[100px]", children: [
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2", children: [
           /* @__PURE__ */ jsx(Lock, { size: 12 }),
           " VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST"
@@ -8539,7 +8540,7 @@ const LTDCert = ({ title, features, isFeatured }) => {
       /* @__PURE__ */ jsx(CheckCircle, { size: 18, className: "text-[#C5A059] shrink-0 mt-0.5" }),
       /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-gray-300", children: f })
     ] }, f)) })
-  ] });
+  ] }) });
 };
 const AIAssistant = () => {
   const navigate = useNavigate();

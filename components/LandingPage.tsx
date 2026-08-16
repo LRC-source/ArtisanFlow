@@ -89,7 +89,7 @@ export const LandingPage = () => {
                             <Sparkles size={14} /> VIP Launch: September 1st
                         </div>
                         <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
-                            Precision Manufacturing <br/> <span className="bg-gradient-to-r from-[#C5A059] to-[#E2C792] text-transparent bg-clip-text">For Artisanal Brands</span>
+                            Precision Manufacturing <br/> For <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Artisanal</span> Brands
                         </h1>
                         <p className="text-lg text-gray-400 font-medium max-w-xl leading-relaxed">
                             Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access.
@@ -156,7 +156,7 @@ export const LandingPage = () => {
                                             variant="primary" 
                                             type="submit" 
                                             disabled={isSubmitting}
-                                            className="w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none"
+                                            className="w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none"
                                         >
                                             {isSubmitting ? 'JOINING...' : 'JOIN VIP WAITLIST'} <ArrowRight size={18} className="ml-2" />
                                         </Button>
@@ -196,14 +196,16 @@ export const LandingPage = () => {
                             </ul>
                         </div>
                         {/* Artisan Flow */}
-                        <div className="bg-white/[0.03] border-2 border-[#C5A059]/40 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.1)] transition-all">
-                            <h3 className="text-white font-bold uppercase tracking-widest text-sm mb-6 relative z-10">Artisan Flow Modern OS</h3>
-                            <ul className="space-y-4 text-gray-200 text-sm w-full text-left relative z-10">
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Automated batch deduction & stock ledgers</li>
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Profit Guard™ real-time margin alerts</li>
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Lola AI multi-channel marketing engine</li>
-                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Next-gen dark mode interface</li>
-                            </ul>
+                        <div className="p-[2px] rounded-[2rem] relative overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059]">
+                            <div className="bg-[#0d0d0d] w-full h-full p-8 rounded-[calc(2rem-2px)] flex flex-col items-center text-center">
+                                <h3 className="text-white font-bold uppercase tracking-widest text-sm mb-6 relative z-10">Artisan Flow Modern OS</h3>
+                                <ul className="space-y-4 text-gray-200 text-sm w-full text-left relative z-10">
+                                    <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Automated batch deduction & stock ledgers</li>
+                                    <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Profit Guard™ real-time margin alerts</li>
+                                    <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Lola AI multi-channel marketing engine</li>
+                                    <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#C5A059] shrink-0 mt-0.5" /> Next-gen dark mode interface</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -285,7 +287,7 @@ export const LandingPage = () => {
                     <div className="mt-16 flex justify-center">
                         <Button 
                             onClick={scrollToForm}
-                            className="h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all"
+                            className="h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all"
                         >
                             JOIN VIP WAITLIST <ArrowRight size={18} className="ml-2" />
                         </Button>
@@ -298,37 +300,39 @@ export const LandingPage = () => {
 
 const LTDCert = ({ title, features, isFeatured }: { title: string, features: string[], isFeatured?: boolean }) => {
     const containerClasses = isFeatured 
-        ? "border border-[#C5A059] shadow-[0_0_35px_rgba(197,160,89,0.15)] scale-105 z-10" 
-        : "border border-white/10 hover:border-white/30";
+        ? "p-[2px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_35px_rgba(168,85,247,0.15)] scale-105 z-10" 
+        : "border border-white/10 hover:border-white/30 p-8";
 
     return (
-        <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`}>
-            {isFeatured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
-                    Most Popular
-                </div>
-            )}
-            <div className="mb-6">
-                <h3 className="text-2xl font-black text-white tracking-tight mb-6">{title}</h3>
-                
-                {/* Locked Price UI */}
-                <div className="relative overflow-hidden rounded-xl bg-black/40 border border-white/5 p-4 flex items-center justify-center min-h-[100px]">
-                    <div className="absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center">
-                        <div className="bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                            <Lock size={12} /> VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST
+        <div className={`group relative flex flex-col h-full rounded-[2rem] transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`}>
+            <div className={`flex flex-col h-full relative ${isFeatured ? 'bg-[#0d0d0d] rounded-[calc(2rem-2px)] p-8' : ''}`}>
+                {isFeatured && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
+                        Most Popular
+                    </div>
+                )}
+                <div className="mb-6">
+                    <h3 className="text-2xl font-black text-white tracking-tight mb-6">{title}</h3>
+                    
+                    {/* Locked Price UI */}
+                    <div className="relative overflow-hidden rounded-xl p-4 flex items-center justify-center min-h-[100px]">
+                        <div className="absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center">
+                            <div className="bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                                <Lock size={12} /> VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST
+                            </div>
                         </div>
+                        <span className="text-4xl font-black text-white/10 blur-sm">$???</span>
                     </div>
-                    <span className="text-4xl font-black text-white/10 blur-sm">$???</span>
                 </div>
-            </div>
-            
-            <div className="space-y-4 mb-8 flex-1 mt-6">
-                {features.map((f: string) => (
-                    <div key={f} className="flex items-start gap-3">
-                        <CheckCircle size={18} className="text-[#C5A059] shrink-0 mt-0.5" />
-                        <span className="text-sm font-medium text-gray-300">{f}</span>
-                    </div>
-                ))}
+                
+                <div className="space-y-4 mb-8 flex-1 mt-6">
+                    {features.map((f: string) => (
+                        <div key={f} className="flex items-start gap-3">
+                            <CheckCircle size={18} className="text-[#C5A059] shrink-0 mt-0.5" />
+                            <span className="text-sm font-medium text-gray-300">{f}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
