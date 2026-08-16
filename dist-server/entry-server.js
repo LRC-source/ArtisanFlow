@@ -8244,7 +8244,8 @@ const StatMini = ({ label, value }) => /* @__PURE__ */ jsxs("div", { children: [
   /* @__PURE__ */ jsx("p", { className: "text-xl font-serif text-stone-900", children: value })
 ] });
 const CATEGORIES = [
-  "Botanical Skincare & Formulator",
+  "What type of maker are you? Click here",
+  "Skincare or Formulator",
   "Herbalist & Apothecary",
   "Candle & Wax Melt Maker",
   "Soap & Bath Product Artisan",
@@ -8269,7 +8270,7 @@ const LandingPage = () => {
   const { submitVIPWaitlist } = useArtisanData();
   useNavigate();
   const [view, setView] = useState("hero");
-  const [formData, setFormData] = useState({ fullName: "", email: "", businessType: CATEGORIES[0] });
+  const [formData, setFormData] = useState({ fullName: "", email: "", businessType: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
   const handleSubmit = async (e) => {
@@ -8279,7 +8280,7 @@ const LandingPage = () => {
       await submitVIPWaitlist(formData);
     }
     setIsSubmitting(false);
-    setFormData({ fullName: "", email: "", businessType: CATEGORIES[0] });
+    setFormData({ fullName: "", email: "", businessType: "" });
   };
   const scrollToForm = () => {
     var _a;
@@ -8341,7 +8342,7 @@ const LandingPage = () => {
                   value: formData.businessType,
                   onChange: (e) => setFormData({ ...formData, businessType: e.target.value }),
                   className: "w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none",
-                  children: CATEGORIES.map((cat) => /* @__PURE__ */ jsx("option", { value: cat, children: cat }, cat))
+                  children: CATEGORIES.map((cat, index) => /* @__PURE__ */ jsx("option", { value: index === 0 ? "" : cat, disabled: index === 0, hidden: index === 0, children: cat }, cat))
                 }
               ) }),
               /* @__PURE__ */ jsxs(

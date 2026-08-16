@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { AuthGateway } from './Auth';
 
 const CATEGORIES = [
-    "Botanical Skincare & Formulator",
+    "What type of maker are you? Click here",
+    "Skincare or Formulator",
     "Herbalist & Apothecary",
     "Candle & Wax Melt Maker",
     "Soap & Bath Product Artisan",
@@ -32,7 +33,7 @@ export const LandingPage = () => {
     const { submitVIPWaitlist } = useArtisanData();
     const navigate = useNavigate();
     const [view, setView] = useState<'hero' | 'login'>('hero');
-    const [formData, setFormData] = useState({ fullName: '', email: '', businessType: CATEGORIES[0] });
+    const [formData, setFormData] = useState({ fullName: '', email: '', businessType: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     
     const formRef = useRef<HTMLDivElement>(null);
@@ -44,7 +45,7 @@ export const LandingPage = () => {
              await submitVIPWaitlist(formData);
         }
         setIsSubmitting(false);
-        setFormData({ fullName: '', email: '', businessType: CATEGORIES[0] });
+        setFormData({ fullName: '', email: '', businessType: '' });
     };
 
     const scrollToForm = () => {
@@ -121,7 +122,11 @@ export const LandingPage = () => {
                                         onChange={(e) => setFormData({...formData, businessType: e.target.value})}
                                         className="w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none"
                                     >
-                                        {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                                        {CATEGORIES.map((cat, index) => (
+                                            <option key={cat} value={index === 0 ? "" : cat} disabled={index === 0} hidden={index === 0}>
+                                                {cat}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                                 <Button 
