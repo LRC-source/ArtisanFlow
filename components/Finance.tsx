@@ -15,6 +15,7 @@ import {
 import { generateFinancialAnalysis, generateBudgetStrategy } from '../services/geminiService';
 import { motion } from 'framer-motion';
 import { TaxExporter } from './TaxExporter';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 const COLORS_LIST = ['#6A2C91', '#C5A059', '#78BE20', '#5B5F7F', '#1A1A1A'];
 
@@ -317,10 +318,7 @@ const FinanceCard = ({ title, value, trend, positive, icon: Icon }: any) => (
         </div>
         <div className="flex justify-between items-start mb-6">
             <span className="text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]">{title}</span>
-            <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-all duration-500 z-10`}>
-                <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#06B6D4] to-[#C5A059] opacity-30 blur-md`}></span>
-                <Icon size={20} className="text-white relative z-10" strokeWidth={1.5} />
-            </div>
+            <GlassHaloIcon icon={Icon} color="gold" size="md" className="group-hover:scale-110 transition-all duration-500 z-10" />
         </div>
         <div className="text-4xl font-serif text-white tracking-tighter mb-4 relative z-10">{value}</div>
         <div className="flex items-center gap-2 relative z-10">

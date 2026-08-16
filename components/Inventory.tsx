@@ -3,6 +3,7 @@ import { Package, Search, Filter, MoreVertical, Plus, Layers, Box, ArrowLeft, Al
 import { Card, Badge, Button, Input, FileUploader, Modal, Select, VaultBanner } from './UI';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData, InventoryItem } from './DataContext';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion } from 'framer-motion';
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
@@ -171,7 +172,7 @@ export const Inventory = () => {
                         </div>
                     </div>
                     
-                    <div className="space-y-4">
+                    <div className="space-y-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none">
                         <Button onClick={() => setShowAdjustStock(true)} className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
                         <Button onClick={() => { window.print(); toast.success('Archival label sent to connected printer.'); }} variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
                     </div>
@@ -239,9 +240,7 @@ export const Inventory = () => {
                                 {usageInRecipes.map(recipe => (
                                     <div key={recipe.id} className="flex justify-between items-center p-4 sm:p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-[#6A2C91]/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/20 transition-all duration-500 cursor-pointer group" onClick={() => navigate('/recipes')}>
                                         <div className="flex items-center gap-6">
-                                            <div className="w-16 h-16 bg-black/20 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-110 transition-transform duration-500 border border-white/5">
-                                                <Layers size={24} strokeWidth={1.2} />
-                                            </div>
+                                            <GlassHaloIcon icon={Layers} color="purple" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
                                             <div>
                                                 <p className="font-serif text-white text-xl tracking-tight mb-1">{recipe.name}</p>
                                                 <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.2em]">Primary Input Node</p>
@@ -297,10 +296,10 @@ export const Inventory = () => {
             badge="Asset Management Protocol Active"
           >
             {userTier !== 'Free Audit' && (
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto">
                   <input type="file" ref={fileInputRef} className="hidden" accept=".csv" onChange={handleFileChange} />
-                  <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm"><Upload size={16} className="mr-3"/> INGEST CSV</Button>
-                  <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
+                  <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm w-full sm:w-auto"><Upload size={16} className="mr-3"/> INGEST CSV</Button>
+                  <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
               </div>
             )}
           </VaultBanner>
@@ -310,10 +309,7 @@ export const Inventory = () => {
             <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                 <div className="flex items-center gap-4 sm:p-8 relative z-10 mb-12">
-                    <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(106,44,145,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10">
-                        <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-40 blur-md"></span>
-                        <Box className="text-[#06B6D4] relative z-10" size={32} strokeWidth={1.5} />
-                    </div>
+                    <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-10 z-10 w-20 h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
                         <h3 className="text-4xl font-serif text-white tracking-tight mb-2">Materials Matrix</h3>
                         <p className="text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{rawMaterials.length} Active Nodes</p>
@@ -327,10 +323,7 @@ export const Inventory = () => {
             <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                 <div className="flex items-center gap-4 sm:p-8 relative z-10 mb-12">
-                    <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10">
-                        <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-40 blur-md"></span>
-                        <Package className="text-[#C5A059] relative z-10" size={32} strokeWidth={1.5} />
-                    </div>
+                    <GlassHaloIcon icon={Package} color="gold" size="lg" className="mb-10 z-10 w-20 h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
                         <h3 className="text-4xl font-serif text-white tracking-tight mb-2">Finished Output</h3>
                         <p className="text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{finishedProducts.length} Retail Ready</p>

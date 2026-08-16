@@ -177,13 +177,15 @@ export const RecipeBuilder: React.FC = () => {
             <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic">{isEditing ? 'Formula Revision' : 'Formula Architect'}</h1>
             <p className="text-gray-500 font-medium">{isEditing ? 'Optimizing existing Bill of Materials for margin integrity.' : 'Constructing Bills of Materials with Synaptic Cost Reconciliation.'}</p>
         </div>
-        <Button 
-            className="bg-[#6A2C91] text-white font-black text-[10px] tracking-widest h-14 px-10 rounded-2xl shadow-xl shadow-purple-100" 
-            onClick={handleSave}
-        >
-            {isEditing ? <RefreshCw size={18} className="mr-2" /> : <Save size={18} className="mr-2" />}
-            {isEditing ? 'UPDATE VAULT NODE' : 'COMMIT FORMULA TO VAULT'}
-        </Button>
+        <div className="sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto mt-4 md:mt-0">
+            <Button 
+                className="w-full sm:w-auto bg-[#6A2C91] text-white font-black text-[10px] tracking-widest h-14 px-10 rounded-2xl shadow-xl shadow-purple-100" 
+                onClick={handleSave}
+            >
+                {isEditing ? <RefreshCw size={18} className="mr-2" /> : <Save size={18} className="mr-2" />}
+                {isEditing ? 'UPDATE VAULT NODE' : 'COMMIT FORMULA TO VAULT'}
+            </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-10">

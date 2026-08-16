@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Minimize2 } from 'lucide-react';
 import { chatWithLola } from '../services/geminiService';
 import { COLORS } from '../constants';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const LolaChat: React.FC = () => { 
   const [isOpen, setIsOpen] = useState(false); 
@@ -56,10 +57,7 @@ export const LolaChat: React.FC = () => {
     <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-black/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
       <div className="bg-white/5 p-5 border-b border-white/10 flex justify-between items-center">
         <div className="flex items-center gap-3">
-            <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/10 border border-white/20">
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-50 blur-sm animate-pulse"></span>
-                <Sparkles size={14} className="text-white relative z-10" />
-            </div>
+            <GlassHaloIcon icon={Sparkles} color="cyan" size="sm" className="animate-pulse" />
             <div>
                 <h3 className="font-serif font-bold text-white tracking-tight text-lg leading-tight">Lola AI</h3>
                 <p className="text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-[#06B6D4]">Systems Architect</p>
@@ -98,7 +96,7 @@ export const LolaChat: React.FC = () => {
       </div>
       
       {/* Input */}
-      <div className="p-4 border-t border-white/10 bg-white/5">
+      <div className="sticky bottom-0 z-50 md:static p-4 border-t border-white/10 bg-[#0A0A0A]/90 md:bg-white/5 backdrop-blur-xl md:backdrop-blur-none">
         <div className="flex items-center gap-3">
           <input
             type="text"

@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { useNavigate, useLocation, useParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
+import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, Factory, User, TrendingUp, Package, Activity, DollarSign, Layers, LogOut, Hexagon, Search, Bell, RefreshCw, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Cpu, Server, BarChart3, PieChart, Clock, Box, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, Tooltip, Area, LineChart, Line, YAxis, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend, Bar } from "recharts";
 import { toast, Toaster } from "sonner";
 import { initializeApp } from "firebase/app";
@@ -722,6 +722,59 @@ const useArtisanData = () => {
   if (!context) throw new Error("useArtisanData error");
   return context;
 };
+const colorStyles = {
+  cyan: {
+    bg: "bg-[#06B6D4]/10",
+    border: "border-[#06B6D4]/30",
+    shadow: "shadow-[0_0_15px_rgba(6,182,212,0.25)]",
+    text: "text-[#06B6D4]"
+  },
+  purple: {
+    bg: "bg-[#A855F7]/10",
+    border: "border-[#A855F7]/30",
+    shadow: "shadow-[0_0_15px_rgba(168,85,247,0.25)]",
+    text: "text-[#A855F7]"
+  },
+  gold: {
+    bg: "bg-[#C5A059]/10",
+    border: "border-[#C5A059]/30",
+    shadow: "shadow-[0_0_15px_rgba(197,160,89,0.25)]",
+    text: "text-[#C5A059]"
+  },
+  magenta: {
+    bg: "bg-[#D946EF]/10",
+    border: "border-[#D946EF]/30",
+    shadow: "shadow-[0_0_15px_rgba(217,70,239,0.25)]",
+    text: "text-[#D946EF]"
+  },
+  emerald: {
+    bg: "bg-[#10B981]/10",
+    border: "border-[#10B981]/30",
+    shadow: "shadow-[0_0_15px_rgba(16,185,129,0.25)]",
+    text: "text-[#10B981]"
+  }
+};
+const sizeStyles = {
+  sm: { container: "w-8 h-8 rounded-xl", icon: "w-4 h-4" },
+  md: { container: "w-11 h-11 rounded-2xl", icon: "w-5 h-5" },
+  lg: { container: "w-14 h-14 rounded-2xl", icon: "w-7 h-7" }
+};
+const GlassHaloIcon = ({
+  icon: Icon,
+  color = "cyan",
+  size = "md",
+  className = ""
+}) => {
+  const c = colorStyles[color];
+  const s = sizeStyles[size];
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      className: `relative flex items-center justify-center shrink-0 border backdrop-blur-md transition-all duration-300 ${s.container} ${c.bg} ${c.border} ${c.shadow} ${className}`,
+      children: /* @__PURE__ */ jsx(Icon, { className: `${s.icon} ${c.text}` })
+    }
+  );
+};
 const chatWithLola = async (message, context, mode = "fast") => {
   try {
     const response = await fetch("/api/gemini", {
@@ -988,15 +1041,17 @@ const LockedNode = ({ children, isLocked, requiredTier, onUpgrade, featureKey })
   if (!effectiveIsLocked) return /* @__PURE__ */ jsx(Fragment, { children });
   return /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-[2rem] luxury-card group", children: [
     /* @__PURE__ */ jsx("div", { className: "blur-[6px] pointer-events-none transition-all duration-700 group-hover:blur-[8px]", children }),
-    /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-[4px] flex flex-col items-center justify-center p-4 sm:p-8 text-center animate-in fade-in duration-700", children: [
-      /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-white/10 text-white rounded-2xl flex items-center justify-center mb-6 shadow-2xl border border-white/10", children: /* @__PURE__ */ jsx(Lock, { size: 28, strokeWidth: 1.5 }) }),
-      /* @__PURE__ */ jsx("h4", { className: "text-2xl font-serif text-white tracking-tight mb-3", children: "Vault Node Locked" }),
-      /* @__PURE__ */ jsxs("p", { className: "text-white/50 font-sans font-light text-sm mb-8 max-w-[240px] leading-relaxed", children: [
+    /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center p-4 sm:p-8 text-center animate-in fade-in duration-700 shadow-[inset_0_0_50px_rgba(106,44,145,0.2)]", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[radial-gradient(circle_at_top_left,#6A2C91_0%,transparent_50%)] opacity-20 pointer-events-none" }),
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,#C5A059_0%,transparent_50%)] opacity-20 pointer-events-none" }),
+      /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Lock, color: "magenta", size: "lg", className: "mb-6 relative z-10" }),
+      /* @__PURE__ */ jsx("h4", { className: "text-2xl font-serif text-white tracking-tight mb-3 relative z-10", children: "Vault Node Locked" }),
+      /* @__PURE__ */ jsxs("p", { className: "text-white/50 font-sans font-light text-sm mb-8 max-w-[240px] leading-relaxed relative z-10", children: [
         "This synaptic protocol requires a ",
         /* @__PURE__ */ jsx("span", { className: "font-medium text-[#6A2C91]", children: requiredTier }),
         " authorization."
       ] }),
-      /* @__PURE__ */ jsxs(Button, { variant: "primary", onClick: handleUpgradeClick, className: "h-12 px-10", children: [
+      /* @__PURE__ */ jsxs(Button, { variant: "primary", onClick: handleUpgradeClick, className: "h-12 px-10 relative z-10", children: [
         /* @__PURE__ */ jsx(Crown, { size: 16, className: "mr-2 text-[#C5A059]", strokeWidth: 1.5 }),
         " UPGRADE ACCESS"
       ] })
@@ -1060,24 +1115,24 @@ const VaultBanner = ({ title, subtitle, badge = "Secure Vault Access", children,
   );
 };
 const Badge = ({ children, color = "purple", className = "" }) => {
-  let colorStyles = "";
+  let colorStyles2 = "";
   if (color === "gold") {
-    colorStyles = "bg-amber-500/10 text-amber-500 border border-amber-500/20";
+    colorStyles2 = "bg-amber-500/10 text-amber-500 border border-amber-500/20";
   } else if (color === "purple") {
-    colorStyles = "bg-purple-500/10 text-[#6A2C91] border border-purple-500/20";
+    colorStyles2 = "bg-purple-500/10 text-[#6A2C91] border border-purple-500/20";
   } else if (color === "red") {
-    colorStyles = "bg-red-500/10 text-red-500 border border-red-500/20";
+    colorStyles2 = "bg-red-500/10 text-red-500 border border-red-500/20";
   } else if (color === "green") {
-    colorStyles = "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20";
+    colorStyles2 = "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20";
   } else if (color === "blue") {
-    colorStyles = "bg-blue-500/10 text-blue-500 border border-blue-500/20";
+    colorStyles2 = "bg-blue-500/10 text-blue-500 border border-blue-500/20";
   } else {
-    colorStyles = "bg-white/5 text-white/60 border border-white/10";
+    colorStyles2 = "bg-white/5 text-white/60 border border-white/10";
   }
   return /* @__PURE__ */ jsx(
     "span",
     {
-      className: `px-3 py-1.5 rounded-full text-[9px] font-sans font-medium uppercase tracking-[0.2em] ${colorStyles} ${className}`,
+      className: `px-3 py-1.5 rounded-full text-[9px] font-sans font-medium uppercase tracking-[0.2em] ${colorStyles2} ${className}`,
       children
     }
   );
@@ -1595,7 +1650,7 @@ function Layout({ children }) {
             navigate("/");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "📊" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: LayoutDashboard, color: "cyan", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Dashboard" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" })
           ] }),
@@ -1603,7 +1658,7 @@ function Layout({ children }) {
             navigate("/marketing");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/marketing" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "✨" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Sparkles, color: "magenta", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Marketing Studio" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" })
           ] }),
@@ -1611,7 +1666,7 @@ function Layout({ children }) {
             navigate("/recipes");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/recipes" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "🏭" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Factory, color: "cyan", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Manufacturing" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" })
           ] }),
@@ -1619,7 +1674,7 @@ function Layout({ children }) {
             navigate("/operations/crm");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/operations/crm" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "🤝" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: User, color: "purple", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "CRM Hub" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" })
           ] }),
@@ -1627,7 +1682,7 @@ function Layout({ children }) {
             navigate("/finance");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/finance" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "📈" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: TrendingUp, color: "gold", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Orders & Finance" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" })
           ] })
@@ -1638,15 +1693,15 @@ function Layout({ children }) {
             navigate("/inventory");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/inventory" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "📦" }),
-            /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Materials Matrix" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Package, color: "cyan", size: "sm", className: "mr-3" }),
+            /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Inventory Hub" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" })
           ] }),
           /* @__PURE__ */ jsxs("button", { onClick: () => {
             navigate("/forecasting");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/forecasting" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "⏳" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Activity, color: "gold", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Forecasting" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]" })
           ] }),
@@ -1654,7 +1709,7 @@ function Layout({ children }) {
             navigate("/qc");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/qc" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "💸" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: DollarSign, color: "emerald", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Trapped Cash Audit" }),
             /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]" })
           ] })
@@ -1665,41 +1720,41 @@ function Layout({ children }) {
             navigate("/settings/account");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/settings/account" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "💎" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Crown, color: "gold", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Subscription Status" })
           ] }),
           businessProfile.role === "super_admin" && /* @__PURE__ */ jsxs("button", { onClick: () => {
             navigate("/super-admin");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/super-admin" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "🛡️" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: ShieldCheck, color: "cyan", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Super-Admin" })
           ] }),
           /* @__PURE__ */ jsxs("button", { onClick: () => {
             navigate("/settings/integrations");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/settings/integrations" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "💳" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers, color: "purple", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Integrations" })
           ] }),
           /* @__PURE__ */ jsxs("button", { onClick: () => {
             navigate("/marketing/brand-voice");
             setIsMobileMenuOpen(false);
           }, className: `nav-item ${location.pathname === "/marketing/brand-voice" ? "active" : ""}`, children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "✉️" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: FileText, color: "cyan", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Brand Voice Profile" })
           ] }),
           /* @__PURE__ */ jsxs("button", { onClick: () => {
             setIsSupportOpen(true);
             setIsMobileMenuOpen(false);
           }, className: "nav-item", children: [
-            /* @__PURE__ */ jsx("span", { className: "nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0", children: "🆘" }),
+            /* @__PURE__ */ jsx(GlassHaloIcon, { icon: HelpCircle, color: "magenta", size: "sm", className: "mr-3" }),
             /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: "Support Node" })
           ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "sidebar-user-footer", children: [
-        /* @__PURE__ */ jsx("div", { className: "user-avatar-frame text-xl", children: "👤" }),
+        /* @__PURE__ */ jsx(GlassHaloIcon, { icon: User, color: "purple", size: "sm", className: "mr-3" }),
         /* @__PURE__ */ jsxs("div", { className: "user-details text-left flex-1 min-w-0", children: [
           /* @__PURE__ */ jsx("span", { className: "user-name truncate", children: businessProfile.ownerName || "LaToya Carter" }),
           /* @__PURE__ */ jsx("span", { className: "user-role truncate", children: "Sovereign Architect" })
@@ -5840,7 +5895,7 @@ const Inventory = () => {
                 selectedItem.img ? /* @__PURE__ */ jsx("img", { src: selectedItem.img, alt: selectedItem.name, className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" }) : /* @__PURE__ */ jsx(Package, { size: 120, className: "text-white/5", strokeWidth: 0.5 }),
                 /* @__PURE__ */ jsx("div", { className: "absolute top-4 sm:p-8 left-8", children: /* @__PURE__ */ jsx(Badge, { color: selectedItem.type === "raw" ? "purple" : "green", className: "px-5 py-2 uppercase font-sans font-bold tracking-[0.3em] text-[10px] shadow-lg", children: selectedItem.type }) })
               ] }) }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none", children: [
                 /* @__PURE__ */ jsx(Button, { onClick: () => setShowAdjustStock(true), className: "w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10", children: "ADJUST STOCK QUANTITY" }),
                 /* @__PURE__ */ jsx(Button, { onClick: () => {
                   window.print();
@@ -5921,7 +5976,7 @@ const Inventory = () => {
                 ] }),
                 usageInRecipes.length > 0 ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: usageInRecipes.map((recipe) => /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center p-4 sm:p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-[#6A2C91]/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/20 transition-all duration-500 cursor-pointer group", onClick: () => navigate("/recipes"), children: [
                   /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-black/20 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner group-hover:scale-110 transition-transform duration-500 border border-white/5", children: /* @__PURE__ */ jsx(Layers, { size: 24, strokeWidth: 1.2 }) }),
+                    /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Layers, color: "purple", size: "lg", className: "group-hover:scale-110 transition-transform duration-500" }),
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("p", { className: "font-serif text-white text-xl tracking-tight mb-1", children: recipe.name }),
                       /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.2em]", children: "Primary Input Node" })
@@ -5978,16 +6033,16 @@ const Inventory = () => {
                 title: "Inventory Hub",
                 subtitle: "Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output.",
                 badge: "Asset Management Protocol Active",
-                children: userTier !== "Free Audit" && /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+                children: userTier !== "Free Audit" && /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto", children: [
                   /* @__PURE__ */ jsx("input", { type: "file", ref: fileInputRef, className: "hidden", accept: ".csv", onChange: handleFileChange }),
                   /* @__PURE__ */ jsxs(Button, { onClick: () => {
                     var _a;
                     return (_a = fileInputRef.current) == null ? void 0 : _a.click();
-                  }, variant: "outline", className: "rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm", children: [
+                  }, variant: "outline", className: "rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm w-full sm:w-auto", children: [
                     /* @__PURE__ */ jsx(Upload, { size: 16, className: "mr-3" }),
                     " INGEST CSV"
                   ] }),
-                  /* @__PURE__ */ jsxs(Button, { variant: "primary", onClick: () => setShowAddItem(true), className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all", children: [
+                  /* @__PURE__ */ jsxs(Button, { variant: "primary", onClick: () => setShowAddItem(true), className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto", children: [
                     /* @__PURE__ */ jsx(Plus, { size: 16, className: "mr-3" }),
                     " DEPLOY ASSET"
                   ] })
@@ -5999,10 +6054,7 @@ const Inventory = () => {
             /* @__PURE__ */ jsxs("div", { onClick: () => setView("raw_materials"), className: "luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10", children: [
               /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000" }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 sm:p-8 relative z-10 mb-12", children: [
-                /* @__PURE__ */ jsxs("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(106,44,145,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10", children: [
-                  /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-40 blur-md" }),
-                  /* @__PURE__ */ jsx(Box, { className: "text-[#06B6D4] relative z-10", size: 32, strokeWidth: 1.5 })
-                ] }),
+                /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Box, color: "cyan", size: "lg", className: "mb-10 z-10 w-20 h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h3", { className: "text-4xl font-serif text-white tracking-tight mb-2", children: "Materials Matrix" }),
                   /* @__PURE__ */ jsxs("p", { className: "text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]", children: [
@@ -6019,10 +6071,7 @@ const Inventory = () => {
             /* @__PURE__ */ jsxs("div", { onClick: () => setView("finished_products"), className: "luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-16 min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10", children: [
               /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-20 group-hover:opacity-10 transition-opacity duration-1000" }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 sm:p-8 relative z-10 mb-12", children: [
-                /* @__PURE__ */ jsxs("div", { className: "relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.4)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 mb-10 z-10", children: [
-                  /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-40 blur-md" }),
-                  /* @__PURE__ */ jsx(Package, { className: "text-[#C5A059] relative z-10", size: 32, strokeWidth: 1.5 })
-                ] }),
+                /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Package, color: "gold", size: "lg", className: "mb-10 z-10 w-20 h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h3", { className: "text-4xl font-serif text-white tracking-tight mb-2", children: "Finished Output" }),
                   /* @__PURE__ */ jsxs("p", { className: "text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]", children: [
@@ -6631,7 +6680,7 @@ const ProductionWorkflow = () => {
             ] }, i)) })
           ] })
         ] }),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx("div", { className: "sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full mt-4", children: /* @__PURE__ */ jsx(
           Button,
           {
             className: "w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl font-bold uppercase tracking-widest text-xs h-12",
@@ -6654,7 +6703,7 @@ const ProductionWorkflow = () => {
             },
             children: "Commit Batch to Production"
           }
-        )
+        ) })
       ] }) }, recipe.id)) })
     ] })
   ] });
@@ -6902,10 +6951,10 @@ const QualityControl = () => {
       )
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-6", children: [
-      /* @__PURE__ */ jsx(StatBox$1, { label: "Total Audits", val: qualityChecks.length, color: "text-[#C5A059]", icon: ClipboardList }),
-      /* @__PURE__ */ jsx(StatBox$1, { label: "Pass Velocity", val: `${passRate}%`, color: "text-emerald-400", icon: ShieldCheck }),
-      /* @__PURE__ */ jsx(StatBox$1, { label: "Failure Waste", val: "$0.00", color: "text-red-400", icon: AlertTriangle }),
-      /* @__PURE__ */ jsx(StatBox$1, { label: "Pending QA", val: qualityChecks.filter((c) => c.status === "Pending").length, color: "text-blue-400", icon: Clock })
+      /* @__PURE__ */ jsx(StatBox$1, { label: "Total Audits", val: qualityChecks.length, color: "text-[#C5A059]", haloColor: "gold", icon: ClipboardList }),
+      /* @__PURE__ */ jsx(StatBox$1, { label: "Pass Velocity", val: `${passRate}%`, color: "text-emerald-400", haloColor: "emerald", icon: ShieldCheck }),
+      /* @__PURE__ */ jsx(StatBox$1, { label: "Failure Waste", val: "$0.00", color: "text-red-400", haloColor: "magenta", icon: AlertTriangle }),
+      /* @__PURE__ */ jsx(StatBox$1, { label: "Pending QA", val: qualityChecks.filter((c) => c.status === "Pending").length, color: "text-blue-400", haloColor: "cyan", icon: Clock })
     ] }),
     qualityChecks.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "luxury-card border-white/10 rounded-[2.5rem] p-24 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl", children: [
       /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-white/20 mb-6 shadow-inner border border-white/10", children: /* @__PURE__ */ jsx(ClipboardCheck, { size: 40 }) }),
@@ -6914,7 +6963,7 @@ const QualityControl = () => {
       /* @__PURE__ */ jsx(Button, { onClick: () => setShowAdd(true), className: "mt-8 bg-white/5 text-[#C5A059] h-12 px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10", children: "INITIALIZE AUDIT" })
     ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8", children: qualityChecks.map((check) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#C5A059]/50 transition-all group relative overflow-hidden", children: [
       /* @__PURE__ */ jsx("div", { className: "flex justify-between items-start mb-8 relative z-10", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-        /* @__PURE__ */ jsx("div", { className: `w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center ${check.status === "Passed" ? "text-emerald-400" : "text-amber-400"} shadow-inner group-hover:bg-white/10 transition-colors`, children: check.status === "Passed" ? /* @__PURE__ */ jsx(ShieldCheck, { size: 28 }) : /* @__PURE__ */ jsx(Clock, { size: 28 }) }),
+        /* @__PURE__ */ jsx(GlassHaloIcon, { icon: check.status === "Passed" ? ShieldCheck : Clock, color: check.status === "Passed" ? "emerald" : "gold", size: "md" }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("h3", { className: "text-3xl font-serif text-white tracking-tight", children: check.productName }),
           /* @__PURE__ */ jsxs(Badge, { color: "gold", className: "text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10", children: [
@@ -6941,8 +6990,8 @@ const QualityControl = () => {
     ] }, check.id)) })
   ] });
 };
-const StatBox$1 = ({ label, val, color, icon: Icon }) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#C5A059]/30 transition-all", children: [
-  /* @__PURE__ */ jsx("div", { className: `p-4 bg-white/5 border border-white/10 rounded-2xl mb-6 text-white/50 group-hover:text-[#C5A059] group-hover:scale-110 transition-all`, children: /* @__PURE__ */ jsx(Icon, { size: 24 }) }),
+const StatBox$1 = ({ label, val, color, haloColor, icon: Icon }) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#C5A059]/30 transition-all", children: [
+  /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: haloColor, size: "md", className: "mb-6 group-hover:scale-110 transition-all" }),
   /* @__PURE__ */ jsx("p", { className: "text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2", children: label }),
   /* @__PURE__ */ jsx("p", { className: `text-4xl font-serif tracking-tight ${color}`, children: val })
 ] });
@@ -7226,17 +7275,17 @@ const RecipeBuilder = () => {
           /* @__PURE__ */ jsx("h1", { className: "text-4xl font-black text-white tracking-tighter uppercase italic", children: isEditing ? "Formula Revision" : "Formula Architect" }),
           /* @__PURE__ */ jsx("p", { className: "text-gray-500 font-medium", children: isEditing ? "Optimizing existing Bill of Materials for margin integrity." : "Constructing Bills of Materials with Synaptic Cost Reconciliation." })
         ] }),
-        /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ jsx("div", { className: "sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto mt-4 md:mt-0", children: /* @__PURE__ */ jsxs(
           Button,
           {
-            className: "bg-[#6A2C91] text-white font-black text-[10px] tracking-widest h-14 px-10 rounded-2xl shadow-xl shadow-purple-100",
+            className: "w-full sm:w-auto bg-[#6A2C91] text-white font-black text-[10px] tracking-widest h-14 px-10 rounded-2xl shadow-xl shadow-purple-100",
             onClick: handleSave,
             children: [
               isEditing ? /* @__PURE__ */ jsx(RefreshCw, { size: 18, className: "mr-2" }) : /* @__PURE__ */ jsx(Save, { size: 18, className: "mr-2" }),
               isEditing ? "UPDATE VAULT NODE" : "COMMIT FORMULA TO VAULT"
             ]
           }
-        )
+        ) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-10", children: [
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2 space-y-10", children: [
@@ -7750,12 +7799,12 @@ const CRM = () => {
               title: "CRM Hub",
               subtitle: "Synaptic client management and lifetime value analytics.",
               badge: "Client Protocol Active",
-              children: /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+              children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto", children: [
                 /* @__PURE__ */ jsxs(
                   Button,
                   {
                     variant: "outline",
-                    className: "rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm",
+                    className: "rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm w-full sm:w-auto",
                     onClick: handleSync,
                     disabled: isSyncing,
                     children: [
@@ -7769,7 +7818,7 @@ const CRM = () => {
                   Button,
                   {
                     variant: "primary",
-                    className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all",
+                    className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto",
                     onClick: () => setIsAddModalOpen(true),
                     children: [
                       /* @__PURE__ */ jsx(UserPlus, { size: 16, className: "mr-3" }),
@@ -7782,15 +7831,12 @@ const CRM = () => {
           )
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8", children: [
-          { label: "Active Nodes", val: allCustomers.length, icon: Users, color: "text-purple-400", bg: "bg-[#6A2C91]/20", border: "border-[#6A2C91]/30" },
-          { label: "Network Value", val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: "text-[#C5A059]", bg: "bg-[#C5A059]/20", border: "border-[#C5A059]/30" },
-          { label: "Synaptic Health", val: "98%", icon: TrendingUp, color: "text-emerald-400", bg: "bg-emerald-500/20", border: "border-emerald-500/30" },
-          { label: "At Risk", val: "0", icon: ShoppingCart, color: "text-amber-500", bg: "bg-amber-500/20", border: "border-amber-500/30" }
+          { label: "Active Nodes", val: allCustomers.length, icon: Users, color: "purple" },
+          { label: "Network Value", val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: "gold" },
+          { label: "Synaptic Health", val: "98%", icon: TrendingUp, color: "emerald" },
+          { label: "At Risk", val: "0", icon: ShoppingCart, color: "magenta" }
         ].map((kpi, i) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl", children: [
-          /* @__PURE__ */ jsxs("div", { className: `relative inline-flex items-center justify-center w-16 h-16 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10`, children: [
-            /* @__PURE__ */ jsx("span", { className: `absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-white/10 to-white/5 opacity-40 blur-md ${kpi.bg}` }),
-            /* @__PURE__ */ jsx(kpi.icon, { size: 24, className: `${kpi.color} relative z-10`, strokeWidth: 1.5 })
-          ] }),
+          /* @__PURE__ */ jsx(GlassHaloIcon, { icon: kpi.icon, color: kpi.color, size: "lg", className: "mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10" }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2", children: kpi.label }),
           /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white tracking-tighter", children: kpi.val })
         ] }, i)) }),
@@ -7942,12 +7988,12 @@ const Orders = () => {
             title: "Order Logistics",
             subtitle: "Secure handling and dispatch of transactional nodes.",
             badge: "Fulfillment Protocol",
-            children: /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto", children: [
               /* @__PURE__ */ jsxs(
                 Button,
                 {
                   variant: "outline",
-                  className: "rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm",
+                  className: "rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm w-full sm:w-auto",
                   onClick: handleSync,
                   disabled: isSyncing,
                   children: [
@@ -7961,7 +8007,7 @@ const Orders = () => {
                 Button,
                 {
                   variant: "primary",
-                  className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all",
+                  className: "rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto",
                   onClick: handleExport,
                   children: [
                     /* @__PURE__ */ jsx(Download, { size: 16, className: "mr-3" }),
@@ -7973,12 +8019,12 @@ const Orders = () => {
           }
         ),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8", children: [
-          { label: "Total Orders", val: orders.length, icon: ShoppingCart, color: "text-purple-400", bg: "bg-[#6A2C91]/20", border: "border-[#6A2C91]/30" },
-          { label: "Revenue", val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: "text-[#C5A059]", bg: "bg-[#C5A059]/20", border: "border-[#C5A059]/30" },
-          { label: "Pending", val: pendingCount, icon: Package, color: "text-amber-500", bg: "bg-amber-500/20", border: "border-amber-500/30" },
-          { label: "Shipped", val: shippedCount, icon: Truck, color: "text-emerald-400", bg: "bg-emerald-500/20", border: "border-emerald-500/30" }
+          { label: "Total Orders", val: orders.length, icon: ShoppingCart, color: "purple" },
+          { label: "Revenue", val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: "gold" },
+          { label: "Pending", val: pendingCount, icon: Package, color: "magenta" },
+          { label: "Shipped", val: shippedCount, icon: Truck, color: "emerald" }
         ].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl", children: [
-          /* @__PURE__ */ jsx("div", { className: `p-4 ${stat.bg} ${stat.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${stat.border}`, children: /* @__PURE__ */ jsx(stat.icon, { size: 24 }) }),
+          /* @__PURE__ */ jsx(GlassHaloIcon, { icon: stat.icon, color: stat.color, size: "lg", className: "mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2", children: stat.label }),
           /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white tracking-tighter", children: stat.val })
         ] }, i)) }),
@@ -10023,10 +10069,7 @@ const FinanceCard = ({ title, value, trend, positive, icon: Icon }) => /* @__PUR
   /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 p-4 sm:p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700", children: /* @__PURE__ */ jsx(Icon, { size: 64, className: "text-white" }) }),
   /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
     /* @__PURE__ */ jsx("span", { className: "text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em]", children: title }),
-    /* @__PURE__ */ jsxs("div", { className: `relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-all duration-500 z-10`, children: [
-      /* @__PURE__ */ jsx("span", { className: `absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#06B6D4] to-[#C5A059] opacity-30 blur-md` }),
-      /* @__PURE__ */ jsx(Icon, { size: 20, className: "text-white relative z-10", strokeWidth: 1.5 })
-    ] })
+    /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: "gold", size: "md", className: "group-hover:scale-110 transition-all duration-500 z-10" })
   ] }),
   /* @__PURE__ */ jsx("div", { className: "text-4xl font-serif text-white tracking-tighter mb-4 relative z-10", children: value }),
   /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 relative z-10", children: [
@@ -10826,10 +10869,10 @@ const SuperAdmin = () => {
           }
         ),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8", children: [
-          /* @__PURE__ */ jsx(AdminStatCard, { title: "Total Platform Users", value: liveUsers.length.toString(), icon: Users, trend: "+1 This Week" }),
-          /* @__PURE__ */ jsx(AdminStatCard, { title: "Pro Tier Subscribers", value: liveUsers.filter((u) => u.tier === "Margin Protection Pro").length.toString(), icon: CrownIcon, trend: "Margin Protection Pro", color: "text-[#C5A059]", border: "border-[#C5A059]/20" }),
-          /* @__PURE__ */ jsx(AdminStatCard, { title: "Global Volume Processed", value: "$187,020", icon: Activity, trend: "+14% MoM", color: "text-emerald-400" }),
-          /* @__PURE__ */ jsx(AdminStatCard, { title: "System Health", value: "100%", icon: Server, trend: "All Nodes Online", color: "text-blue-400" })
+          /* @__PURE__ */ jsx(AdminStatCard, { title: "Total Platform Users", value: liveUsers.length.toString(), icon: Users, haloColor: "purple", trend: "+1 This Week" }),
+          /* @__PURE__ */ jsx(AdminStatCard, { title: "Pro Tier Subscribers", value: liveUsers.filter((u) => u.tier === "Margin Protection Pro").length.toString(), icon: CrownIcon, haloColor: "gold", trend: "Margin Protection Pro", color: "text-[#C5A059]", border: "border-[#C5A059]/20" }),
+          /* @__PURE__ */ jsx(AdminStatCard, { title: "Global Volume Processed", value: "$187,020", icon: Activity, haloColor: "emerald", trend: "+14% MoM", color: "text-emerald-400" }),
+          /* @__PURE__ */ jsx(AdminStatCard, { title: "System Health", value: "100%", icon: Server, haloColor: "cyan", trend: "All Nodes Online", color: "text-blue-400" })
         ] }),
         /* @__PURE__ */ jsxs(Card, { title: "User Matrix & Tier Assignment", className: "luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-12", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-center gap-6 mb-10", children: [
@@ -10884,7 +10927,7 @@ const SuperAdmin = () => {
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 sm:p-8", children: [
           /* @__PURE__ */ jsx(Card, { title: "Database Sync Configuration", className: "luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6 mt-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-4", children: [
-              /* @__PURE__ */ jsx(Database, { className: "text-[#C5A059] shrink-0 mt-1", size: 20 }),
+              /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Database, color: "gold", size: "sm", className: "shrink-0 mt-1" }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("h4", { className: "text-white font-serif text-xl mb-1", children: "Google Sheets Sync" }),
                 /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm font-sans font-light mb-4", children: "Export Super-Admin matrix automatically to a master Google Sheet." }),
@@ -10892,7 +10935,7 @@ const SuperAdmin = () => {
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-4", children: [
-              /* @__PURE__ */ jsx(Server, { className: "text-[#6A2C91] shrink-0 mt-1", size: 20 }),
+              /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Server, color: "purple", size: "sm", className: "shrink-0 mt-1" }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("h4", { className: "text-white font-serif text-xl mb-1", children: "Firebase Core Integration" }),
                 /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm font-sans font-light mb-4", children: "Manage remote config and user authentication nodes." }),
@@ -11076,10 +11119,10 @@ const SuperAdmin = () => {
     }
   );
 };
-const AdminStatCard = ({ title, value, icon: Icon, trend, color = "text-white", border = "border-white/10" }) => /* @__PURE__ */ jsxs("div", { className: `luxury-card bg-white/5 backdrop-blur-xl border ${border} rounded-[2.5rem] p-8 relative overflow-hidden group hover:bg-white/10 transition-all duration-500`, children: [
+const AdminStatCard = ({ title, value, icon: Icon, trend, haloColor, color = "text-white", border = "border-white/10" }) => /* @__PURE__ */ jsxs("div", { className: `luxury-card bg-white/5 backdrop-blur-xl border ${border} rounded-[2.5rem] p-8 relative overflow-hidden group hover:bg-white/10 transition-all duration-500`, children: [
   /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-6", children: [
     /* @__PURE__ */ jsx("span", { className: "text-white/40 font-sans font-bold text-[10px] uppercase tracking-[0.3em]", children: title }),
-    /* @__PURE__ */ jsx("div", { className: `p-3 rounded-xl bg-white/5 ${color} border border-white/5`, children: /* @__PURE__ */ jsx(Icon, { size: 18, strokeWidth: 1.5 }) })
+    /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Icon, color: haloColor, size: "sm" })
   ] }),
   /* @__PURE__ */ jsx("div", { className: `text-4xl font-serif tracking-tighter mb-4 ${color}`, children: value }),
   /* @__PURE__ */ jsx("div", { className: "text-white/30 text-[10px] font-sans font-bold uppercase tracking-[0.3em]", children: trend })

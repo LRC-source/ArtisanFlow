@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const Orders = () => {
   const { orders, processOrder, getTotalRevenue, syncWooCommerce, integrations } = useArtisanData();
@@ -109,10 +110,10 @@ export const Orders = () => {
             subtitle="Secure handling and dispatch of transactional nodes."
             badge="Fulfillment Protocol"
         >
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto">
                 <Button 
                     variant="outline" 
-                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm" 
+                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm w-full sm:w-auto" 
                     onClick={handleSync} 
                     disabled={isSyncing}
                 >
@@ -120,7 +121,7 @@ export const Orders = () => {
                 </Button>
                 <Button 
                     variant="primary" 
-                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all" 
+                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto" 
                     onClick={handleExport}
                 >
                     <Download size={16} className="mr-3" /> EXPORT CSV
@@ -131,15 +132,13 @@ export const Orders = () => {
         {/* Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
             {[
-              { label: 'Total Orders', val: orders.length, icon: ShoppingCart, color: 'text-purple-400', bg: 'bg-[#6A2C91]/20', border: 'border-[#6A2C91]/30' },
-              { label: 'Revenue', val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-[#C5A059]/20', border: 'border-[#C5A059]/30' },
-              { label: 'Pending', val: pendingCount, icon: Package, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' },
-              { label: 'Shipped', val: shippedCount, icon: Truck, color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/30' }
+              { label: 'Total Orders', val: orders.length, icon: ShoppingCart, color: 'purple' },
+              { label: 'Revenue', val: `$${getTotalRevenue().toFixed(2)}`, icon: DollarSign, color: 'gold' },
+              { label: 'Pending', val: pendingCount, icon: Package, color: 'magenta' },
+              { label: 'Shipped', val: shippedCount, icon: Truck, color: 'emerald' }
             ].map((stat, i) => (
               <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
-                <div className={`p-4 ${stat.bg} ${stat.color} rounded-2xl mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border ${stat.border}`}>
-                    <stat.icon size={24} />
-                </div>
+                <GlassHaloIcon icon={stat.icon} color={stat.color as any} size="lg" className="mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
                 <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{stat.label}</p>
                 <p className="text-4xl font-serif text-white tracking-tighter">{stat.val}</p>
               </div>

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useArtisanData } from './DataContext';
 import { LRCLogo } from './UI';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { searchBusinessData } from '../services/geminiService';
 import { TutorialOverlay } from './TutorialOverlay';
 import { SupportModal } from './SupportModal';
@@ -104,27 +105,27 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <div className="nav-section-group">
                   <span className="nav-section-title">Primary Nodes</span>
                   <button onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📊</span>
+                      <GlassHaloIcon icon={LayoutDashboard} color="cyan" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Dashboard</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✨</span>
+                      <GlassHaloIcon icon={Sparkles} color="magenta" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Marketing Studio</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🏭</span>
+                      <GlassHaloIcon icon={Factory} color="cyan" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Manufacturing</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🤝</span>
+                      <GlassHaloIcon icon={User} color="purple" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">CRM Hub</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📈</span>
+                      <GlassHaloIcon icon={TrendingUp} color="gold" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Orders & Finance</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
@@ -133,17 +134,17 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <div className="nav-section-group">
                   <span className="nav-section-title">Supply Logistics</span>
                   <button onClick={() => { navigate('/inventory'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/inventory' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">📦</span>
-                      <span className="flex-1 text-left">Materials Matrix</span>
+                      <GlassHaloIcon icon={Package} color="cyan" size="sm" className="mr-3" />
+                      <span className="flex-1 text-left">Inventory Hub</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/forecasting'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/forecasting' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">⏳</span>
+                      <GlassHaloIcon icon={Activity} color="gold" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Forecasting</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
                   </button>
                   <button onClick={() => { navigate('/qc'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/qc' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💸</span>
+                      <GlassHaloIcon icon={DollarSign} color="emerald" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Trapped Cash Audit</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_#f59e0b]"></span>
                   </button>
@@ -152,32 +153,32 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <div className="nav-section-group mt-auto pt-8">
                   <span className="nav-section-title text-[#C5A059]">My Account</span>
                   <button onClick={() => { navigate('/settings/account'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/account' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💎</span>
+                      <GlassHaloIcon icon={Crown} color="gold" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Subscription Status</span>
                   </button>
                   {businessProfile.role === 'super_admin' && (
                     <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
-                        <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🛡️</span>
+                        <GlassHaloIcon icon={ShieldCheck} color="cyan" size="sm" className="mr-3" />
                         <span className="flex-1 text-left">Super-Admin</span>
                     </button>
                   )}
                   <button onClick={() => { navigate('/settings/integrations'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/integrations' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💳</span>
+                      <GlassHaloIcon icon={Layers} color="purple" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Integrations</span>
                   </button>
                   <button onClick={() => { navigate('/marketing/brand-voice'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing/brand-voice' ? 'active' : ''}`}>
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">✉️</span>
+                      <GlassHaloIcon icon={FileText} color="cyan" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Brand Voice Profile</span>
                   </button>
                   <button onClick={() => { setIsSupportOpen(true); setIsMobileMenuOpen(false); }} className="nav-item">
-                      <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🆘</span>
+                      <GlassHaloIcon icon={HelpCircle} color="magenta" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Support Node</span>
                   </button>
               </div>
           </nav>
 
           <div className="sidebar-user-footer">
-              <div className="user-avatar-frame text-xl">👤</div>
+              <GlassHaloIcon icon={User} color="purple" size="sm" className="mr-3" />
               <div className="user-details text-left flex-1 min-w-0">
                   <span className="user-name truncate">{businessProfile.ownerName || 'LaToya Carter'}</span>
                   <span className="user-role truncate">Sovereign Architect</span>

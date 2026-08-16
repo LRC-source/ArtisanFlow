@@ -5,6 +5,7 @@ import { useArtisanData, Report } from './DataContext';
 import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { motion } from 'framer-motion';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const Reports = () => {
   const { inventory, orders, productionStats, getInventoryValue, getTotalRevenue, reports, saveReport, deleteReport } = useArtisanData();
@@ -136,9 +137,7 @@ export const Reports = () => {
 
               {reports.length === 0 ? (
                   <div className="bg-white/5 border border-dashed border-white/10 rounded-[3rem] p-24 flex flex-col items-center justify-center min-h-[400px]">
-                      <div className="w-24 h-24 bg-white/5 rounded-[2rem] flex items-center justify-center mb-8 shadow-inner border border-white/10 text-white/20">
-                          <History size={48} strokeWidth={1} />
-                      </div>
+                      <GlassHaloIcon icon={History} color="purple" size="lg" className="mb-8 w-24 h-24 [&>svg]:w-12 [&>svg]:h-12 opacity-50" />
                       <h3 className="text-3xl font-serif text-white tracking-tight mb-2">No Reports Archieved</h3>
                       <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Generate a report to see it here</p>
                   </div>
@@ -147,9 +146,7 @@ export const Reports = () => {
                       {reports.map((report) => (
                           <div key={report.id} className="luxury-card bg-white/5 p-8 rounded-[2rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all flex flex-col md:flex-row justify-between items-center gap-4 sm:p-8 group">
                               <div className="flex items-start gap-6">
-                                  <div className="p-4 bg-black/40 text-[#C5A059] rounded-xl border border-white/5 group-hover:bg-[#C5A059]/20 transition-all">
-                                      <FileText size={28} strokeWidth={1.5} />
-                                  </div>
+                                  <GlassHaloIcon icon={FileText} color="gold" size="md" className="group-hover:scale-110 transition-all" />
                                   <div>
                                       <h3 className="font-serif text-white text-2xl tracking-tight mb-2">{report.title}</h3>
                                       <div className="flex items-center gap-4 text-xs text-white/50">
@@ -205,9 +202,7 @@ export const Reports = () => {
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6A2C91]/20 to-transparent rounded-bl-full opacity-50 -mr-16 -mt-16 pointer-events-none"></div>
             
             <div className="flex items-center gap-4 mb-10 relative z-10">
-                <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner">
-                    <Sparkles size={24} strokeWidth={1.5} />
-                </div>
+                <GlassHaloIcon icon={Sparkles} color="purple" size="md" />
                 <h3 className="text-3xl font-serif text-white tracking-tight">AI-Powered Extraction</h3>
             </div>
             

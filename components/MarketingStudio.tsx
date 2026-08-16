@@ -3,6 +3,7 @@ import { Camera, Type, Share2, Video, Sparkles, ArrowLeft } from 'lucide-react';
 import { VaultBanner, Button } from './UI';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const MarketingStudio = () => {
   const navigate = useNavigate();
@@ -32,10 +33,7 @@ export const MarketingStudio = () => {
                 <Sparkles size={120} className="text-[#C5A059]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.2)] group-hover:scale-110 transition-all duration-500`}>
-                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-30 blur-md`}></span>
-                    <Sparkles size={20} className="text-[#C5A059] relative z-10" strokeWidth={1.5} />
-                </div>
+                <GlassHaloIcon icon={Sparkles} color="gold" size="md" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Campaign Generator</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">Generate comprehensive strategies based on inventory levels.</p>
@@ -47,10 +45,7 @@ export const MarketingStudio = () => {
                 <Type size={120} className="text-[#06B6D4]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(6,182,212,0.2)] group-hover:scale-110 transition-all duration-500`}>
-                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#06B6D4] to-[#6A2C91] opacity-30 blur-md`}></span>
-                    <Type size={20} className="text-[#06B6D4] relative z-10" strokeWidth={1.5} />
-                </div>
+                <GlassHaloIcon icon={Type} color="cyan" size="md" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Copywriter</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">Create blog posts, emails, and social captions.</p>
@@ -62,10 +57,7 @@ export const MarketingStudio = () => {
                 <Camera size={120} className="text-[#D946EF]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(217,70,239,0.2)] group-hover:scale-110 transition-all duration-500`}>
-                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#D946EF] to-[#A855F7] opacity-30 blur-md`}></span>
-                    <Camera size={20} className="text-[#D946EF] relative z-10" strokeWidth={1.5} />
-                </div>
+                <GlassHaloIcon icon={Camera} color="magenta" size="md" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Visual Studio</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">AI image generation for product showcases.</p>
@@ -77,10 +69,7 @@ export const MarketingStudio = () => {
                 <Video size={120} className="text-[#A855F7]" />
             </div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-                <div className={`relative inline-flex items-center justify-center w-12 h-12 rounded-[1rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(168,85,247,0.2)] group-hover:scale-110 transition-all duration-500`}>
-                    <span className={`absolute inset-0 rounded-[1rem] bg-gradient-to-r from-[#A855F7] to-[#06B6D4] opacity-30 blur-md`}></span>
-                    <Video size={20} className="text-[#A855F7] relative z-10" strokeWidth={1.5} />
-                </div>
+                <GlassHaloIcon icon={Video} color="purple" size="md" className="group-hover:scale-110 transition-all duration-500" />
                 <h3 className="font-serif text-2xl text-white tracking-tight">Video Scripts</h3>
             </div>
             <p className="text-white/40 font-sans font-light mb-8 relative z-10">Generate scripts for TikTok and Reels.</p>

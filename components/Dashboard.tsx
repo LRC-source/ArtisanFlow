@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, TrendingUp } from 'lucide-react';
+import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, TrendingUp, Sparkles, Factory, User } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from 'recharts';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion } from 'framer-motion';
 import { Badge, Button, VaultBanner } from './UI';
 
@@ -42,7 +43,8 @@ export const Dashboard = () => {
         <MainNodePortal 
             title="Marketing Studio" 
             path="/marketing"
-            icon="✨" 
+            icon={Sparkles} 
+            iconColor="magenta"
             delay={0.3} 
             color="from-purple-600/40 to-indigo-600/40"
             shadow="shadow-purple-900/40"
@@ -50,7 +52,8 @@ export const Dashboard = () => {
         <MainNodePortal 
             title="Manufacturing" 
             path="/recipes"
-            icon="🏭" 
+            icon={Factory} 
+            iconColor="cyan"
             delay={0.4} 
             color="from-emerald-600/40 to-teal-600/40"
             shadow="shadow-emerald-900/40"
@@ -58,7 +61,8 @@ export const Dashboard = () => {
         <MainNodePortal 
             title="CRM Hub" 
             path="/operations/crm"
-            icon="🤝" 
+            icon={User} 
+            iconColor="purple"
             delay={0.5} 
             color="from-blue-600/40 to-cyan-600/40"
             shadow="shadow-blue-900/40"
@@ -66,7 +70,8 @@ export const Dashboard = () => {
         <MainNodePortal 
             title="Orders & Finance" 
             path="/finance"
-            icon="📈" 
+            icon={TrendingUp} 
+            iconColor="gold"
             delay={0.6} 
             color="from-[#C5A059]/40 to-amber-600/40"
             shadow="shadow-amber-900/40"
@@ -82,15 +87,12 @@ export const Dashboard = () => {
             className="lg:col-span-2 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(168,85,247,0.2)]"
         >
           <div className="luxury-card bg-[#0A0A0A] border-none p-4 sm:p-12 rounded-[3rem] relative overflow-hidden group w-full h-full">
-          <div className="flex justify-between items-center mb-12">
+              <div className="flex justify-between items-center mb-12">
               <div>
                   <h3 className="text-3xl font-serif text-white tracking-tight">Revenue Trajectory</h3>
                   <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mt-2">7-Day rolling performance audit</p>
               </div>
-              <div className="relative inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(197,160,89,0.4)] group-hover:scale-110 transition-transform duration-500">
-                  <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#C5A059] to-[#D946EF] opacity-40 blur-md"></span>
-                  <TrendingUp size={28} strokeWidth={1.5} className="text-[#C5A059] relative z-10" />
-              </div>
+              <GlassHaloIcon icon={TrendingUp} color="gold" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
           </div>
           <div className="w-full h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -125,10 +127,7 @@ export const Dashboard = () => {
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6A2C91]/20 to-transparent rounded-bl-full opacity-30 -mr-16 -mt-16"></div>
           <div>
               <div className="flex items-center gap-5 mb-10 relative z-10">
-                <div className="relative inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:scale-110 transition-transform duration-500">
-                    <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-40 blur-md"></span>
-                    <Zap size={24} strokeWidth={1.5} className="text-[#C5A059] relative z-10" />
-                </div>
+                <GlassHaloIcon icon={Zap} color="gold" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
                 <h3 className="text-3xl font-serif text-white tracking-tight">Synaptic Insights</h3>
               </div>
               <div className="space-y-10 relative z-10">
@@ -153,7 +152,7 @@ export const Dashboard = () => {
   );
 };
 
-const MainNodePortal = ({ title, path, icon, color, shadow, delay }: any) => {
+const MainNodePortal = ({ title, path, icon, color, shadow, delay, iconColor }: any) => {
   const navigate = useNavigate();
   return (
       <motion.button
@@ -177,8 +176,8 @@ const MainNodePortal = ({ title, path, icon, color, shadow, delay }: any) => {
           <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 sm:p-8 border border-white/10 rounded-[3rem] bg-black/40 shadow-inner overflow-hidden">
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
               
-              <div className="text-6xl mb-6 drop-shadow-[0_20px_20px_rgba(0,0,0,0.8)] grayscale-0 group-hover:scale-125 transition-transform duration-700 ease-out">
-                  {icon}
+              <div className="mb-6 drop-shadow-[0_20px_20px_rgba(0,0,0,0.8)] grayscale-0 group-hover:scale-125 transition-transform duration-700 ease-out">
+                  <GlassHaloIcon icon={icon} color={iconColor} size="lg" className="w-20 h-20 [&>svg]:w-10 [&>svg]:h-10" />
               </div>
               
               <h3 className="text-xl font-serif text-white font-bold tracking-tight text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:text-white transition-colors">

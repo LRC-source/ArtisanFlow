@@ -4,6 +4,7 @@ import { useArtisanData, QualityCheck } from './DataContext';
 import { ClipboardList, Plus, Search, CheckCircle, Clock, ArrowLeft, ShieldCheck, Activity, BarChart3, ChevronRight, Zap, Target, ClipboardCheck, History, AlertTriangle, Layers, Box } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 /**
  * Quality Control - High-Fidelity Batch Integrity Hub ✅
@@ -72,10 +73,10 @@ export const QualityControl = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <StatBox label="Total Audits" val={qualityChecks.length} color="text-[#C5A059]" icon={ClipboardList} />
-          <StatBox label="Pass Velocity" val={`${passRate}%`} color="text-emerald-400" icon={ShieldCheck} />
-          <StatBox label="Failure Waste" val="$0.00" color="text-red-400" icon={AlertTriangle} />
-          <StatBox label="Pending QA" val={qualityChecks.filter(c => c.status === 'Pending').length} color="text-blue-400" icon={Clock} />
+          <StatBox label="Total Audits" val={qualityChecks.length} color="text-[#C5A059]" haloColor="gold" icon={ClipboardList} />
+          <StatBox label="Pass Velocity" val={`${passRate}%`} color="text-emerald-400" haloColor="emerald" icon={ShieldCheck} />
+          <StatBox label="Failure Waste" val="$0.00" color="text-red-400" haloColor="magenta" icon={AlertTriangle} />
+          <StatBox label="Pending QA" val={qualityChecks.filter(c => c.status === 'Pending').length} color="text-blue-400" haloColor="cyan" icon={Clock} />
       </div>
 
       {qualityChecks.length === 0 ? (
@@ -93,9 +94,7 @@ export const QualityControl = () => {
                   <div key={check.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10 hover:shadow-2xl hover:border-[#C5A059]/50 transition-all group relative overflow-hidden">
                       <div className="flex justify-between items-start mb-8 relative z-10">
                           <div className="flex items-center gap-6">
-                              <div className={`w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center ${check.status === 'Passed' ? 'text-emerald-400' : 'text-amber-400'} shadow-inner group-hover:bg-white/10 transition-colors`}>
-                                  {check.status === 'Passed' ? <ShieldCheck size={28} /> : <Clock size={28} />}
-                              </div>
+                              <GlassHaloIcon icon={check.status === 'Passed' ? ShieldCheck : Clock} color={check.status === 'Passed' ? 'emerald' : 'gold'} size="md" />
                               <div>
                                   <h3 className="text-3xl font-serif text-white tracking-tight">{check.productName}</h3>
                                   <Badge color="gold" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">Batch: {check.batchNumber}</Badge>
@@ -125,9 +124,9 @@ export const QualityControl = () => {
   );
 };
 
-const StatBox = ({ label, val, color, icon: Icon }: any) => (
+const StatBox = ({ label, val, color, haloColor, icon: Icon }: any) => (
     <div className="luxury-card bg-black/40 backdrop-blur-xl p-4 sm:p-8 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#C5A059]/30 transition-all">
-        <div className={`p-4 bg-white/5 border border-white/10 rounded-2xl mb-6 text-white/50 group-hover:text-[#C5A059] group-hover:scale-110 transition-all`}><Icon size={24} /></div>
+        <GlassHaloIcon icon={Icon} color={haloColor} size="md" className="mb-6 group-hover:scale-110 transition-all" />
         <p className="text-[10px] text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
         <p className={`text-4xl font-serif tracking-tight ${color}`}>{val}</p>
     </div>

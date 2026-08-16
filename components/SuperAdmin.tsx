@@ -6,6 +6,7 @@ import { Card, Button, Badge, Input, Select, VaultBanner, Modal } from './UI';
 import { SubPageHeader } from './SubPageHeader';
 import { useArtisanData, SystemUser } from './DataContext';
 import { toast } from 'sonner';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const SuperAdmin = () => {
     const navigate = useNavigate();
@@ -230,10 +231,10 @@ export const SuperAdmin = () => {
             </VaultBanner>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
-                <AdminStatCard title="Total Platform Users" value={liveUsers.length.toString()} icon={Users} trend="+1 This Week" />
-                <AdminStatCard title="Pro Tier Subscribers" value={liveUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
-                <AdminStatCard title="Global Volume Processed" value="$187,020" icon={Activity} trend="+14% MoM" color="text-emerald-400" />
-                <AdminStatCard title="System Health" value="100%" icon={Server} trend="All Nodes Online" color="text-blue-400" />
+                <AdminStatCard title="Total Platform Users" value={liveUsers.length.toString()} icon={Users} haloColor="purple" trend="+1 This Week" />
+                <AdminStatCard title="Pro Tier Subscribers" value={liveUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} haloColor="gold" trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
+                <AdminStatCard title="Global Volume Processed" value="$187,020" icon={Activity} haloColor="emerald" trend="+14% MoM" color="text-emerald-400" />
+                <AdminStatCard title="System Health" value="100%" icon={Server} haloColor="cyan" trend="All Nodes Online" color="text-blue-400" />
             </div>
 
             <Card title="User Matrix & Tier Assignment" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-12">
@@ -310,7 +311,7 @@ export const SuperAdmin = () => {
                 <Card title="Database Sync Configuration" className="luxury-card border-none bg-black/40 backdrop-blur-xl rounded-[3rem] p-4 sm:p-10">
                     <div className="space-y-6 mt-4">
                         <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-4">
-                            <Database className="text-[#C5A059] shrink-0 mt-1" size={20} />
+                            <GlassHaloIcon icon={Database} color="gold" size="sm" className="shrink-0 mt-1" />
                             <div>
                                 <h4 className="text-white font-serif text-xl mb-1">Google Sheets Sync</h4>
                                 <p className="text-white/50 text-sm font-sans font-light mb-4">Export Super-Admin matrix automatically to a master Google Sheet.</p>
@@ -320,7 +321,7 @@ export const SuperAdmin = () => {
                             </div>
                         </div>
                         <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-4">
-                            <Server className="text-[#6A2C91] shrink-0 mt-1" size={20} />
+                            <GlassHaloIcon icon={Server} color="purple" size="sm" className="shrink-0 mt-1" />
                             <div>
                                 <h4 className="text-white font-serif text-xl mb-1">Firebase Core Integration</h4>
                                 <p className="text-white/50 text-sm font-sans font-light mb-4">Manage remote config and user authentication nodes.</p>
@@ -531,13 +532,11 @@ export const SuperAdmin = () => {
     );
 };
 
-const AdminStatCard = ({ title, value, icon: Icon, trend, color = 'text-white', border = 'border-white/10' }: any) => (
+const AdminStatCard = ({ title, value, icon: Icon, trend, haloColor, color = 'text-white', border = 'border-white/10' }: any) => (
     <div className={`luxury-card bg-white/5 backdrop-blur-xl border ${border} rounded-[2.5rem] p-8 relative overflow-hidden group hover:bg-white/10 transition-all duration-500`}>
         <div className="flex justify-between items-start mb-6">
             <span className="text-white/40 font-sans font-bold text-[10px] uppercase tracking-[0.3em]">{title}</span>
-            <div className={`p-3 rounded-xl bg-white/5 ${color} border border-white/5`}>
-                <Icon size={18} strokeWidth={1.5} />
-            </div>
+            <GlassHaloIcon icon={Icon} color={haloColor} size="sm" />
         </div>
         <div className={`text-4xl font-serif tracking-tighter mb-4 ${color}`}>{value}</div>
         <div className="text-white/30 text-[10px] font-sans font-bold uppercase tracking-[0.3em]">{trend}</div>

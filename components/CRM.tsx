@@ -8,6 +8,7 @@ import { SubPageHeader } from './SubPageHeader';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { UpgradeModal } from './UpgradeModal';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const CRM = () => {
   const { orders, manualCustomers, addManualCustomer, getTotalRevenue, userTier } = useArtisanData();
@@ -228,10 +229,10 @@ export const CRM = () => {
             subtitle="Synaptic client management and lifetime value analytics."
             badge="Client Protocol Active"
           >
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full sm:w-auto">
                 <Button 
                     variant="outline" 
-                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm" 
+                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 transition-all shadow-sm w-full sm:w-auto" 
                     onClick={handleSync} 
                     disabled={isSyncing}
                 >
@@ -239,7 +240,7 @@ export const CRM = () => {
                 </Button>
                 <Button 
                     variant="primary" 
-                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all" 
+                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 shadow-2xl shadow-black/10 transition-all w-full sm:w-auto" 
                     onClick={() => setIsAddModalOpen(true)}
                 >
                     <UserPlus size={16} className="mr-3" /> ADD MANUAL NODE
@@ -251,16 +252,13 @@ export const CRM = () => {
         {/* KPI Cards */}
          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:p-8">
             {[
-              { label: 'Active Nodes', val: allCustomers.length, icon: Users, color: 'text-purple-400', bg: 'bg-[#6A2C91]/20', border: 'border-[#6A2C91]/30' },
-              { label: 'Network Value', val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: 'text-[#C5A059]', bg: 'bg-[#C5A059]/20', border: 'border-[#C5A059]/30' },
-              { label: 'Synaptic Health', val: '98%', icon: TrendingUp, color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/30' },
-              { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'text-amber-500', bg: 'bg-amber-500/20', border: 'border-amber-500/30' }
+              { label: 'Active Nodes', val: allCustomers.length, icon: Users, color: 'purple' },
+              { label: 'Network Value', val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: 'gold' },
+              { label: 'Synaptic Health', val: '98%', icon: TrendingUp, color: 'emerald' },
+              { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'magenta' }
             ].map((kpi, i) => (
               <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-4 sm:p-10 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
-                <div className={`relative inline-flex items-center justify-center w-16 h-16 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10`}>
-                    <span className={`absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-white/10 to-white/5 opacity-40 blur-md ${kpi.bg}`}></span>
-                    <kpi.icon size={24} className={`${kpi.color} relative z-10`} strokeWidth={1.5} />
-                </div>
+                <GlassHaloIcon icon={kpi.icon} color={kpi.color as any} size="lg" className="mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10" />
                 <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
                 <p className="text-4xl font-serif text-white tracking-tighter">{kpi.val}</p>
               </div>

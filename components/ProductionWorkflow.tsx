@@ -79,28 +79,30 @@ export const ProductionWorkflow = () => {
                                   </div>
                               </div>
                           </div>
-                          <Button 
-                              className="w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl font-bold uppercase tracking-widest text-xs h-12"
-                              onClick={async () => {
-                                  try {
-                                      const result = await produceBatch(recipe.id, 1);
-                                      if (result.success) {
-                                          if (result.warnings.length > 0) {
-                                              toast.warning(`Batch Produced with Warnings: ${result.warnings.join(', ')}`);
+                          <div className="sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full mt-4">
+                              <Button 
+                                  className="w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl font-bold uppercase tracking-widest text-xs h-12"
+                                  onClick={async () => {
+                                      try {
+                                          const result = await produceBatch(recipe.id, 1);
+                                          if (result.success) {
+                                              if (result.warnings.length > 0) {
+                                                  toast.warning(`Batch Produced with Warnings: ${result.warnings.join(', ')}`);
+                                              } else {
+                                                  toast.success(`${recipe.name} Batch successfully produced and materials deducted.`);
+                                              }
                                           } else {
-                                              toast.success(`${recipe.name} Batch successfully produced and materials deducted.`);
+                                              toast.error(result.warnings[0]);
                                           }
-                                      } else {
-                                          toast.error(result.warnings[0]);
+                                      } catch (error) {
+                                          toast.error("An unexpected error occurred while producing the batch.");
+                                          console.error("Batch production error:", error);
                                       }
-                                  } catch (error) {
-                                      toast.error("An unexpected error occurred while producing the batch.");
-                                      console.error("Batch production error:", error);
-                                  }
-                              }}
-                          >
-                              Commit Batch to Production
-                          </Button>
+                                  }}
+                              >
+                                  Commit Batch to Production
+                              </Button>
+                          </div>
                           </div>
                       </div>
                   ))}

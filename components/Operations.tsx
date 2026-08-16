@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Activity, Layers, Truck, CheckCircle, ClipboardList, Package, ShieldCheck, DollarSign, Calculator, AlertTriangle, Crown, Search, TrendingUp } from 'lucide-react';
 import { Card, Input, Button, Badge, LockedNode } from './UI';
+import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { useArtisanData } from './DataContext';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -103,10 +104,12 @@ export const MarginGuard = () => {
                               {currentMultiplier.toFixed(2)}x Markup
                           </Badge>
                       </div>
-                      <Button onClick={() => toast.info('Accessing live production nodes...')} className="w-full mt-10 bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all group overflow-hidden relative">
-                          <span className="relative z-10">Commit To Production</span>
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                      </Button>
+                      <div className="sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none mt-10 w-full">
+                          <Button onClick={() => toast.info('Accessing live production nodes...')} className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-black/10 transition-all group overflow-hidden relative">
+                              <span className="relative z-10">Commit To Production</span>
+                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                          </Button>
+                      </div>
                     </LockedNode>
                 </div>
             </div>
@@ -176,10 +179,7 @@ const HubNode = ({ icon: Icon, title, desc, color = "text-[#6A2C91]", bg = "bg-w
     className={`luxury-card ${bg} p-12 rounded-[3rem] hover:-translate-y-2 transition-all duration-700 cursor-pointer group flex flex-col h-full relative overflow-hidden shadow-2xl shadow-black/20`}
   >
       <div className="absolute top-0 right-0 w-48 h-48 bg-white opacity-[0.05] rounded-bl-full -mr-12 -mt-12 group-hover:opacity-10 transition-opacity duration-700"></div>
-      <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-white/[0.05] border border-white/20 backdrop-blur-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-110 transition-transform duration-700 mb-10 z-10">
-          <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] opacity-40 blur-md"></span>
-          <Icon className="text-[#06B6D4] relative z-10" size={32} strokeWidth={1.5} />
-      </div>
+      <GlassHaloIcon icon={Icon} color="cyan" size="lg" className="w-20 h-20 group-hover:scale-110 transition-transform duration-700 mb-10 z-10 [&>svg]:w-8 [&>svg]:h-8" />
       <h3 className="text-3xl font-serif text-white mb-4 tracking-tight relative z-10 leading-none">{title}</h3>
       <p className="text-base text-white/50 font-sans font-light leading-relaxed relative z-10">{desc}</p>
   </motion.div>
