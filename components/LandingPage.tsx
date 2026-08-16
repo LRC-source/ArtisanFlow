@@ -69,13 +69,24 @@ export const LandingPage = () => {
             
             {/* Top VIP Announcement Banner */}
             <div className="w-full bg-gradient-to-r from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 backdrop-blur-md border-b border-white/15 text-center flex items-center justify-center gap-2 text-white font-bold tracking-wide text-sm py-3 px-6 z-50 relative">
-                <Sparkles size={16} /> VIP Launch: September 1st
+                <span className="relative inline-flex items-center justify-center w-6 h-6 rounded-lg bg-white/10 border border-white/20 backdrop-blur-md mr-1.5 shadow-[0_0_12px_rgba(168,85,247,0.4)]">
+                    <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-40 blur-sm" />
+                    <Sparkles className="w-3.5 h-3.5 text-white relative z-10" />
+                </span>
+                VIP Launch: September 1st
             </div>
 
             {/* Nav */}
             <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
-                <div className="flex items-center">
-                    <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-16 w-auto object-contain" />
+                <div className="flex items-center gap-3">
+                    <div className="relative w-10 h-10 rounded-xl bg-white/[0.06] border border-white/20 backdrop-blur-xl flex items-center justify-center p-2 shadow-[0_0_15px_rgba(6,182,212,0.25)] hover:border-white/40 transition-all">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 blur-sm rounded-xl pointer-events-none" />
+                        <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Icon" className="relative z-10 w-full h-full object-contain" />
+                    </div>
+                    <span className="text-xl">
+                        <span className="text-white font-extrabold tracking-tight">Artisan</span>
+                        <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-transparent bg-clip-text font-black ml-1.5">Flow</span>
+                    </span>
                 </div>
                 <div>
                     <Button variant="outline" onClick={() => setView('login')} className="h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase">
