@@ -8315,7 +8315,7 @@ const LandingPage = () => {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 font-medium max-w-xl leading-relaxed", children: "Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access." }),
           /* @__PURE__ */ jsx("div", { ref: formRef, className: "mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl", children: isSubmitted ? /* @__PURE__ */ jsxs("div", { className: "text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500", children: [
-            /* @__PURE__ */ jsx(CheckCircle, { size: 48, className: "text-[#C5A059] mx-auto mb-4" }),
+            /* @__PURE__ */ jsx(CheckCircle, { size: 48, className: "text-[#10B981] mx-auto mb-4" }),
             /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white", children: "You're Officially on the VIP List!" }),
             /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm max-w-sm mx-auto leading-relaxed", children: "We've reserved your priority spot. Keep an eye on your inbox for exclusive behind-the-scenes previews before doors open September 1st @ 10:00 AM EST." })
           ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -8389,21 +8389,66 @@ const LandingPage = () => {
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-32 w-full max-w-6xl relative z-10", children: [
+      /* @__PURE__ */ jsx("div", { className: "mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-red-900/10 border border-red-500/20 p-8 rounded-[2rem] flex flex-col items-center text-center hover:border-red-500/40 transition-all", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-red-400 font-bold uppercase tracking-widest text-sm mb-6", children: "Legacy Spreadsheets & Craftybase" }),
+          /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-400 text-sm w-full text-left", children: [
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+              " Manual inventory deduction & data entry"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+              " Disconnected sales channels & production"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+              " Blind to hidden raw material cost increases"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-red-500 font-bold text-lg leading-none", children: "×" }),
+              " Zero marketing or social automation"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-[#10B981]/5 border border-[#10B981]/30 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden hover:border-[#10B981]/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-[#10B981]/10 to-transparent pointer-events-none" }),
+          /* @__PURE__ */ jsx("h3", { className: "text-[#10B981] font-bold uppercase tracking-widest text-sm mb-6 relative z-10", children: "Artisan Flow Modern OS" }),
+          /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300 text-sm w-full text-left relative z-10", children: [
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#10B981] shrink-0 mt-0.5" }),
+              " Automated, real-time inventory deduction"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#10B981] shrink-0 mt-0.5" }),
+              " Omnichannel sync with Square"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "text-[#10B981] shrink-0 mt-0.5" }),
+              " Profit Guard™ margin anomaly detection"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx(Sparkles, { size: 16, className: "text-[#A855F7] shrink-0 mt-0.5" }),
+              " Lola AI Marketing & Content Co-Pilot"
+            ] })
+          ] })
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-20 w-full max-w-6xl relative z-10", children: [
         /* @__PURE__ */ jsx("div", { className: "text-center mb-16", children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }) }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx(Activity, { size: 32, className: "text-[#C5A059] mb-4" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#10B981]/5 border border-[#10B981]/20 p-6 rounded-2xl hover:border-[#10B981]/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx("div", { className: "bg-[#10B981]/10 p-3 rounded-xl mb-4 border border-[#10B981]/20", children: /* @__PURE__ */ jsx(Activity, { size: 24, className: "text-[#10B981]" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Operations & Recipe Builder" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx(Shield, { size: 32, className: "text-[#C5A059] mb-4" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#10B981]/5 border border-[#10B981]/20 p-6 rounded-2xl hover:border-[#10B981]/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx("div", { className: "bg-[#10B981]/10 p-3 rounded-xl mb-4 border border-[#10B981]/20", children: /* @__PURE__ */ jsx(Shield, { size: 24, className: "text-[#10B981]" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Finance Hub & Profit Guard™" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left", children: [
-            /* @__PURE__ */ jsx(Cpu, { size: 32, className: "text-[#C5A059] mb-4" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#A855F7]/5 border border-[#A855F7]/20 p-6 rounded-2xl hover:border-[#A855F7]/40 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all flex flex-col items-start text-left", children: [
+            /* @__PURE__ */ jsx("div", { className: "bg-[#A855F7]/10 p-3 rounded-xl mb-4 border border-[#A855F7]/20", children: /* @__PURE__ */ jsx(Cpu, { size: 24, className: "text-[#A855F7]" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Lola AI Marketing Co-Pilot" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 leading-relaxed", children: "Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice." })
           ] })
@@ -8420,9 +8465,11 @@ const LandingPage = () => {
             {
               title: "Starter Maker LTD",
               features: [
-                "Operations Hub",
-                "BOM Recipe Builder",
-                "Inventory up to 500 SKUs"
+                "Precision Bill of Materials (BOM) Recipe Costing",
+                "Automated Batch Inventory Deduction",
+                "Warehouse Stock Ledger & Low-Stock Alerts",
+                "Universal CSV Importer (Craftybase Migration)",
+                "Track Up to 500 Active SKUs"
               ]
             }
           ),
@@ -8432,9 +8479,11 @@ const LandingPage = () => {
               title: "Artisan Pro LTD",
               isFeatured: true,
               features: [
-                "Operations Hub",
-                "Lola AI Marketing Engine",
-                "Production Scheduler"
+                "Everything in Starter Maker, PLUS:",
+                "Lola AI Marketing Suite (Social, Blogs, Scripts)",
+                "Kanban Production Scheduler & Curing Workflow",
+                "Supplier QC Ledgers & Purchase Orders",
+                "Square SDK Omnichannel Sales Sync"
               ]
             }
           ),
@@ -8443,9 +8492,11 @@ const LandingPage = () => {
             {
               title: "Master Formulator LTD",
               features: [
-                "Full OS",
-                "Profit Guard™ Margin Protection",
-                "Predictive Reordering"
+                "Everything in Artisan Pro, PLUS:",
+                "Profit Guard™ Real-Time Margin Protection",
+                "Predictive Raw Material Reordering Alerts",
+                "Multi-Location Warehouse Tracking",
+                "Unlimited SKUs & Priority VIP Concierge Support"
               ]
             }
           )

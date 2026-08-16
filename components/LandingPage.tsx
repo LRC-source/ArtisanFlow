@@ -99,7 +99,7 @@ export const LandingPage = () => {
                         <div ref={formRef} className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl">
                             {isSubmitted ? (
                                 <div className="text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500">
-                                    <CheckCircle size={48} className="text-[#C5A059] mx-auto mb-4" />
+                                    <CheckCircle size={48} className="text-[#10B981] mx-auto mb-4" />
                                     <h3 className="text-2xl font-black text-white">You're Officially on the VIP List!</h3>
                                     <p className="text-gray-400 text-sm max-w-sm mx-auto leading-relaxed">
                                         We've reserved your priority spot. Keep an eye on your inbox for exclusive behind-the-scenes previews before doors open September 1st @ 10:00 AM EST.
@@ -178,24 +178,57 @@ export const LandingPage = () => {
                     </div>
                 </div>
 
+                {/* Anti-Spreadsheet Comparison Section */}
+                <div className="mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12">
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {/* Legacy */}
+                        <div className="bg-red-900/10 border border-red-500/20 p-8 rounded-[2rem] flex flex-col items-center text-center hover:border-red-500/40 transition-all">
+                            <h3 className="text-red-400 font-bold uppercase tracking-widest text-sm mb-6">Legacy Spreadsheets & Craftybase</h3>
+                            <ul className="space-y-4 text-gray-400 text-sm w-full text-left">
+                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Manual inventory deduction & data entry</li>
+                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Disconnected sales channels & production</li>
+                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Blind to hidden raw material cost increases</li>
+                                <li className="flex items-start gap-3"><span className="text-red-500 font-bold text-lg leading-none">×</span> Zero marketing or social automation</li>
+                            </ul>
+                        </div>
+                        {/* Artisan Flow */}
+                        <div className="bg-[#10B981]/5 border border-[#10B981]/30 p-8 rounded-[2rem] flex flex-col items-center text-center relative overflow-hidden hover:border-[#10B981]/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#10B981]/10 to-transparent pointer-events-none"></div>
+                            <h3 className="text-[#10B981] font-bold uppercase tracking-widest text-sm mb-6 relative z-10">Artisan Flow Modern OS</h3>
+                            <ul className="space-y-4 text-gray-300 text-sm w-full text-left relative z-10">
+                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#10B981] shrink-0 mt-0.5" /> Automated, real-time inventory deduction</li>
+                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#10B981] shrink-0 mt-0.5" /> Omnichannel sync with Square</li>
+                                <li className="flex items-start gap-3"><CheckCircle size={16} className="text-[#10B981] shrink-0 mt-0.5" /> Profit Guard™ margin anomaly detection</li>
+                                <li className="flex items-start gap-3"><Sparkles size={16} className="text-[#A855F7] shrink-0 mt-0.5" /> Lola AI Marketing & Content Co-Pilot</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Platform Feature Nodes Section */}
-                <div className="mt-32 w-full max-w-6xl relative z-10">
+                <div className="mt-20 w-full max-w-6xl relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Built For Industrial Manufacturing Precision</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left">
-                            <Activity size={32} className="text-[#C5A059] mb-4" />
+                        <div className="bg-[#10B981]/5 border border-[#10B981]/20 p-6 rounded-2xl hover:border-[#10B981]/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all flex flex-col items-start text-left">
+                            <div className="bg-[#10B981]/10 p-3 rounded-xl mb-4 border border-[#10B981]/20">
+                                <Activity size={24} className="text-[#10B981]" />
+                            </div>
                             <h3 className="text-xl font-bold text-white mb-2">Operations & Recipe Builder</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers.</p>
                         </div>
-                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left">
-                            <Shield size={32} className="text-[#C5A059] mb-4" />
+                        <div className="bg-[#10B981]/5 border border-[#10B981]/20 p-6 rounded-2xl hover:border-[#10B981]/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all flex flex-col items-start text-left">
+                            <div className="bg-[#10B981]/10 p-3 rounded-xl mb-4 border border-[#10B981]/20">
+                                <Shield size={24} className="text-[#10B981]" />
+                            </div>
                             <h3 className="text-xl font-bold text-white mb-2">Finance Hub & Profit Guard™</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins.</p>
                         </div>
-                        <div className="bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-[#C5A059]/40 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all flex flex-col items-start text-left">
-                            <Cpu size={32} className="text-[#C5A059] mb-4" />
+                        <div className="bg-[#A855F7]/5 border border-[#A855F7]/20 p-6 rounded-2xl hover:border-[#A855F7]/40 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all flex flex-col items-start text-left">
+                            <div className="bg-[#A855F7]/10 p-3 rounded-xl mb-4 border border-[#A855F7]/20">
+                                <Cpu size={24} className="text-[#A855F7]" />
+                            </div>
                             <h3 className="text-xl font-bold text-white mb-2">Lola AI Marketing Co-Pilot</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Automate multi-channel content creation, social calendar scheduling, and blog writing tailored to your brand voice.</p>
                         </div>
@@ -213,26 +246,32 @@ export const LandingPage = () => {
                         <LTDCert 
                             title="Starter Maker LTD"
                             features={[
-                                'Operations Hub',
-                                'BOM Recipe Builder',
-                                'Inventory up to 500 SKUs'
+                                "Precision Bill of Materials (BOM) Recipe Costing",
+                                "Automated Batch Inventory Deduction",
+                                "Warehouse Stock Ledger & Low-Stock Alerts",
+                                "Universal CSV Importer (Craftybase Migration)",
+                                "Track Up to 500 Active SKUs"
                             ]}
                         />
                         <LTDCert 
                             title="Artisan Pro LTD"
                             isFeatured
                             features={[
-                                'Operations Hub',
-                                'Lola AI Marketing Engine',
-                                'Production Scheduler'
+                                "Everything in Starter Maker, PLUS:",
+                                "Lola AI Marketing Suite (Social, Blogs, Scripts)",
+                                "Kanban Production Scheduler & Curing Workflow",
+                                "Supplier QC Ledgers & Purchase Orders",
+                                "Square SDK Omnichannel Sales Sync"
                             ]}
                         />
                         <LTDCert 
                             title="Master Formulator LTD"
                             features={[
-                                'Full OS',
-                                'Profit Guard™ Margin Protection',
-                                'Predictive Reordering'
+                                "Everything in Artisan Pro, PLUS:",
+                                "Profit Guard™ Real-Time Margin Protection",
+                                "Predictive Raw Material Reordering Alerts",
+                                "Multi-Location Warehouse Tracking",
+                                "Unlimited SKUs & Priority VIP Concierge Support"
                             ]}
                         />
                     </div>
