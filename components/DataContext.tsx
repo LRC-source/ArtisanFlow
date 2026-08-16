@@ -242,8 +242,8 @@ interface DataContextType {
   addManualCustomer: (customer: Omit<ManualCustomer, 'id' | 'createdDate'>) => void;
   updateMarketingPost: (id: string, updates: Partial<MarketingPost>) => void;
   generateSchedule: () => void;
-  produceBatch: (recipeId: string, multiplier: number) => { success: boolean; warnings: string[] };
-  processOrder: (id: string) => void;
+  produceBatch: (recipeId: string, multiplier: number) => Promise<{ success: boolean; warnings: string[] }>;
+  processOrder: (id: string) => Promise<void>;
   syncWooCommerce: () => Promise<{ success: boolean; count?: number; error?: string }>;
   addRecipe: (recipe: any) => Promise<void>;
   updateRecipe: (id: string, updates: any) => void;
@@ -263,6 +263,7 @@ interface DataContextType {
   toggleChannelConnection: (platform: string) => void;
   onboardingState: Record<string, boolean>;
   markHubVisited: (hubId: string) => void;
+  submitVIPWaitlist: (data: { fullName: string; email: string; businessType: string }) => Promise<boolean>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -281,10 +282,12 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   // Read initial onboarding state from localStorage if available
   const [onboardingState, setOnboardingState] = useState<Record<string, boolean>>(() => {
-      try {
-          const stored = localStorage.getItem('artisanflow_onboarding');
-          if (stored) return JSON.parse(stored);
-      } catch (e) { console.error(e); }
+      if (typeof window !== 'undefined') {
+          try {
+              const stored = localStorage.getItem('artisanflow_onboarding');
+              if (stored) return JSON.parse(stored);
+          } catch (e) { console.error(e); }
+      }
       return {};
   });
 
@@ -558,12 +561,14 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const updateMarketingPost = (id: string, updates: any) => setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
   const generateSchedule = () => setProductionStats(prev => ({ ...prev, active: prev.active + 1 }));
   
-  const produceBatch = (recipeId: string, multiplier: number) => {
+  const produceBatch = async (recipeId: string, multiplier: number) => {
       const recipe = recipes.find(r => r.id === recipeId);
       if (!recipe) return { success: false, warnings: ['Recipe not found.'] };
 
       const warnings: string[] = [];
       let newInventory = [...inventory];
+      const itemsToUpdate: any[] = [];
+      const itemsToCreate: any[] = [];
 
       // 1. Deduct Raw Materials
       recipe.ingredients.forEach(ing => {
@@ -577,6 +582,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
                   warnings.push(`Negative stock warning: ${newInventory[invItemIndex].name} dropped to ${newStock.toFixed(2)} units.`);
               }
               newInventory[invItemIndex] = { ...newInventory[invItemIndex], stock: newStock, stockValue: newStock * newInventory[invItemIndex].unitCost };
+              itemsToUpdate.push(newInventory[invItemIndex]);
           } else {
               warnings.push(`Material not found in inventory: ${ing.name}. Batch will proceed without deduction for this item.`);
           }
@@ -589,9 +595,10 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       if (finishedProductIndex >= 0) {
           const newStock = newInventory[finishedProductIndex].stock + yieldAmount;
           newInventory[finishedProductIndex] = { ...newInventory[finishedProductIndex], stock: newStock, stockValue: newStock * newInventory[finishedProductIndex].unitCost };
+          itemsToUpdate.push(newInventory[finishedProductIndex]);
       } else {
           // Auto-create finished product if it doesn't exist
-          newInventory.push({
+          const newItem = {
               id: Date.now(),
               name: recipe.name,
               sku: recipe.sku || `SKU-${Date.now()}`,
@@ -603,16 +610,31 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               stockValue: recipe.totalCost * multiplier,
               unit: 'pcs',
               reorderPoint: 5
-          });
+          };
+          newInventory.push(newItem as any);
+          itemsToCreate.push(newItem);
       }
 
       setInventory(newInventory);
       setProductionStats(prev => ({ ...prev, active: prev.active + 1, completed: prev.completed + 1 }));
+
+      // Persist changes asynchronously
+      try {
+          await Promise.all([
+              ...itemsToUpdate.map(item => dataLayer.update('inventory', String(item.id), item)),
+              ...itemsToCreate.map(item => dataLayer.create('inventory', item))
+          ]);
+      } catch (err) {
+          console.error("Failed to persist batch production to backend:", err);
+          warnings.push("Backend persistence failed. Data may be lost on reload.");
+      }
+
       return { success: true, warnings };
   };
 
-  const processOrder = (id: string) => {
+  const processOrder = async (id: string) => {
       const order = orders.find(o => o.id === id);
+      const itemsToUpdate: any[] = [];
       if (order && order.status !== 'Shipped') {
           // Deduct from finished goods inventory
           setInventory(prev => {
@@ -625,6 +647,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
                           toast.warning(`Negative stock: ${newInv[invItemIndex].name} is now ${newStock}.`);
                       }
                       newInv[invItemIndex] = { ...newInv[invItemIndex], stock: newStock, stockValue: newStock * newInv[invItemIndex].unitCost };
+                      itemsToUpdate.push(newInv[invItemIndex]);
                   }
               });
               return newInv;
@@ -633,6 +656,17 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
       setOrders(prev => prev.map(o => o.id === id ? { ...o, status: 'Shipped' } : o));
       completeTodoByCategory('orders');
+
+      // Persist changes asynchronously
+      try {
+          await Promise.all([
+              ...itemsToUpdate.map(item => dataLayer.update('inventory', String(item.id), item)),
+              dataLayer.update('orders', id, { status: 'Shipped' })
+          ]);
+      } catch (err) {
+          console.error("Failed to persist order processing to backend:", err);
+          toast.error("Failed to sync order processing to backend.");
+      }
   };
 
   const syncWooCommerce = async () => {
@@ -729,6 +763,31 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }]);
   };
 
+  const submitVIPWaitlist = async (data: { fullName: string; email: string; businessType: string }) => {
+    try {
+      // 1. Write to Firestore
+      const waitlistRef = doc(db, 'vip_waitlist', data.email);
+      await setDoc(waitlistRef, {
+        ...data,
+        timestamp: new Date().toISOString()
+      });
+
+      // 2. Call Webhook for Google Sheets
+      fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, timestamp: new Date().toISOString() })
+      }).catch(err => console.error('Failed to sync to sheets:', err));
+
+      toast.success('You have been added to the VIP Waitlist!');
+      return true;
+    } catch (error: any) {
+      console.error('Waitlist submission failed', error);
+      toast.error('Submission failed. Please try again.');
+      return false;
+    }
+  };
+
   return (
     <DataContext.Provider value={{ 
       inventory, orders, manualCustomers, businessProfile, isAuthenticated, userTier, reports, productionStats,
@@ -741,7 +800,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,
       connectedChannels,
-      toggleChannelConnection
+      toggleChannelConnection,
+      submitVIPWaitlist
     }}>
       {children}
     </DataContext.Provider>

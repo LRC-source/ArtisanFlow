@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Input, Select, Badge } from './UI';
+import { Card, Button, Input, Select, Badge, Modal } from './UI';
 import { Plus, Trash2, Save, Calculator, ArrowRight, Layers, ArrowLeft, TrendingUp, DollarSign, Zap, Target, ShieldCheck, Clock, RefreshCw } from 'lucide-react';
 import { Api } from '../services/api';
 import { InventoryType, Recipe, RecipeIngredient } from '../types';
@@ -37,6 +37,7 @@ export const RecipeBuilder: React.FC = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [upgradeLimit, setUpgradeLimit] = useState(5);
   const [requiredTier, setRequiredTier] = useState("Artisan Flow Basic");
+  const [showROIHeatmap, setShowROIHeatmap] = useState(false);
 
   useEffect(() => {
     if (!isEditing) {
@@ -307,11 +308,20 @@ export const RecipeBuilder: React.FC = () => {
               <p className="text-stone-400 text-xs leading-relaxed font-medium mb-6">
                   Lola is simulating current formula ROI based on active raw material burn rates. Your estimated break-even is <span className="text-white font-bold">14 units</span> at current wholesale projections.
               </p>
-              <button onClick={() => toast.info('Generating ROI heatmap simulation...')} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">VIEW ROI HEATMAP</button>
+              <button onClick={() => setShowROIHeatmap(true)} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">VIEW ROI HEATMAP</button>
           </div>
         </div>
       </div>
     </div>
+    <Modal isOpen={showROIHeatmap} onClose={() => setShowROIHeatmap(false)} title="ROI Heatmap Simulation">
+        <div className="p-4 space-y-4">
+            <p className="text-gray-300 text-sm">Estimated Break-Even: <span className="font-bold text-white">14 units</span> at current wholesale projections.</p>
+            <div className="h-48 w-full bg-gradient-to-r from-red-500/20 via-yellow-500/20 to-green-500/20 rounded-xl flex items-center justify-center border border-white/10">
+                <span className="text-white/50 text-xs font-bold uppercase tracking-widest">Heatmap Visualization Active</span>
+            </div>
+            <Button onClick={() => setShowROIHeatmap(false)} className="w-full bg-[#C5A059] text-white">Close Simulation</Button>
+        </div>
+    </Modal>
     <UpgradeModal 
       isOpen={showUpgradeModal} 
       onClose={() => setShowUpgradeModal(false)}

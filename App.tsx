@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Package, TrendingUp, Settings, ShoppingBag, Activity, 
@@ -61,6 +61,7 @@ import MakerFunnel from './components/Funnels/MakerFunnel';
 import ApothecaryFunnel from './components/Funnels/ApothecaryFunnel';
 import ScaleFunnel from './components/Funnels/ScaleFunnel';
 import { PublicLayout } from './components/Funnels/PublicLayout';
+import { AppOverview } from './src/pages/AppOverview';
 import { FinanceHub, FinancialProjections } from './components/Finance';
 import { ContextualTutorialModal } from './components/ContextualTutorialModal';
 import { BudgetGuard } from './components/BudgetGuard';
@@ -313,7 +314,7 @@ const AppContent = () => {
   }
 
   // Define public routes that should bypass the auth wall entirely
-  const publicRoutes = ['/makers', '/apothecaries', '/scale', '/auth'];
+  const publicRoutes = ['/makers', '/apothecaries', '/scale', '/auth', '/overview'];
   const isPublicRoute = publicRoutes.includes(location.pathname);
 
   // If user is not authenticated and trying to access a protected route, show the general landing page (or auth)
@@ -341,6 +342,7 @@ const AppContent = () => {
                           <Route path="/makers" element={<MakerFunnel />} />
                           <Route path="/apothecaries" element={<ApothecaryFunnel />} />
                           <Route path="/scale" element={<ScaleFunnel />} />
+                          <Route path="/overview" element={<AppOverview />} />
                           {/* Using AuthGateway for auth route. Note: AuthGateway itself might need to handle the ?tier= query params */}
                           <Route path="/auth" element={<AuthGateway />} />
                           <Route path="*" element={<Navigate to="/" replace />} />
@@ -535,14 +537,18 @@ const AppContent = () => {
   );
 };
 
+export const AppWithoutRouter = () => (
+  <ArtisanDataProvider>
+    <TierProvider>
+      <AppContent />
+    </TierProvider>
+  </ArtisanDataProvider>
+);
+
 export default function App() {
   return (
     <Router>
-        <ArtisanDataProvider>
-          <TierProvider>
-            <AppContent />
-          </TierProvider>
-        </ArtisanDataProvider>
+      <AppWithoutRouter />
     </Router>
   );
 }

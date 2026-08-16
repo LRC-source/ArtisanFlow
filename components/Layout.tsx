@@ -146,7 +146,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                       <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">💎</span>
                       <span className="flex-1 text-left">Subscription Status</span>
                   </button>
-                  {businessProfile.role === 'admin' && (
+                  {businessProfile.role === 'super_admin' && (
                     <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
                         <span className="nav-icon text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] grayscale-0">🛡️</span>
                         <span className="flex-1 text-left">Super-Admin</span>

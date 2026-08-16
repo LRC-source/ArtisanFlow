@@ -4,6 +4,7 @@ import { Card, Badge, Button } from './UI';
 import { useArtisanData } from './DataContext';
 import { Clock, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const ProductionWorkflow = () => {
   const { productionStats, recipes, produceBatch } = useArtisanData();
@@ -79,16 +80,21 @@ export const ProductionWorkflow = () => {
                           </div>
                           <Button 
                               className="w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl font-bold uppercase tracking-widest text-xs h-12"
-                              onClick={() => {
-                                  const result = produceBatch(recipe.id, 1);
-                                  if (result.success) {
-                                      if (result.warnings.length > 0) {
-                                          alert(`Batch Produced with Warnings:\n${result.warnings.join('\n')}`);
+                              onClick={async () => {
+                                  try {
+                                      const result = await produceBatch(recipe.id, 1);
+                                      if (result.success) {
+                                          if (result.warnings.length > 0) {
+                                              toast.warning(`Batch Produced with Warnings: ${result.warnings.join(', ')}`);
+                                          } else {
+                                              toast.success(`${recipe.name} Batch successfully produced and materials deducted.`);
+                                          }
                                       } else {
-                                          alert(`${recipe.name} Batch successfully produced and materials deducted.`);
+                                          toast.error(result.warnings[0]);
                                       }
-                                  } else {
-                                      alert(result.warnings[0]);
+                                  } catch (error) {
+                                      toast.error("An unexpected error occurred while producing the batch.");
+                                      console.error("Batch production error:", error);
                                   }
                               }}
                           >

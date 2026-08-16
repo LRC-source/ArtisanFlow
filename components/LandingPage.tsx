@@ -1,199 +1,230 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card, Button, Input } from './UI';
-import { useArtisanData, UserTier } from './DataContext';
-import { Hexagon, Lock, ArrowRight, ShieldCheck, Zap, Crown, CheckCircle, Mail, Chrome, Sparkles } from 'lucide-react';
+import { useArtisanData } from './DataContext';
+import { Lock, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AuthGateway } from './Auth';
 
+const CATEGORIES = [
+    "Botanical Skincare & Formulator",
+    "Herbalist & Apothecary",
+    "Candle & Wax Melt Maker",
+    "Soap & Bath Product Artisan",
+    "Perfumer & Fragrance Creator",
+    "Essential Oil & Aromatherapy Blender",
+    "Hair Care & Body Care Artisan",
+    "Herbal Tea & Beverage Formulator",
+    "Tincture & Botanical Extract Craftsman",
+    "Resin & Home Decor Maker",
+    "Ceramic & Pottery Artisan",
+    "Leather Goods Craftsman",
+    "Woodworking & Custom Furniture Maker",
+    "Jewelry & Metal Accessories Designer",
+    "Textile, Fiber & Apparel Artisan",
+    "Specialty Food & Confectioner",
+    "Gourmet Sauce & Condiment Artisan",
+    "Bakery & Artisan Treats Maker",
+    "Stationery, Paper & Printmaker",
+    "Other Artisan / Handmade Goods"
+];
+
 export const LandingPage = () => {
-    const { login, googleLogin, signUp } = useArtisanData();
+    const { submitVIPWaitlist } = useArtisanData();
     const navigate = useNavigate();
-    const [view, setView] = useState<'hero' | 'login' | 'signup'>('hero');
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
-    const [selectedTier, setSelectedTier] = useState<UserTier | null>(null);
+    const [view, setView] = useState<'hero' | 'login'>('hero');
+    const [formData, setFormData] = useState({ fullName: '', email: '', businessType: CATEGORIES[0] });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
+    const formRef = useRef<HTMLDivElement>(null);
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const success = await login(email, pass);
-        if (success) {
-            navigate('/command-center');
+        setIsSubmitting(true);
+        if (submitVIPWaitlist) {
+             await submitVIPWaitlist(formData);
         }
+        setIsSubmitting(false);
+        setFormData({ fullName: '', email: '', businessType: CATEGORIES[0] });
     };
 
-    const handleGoogleAuth = async () => {
-        await googleLogin();
-        navigate('/command-center');
+    const scrollToForm = () => {
+        formRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const handlePurchase = (tier: UserTier) => {
-        setSelectedTier(tier);
-        setView('signup');
-    };
-
-    if (view === 'login' || view === 'signup') {
-        return <AuthGateway initialView={view} selectedTier={selectedTier || undefined} onBack={() => setView('hero')} />;
+    if (view === 'login') {
+        return <AuthGateway initialView="login" onBack={() => setView('hero')} />;
     }
 
     return (
-        <div 
-            className="min-h-screen bg-stone-900 relative overflow-hidden flex flex-col bg-cover bg-center bg-fixed bg-no-repeat"
-            style={{ backgroundImage: 'url(/artisan_flow_hero.png)' }}
-        >
-            {/* 20% overlay for 80% image visibility across entire page */}
-            <div className="absolute inset-0 bg-black/20 z-0"></div>
+        <div className="min-h-screen bg-[#0d0d0d] relative overflow-hidden flex flex-col font-sans">
             
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#6A2C91] opacity-[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none z-0"></div>
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C5A059] opacity-[0.04] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none z-0"></div>
+            {/* Ambient luxury lighting */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059] opacity-[0.03] rounded-full blur-[120px] pointer-events-none z-0"></div>
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91] opacity-[0.03] rounded-full blur-[120px] pointer-events-none z-0"></div>
             
             {/* Nav */}
-            <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-black border-b border-white/20 shadow-sm sticky top-0">
+            <nav className="w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
                 <div className="flex items-center">
-                    <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-20 w-auto object-contain" />
+                    <img src="/LOGO%20Official-Trans.png" alt="ArtisanFlow Logo" className="h-16 w-auto object-contain" />
                 </div>
                 <div>
-                    <Button variant="primary" onClick={() => setView('login')} className="h-10 px-8 font-black bg-[#6A2C91] text-white hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(106,44,145,0.8)] transition-all duration-300 rounded-full tracking-widest text-xs uppercase">
+                    <Button variant="outline" onClick={() => setView('login')} className="h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase">
                         Sign In
                     </Button>
                 </div>
             </nav>
 
-            {/* Hero */}
-            <main className="flex-1 flex flex-col items-center justify-center p-6 z-10 mt-12 mb-24 relative">
-                <div className="max-w-4xl text-center space-y-8 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white text-xs font-bold uppercase tracking-widest shadow-lg">
-                        <Sparkles size={14} /> Built-in AI-Supported Operations
-                    </div>
-                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase italic leading-[0.9] drop-shadow-xl">
-                        Precision Manufacturing <br/> <span className="text-[#C5A059]">For Artisanal Brands</span>
-                    </h1>
-                    <p className="text-xl text-white font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
-                        Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI.
-                    </p>
-                </div>
-
-                {/* Tiers */}
-                <div className="mt-24 w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8 px-4 relative z-10">
-                    <TierCard 
-                        title="Free Audit" 
-                        price="$0" 
-                        tierNumber="1"
-                        color="bg-slate-700"
-                        buttonText="Join Our Free Tier"
-                        features={[
-                            'Basic CRM: Client Tracking', 
-                            'Basic Inventory: Spreadsheet Sync', 
-                            'Basic Manufacturing: Manual Batch Entry', 
-                            'Public Resources & Strategy Session'
-                        ]}
-                        onSelect={() => handlePurchase('Free Audit')}
-                    />
-                    <TierCard 
-                        title="Artisan Flow Basic" 
-                        price="$49" 
-                        isPopular 
-                        tierNumber="2"
-                        color="bg-[#6A2C91]"
-                        buttonText="Join Our Basic Tier"
-                        features={[
-                            'Advanced CRM: Automated Follow-ups', 
-                            'Advanced Inventory: Omnichannel Sync', 
-                            'Advanced Manufacturing: Production Scheduler', 
-                            'Lola AI Basic Access'
-                        ]}
-                        onSelect={() => handlePurchase('Artisan Flow Basic')}
-                    />
-                    <TierCard 
-                        title="Margin Protection Pro" 
-                        price="$149" 
-                        tierNumber="3"
-                        color="bg-[#C5A059]"
-                        buttonText="Join Our Pro Tier"
-                        features={[
-                            'Pro CRM: Sentiment Analysis', 
-                            'Pro Inventory: Predictive Reordering', 
-                            'Pro Manufacturing: Margin Anomaly Detection', 
-                            'AI Competitive Intelligence'
-                        ]}
-                        onSelect={() => handlePurchase('Margin Protection Pro')}
-                    />
-                </div>
-
-                {/* Contact Form Section */}
-                <div className="mt-32 w-full max-w-3xl relative z-10">
-                    <Card className="shadow-2xl border-stone-200 bg-white/80 backdrop-blur-lg">
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl font-black text-gray-900 tracking-tight uppercase italic mb-2">Need a Custom Solution?</h2>
-                            <p className="text-gray-500">Reach out for tier selection assistance or to inquire about a custom app built specifically for your business.</p>
+            {/* Hero Section */}
+            <main className="flex-1 flex flex-col items-center justify-start p-6 z-10 mt-12 relative w-full max-w-7xl mx-auto">
+                <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
+                    
+                    {/* Left Column: Copy & Form */}
+                    <div className="text-left space-y-8 relative z-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20 text-[#C5A059] text-xs font-bold uppercase tracking-widest shadow-lg">
+                            <Sparkles size={14} /> VIP Launch: September 1st
                         </div>
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
-                            alert("Message sent to Admins (lacarmsu38@gmail.com & lcarter@lrcholisticmarketing.online). We will be in touch shortly!");
-                        }} className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Name</label>
-                                    <Input type="text" placeholder="Your Name" required />
+                        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
+                            Precision Manufacturing <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C5A059] to-[#E2C792]">For Artisanal Brands</span>
+                        </h1>
+                        <p className="text-lg text-gray-400 font-medium max-w-xl leading-relaxed">
+                            Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access.
+                        </p>
+
+                        {/* Waitlist Form */}
+                        <div ref={formRef} className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl">
+                            <h3 className="text-xl font-bold text-white mb-4">Secure Your VIP Spot</h3>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <Input 
+                                        type="text" 
+                                        placeholder="Full Name" 
+                                        required 
+                                        value={formData.fullName}
+                                        onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                                        className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
+                                    />
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Email</label>
-                                    <Input type="email" placeholder="you@company.com" required />
+                                <div>
+                                    <Input 
+                                        type="email" 
+                                        placeholder="Email Address" 
+                                        required 
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                        className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
+                                    />
                                 </div>
-                            </div>
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Inquiry Type</label>
-                                <select className="w-full bg-stone-50 border border-stone-200 text-stone-900 rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm" required>
-                                    <option value="tier_help">Help selecting a tier</option>
-                                    <option value="custom_app">Inquire about a custom app build</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Message</label>
-                                <textarea className="w-full bg-stone-50 border border-stone-200 text-stone-900 rounded-xl px-4 py-3 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm h-32 resize-none" placeholder="Tell us about your business needs..." required></textarea>
-                            </div>
-                            <Button variant="primary" type="submit" className="w-full h-14 font-black tracking-widest bg-[#6A2C91] hover:bg-purple-900 shadow-xl shadow-purple-900/20">
-                                SEND MESSAGE <ArrowRight size={18} className="ml-2" />
-                            </Button>
-                        </form>
-                    </Card>
+                                <div>
+                                    <select 
+                                        required
+                                        value={formData.businessType}
+                                        onChange={(e) => setFormData({...formData, businessType: e.target.value})}
+                                        className="w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 h-12 outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none"
+                                    >
+                                        {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                                    </select>
+                                </div>
+                                <Button 
+                                    variant="primary" 
+                                    type="submit" 
+                                    disabled={isSubmitting}
+                                    className="w-full h-12 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 border-none"
+                                >
+                                    {isSubmitting ? 'JOINING...' : 'JOIN VIP WAITLIST'} <ArrowRight size={18} className="ml-2" />
+                                </Button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Tablet Mockup Image */}
+                    <div className="relative w-full flex justify-center lg:justify-end items-center z-10">
+                        {/* Glow behind the tablet */}
+                        <div className="absolute inset-0 bg-[#C5A059]/10 blur-[80px] rounded-full pointer-events-none"></div>
+                        <img 
+                            src="/artisan_flow_hero.png" 
+                            alt="Artisan Flow Dashboard Mockup" 
+                            className="relative z-10 w-full max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700" 
+                        />
+                    </div>
+                </div>
+
+                {/* LTD Teaser Cards Section */}
+                <div className="mt-32 w-full max-w-6xl relative z-10 mb-20">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Lifetime Deal Tiers</h2>
+                        <p className="text-gray-400 text-lg max-w-2xl mx-auto">Lock in lifetime access for a single payment. Limited to 100 licenses. Prices reveal on launch day.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <LTDCert 
+                            title="Starter Maker LTD"
+                            features={[
+                                'Operations Hub',
+                                'BOM Recipe Builder',
+                                'Inventory up to 500 SKUs'
+                            ]}
+                        />
+                        <LTDCert 
+                            title="Artisan Pro LTD"
+                            isFeatured
+                            features={[
+                                'Operations Hub',
+                                'Lola AI Marketing Engine',
+                                'Production Scheduler'
+                            ]}
+                        />
+                        <LTDCert 
+                            title="Master Formulator LTD"
+                            features={[
+                                'Full OS',
+                                'Profit Guard™ Margin Protection',
+                                'Predictive Reordering'
+                            ]}
+                        />
+                    </div>
+
+                    <div className="mt-16 flex justify-center">
+                        <Button 
+                            onClick={scrollToForm}
+                            className="h-14 px-10 font-black tracking-widest bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 border-none rounded-full"
+                        >
+                            JOIN VIP WAITLIST <ArrowRight size={18} className="ml-2" />
+                        </Button>
+                    </div>
                 </div>
             </main>
         </div>
     );
 };
 
-const TierCard = ({ title, price, features, tierNumber, isPopular, buttonText, onSelect }: any) => (
-    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all hover:-translate-y-2 duration-500 bg-black/40 backdrop-blur-xl ${isPopular ? 'border-[#6A2C91] hover:shadow-[0_0_40px_rgba(106,44,145,0.6)]' : 'border-white/10 hover:border-[#C5A059]/50 hover:shadow-[0_0_40px_rgba(197,160,89,0.3)]'}`}>
-        {isPopular && (
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#6A2C91] to-purple-800 text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg border border-purple-400/30">
-                Recommended for Growth
+const LTDCert = ({ title, features, isFeatured }: { title: string, features: string[], isFeatured?: boolean }) => (
+    <div className={`group relative flex flex-col h-full rounded-[2rem] p-8 border transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${isFeatured ? 'border-[#C5A059] shadow-[0_0_40px_rgba(197,160,89,0.15)] scale-105 z-10' : 'border-white/10 hover:border-white/30'}`}>
+        {isFeatured && (
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#b08d4b] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
+                Most Popular
             </div>
         )}
-        <div className="mb-8">
-            <div className={`w-14 h-14 bg-white/10 backdrop-blur-lg text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl font-black text-2xl italic border border-white/20`}>
-                {tierNumber}
-            </div>
-            <h3 className="text-2xl font-black text-white tracking-tight">{title}</h3>
-            <div className="flex items-baseline mt-2">
-                <span className="text-3xl font-black text-[#6A2C91]">{price}</span>
-                <span className="text-gray-400 text-sm font-bold ml-1 uppercase">/month</span>
+        <div className="mb-6">
+            <h3 className="text-2xl font-black text-white tracking-tight mb-6">{title}</h3>
+            
+            {/* Locked Price UI */}
+            <div className="relative overflow-hidden rounded-xl bg-black/40 border border-white/5 p-4 flex items-center justify-center min-h-[100px]">
+                <div className="absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center">
+                    <div className="bg-black/80 border border-[#C5A059]/50 text-[#C5A059] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                        <Lock size={12} /> VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST
+                    </div>
+                </div>
+                <span className="text-4xl font-black text-white/10 blur-sm">$???</span>
             </div>
         </div>
-        <div className="space-y-4 mb-10 flex-1">
+        
+        <div className="space-y-4 mb-8 flex-1 mt-6">
             {features.map((f: string) => (
                 <div key={f} className="flex items-start gap-3">
-                    <CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" />
+                    <CheckCircle size={18} className="text-[#C5A059] shrink-0 mt-0.5" />
                     <span className="text-sm font-medium text-gray-300">{f}</span>
                 </div>
             ))}
         </div>
-        <Button 
-            variant={isPopular ? 'primary' : 'outline'} 
-            onClick={onSelect}
-            className={`w-full h-14 font-black tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ${isPopular ? 'bg-[#6A2C91] hover:bg-purple-800 group-hover:shadow-[0_0_25px_rgba(106,44,145,0.8)] border-none' : 'border-white/20 text-white hover:bg-white/5 group-hover:shadow-[0_0_20px_rgba(197,160,89,0.4)]'}`}
-        >
-            {buttonText || `Initialize ${title}`}
-        </Button>
     </div>
 );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, Users, Database, Server, Activity, ArrowUpRight, Search, Lock, Edit2, Download, AlertTriangle, Key, X, Loader2 } from 'lucide-react';
 import { Card, Button, Badge, Input, Select, VaultBanner, Modal } from './UI';
 import { SubPageHeader } from './SubPageHeader';
@@ -7,7 +8,8 @@ import { useArtisanData, SystemUser } from './DataContext';
 import { toast } from 'sonner';
 
 export const SuperAdmin = () => {
-    const { updateSystemUser, deleteSystemUser, inviteSystemUser } = useArtisanData();
+    const navigate = useNavigate();
+    const { updateSystemUser, deleteSystemUser, inviteSystemUser, businessProfile } = useArtisanData();
     const [search, setSearch] = useState('');
     const [liveUsers, setLiveUsers] = useState<SystemUser[]>([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
@@ -27,6 +29,11 @@ export const SuperAdmin = () => {
 
     useEffect(() => {
         const fetchDashboardData = async () => {
+            if (businessProfile.role !== 'super_admin') {
+                toast.error("Unauthorized Access: Super Admin privileges required.");
+                navigate('/');
+                return;
+            }
             setIsLoadingData(true);
             try {
                 const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
