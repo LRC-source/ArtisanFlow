@@ -5,10 +5,10 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toAbsolute = (p) => path.resolve(__dirname, p);
 
-const template = fs.readFileSync(toAbsolute('dist/client/index.html'), 'utf-8');
+const template = fs.readFileSync(toAbsolute('dist/index.html'), 'utf-8');
 
 // Use dynamic import so Node can load the ESM module
-const { render } = await import('./dist/server/entry-server.js');
+const { render } = await import('./dist-server/entry-server.js');
 
 const routes = [
   '/',
@@ -24,7 +24,7 @@ const routes = [
     const appHtml = render(url);
     const html = template.replace(`<!--app-html-->`, appHtml);
 
-    const filePath = `dist/client${url === '/' ? '/index.html' : `${url}/index.html`}`;
+    const filePath = `dist${url === '/' ? '/index.html' : `${url}/index.html`}`;
     
     // Ensure directory exists
     const dir = path.dirname(toAbsolute(filePath));
