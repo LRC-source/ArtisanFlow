@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { useNavigate, useLocation, useParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
+import { Loader2, Lock, Crown, Upload, FileText, CheckCircle, X, ShieldCheck, Sparkles, LayoutDashboard, Boxes, ShoppingBag, Target, ChevronLeft, ChevronRight, HelpCircle, Paperclip, Send, Menu, LogOut, Hexagon, Search, Bell, RefreshCw, User, AlertTriangle, ArrowLeft, Star, Share2, MoreHorizontal, Eye, Info, Image, Layers, Volume2, Calendar, Video, PenTool, Zap, MessageSquare, Film, Plus, Globe, Youtube, Twitter, Linkedin, Facebook, Instagram, Download, Bot, Mail, ArrowRight, Chrome, CreditCard, ExternalLink, CheckCircle2, Activity, Cpu, Server, BarChart3, Factory, DollarSign, TrendingUp, PieChart, Clock, Box, Package, BarChart, History, Trash2, Truck, Edit2, Phone, ClipboardList, ClipboardCheck, Save, Calculator, MapPin, AlertCircle, UserPlus, Users, ShoppingCart, ArrowUpRight, Rocket, ChevronDown, FlaskConical, VolumeX, Minimize2, Database, MicOff, Mic, PackageOpen, Leaf, Scale, FileSignature, Beaker, Quote, Workflow, PackageCheck, Wallet, GanttChartSquare, Map, Ship, ArrowDownRight, ListTodo, Key, ShieldAlert, Shield } from "lucide-react";
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, Tooltip, Area, LineChart, Line, YAxis, PieChart as PieChart$1, Pie, Cell, BarChart as BarChart$1, Legend, Bar } from "recharts";
 import { toast, Toaster } from "sonner";
 import { initializeApp } from "firebase/app";
@@ -8297,21 +8297,18 @@ const LandingPage = () => {
     /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
     /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0" }),
     /* @__PURE__ */ jsxs("div", { className: "w-full bg-gradient-to-r from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 backdrop-blur-md border-b border-white/15 text-center flex items-center justify-center gap-2 text-white font-bold tracking-wide text-sm py-3 px-6 z-50 relative", children: [
-      /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center w-6 h-6 rounded-lg bg-white/10 border border-white/20 backdrop-blur-md mr-1.5 shadow-[0_0_12px_rgba(168,85,247,0.4)]", children: [
-        /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-lg bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-40 blur-sm" }),
-        /* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-white relative z-10" })
+      /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center w-[26px] h-[26px] rounded-lg bg-white/10 border border-white/25 backdrop-blur-md mr-2 shadow-[0_0_15px_rgba(6,182,212,0.5)]", children: [
+        /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-lg bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-50 blur-[2px] animate-pulse" }),
+        /* @__PURE__ */ jsx(Rocket, { className: "w-3.5 h-3.5 text-white relative z-10 -rotate-12" })
       ] }),
       "VIP Launch: September 1st"
     ] }),
     /* @__PURE__ */ jsxs("nav", { className: "w-full px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsxs("div", { className: "relative w-10 h-10 rounded-xl bg-white/[0.06] border border-white/20 backdrop-blur-xl flex items-center justify-center p-2 shadow-[0_0_15px_rgba(6,182,212,0.25)] hover:border-white/40 transition-all", children: [
-          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-tr from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 blur-sm rounded-xl pointer-events-none" }),
-          /* @__PURE__ */ jsx("img", { src: "/LOGO%20Official-Trans.png", alt: "ArtisanFlow Icon", className: "relative z-10 w-full h-full object-contain" })
-        ] }),
-        /* @__PURE__ */ jsxs("span", { className: "text-xl", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-white font-extrabold tracking-tight", children: "Artisan" }),
-          /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-transparent bg-clip-text font-black ml-1.5", children: "Flow" })
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2.5 cursor-pointer group", children: [
+        /* @__PURE__ */ jsx("div", { className: "w-9 h-9 rounded-xl bg-white/[0.06] border border-white/20 backdrop-blur-xl flex items-center justify-center p-2 shadow-[0_0_15px_rgba(168,85,247,0.3)] group-hover:border-white/40 transition-all", children: /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[#06B6D4] to-[#D946EF] shadow-[0_0_8px_#D946EF]" }) }),
+        /* @__PURE__ */ jsxs("span", { className: "text-xl tracking-tight", children: [
+          /* @__PURE__ */ jsx("span", { className: "font-extrabold text-white", children: "Artisan" }),
+          /* @__PURE__ */ jsx("span", { className: "font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text ml-1", children: "Flow" })
         ] })
       ] }),
       /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setView("login"), className: "h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase", children: "Sign In" }) })
