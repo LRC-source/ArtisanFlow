@@ -101,10 +101,10 @@ export const LandingPage = () => {
                     
                     {/* Left Column: Copy & Form */}
                     <div className="text-left space-y-8 relative z-10">
-                        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]">
                             Precision Manufacturing <br/> For <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Artisanal</span> Brands
                         </h1>
-                        <p className="text-lg text-gray-400 font-medium max-w-xl leading-relaxed">
+                        <p className="text-base sm:text-lg text-gray-400 font-medium max-w-xl leading-relaxed">
                             Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access.
                         </p>
 
@@ -180,22 +180,22 @@ export const LandingPage = () => {
                     </div>
 
                     {/* Right Column: Tablet Mockup Image */}
-                    <div className="relative w-full flex justify-center lg:justify-end items-center z-10">
+                    <div className="relative w-full flex justify-center lg:justify-end items-center z-10 mt-8 lg:mt-0">
                         {/* Glow behind the tablet */}
                         <div className="absolute inset-0 bg-[#C5A059]/10 blur-[80px] rounded-full pointer-events-none"></div>
                         <img 
                             src="/artisan_flow_hero.png" 
                             alt="Artisan Flow Dashboard Mockup" 
-                            className="relative z-10 w-full max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700" 
+                            className="relative z-10 w-full max-w-sm md:max-w-md lg:max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700" 
                         />
                     </div>
                 </div>
 
                 {/* Anti-Spreadsheet Comparison Section */}
-                <div className="mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-black text-white tracking-tight uppercase mb-4">The Anti-Spreadsheet <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">OS for Modern Makers</span></h2>
-                        <p className="text-gray-400 text-lg max-w-2xl mx-auto">Why artisans are ditching legacy inventory sheets for automated precision.</p>
+                <div className="mt-16 md:mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12 px-2">
+                    <div className="text-center mb-8 md:mb-12">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight uppercase mb-4">The Anti-Spreadsheet <br className="md:hidden" /><span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">OS for Modern Makers</span></h2>
+                        <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-2">Why artisans are ditching legacy inventory sheets for automated precision.</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* Legacy */}
@@ -240,11 +240,11 @@ export const LandingPage = () => {
                 </div>
 
                 {/* Platform Feature Nodes Section */}
-                <div className="mt-20 w-full max-w-6xl relative z-10">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Built For Industrial Manufacturing Precision</h2>
+                <div className="mt-16 md:mt-20 w-full max-w-6xl relative z-10 px-2">
+                    <div className="text-center mb-10 md:mb-16">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Built For Industrial<br className="md:hidden" /> Manufacturing Precision</h2>
                         <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block">
-                            <span className="block bg-[#0d0d0d] rounded-full py-2 px-6 text-[#E2C792] text-sm font-black uppercase tracking-widest">
+                            <span className="block bg-[#0d0d0d] rounded-full py-1.5 px-4 md:py-2 md:px-6 text-[#E2C792] text-xs md:text-sm font-black uppercase tracking-widest">
                                Designed by a Maker, Built for Makers
                             </span>
                         </div>
@@ -281,10 +281,10 @@ export const LandingPage = () => {
                 </div>
 
                 {/* LTD Teaser Cards Section */}
-                <div className="mt-32 w-full max-w-6xl relative z-10 mb-20">
-                    <div className="text-center mb-16">
+                <div className="mt-20 md:mt-32 w-full max-w-6xl relative z-10 mb-20 px-2">
+                    <div className="text-center mb-10 md:mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">Lifetime Deal Tiers</h2>
-                        <p className="text-gray-400 text-lg max-w-2xl mx-auto">Lock in lifetime access for a single payment. Limited to 100 licenses. Prices reveal on launch day.</p>
+                        <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-2">Lock in lifetime access for a single payment. Limited to 100 licenses. Prices reveal on launch day.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
