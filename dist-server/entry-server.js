@@ -8260,6 +8260,7 @@ const CATEGORIES = [
   "Woodworking & Custom Furniture Maker",
   "Jewelry & Metal Accessories Designer",
   "Textile, Fiber & Apparel Artisan",
+  "Custom T-Shirt & Clothing Maker",
   "Specialty Food & Confectioner",
   "Gourmet Sauce & Condiment Artisan",
   "Bakery & Artisan Treats Maker",
