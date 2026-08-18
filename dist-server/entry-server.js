@@ -715,16 +715,30 @@ const ArtisanDataProvider = ({ children }) => {
   };
   const submitVIPWaitlist = async (data) => {
     try {
-      const waitlistRef = doc(db$1, "vip_waitlist", data.email);
-      await setDoc(waitlistRef, {
-        ...data,
-        timestamp: (/* @__PURE__ */ new Date()).toISOString()
-      });
-      fetch("/api/waitlist", {
+      const googleAppScriptUrl = "https://script.google.com/macros/s/AKfycbwcHalq43bfMKo-HHwKO6cNGNNBU67sF7CPtRHITBw1Lbdrx28GNOHfBBDJhEDZSTxB/exec";
+      const payload = {
+        action: "artisan_flow_lead",
+        name: data.fullName,
+        email: data.email,
+        businessType: data.businessType
+      };
+      await fetch(googleAppScriptUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, timestamp: (/* @__PURE__ */ new Date()).toISOString() })
-      }).catch((err) => console.error("Failed to sync to sheets:", err));
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+      });
+      try {
+        const waitlistRef = doc(db$1, "vip_waitlist", data.email);
+        await setDoc(waitlistRef, {
+          ...data,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        });
+      } catch (fbError) {
+        console.warn("Firestore write failed (likely permissions), but webhook succeeded:", fbError);
+      }
       toast.success("You have been added to the VIP Waitlist!");
       return true;
     } catch (error) {

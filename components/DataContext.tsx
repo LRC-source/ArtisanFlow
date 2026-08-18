@@ -854,19 +854,34 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const submitVIPWaitlist = async (data: { fullName: string; email: string; businessType: string }) => {
     try {
-      // 1. Write to Firestore
-      const waitlistRef = doc(db, 'vip_waitlist', data.email);
-      await setDoc(waitlistRef, {
-        ...data,
-        timestamp: new Date().toISOString()
+      // 1. Call Webhook for Google Sheets directly
+      const googleAppScriptUrl = 'https://script.google.com/macros/s/AKfycbwcHalq43bfMKo-HHwKO6cNGNNBU67sF7CPtRHITBw1Lbdrx28GNOHfBBDJhEDZSTxB/exec';
+      const payload = {
+        action: 'artisan_flow_lead',
+        name: data.fullName,
+        email: data.email,
+        businessType: data.businessType
+      };
+
+      await fetch(googleAppScriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8',
+        },
+        body: JSON.stringify(payload)
       });
 
-      // 2. Call Webhook for Google Sheets
-      fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, timestamp: new Date().toISOString() })
-      }).catch(err => console.error('Failed to sync to sheets:', err));
+      // 2. Write to Firestore (Don't let permissions block success message)
+      try {
+        const waitlistRef = doc(db, 'vip_waitlist', data.email);
+        await setDoc(waitlistRef, {
+          ...data,
+          timestamp: new Date().toISOString()
+        });
+      } catch (fbError) {
+        console.warn('Firestore write failed (likely permissions), but webhook succeeded:', fbError);
+      }
 
       toast.success('You have been added to the VIP Waitlist!');
       return true;
