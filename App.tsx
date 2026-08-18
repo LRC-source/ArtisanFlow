@@ -332,13 +332,12 @@ const AppContent = () => {
           <PublicLayout>
               <AnimatePresence mode="wait">
                   <motion.div
-                      key={location.pathname}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
                   >
-                      <Routes location={location} key={location.pathname}>
+                      <Routes location={location}>
                           <Route path="/makers" element={<MakerFunnel />} />
                           <Route path="/apothecaries" element={<ApothecaryFunnel />} />
                           <Route path="/scale" element={<ScaleFunnel />} />
@@ -357,14 +356,13 @@ const AppContent = () => {
     <Layout>
       <AnimatePresence mode="wait">
         <motion.div
-          key={location.pathname}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="h-full w-full"
         >
-          <Routes location={location} key={location.pathname}>
+          <Routes location={location}>
             <Route path="/" element={<BusinessPulse />} />
             <Route path="/business-pulse-check" element={<BusinessPulseCheck />} />
         

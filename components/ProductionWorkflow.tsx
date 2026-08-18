@@ -24,42 +24,42 @@ export const ProductionWorkflow = () => {
             <ArrowLeft size={18} /> Back to Operations
           </button>
           <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold text-white">Production Workflow</h1>
+              <h1 className="text-3xl sm:text-4xl font-serif text-white tracking-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">Precision Manufacturing Hub & Recipe Engine</h1>
               <Badge color="gold">Beta</Badge>
           </div>
-          <p className="text-gray-500">Manage production stages, assignments, and approvals</p>
+          <p className="text-white/60 font-sans font-light text-lg max-w-xl leading-relaxed mt-2">Manage production stages, assignments, and approvals</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-              <p className="text-xs text-gray-500 font-bold uppercase mb-2">Active Orders</p>
-              <p className="text-3xl font-bold text-gray-900">{productionStats.active}</p>
+          <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6">
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">Active Production Jobs</p>
+              <p className="text-4xl font-serif text-white">{productionStats.active}</p>
           </div>
-          <div className="bg-purple-50 p-4 rounded-xl border border-purple-100 shadow-sm">
-              <p className="text-xs text-gray-500 font-bold uppercase mb-2">In Progress</p>
-              <p className="text-3xl font-bold text-gray-900">{productionStats.inProgress}</p>
+          <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6">
+              <p className="text-[10px] text-purple-400 font-bold uppercase tracking-widest mb-2">Pending Curing Batches</p>
+              <p className="text-4xl font-serif text-white">{productionStats.inProgress}</p>
           </div>
-          <div className="bg-[#FFF9E6] p-4 rounded-xl border border-[#FFE082] shadow-sm">
-              <p className="text-xs text-[#B45309] font-bold uppercase mb-2">Awaiting Approval</p>
-              <p className="text-3xl font-bold text-[#B45309]">{productionStats.awaiting}</p>
+          <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6">
+              <p className="text-[10px] text-amber-400 font-bold uppercase tracking-widest mb-2">Recipe BOM Library</p>
+              <p className="text-4xl font-serif text-white">{recipes.length}</p>
           </div>
-          <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 shadow-sm">
-              <p className="text-xs text-emerald-700 font-bold uppercase mb-2">Completed Today</p>
-              <p className="text-3xl font-bold text-emerald-700">{productionStats.completed}</p>
+          <div className="luxury-card bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-6 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+              <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-2">Batch Deductions Ledger</p>
+              <p className="text-4xl font-serif text-white">{productionStats.completed}</p>
           </div>
       </div>
 
       <div className="mt-8 space-y-4">
-          <h2 className="text-xl font-bold text-white mb-6">Active Formulations Ready for Production</h2>
+          <h2 className="text-2xl font-serif text-white mb-6">Active Formulations Ready for Production</h2>
           {recipes.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]">
+              <div className="bg-black/40 border border-white/10 rounded-3xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]">
                   <GlassHaloIcon icon={Clock} color="purple" size="lg" className="mb-4" />
-                  <p className="text-gray-500">No active production formulas found. Create one in Recipes.</p>
+                  <p className="text-white/50 font-sans tracking-widest text-[11px] uppercase">No active production formulas found. Create one in Recipes.</p>
               </div>
           ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {recipes.map(recipe => (
-                      <div key={recipe.id} className="p-[1.5px] rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_15px_rgba(6,182,212,0.15)] flex flex-col justify-between">
+                      <div key={recipe.id} className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 hover:border-purple-500/50 transition-all shadow-lg group">
                           <div className="bg-[#0A0A0A] backdrop-blur-3xl border-none p-6 rounded-[1.5rem] flex flex-col justify-between h-full">
                           <div>
                               <div className="flex justify-between items-start mb-4">

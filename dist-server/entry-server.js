@@ -2430,7 +2430,7 @@ const MarketingStudio = () => {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -20 },
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-      className: "p-6 space-y-12 pb-20 max-w-7xl mx-auto",
+      className: "max-w-7xl mx-auto px-4 py-6 space-y-12 pb-20 overflow-visible",
       children: [
         /* @__PURE__ */ jsx(
           ContextualTutorialModal,
@@ -4039,7 +4039,7 @@ const BrandVoiceProfile = () => {
                     disabled: isSaving,
                     children: [
                       isSaving ? /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mr-3", size: 16 }) : /* @__PURE__ */ jsx(CheckCircle, { size: 16, className: "mr-3" }),
-                      "COMMIT CALIBRATION"
+                      "SAVE & SYNC WITH LOLA AI"
                     ]
                   }
                 )
@@ -4062,6 +4062,10 @@ const BrandVoiceProfile = () => {
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1", children: "Brand Adjectives (Comma separated)" }),
                 /* @__PURE__ */ jsx(Input, { value: adjectives, onChange: (e) => setAdjectives(e.target.value), placeholder: "e.g., Luxurious, Artisanal...", className: "h-14 rounded-2xl bg-white/5 border-white/10 text-white" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1", children: "Core Values & Mission" }),
+                /* @__PURE__ */ jsx(Input, { value: tagline, onChange: (e) => setTagline(e.target.value), placeholder: "e.g., Crafting the extraordinary...", className: "h-14 rounded-2xl bg-white/5 border-white/10 text-white" })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("label", { className: "block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1", children: "Restricted Vocabulary" }),
@@ -6451,7 +6455,7 @@ const UpgradeModal = ({
         initial: { opacity: 0 },
         animate: { opacity: 1 },
         exit: { opacity: 0 },
-        className: "absolute inset-0 bg-black/60 backdrop-blur-sm",
+        className: "absolute inset-0 bg-black/80 backdrop-blur-md",
         onClick: onClose
       }
     ),
@@ -6461,47 +6465,74 @@ const UpgradeModal = ({
         initial: { opacity: 0, scale: 0.95, y: 20 },
         animate: { opacity: 1, scale: 1, y: 0 },
         exit: { opacity: 0, scale: 0.95, y: 20 },
-        className: "relative w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-[2rem] p-8 sm:p-12 shadow-2xl overflow-hidden",
+        className: "relative w-full max-w-2xl bg-black/60 border border-white/10 rounded-[3rem] p-8 sm:p-12 shadow-[0_0_50px_rgba(106,44,145,0.15)] overflow-hidden backdrop-blur-3xl",
         children: [
-          /* @__PURE__ */ jsx("button", { onClick: onClose, className: "absolute top-6 right-6 text-white/40 hover:text-white transition-colors", children: /* @__PURE__ */ jsx(X, { size: 24 }) }),
-          /* @__PURE__ */ jsx("div", { className: "mb-8 flex justify-center", children: /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-[#6A2C91]/20 border border-[#6A2C91]/30 rounded-2xl flex items-center justify-center", children: /* @__PURE__ */ jsx(Lock, { size: 32, className: "text-[#C5A059]" }) }) }),
-          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-serif text-white tracking-tight text-center mb-4", children: "Capacity Reached" }),
-          /* @__PURE__ */ jsxs("p", { className: "text-white/60 font-sans text-sm leading-relaxed text-center mb-8", children: [
-            "You have reached your limit of ",
-            /* @__PURE__ */ jsxs("strong", { className: "text-white", children: [
-              currentLimit,
-              " ",
-              featureName
+          /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-96 h-96 bg-[#C5A059] opacity-[0.03] rounded-bl-full -mr-20 -mt-20" }),
+          /* @__PURE__ */ jsx("button", { onClick: onClose, className: "absolute top-8 right-8 text-white/40 hover:text-white transition-colors z-10", children: /* @__PURE__ */ jsx(X, { size: 24 }) }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-10 flex items-center gap-6", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-gradient-to-br from-[#6A2C91]/30 to-[#C5A059]/20 border border-white/10 rounded-2xl flex items-center justify-center shadow-inner", children: /* @__PURE__ */ jsx(Lock, { size: 32, className: "text-[#C5A059]" }) }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("h2", { className: "text-4xl font-serif text-white tracking-tight mb-2", children: "System Architecture Locked" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]", children: "Tier Limit Reached" })
+              ] })
             ] }),
-            " on your current tier. Upgrade to ",
-            /* @__PURE__ */ jsx("strong", { className: "text-[#C5A059]", children: requiredTier }),
-            " to unlock higher capacities and advanced business capabilities."
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
-            /* @__PURE__ */ jsxs(
-              Button,
-              {
-                variant: "premium",
-                onClick: () => {
-                  onClose();
-                  navigate("/settings/subscription");
-                },
-                className: "w-full h-14 font-black tracking-widest text-[11px]",
-                children: [
-                  "UPGRADE SUBSCRIPTION ",
-                  /* @__PURE__ */ jsx(ArrowRight, { size: 16, className: "ml-2" })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              Button,
-              {
-                variant: "ghost",
-                onClick: onClose,
-                className: "w-full h-14 text-white/50 hover:text-white uppercase tracking-widest text-[11px]",
-                children: "Not Now"
-              }
-            )
+            /* @__PURE__ */ jsxs("p", { className: "text-white/60 font-sans text-sm leading-relaxed mb-10", children: [
+              "You have reached your vault limit of ",
+              /* @__PURE__ */ jsxs("strong", { className: "text-white", children: [
+                currentLimit,
+                " ",
+                featureName
+              ] }),
+              ". Upgrade to ",
+              /* @__PURE__ */ jsx("strong", { className: "text-[#C5A059]", children: requiredTier }),
+              " to unlock infinite scaling capacity and automated profit protection."
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-6 text-center shadow-sm", children: [
+                /* @__PURE__ */ jsx(TrendingUp, { size: 24, className: "text-emerald-400 mx-auto mb-3" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white text-xl font-serif mb-1", children: "+24%" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white/30 text-[9px] uppercase tracking-widest font-bold", children: "Avg. Margin Increase" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-6 text-center shadow-sm border-t-2 border-t-[#C5A059]", children: [
+                /* @__PURE__ */ jsx(ShieldCheck, { size: 24, className: "text-[#C5A059] mx-auto mb-3" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white text-xl font-serif mb-1", children: "Infinite" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white/30 text-[9px] uppercase tracking-widest font-bold", children: "Vault Capacity" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-6 text-center shadow-sm", children: [
+                /* @__PURE__ */ jsx(Zap, { size: 24, className: "text-cyan-400 mx-auto mb-3" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white text-xl font-serif mb-1", children: "24/7" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white/30 text-[9px] uppercase tracking-widest font-bold", children: "Lola AI Assistance" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4", children: [
+              /* @__PURE__ */ jsx(
+                Button,
+                {
+                  variant: "ghost",
+                  onClick: onClose,
+                  className: "flex-1 h-16 text-white/50 hover:text-white hover:bg-white/5 rounded-full uppercase tracking-[0.2em] text-[11px] font-bold",
+                  children: "MAINTAIN CURRENT TIER"
+                }
+              ),
+              /* @__PURE__ */ jsxs(
+                Button,
+                {
+                  variant: "primary",
+                  onClick: () => {
+                    onClose();
+                    navigate("/settings/subscription");
+                  },
+                  className: "flex-1 h-16 bg-gradient-to-r from-[#C5A059] to-[#b08e4d] hover:from-[#b08e4d] hover:to-[#9c7d42] border-none text-white rounded-full font-black tracking-[0.2em] text-[11px] shadow-[0_0_20px_rgba(197,160,89,0.3)] transition-all",
+                  children: [
+                    "UNLOCK ",
+                    requiredTier.toUpperCase(),
+                    " ",
+                    /* @__PURE__ */ jsx(ArrowRight, { size: 16, className: "ml-2" })
+                  ]
+                }
+              )
+            ] })
           ] })
         ]
       }
@@ -7351,35 +7382,35 @@ const ProductionWorkflow = () => {
         " Back to Operations"
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold text-white", children: "Production Workflow" }),
+        /* @__PURE__ */ jsx("h1", { className: "text-3xl sm:text-4xl font-serif text-white tracking-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]", children: "Precision Manufacturing Hub & Recipe Engine" }),
         /* @__PURE__ */ jsx(Badge, { color: "gold", children: "Beta" })
       ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-gray-500", children: "Manage production stages, assignments, and approvals" })
+      /* @__PURE__ */ jsx("p", { className: "text-white/60 font-sans font-light text-lg max-w-xl leading-relaxed mt-2", children: "Manage production stages, assignments, and approvals" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-6", children: [
-      /* @__PURE__ */ jsxs("div", { className: "bg-white p-4 rounded-xl border border-gray-200 shadow-sm", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 font-bold uppercase mb-2", children: "Active Orders" }),
-        /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-gray-900", children: productionStats.active })
+      /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2", children: "Active Production Jobs" }),
+        /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white", children: productionStats.active })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-purple-50 p-4 rounded-xl border border-purple-100 shadow-sm", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 font-bold uppercase mb-2", children: "In Progress" }),
-        /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-gray-900", children: productionStats.inProgress })
+      /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[10px] text-purple-400 font-bold uppercase tracking-widest mb-2", children: "Pending Curing Batches" }),
+        /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white", children: productionStats.inProgress })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-[#FFF9E6] p-4 rounded-xl border border-[#FFE082] shadow-sm", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-[#B45309] font-bold uppercase mb-2", children: "Awaiting Approval" }),
-        /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-[#B45309]", children: productionStats.awaiting })
+      /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[10px] text-amber-400 font-bold uppercase tracking-widest mb-2", children: "Recipe BOM Library" }),
+        /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white", children: recipes.length })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-emerald-50 p-4 rounded-xl border border-emerald-100 shadow-sm", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-emerald-700 font-bold uppercase mb-2", children: "Completed Today" }),
-        /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-emerald-700", children: productionStats.completed })
+      /* @__PURE__ */ jsxs("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-6 shadow-[0_0_20px_rgba(16,185,129,0.1)]", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-2", children: "Batch Deductions Ledger" }),
+        /* @__PURE__ */ jsx("p", { className: "text-4xl font-serif text-white", children: productionStats.completed })
       ] })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4", children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-xl font-bold text-white mb-6", children: "Active Formulations Ready for Production" }),
-      recipes.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]", children: [
+      /* @__PURE__ */ jsx("h2", { className: "text-2xl font-serif text-white mb-6", children: "Active Formulations Ready for Production" }),
+      recipes.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "bg-black/40 border border-white/10 rounded-3xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]", children: [
         /* @__PURE__ */ jsx(GlassHaloIcon, { icon: Clock, color: "purple", size: "lg", className: "mb-4" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-500", children: "No active production formulas found. Create one in Recipes." })
-      ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: recipes.map((recipe) => /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-[1.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_15px_rgba(6,182,212,0.15)] flex flex-col justify-between", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0A0A0A] backdrop-blur-3xl border-none p-6 rounded-[1.5rem] flex flex-col justify-between h-full", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-white/50 font-sans tracking-widest text-[11px] uppercase", children: "No active production formulas found. Create one in Recipes." })
+      ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: recipes.map((recipe) => /* @__PURE__ */ jsx("div", { className: "luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 hover:border-purple-500/50 transition-all shadow-lg group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#0A0A0A] backdrop-blur-3xl border-none p-6 rounded-[1.5rem] flex flex-col justify-between h-full", children: [
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-4", children: [
             /* @__PURE__ */ jsxs("div", { children: [
@@ -8569,7 +8600,7 @@ const CRM = () => {
             /* @__PURE__ */ jsx(Search, { className: "absolute left-6 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#C5A059] transition-colors", size: 20 }),
             /* @__PURE__ */ jsx(Input, { placeholder: "Scan for nodes by name, email, or metadata...", className: "pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:p-10", children: allCustomers.map((c, i) => /* @__PURE__ */ jsxs(
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-10", children: allCustomers.map((c, i) => /* @__PURE__ */ jsxs(
             "div",
             {
               onClick: () => setSelectedCustomer(c.name),
@@ -8809,7 +8840,7 @@ const Orders = () => {
                     order.id
                   ] })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:p-10", children: [
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-10", children: [
                   /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
                     /* @__PURE__ */ jsx("p", { className: "text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]", children: "Customer Node" }),
                     /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
@@ -9128,14 +9159,14 @@ const LandingPage = () => {
     /* @__PURE__ */ jsxs("main", { className: "flex-1 flex flex-col items-center justify-start p-6 z-10 mt-12 relative w-full max-w-7xl mx-auto", children: [
       /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-12 items-center w-full", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-left space-y-8 relative z-10", children: [
-          /* @__PURE__ */ jsxs("h1", { className: "text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]", children: [
+          /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[1.1]", children: [
             "Precision Manufacturing ",
             /* @__PURE__ */ jsx("br", {}),
             " For ",
             /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "Artisanal" }),
             " Brands"
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 font-medium max-w-xl leading-relaxed", children: "Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access." }),
+          /* @__PURE__ */ jsx("p", { className: "text-base sm:text-lg text-gray-400 font-medium max-w-xl leading-relaxed", children: "Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access." }),
           /* @__PURE__ */ jsx("div", { ref: formRef, className: "mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl", children: isSubmitted ? /* @__PURE__ */ jsxs("div", { className: "text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500", children: [
             /* @__PURE__ */ jsx(CheckCircle, { size: 48, className: "text-[#10B981] mx-auto mb-4" }),
             /* @__PURE__ */ jsx("h3", { className: "text-2xl font-black text-white", children: "You're Officially on the VIP List!" }),
@@ -9199,25 +9230,26 @@ const LandingPage = () => {
             ] })
           ] }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "relative w-full flex justify-center lg:justify-end items-center z-10", children: [
+        /* @__PURE__ */ jsxs("div", { className: "relative w-full flex justify-center lg:justify-end items-center z-10 mt-8 lg:mt-0", children: [
           /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#C5A059]/10 blur-[80px] rounded-full pointer-events-none" }),
           /* @__PURE__ */ jsx(
             "img",
             {
               src: "/artisan_flow_hero.png",
               alt: "Artisan Flow Dashboard Mockup",
-              className: "relative z-10 w-full max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700"
+              className: "relative z-10 w-full max-w-sm md:max-w-md lg:max-w-2xl object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700"
             }
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-12", children: [
-          /* @__PURE__ */ jsxs("h2", { className: "text-3xl font-black text-white tracking-tight uppercase mb-4", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mt-16 md:mt-24 w-full max-w-5xl relative z-10 mx-auto mb-12 px-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-8 md:mb-12", children: [
+          /* @__PURE__ */ jsxs("h2", { className: "text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight uppercase mb-4", children: [
             "The Anti-Spreadsheet ",
+            /* @__PURE__ */ jsx("br", { className: "md:hidden" }),
             /* @__PURE__ */ jsx("span", { className: "bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text", children: "OS for Modern Makers" })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg max-w-2xl mx-auto", children: "Why artisans are ditching legacy inventory sheets for automated precision." })
+          /* @__PURE__ */ jsx("p", { className: "text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-2", children: "Why artisans are ditching legacy inventory sheets for automated precision." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "bg-white/[0.01] border border-white/5 p-8 rounded-[2rem] flex flex-col items-center text-center text-gray-400 opacity-70 transition-all", children: [
@@ -9264,10 +9296,14 @@ const LandingPage = () => {
           ] }) })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-20 w-full max-w-6xl relative z-10", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Built For Industrial Manufacturing Precision" }),
-          /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block", children: /* @__PURE__ */ jsx("span", { className: "block bg-[#0d0d0d] rounded-full py-2 px-6 text-[#E2C792] text-sm font-black uppercase tracking-widest", children: "Designed by a Maker, Built for Makers" }) })
+      /* @__PURE__ */ jsxs("div", { className: "mt-16 md:mt-20 w-full max-w-6xl relative z-10 px-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-10 md:mb-16", children: [
+          /* @__PURE__ */ jsxs("h2", { className: "text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: [
+            "Built For Industrial",
+            /* @__PURE__ */ jsx("br", { className: "md:hidden" }),
+            " Manufacturing Precision"
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block", children: /* @__PURE__ */ jsx("span", { className: "block bg-[#0d0d0d] rounded-full py-1.5 px-4 md:py-2 md:px-6 text-[#E2C792] text-xs md:text-sm font-black uppercase tracking-widest", children: "Designed by a Maker, Built for Makers" }) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
           /* @__PURE__ */ jsxs("div", { className: "group bg-white/[0.02] border border-white/10 p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left", children: [
@@ -9296,10 +9332,10 @@ const LandingPage = () => {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-32 w-full max-w-6xl relative z-10 mb-20", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mt-20 md:mt-32 w-full max-w-6xl relative z-10 mb-20 px-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-10 md:mb-16", children: [
           /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-5xl font-black text-white tracking-tight uppercase mb-4", children: "Lifetime Deal Tiers" }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg max-w-2xl mx-auto", children: "Lock in lifetime access for a single payment. Limited to 100 licenses. Prices reveal on launch day." })
+          /* @__PURE__ */ jsx("p", { className: "text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-2", children: "Lock in lifetime access for a single payment. Limited to 100 licenses. Prices reveal on launch day." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
           /* @__PURE__ */ jsx(
@@ -12099,9 +12135,8 @@ const AppContent = () => {
           /* @__PURE__ */ jsx(Route, { path: "/overview", element: /* @__PURE__ */ jsx(AppOverview, {}) }),
           /* @__PURE__ */ jsx(Route, { path: "/auth", element: /* @__PURE__ */ jsx(AuthGateway, {}) }),
           /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(Navigate, { to: "/", replace: true }) })
-        ] }, location.pathname)
-      },
-      location.pathname
+        ] })
+      }
     ) }) });
   }
   return /* @__PURE__ */ jsxs(Layout, { children: [
@@ -12158,9 +12193,8 @@ const AppContent = () => {
           /* @__PURE__ */ jsx(Route, { path: "/settings/privacy", element: /* @__PURE__ */ jsx(PrivacyGovernance, {}) }),
           /* @__PURE__ */ jsx(Route, { path: "/super-admin", element: businessProfile.role === "admin" ? /* @__PURE__ */ jsx(SuperAdmin, {}) : /* @__PURE__ */ jsx(Navigate, { to: "/", replace: true }) }),
           /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(Navigate, { to: "/", replace: true }) })
-        ] }, location.pathname)
-      },
-      location.pathname
+        ] })
+      }
     ) }),
     /* @__PURE__ */ jsx(AIAssistant, {})
   ] });

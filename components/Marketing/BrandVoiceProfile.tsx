@@ -101,7 +101,7 @@ export const BrandVoiceProfile = () => {
                         disabled={isSaving}
                     >
                         {isSaving ? <Loader2 className="animate-spin mr-3" size={16} /> : <CheckCircle size={16} className="mr-3"/>}
-                        COMMIT CALIBRATION
+                        SAVE & SYNC WITH LOLA AI
                     </Button>
                   </div>
                 </VaultBanner>
@@ -125,6 +125,10 @@ export const BrandVoiceProfile = () => {
                             <div>
                                 <label className="block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1">Brand Adjectives (Comma separated)</label>
                                 <Input value={adjectives} onChange={(e) => setAdjectives(e.target.value)} placeholder="e.g., Luxurious, Artisanal..." className="h-14 rounded-2xl bg-white/5 border-white/10 text-white" />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1">Core Values & Mission</label>
+                                <Input value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder="e.g., Crafting the extraordinary..." className="h-14 rounded-2xl bg-white/5 border-white/10 text-white" />
                             </div>
                             <div>
                                 <label className="block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest mb-3 ml-1">Restricted Vocabulary</label>

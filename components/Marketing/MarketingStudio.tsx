@@ -164,7 +164,7 @@ export const MarketingStudio = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="p-6 space-y-12 pb-20 max-w-7xl mx-auto"
+            className="max-w-7xl mx-auto px-4 py-6 space-y-12 pb-20 overflow-visible"
         >
             <ContextualTutorialModal
                 hubId="marketing_studio"

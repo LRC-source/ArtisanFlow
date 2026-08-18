@@ -207,7 +207,7 @@ export const Orders = () => {
                                         <span className="text-[11px] text-white/60 font-mono tracking-widest bg-black/40 px-3 py-1 rounded-full border border-white/5"># {order.id}</span>
                                     </div>
                                     
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:p-10">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-10">
                                         <div className="space-y-4">
                                             <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
                                             <div className="flex items-center gap-4">
