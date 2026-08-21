@@ -466,6 +466,24 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
             
             setBusinessProfile(prev => ({ ...prev, ...profileData }));
             setUserTier(docSnap.data().tier || 'Artisan Flow Basic');
+          } else {
+            const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
+            if (user.email && adminEmails.includes(user.email.toLowerCase())) {
+              const defaultProfile = { name: 'Admin Hub', email: user.email, role: 'admin' };
+              await setDoc(docRef, {
+                email: user.email,
+                tier: 'Margin Protection Pro',
+                status: 'Active',
+                profile: defaultProfile,
+                createdAt: new Date().toISOString()
+              });
+              setIsAuthenticated(true);
+              setBusinessProfile(prev => ({ ...prev, ...defaultProfile }));
+              setUserTier('Margin Protection Pro');
+            } else {
+              auth.signOut();
+              toast.error("Account incomplete. Please finish checkout.");
+            }
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
