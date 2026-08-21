@@ -92,7 +92,7 @@ export const VideoCreator = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-12 sm:pb-20 lg:pb-32 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
@@ -103,13 +103,13 @@ export const VideoCreator = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                 {/* Configuration Panel */}
                 <div className="lg:col-span-5 space-y-6">
-                    <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
                         <div className="space-y-6">
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Clapperboard size={14} className="mr-2 text-magenta-500" /> Video Concept
                                 </label>
                                 <textarea 
@@ -120,10 +120,10 @@ export const VideoCreator = () => {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
                                     <label className="block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1">Format Duration</label>
-                                    <Select value={duration} onChange={(e) => setDuration(e.target.value)} className="h-12 bg-white/5 border-white/10">
+                                    <Select value={duration} onChange={(e) => setDuration(e.target.value)} className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10">
                                         <option className="bg-black">15 Seconds (Reel/Short)</option>
                                         <option className="bg-black">30 Seconds (Commercial)</option>
                                         <option className="bg-black">60 Seconds (Deep Dive)</option>
@@ -133,13 +133,13 @@ export const VideoCreator = () => {
                                     <label className="flex items-center text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1">
                                         <Music size={12} className="mr-1"/> Audio Vibe
                                     </label>
-                                    <Select value={audioTrack} onChange={(e) => setAudioTrack(e.target.value)} className="h-12 bg-white/5 border-white/10">
+                                    <Select value={audioTrack} onChange={(e) => setAudioTrack(e.target.value)} className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10">
                                         {audioOptions.map(opt => <option key={opt} className="bg-black">{opt}</option>)}
                                     </Select>
                                 </div>
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-pink-600 to-[#6A2C91] text-white h-14 rounded-2xl shadow-lg border-none">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-pink-600 to-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
                                 {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <MonitorPlay className="mr-2" />}
                                 {isGenerating ? "Rendering Storyboard..." : "Generate Script & Frames"}
                             </Button>
@@ -150,8 +150,8 @@ export const VideoCreator = () => {
                 {/* Output Panel */}
                 <div className="lg:col-span-7 flex flex-col h-full">
                     <Card className="flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative min-h-[600px]">
-                        <div className="h-14 bg-[#111] border-b border-white/10 flex items-center px-6 justify-between">
-                            <h3 className="text-white/80 font-serif flex items-center gap-2">
+                        <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-6 justify-between">
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2">
                                 <Film size={18} className="text-pink-500" /> Storyboard Visualizer
                             </h3>
                             {generatedScript && (
@@ -159,7 +159,7 @@ export const VideoCreator = () => {
                             )}
                         </div>
                         
-                        <div className="flex-1 p-6 overflow-y-auto bg-black/40">
+                        <div className="flex-1 p-4 sm:p-6 overflow-y-auto bg-black/40">
                             {storyboard.length > 0 ? (
                                 <div className="space-y-6">
                                     {storyboard.map((frame, idx) => (
@@ -168,7 +168,7 @@ export const VideoCreator = () => {
                                             initial={{ opacity: 0, x: 20 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: idx * 0.1 }}
-                                            className="bg-white/5 border border-white/10 rounded-2xl p-4 flex gap-6"
+                                            className="bg-white/5 border border-white/10 rounded-2xl p-4 flex gap-3 sm:gap-6"
                                         >
                                             {/* Fake Visual Frame */}
                                             <div className="w-32 h-48 bg-gradient-to-br from-black to-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center shrink-0 relative overflow-hidden">
@@ -179,16 +179,16 @@ export const VideoCreator = () => {
                                             <div className="flex-1 space-y-4 py-2">
                                                 <div>
                                                     <span className="text-[10px] uppercase tracking-widest text-pink-500 font-black">Visual</span>
-                                                    <p className="text-sm text-gray-300 font-sans mt-1">{frame.visual}</p>
+                                                    <p className="text-sm sm:text-base text-white sm:text-gray-300 font-sans mt-1">{frame.visual}</p>
                                                 </div>
-                                                <div className="flex gap-4">
+                                                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                                                     <div className="flex-1">
                                                         <span className="text-[10px] uppercase tracking-widest text-[#C5A059] font-black flex items-center"><Mic size={10} className="mr-1"/> Audio</span>
-                                                        <p className="text-xs text-gray-400 font-sans italic mt-1">"{frame.audio}"</p>
+                                                        <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans italic mt-1">"{frame.audio}"</p>
                                                     </div>
                                                     <div className="flex-1">
                                                         <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-black flex items-center"><Layers size={10} className="mr-1"/> Caption</span>
-                                                        <p className="text-xs text-white font-bold font-sans mt-1 bg-black/40 px-2 py-1 rounded inline-block">{frame.caption}</p>
+                                                        <p className="text-sm sm:text-base text-white font-bold font-sans mt-1 bg-black/40 px-2 py-1 rounded inline-block">{frame.caption}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,21 +200,21 @@ export const VideoCreator = () => {
                                     <textarea 
                                         value={generatedScript}
                                         readOnly
-                                        className="w-full h-full bg-transparent border-none text-gray-300 font-mono text-sm resize-none focus:outline-none"
+                                        className="w-full h-full bg-transparent border-none text-white sm:text-gray-300 font-mono text-sm resize-none focus:outline-none"
                                     />
                                 </div>
                             ) : (
                                 <div className="h-full flex flex-col items-center justify-center opacity-30">
                                     <Clapperboard size={64} className="mx-auto mb-4 text-white" />
-                                    <p className="text-white font-serif text-lg">Awaiting Script Parameters</p>
+                                    <p className="text-sm sm:text-base text-white font-serif leading-relaxed">Awaiting Script Parameters</p>
                                 </div>
                             )}
                         </div>
 
                         {generatedScript && (
-                            <div className="p-6 bg-[#111] border-t border-white/10 flex justify-end gap-4">
-                                <Button variant="outline" className="h-12 px-6">Discard</Button>
-                                <Button onClick={handleSave} className="h-12 px-6 bg-pink-600 hover:bg-pink-700 text-white border-none">
+                            <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex justify-end gap-3 sm:gap-4">
+                                <Button variant="outline" className="w-auto mx-auto py-1 px-3 text-[10px] px-6">Discard</Button>
+                                <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-6 bg-pink-600 hover:bg-pink-700 text-white border-none">
                                     <Save size={16} className="mr-2" /> Save to Vault
                                 </Button>
                             </div>

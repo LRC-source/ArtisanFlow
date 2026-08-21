@@ -94,7 +94,7 @@ export const AdvancedContentGenerator = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-12 pb-20 max-w-7xl mx-auto"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
@@ -105,13 +105,13 @@ export const AdvancedContentGenerator = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                 {/* Configuration Panel */}
                 <div className="lg:col-span-4 space-y-6">
-                    <Card className="luxury-card border-white/10 rounded-3xl p-6 sm:p-8 bg-black/40 backdrop-blur-xl">
+                    <Card className="luxury-card border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 bg-black/40 backdrop-blur-xl">
                         <div className="space-y-8">
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Sparkles size={14} className="mr-2 text-magenta-500" /> Core Topic / Campaign
                                 </label>
                                 <textarea 
@@ -123,10 +123,10 @@ export const AdvancedContentGenerator = () => {
                             </div>
                             
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Globe size={14} className="mr-2 text-blue-400" /> Campaign Goal
                                 </label>
-                                <Select value={campaignGoal} onChange={(e) => setCampaignGoal(e.target.value)} className="h-14 rounded-2xl bg-white/5 border-white/10 text-white font-sans text-sm shadow-sm">
+                                <Select value={campaignGoal} onChange={(e) => setCampaignGoal(e.target.value)} className="w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl bg-white/5 border-white/10 text-white font-sans text-sm shadow-sm">
                                     <option className="bg-black">Brand Awareness</option>
                                     <option className="bg-black">Lead Generation</option>
                                     <option className="bg-black">Direct Sales</option>
@@ -138,7 +138,7 @@ export const AdvancedContentGenerator = () => {
                                 {renderSlider()}
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white h-14 rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none transition-all">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none transition-all">
                                 {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Zap size={14} className="mr-2" />}
                                 {isGenerating ? "Synthesizing..." : `Generate ${activeTab}`}
                             </Button>
@@ -154,26 +154,26 @@ export const AdvancedContentGenerator = () => {
                         <div className="h-16 bg-[#111] border-b border-white/10 flex items-center px-4 gap-2">
                             <button 
                                 onClick={() => setActiveTab('newsletter')}
-                                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'newsletter' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
+                                className={`flex-1 flex items-center justify-center gap-2 w-auto mx-auto py-1 px-3 text-[10px] rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'newsletter' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
                             >
                                 <Mail size={16} /> Newsletter
                             </button>
                             <button 
                                 onClick={() => setActiveTab('press')}
-                                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'press' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
+                                className={`flex-1 flex items-center justify-center gap-2 w-auto mx-auto py-1 px-3 text-[10px] rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'press' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
                             >
                                 <FileText size={16} /> Press Release
                             </button>
                             <button 
                                 onClick={() => setActiveTab('landing')}
-                                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'landing' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
+                                className={`flex-1 flex items-center justify-center gap-2 w-auto mx-auto py-1 px-3 text-[10px] rounded-xl text-xs font-sans font-medium uppercase tracking-widest transition-all ${activeTab === 'landing' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white'}`}
                             >
                                 <Globe size={16} /> Landing Page
                             </button>
                         </div>
 
                         {/* Editor Area */}
-                        <div className="flex-1 p-6 bg-black/40 overflow-y-auto">
+                        <div className="flex-1 p-4 sm:p-6 bg-black/40 overflow-y-auto">
                             <AnimatePresence mode="wait">
                                 <motion.div 
                                     key={activeTab}
@@ -187,14 +187,14 @@ export const AdvancedContentGenerator = () => {
                                         <textarea 
                                             value={outputs[activeTab]}
                                             onChange={(e) => setOutputs({...outputs, [activeTab]: e.target.value})}
-                                            className="w-full h-full min-h-[400px] bg-transparent border-none text-gray-300 font-sans text-sm leading-relaxed resize-none focus:outline-none"
+                                            className="w-full h-full min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden bg-transparent border-none text-white sm:text-gray-300 font-sans text-sm leading-relaxed resize-none focus:outline-none"
                                         />
                                     ) : (
-                                        <div className="h-full flex flex-col items-center justify-center py-20 opacity-30 text-center">
+                                        <div className="h-full flex flex-col items-center justify-center py-6 sm:py-12 lg:py-16 px-4 sm:px-8 opacity-30 text-center">
                                             {activeTab === 'newsletter' && <Mail size={64} className="text-white mb-6" />}
                                             {activeTab === 'press' && <FileText size={64} className="text-white mb-6" />}
                                             {activeTab === 'landing' && <Globe size={64} className="text-white mb-6" />}
-                                            <p className="text-[11px] font-sans font-medium text-white uppercase tracking-[0.2em]">Awaiting {activeTab} parameters</p>
+                                            <p className="text-sm sm:text-base text-[11px] font-sans font-medium text-white uppercase tracking-[0.2em]">Awaiting {activeTab} parameters</p>
                                         </div>
                                     )}
                                 </motion.div>
@@ -202,12 +202,12 @@ export const AdvancedContentGenerator = () => {
                         </div>
 
                         {/* Action Footer */}
-                        <div className="h-20 bg-[#111] border-t border-white/10 flex items-center justify-between px-6 shrink-0">
+                        <div className="h-20 bg-[#111] border-t border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between px-6 shrink-0">
                             <Badge color="gray">Est. Length: {outputs[activeTab] ? outputs[activeTab].split(' ').length : 0} words</Badge>
                             <Button 
                                 onClick={handleSave} 
                                 disabled={!outputs[activeTab]}
-                                className="bg-[#6A2C91] hover:bg-[#552374] text-white h-12 px-8 rounded-xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none"
+                                className="bg-[#6A2C91] hover:bg-[#552374] text-white w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none"
                             >
                                 <CheckCircle size={14} className="mr-2" /> Save {activeTab} to Drafts
                             </Button>

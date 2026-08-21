@@ -111,14 +111,14 @@ export const MarketingStrategyReport = () => {
       return (
           <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8 animate-in fade-in">
               <div className="relative">
-                  <div className="w-20 h-20 border-[6px] border-[#6A2C91]/10 border-t-[#6A2C91] rounded-full animate-spin"></div>
+                  <div className="w-12 h-12 sm:w-20 sm:h-20 border-[6px] border-[#6A2C91]/10 border-t-[#6A2C91] rounded-full animate-spin"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
                       <Sparkles size={24} className="text-[#C5A059] animate-pulse" />
                   </div>
               </div>
               <div className="text-center space-y-2">
-                  <h2 className="text-2xl font-black text-white tracking-tighter uppercase italic">Synthesizing Strategy Hub...</h2>
-                  <p className="text-gray-500 font-medium tracking-wide">Lola AI is reconciling omnichannel manufacturing directives.</p>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Synthesizing Strategy Hub...</h2>
+                  <p className="text-sm sm:text-base text-gray-500 font-medium tracking-wide">Lola AI is reconciling omnichannel manufacturing directives.</p>
               </div>
           </div>
       );
@@ -130,9 +130,9 @@ export const MarketingStrategyReport = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
+        className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-12 sm:pb-20 lg:pb-32 max-w-7xl mx-auto"
     >
-        <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="w-full flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6">
             <div className="flex-1">
                 <SubPageHeader 
                     title="Marketing Strategy"
@@ -142,75 +142,75 @@ export const MarketingStrategyReport = () => {
                 />
             </div>
             <div className="flex gap-3">
-                <Button onClick={handleExportPDF} variant="outline" className="border-white/20 text-white font-black text-[10px] tracking-widest h-12 px-6 rounded-2xl hover:bg-white/5">
+                <Button onClick={handleExportPDF} variant="outline" className="border-white/20 text-white font-black text-[10px] tracking-widest w-auto mx-auto py-1 px-3 text-[10px] px-6 rounded-2xl hover:bg-white/5">
                     <Download size={16} className="mr-2" /> EXPORT PDF DOSSIER
                 </Button>
-                <Button variant="primary" className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-black text-[10px] tracking-widest h-12 px-6 rounded-2xl shadow-xl shadow-purple-900/20" onClick={runGeneration}>
+                <Button variant="primary" className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-black text-[10px] tracking-widest w-auto mx-auto py-1 px-3 text-[10px] px-6 rounded-2xl shadow-xl shadow-purple-900/20" onClick={runGeneration}>
                     <RefreshCw size={16} className="mr-2"/> RE-SYNC STRATEGY
                 </Button>
             </div>
         </div>
 
         {/* KPI Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card className="p-6 bg-black/40 border-white/10 backdrop-blur-xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4">
+            <Card className="p-4 sm:p-6 bg-black/40 border-white/10 backdrop-blur-xl">
                 <div className="flex items-center gap-3 mb-2 text-emerald-500">
                     <Activity size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">Predicted Reach</span>
                 </div>
-                <div className="text-3xl font-serif text-white">450K+</div>
-                <div className="text-xs text-gray-400 mt-2">Monthly Impressions</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">450K+</div>
+                <div className="text-xs text-white sm:text-gray-400 mt-2">Monthly Impressions</div>
             </Card>
-            <Card className="p-6 bg-black/40 border-white/10 backdrop-blur-xl">
+            <Card className="p-4 sm:p-6 bg-black/40 border-white/10 backdrop-blur-xl">
                 <div className="flex items-center gap-3 mb-2 text-magenta-500">
                     <PieChart size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">Engagement Rate</span>
                 </div>
-                <div className="text-3xl font-serif text-white">8.4%</div>
-                <div className="text-xs text-gray-400 mt-2">+2.1% vs Industry Avg</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">8.4%</div>
+                <div className="text-xs text-white sm:text-gray-400 mt-2">+2.1% vs Industry Avg</div>
             </Card>
-            <Card className="p-6 bg-black/40 border-white/10 backdrop-blur-xl">
+            <Card className="p-4 sm:p-6 bg-black/40 border-white/10 backdrop-blur-xl">
                 <div className="flex items-center gap-3 mb-2 text-[#C5A059]">
                     <Target size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">Lead Conversion</span>
                 </div>
-                <div className="text-3xl font-serif text-white">3.2%</div>
-                <div className="text-xs text-gray-400 mt-2">Targeting $60k+ Income</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">3.2%</div>
+                <div className="text-xs text-white sm:text-gray-400 mt-2">Targeting $60k+ Income</div>
             </Card>
-            <Card className="p-6 bg-[#1A1115] border-rose-500/20 backdrop-blur-xl">
+            <Card className="p-4 sm:p-6 bg-[#1A1115] border-rose-500/20 backdrop-blur-xl">
                 <div className="flex items-center gap-3 mb-2 text-rose-500">
                     <DollarSign size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">CAC Estimate</span>
                 </div>
-                <div className="text-3xl font-serif text-white">$14.50</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">$14.50</div>
                 <div className="text-xs text-rose-400/70 mt-2">Customer Acquisition Cost</div>
             </Card>
         </div>
 
         {/* Executive Summary Node */}
-        <Card className="bg-black/40 border-white/10 rounded-[2.5rem] p-4 sm:p-10 shadow-2xl relative overflow-hidden group backdrop-blur-xl">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-magenta-500/10 rounded-bl-full -mr-20 -mt-20 opacity-40 group-hover:opacity-100 transition-opacity"></div>
+        <Card className="bg-black/40 border-white/10 rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 shadow-2xl relative overflow-hidden group backdrop-blur-xl">
+            <div className="absolute top-0 right-0 w-full sm:w-64 h-[180px] sm:h-64 bg-magenta-500/10 rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 opacity-40 group-hover:opacity-100 transition-opacity"></div>
             <div className="flex items-center gap-3 text-[#6A2C91] mb-6 relative z-10">
                 <div className="p-3 bg-[#6A2C91]/20 rounded-2xl"><Sparkles size={24} className="text-magenta-500" /></div>
-                <h3 className="font-black text-white text-2xl uppercase italic tracking-tighter">Executive Directive</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Executive Directive</h3>
             </div>
-            <p className="text-gray-300 leading-relaxed text-lg font-sans font-light relative z-10 max-w-4xl italic">
+            <p className="text-sm sm:text-base text-white sm:text-gray-300 leading-relaxed leading-relaxed font-sans font-light relative z-10 w-full w-full max-w-4xl italic">
                 "{strategyData.summary}"
             </p>
         </Card>
 
         {/* Strategic Pillars Node */}
         <div className="space-y-8">
-            <h3 className="text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3">
+            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
                 <TrendingUp className="text-[#C5A059]" /> Content Pillars & Allocation
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
                 {strategyData.pillars.map((pillar, i) => (
-                    <Card key={i} className="bg-black/40 border-white/10 rounded-[2rem] p-6 shadow-xl hover:border-magenta-500/50 transition-all group overflow-hidden relative backdrop-blur-xl">
-                        <div className="absolute top-0 right-0 p-6 opacity-[0.05] text-magenta-500"><PieChart size={80} /></div>
-                        <div className="flex items-center justify-between mb-4 relative z-10">
-                             <h4 className="font-black text-white uppercase tracking-tight italic">{pillar.name}</h4>
-                             <span className="text-2xl font-serif text-magenta-500">{pillar.pct}%</span>
+                    <Card key={i} className="bg-black/40 border-white/10 rounded-[2rem] p-4 sm:p-6 shadow-xl hover:border-magenta-500/50 transition-all group overflow-hidden relative backdrop-blur-xl">
+                        <div className="absolute top-0 right-0 p-4 sm:p-6 opacity-[0.05] text-magenta-500"><PieChart size={80} /></div>
+                        <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4 relative z-10">
+                             <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{pillar.name}</h4>
+                             <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-magenta-500">{pillar.pct}%</span>
                         </div>
                         <div className="w-full bg-white/5 h-2 rounded-full mb-6 relative overflow-hidden">
                             <div 
@@ -218,18 +218,18 @@ export const MarketingStrategyReport = () => {
                                 style={{ width: `${pillar.pct}%` }}
                             ></div>
                         </div>
-                        <p className="text-sm text-gray-400 leading-relaxed font-sans font-light relative z-10">{pillar.desc}</p>
+                        <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed font-sans font-light relative z-10">{pillar.desc}</p>
                     </Card>
                 ))}
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 sm:p-5 lg:p-6">
             <Card title="Synaptic Channel Links" className="rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl relative">
                  <div className="space-y-4 mt-6 relative z-10">
-                    <p className="text-xs text-gray-400 font-sans font-light leading-relaxed mb-6">Authorize secure handshakes to enable auto-publishing logic via Lola.</p>
+                    <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans font-light leading-relaxed mb-6">Authorize secure handshakes to enable auto-publishing logic via Lola.</p>
                     {Object.entries(connectedChannels).map(([platform, isConnected]) => (
-                        <div key={platform} className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-all">
+                        <div key={platform} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-all">
                             <div className="flex items-center gap-3">
                                 <div className={`p-2 rounded-xl ${isConnected ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-gray-500'} transition-colors`}>
                                     {getPlatformIcon(platform)}
@@ -241,7 +241,7 @@ export const MarketingStrategyReport = () => {
                                 className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl border transition-all ${
                                     isConnected 
                                     ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20 hover:bg-rose-500/10 hover:text-rose-500 hover:border-rose-500/20' 
-                                    : 'bg-white/5 text-gray-400 border-white/10 hover:border-[#6A2C91] hover:text-[#6A2C91]'
+                                    : 'bg-white/5 text-white sm:text-gray-400 border-white/10 hover:border-[#6A2C91] hover:text-[#6A2C91]'
                                 }`}
                             >
                                 {isConnected ? 'LINKED' : 'INITIALIZE'}
@@ -257,8 +257,8 @@ export const MarketingStrategyReport = () => {
 
             <div className="lg:col-span-2 space-y-8">
                 <Card title="Target Audience Node" className="rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl">
-                    <p className="text-[#C5A059] text-lg font-serif italic tracking-tight mb-6 mt-4">{strategyData.audience.demographics}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <p className="text-sm sm:text-base text-[#C5A059] leading-relaxed font-serif italic tracking-tight mb-6 mt-4">{strategyData.audience.demographics}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                         <div>
                             <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2"><Target size={14} className="text-emerald-500" /> Synaptic Affinity</h4>
                             <div className="flex flex-wrap gap-2">
@@ -279,17 +279,17 @@ export const MarketingStrategyReport = () => {
                 </Card>
 
                 {/* AI CONTENT BUNDLE TRIGGER */}
-                <div className="bg-gradient-to-br from-[#6A2C91] to-magenta-900 rounded-[2.5rem] p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden group">
+                <div className="bg-gradient-to-br from-[#6A2C91] to-magenta-900 rounded-[2.5rem] p-4 sm:p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden group">
                      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                     <div className="flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative z-10">
                         <div className="space-y-2 text-center md:text-left">
-                             <h3 className="text-3xl font-serif text-white tracking-tight">AI Content Workbench</h3>
-                             <p className="text-purple-200 font-sans font-light">Auto-generate a week of optimized posts based on your strategy.</p>
+                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">AI Content Workbench</h3>
+                             <p className="text-sm sm:text-base text-purple-200 font-sans font-light">Auto-generate a week of optimized posts based on your strategy.</p>
                         </div>
                         <Button 
                             onClick={handleGenerateBundle}
                             disabled={isBundling}
-                            className="bg-[#C5A059] hover:bg-[#b08e4d] text-white border-none h-16 px-10 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-2xl shadow-amber-500/20 active:scale-95 transition-all"
+                            className="bg-[#C5A059] hover:bg-[#b08e4d] text-white border-none py-3 px-6 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-2xl shadow-amber-500/20 active:scale-95 transition-all"
                         >
                             {isBundling ? <><Loader2 className="animate-spin mr-2" /> SYNTHESIZING...</> : <><Zap size={18} className="mr-2" /> GENERATE BUNDLE</>}
                         </Button>
@@ -301,35 +301,35 @@ export const MarketingStrategyReport = () => {
         {/* Content Bundle Results */}
         {contentBundle.length > 0 && (
             <div className="space-y-8 animate-in slide-up">
-                <h3 className="text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3">
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
                     <Layers className="text-emerald-500" /> Content Queue Nodes
                 </h3>
-                <div className="flex overflow-x-auto gap-6 pb-10 scrollbar-hide px-2">
+                <div className="flex overflow-x-auto gap-3 sm:gap-6 pb-10 scrollbar-hide px-2">
                     {contentBundle.map((post, idx) => {
                         const isScheduled = scheduledIds.includes(`${post.platform}-${idx}`);
                         return (
-                            <Card key={idx} className="min-w-[340px] max-w-[340px] bg-black/60 border-white/10 rounded-[2.5rem] p-6 shadow-2xl hover:border-[#6A2C91]/50 transition-all duration-500 flex flex-col group relative backdrop-blur-xl">
+                            <Card key={idx} className="min-w-[340px] max-w-[340px] bg-black/60 border-white/10 rounded-[2.5rem] p-4 sm:p-6 shadow-2xl hover:border-[#6A2C91]/50 transition-all duration-500 flex flex-col group relative backdrop-blur-xl">
                                 <div className="flex justify-between items-start mb-6">
-                                    <div className={`p-3 rounded-2xl ${isScheduled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-gray-400'}`}>
+                                    <div className={`p-3 rounded-2xl ${isScheduled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-white sm:text-gray-400'}`}>
                                         {getPlatformIcon(post.platform)}
                                     </div>
                                     <Badge color={isScheduled ? 'green' : 'purple'} className="text-[8px] font-black uppercase px-2">
                                         {isScheduled ? 'SYNCED TO CAL' : 'AI DRAFT'}
                                     </Badge>
                                 </div>
-                                <h4 className="font-serif text-xl text-white mb-4 line-clamp-1">{post.topic}</h4>
+                                <h4 className="font-serif text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-white mb-4 line-clamp-1">{post.topic}</h4>
                                 <div className="flex-1 bg-white/5 p-4 rounded-2xl border border-white/5 mb-6 overflow-y-auto max-h-48 scrollbar-hide">
-                                    <p className="text-sm text-gray-300 font-sans font-light whitespace-pre-wrap">{post.content}</p>
+                                    <p className="text-sm sm:text-base text-white sm:text-gray-300 font-sans font-light whitespace-pre-wrap">{post.content}</p>
                                 </div>
                                 <div className="space-y-4 pt-6 border-t border-white/5">
-                                     <div className="flex items-center justify-between text-[10px] font-black text-gray-500 uppercase tracking-widest">
+                                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between text-[10px] font-black text-gray-500 uppercase tracking-widest">
                                         <span className="flex items-center gap-1"><Clock size={12}/> {post.bestTimeToPost}</span>
                                         <span className="flex items-center gap-1 text-[#C5A059]"><Target size={12}/> {post.platform}</span>
                                      </div>
                                      <Button 
                                         onClick={() => handleSchedulePost(post, idx)}
                                         disabled={isScheduled}
-                                        className={`w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm border-none ${
+                                        className={`w-full w-auto mx-auto py-1 px-3 text-[10px] rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm border-none ${
                                             isScheduled 
                                             ? 'bg-white/5 text-gray-500 cursor-default' 
                                             : 'bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white hover:opacity-90'
@@ -346,35 +346,35 @@ export const MarketingStrategyReport = () => {
         )}
 
         {/* Bottom Directive Ledger */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 sm:p-5 lg:p-6">
             <Card title="Raw Concept Repository" className="rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl">
                 <div className="space-y-4 mt-6">
                     {strategyData.ideas.map((idea, i) => (
-                        <div key={i} className="flex gap-4 items-start p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-all">
+                        <div key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto items-start p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-all">
                             <div className="w-8 h-8 rounded-full bg-[#6A2C91]/20 text-[#6A2C91] flex items-center justify-center text-xs font-black shrink-0">{i+1}</div>
-                            <p className="text-sm text-gray-300 font-sans font-light leading-relaxed">{idea}</p>
+                            <p className="text-sm sm:text-base text-white sm:text-gray-300 font-sans font-light leading-relaxed">{idea}</p>
                         </div>
                     ))}
                 </div>
             </Card>
 
             <div className="space-y-8">
-                <h3 className="text-2xl font-black text-white tracking-tighter uppercase italic flex items-center gap-3">
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
                     <Layers className="text-[#C5A059]" /> Channel Protocols
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     {strategyData.platforms.slice(0, 4).map((platform, i) => (
-                        <Card key={i} className="bg-black/40 border-white/10 rounded-[2rem] p-6 hover:border-magenta-500/50 transition-all backdrop-blur-xl">
+                        <Card key={i} className="bg-black/40 border-white/10 rounded-[2rem] p-4 sm:p-6 hover:border-magenta-500/50 transition-all backdrop-blur-xl">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-magenta-500">
+                                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-white/5 rounded-xl flex items-center justify-center text-magenta-500">
                                     {getPlatformIcon(platform.name)}
                                 </div>
                                 <div>
                                     <h4 className="text-white font-serif">{platform.name}</h4>
-                                    <p className="text-[10px] font-black text-[#C5A059] uppercase tracking-widest">{platform.freq}</p>
+                                    <p className="text-sm sm:text-base text-[10px] font-black text-[#C5A059] uppercase tracking-widest">{platform.freq}</p>
                                 </div>
                             </div>
-                            <p className="text-xs text-gray-400 font-sans font-light">{platform.focus}</p>
+                            <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans font-light">{platform.focus}</p>
                         </Card>
                     ))}
                 </div>

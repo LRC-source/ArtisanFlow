@@ -45,7 +45,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
   const pathnames = location.pathname.split('/').filter(x => x);
 
   return (
-    <div className="flex h-screen w-full bg-[#0A0A0A] text-white font-sans selection:bg-purple-900/30">
+    <div className="flex min-h-dvh w-full overflow-x-hidden bg-[#0A0A0A] text-white font-sans selection:bg-purple-900/30">
       <Toaster position="top-right" richColors expand={false} />
       <TutorialOverlay />
       <div className="carbon-texture"></div>
@@ -78,11 +78,11 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       </AnimatePresence>
       
       {/* Sidebar - Artisan Flow Glassmorphic Floating Panel Redesign */}
-      <aside className={`artisan-flow-sidebar z-50 transition-all duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'}`}>
+      <aside className={`artisan-flow-sidebar z-50 transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : isSidebarCollapsed ? '-translate-x-[120%]' : '-translate-x-[120%] md:translate-x-0'} flex flex-col shrink-0`}>
           <div className="sidebar-brand-block flex items-center justify-center relative">
               <div className="flex items-center justify-center w-full py-2">
                 <div className="flex items-center cursor-pointer group" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
-                    <span className="text-xl md:text-2xl tracking-tight flex items-center font-extrabold">
+                    <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg md:text-2xl tracking-tight flex items-center font-extrabold">
                         {/* LRC Prefix */}
                         <span className="text-white mr-2">LRC</span>
                         
@@ -92,10 +92,10 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                     </span>
                 </div>
               </div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
+              <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden absolute right-0 top-0 text-white sm:text-white/50 hover:text-[#C5A059] transition-colors">
                   <X size={20} />
               </button>
-              <button onClick={() => setIsSidebarCollapsed(true)} className="hidden md:block absolute right-0 top-0 text-white/50 hover:text-[#C5A059] transition-colors">
+              <button onClick={() => setIsSidebarCollapsed(true)} className="hidden md:block absolute right-0 top-0 text-white sm:text-white/50 hover:text-[#C5A059] transition-colors">
                   <Menu size={20} />
               </button>
           </div>
@@ -190,15 +190,15 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       </aside>
 
       {/* Main Content Area */}
-      <main className={`flex-1 overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-0' : 'md:ml-[280px]'}`}>
+      <main className={`flex-1 min-w-0 w-full min-h-dvh overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-0' : 'md:ml-[280px]'}`}>
         {/* TOP BAR: SYNAPTIC HEADER */}
-        <header className="sticky top-0 z-30 w-full border-b border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md px-4 md:px-10 py-3 md:py-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 md:gap-4 sm:p-12 transition-all duration-500">
-            <div className="flex items-center gap-4 md:gap-4 sm:p-8">
-              <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white/60 hover:text-white">
+        <header className="sticky top-0 z-30 w-full border-b border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md h-14 px-4 md:px-10 flex items-center justify-between gap-3 sm:gap-4 transition-all duration-500">
+            <div className="flex items-center gap-3 sm:gap-4 md:gap-4 sm:gap-6">
+              <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white sm:text-white/60 hover:text-white">
                 <Menu size={24} />
               </button>
               {isSidebarCollapsed && (
-                <button onClick={() => setIsSidebarCollapsed(false)} className="hidden md:block p-2 -ml-2 text-white/60 hover:text-[#C5A059] transition-colors">
+                <button onClick={() => setIsSidebarCollapsed(false)} className="hidden md:block p-2 -ml-2 text-white sm:text-white/60 hover:text-[#C5A059] transition-colors">
                   <Menu size={24} />
                 </button>
               )}
@@ -206,7 +206,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               {/* Mobile/Collapsed Logo */}
               <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
                  <div className="flex items-center cursor-pointer group" onClick={() => navigate('/')}>
-                     <span className="text-xl tracking-tight flex items-center font-extrabold">
+                     <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg tracking-tight flex items-center font-extrabold">
                          <span className="text-white mr-2">LRC</span>
                          <span className="text-white">Artisan</span>
                          <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
@@ -238,9 +238,9 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
 
             {/* Global AI Search Gateway */}
-            <form onSubmit={handleSearch} className="flex-1 min-w-[150px] w-full order-3 sm:order-none mt-2 sm:mt-0 max-w-xl relative group">
+            <form onSubmit={handleSearch} className="flex-1 min-w-[150px] w-full order-3 sm:order-none mt-2 sm:mt-0 max-w-xs relative group">
                 <div className="relative">
-                    <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C5A059] transition-colors" size={14} />
+                    <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C5A059] transition-colors" size={10} />
                     <input 
                         type="text"
                         placeholder="Ask Lola..."
@@ -249,52 +249,52 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-2 sm:py-3 pl-9 sm:pl-12 pr-10 sm:pr-12 text-xs focus:bg-white/10 focus:border-[#C5A059] focus:ring-4 focus:ring-amber-500/5 transition-all outline-none shadow-inner font-medium text-white"
                     />
                     <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2">
-                        {isSearching ? <Loader2 size={12} className="animate-spin text-[#C5A059]" /> : <Sparkles size={12} className="text-[#C5A059] animate-pulse" />}
+                        {isSearching ? <Loader2 size={10} className="animate-spin text-[#C5A059]" /> : <Sparkles size={10} className="text-[#C5A059] animate-pulse" />}
                     </div>
                 </div>
 
                 {/* AI Search Result Dropdown */}
                 {searchResult && (
-                    <div className="absolute top-full left-0 right-0 mt-5 bg-white border border-stone-200 rounded-[2.5rem] shadow-2xl p-4 sm:p-10 animate-in slide-up z-50 border-t-8 border-t-[#6A2C91]">
-                        <div className="flex items-start gap-6">
+                    <div className="absolute top-full left-0 right-0 mt-5 bg-white border border-stone-200 rounded-[2.5rem] shadow-2xl p-3.5 sm:p-6 lg:p-12 animate-in slide-up z-50 border-t-8 border-t-[#6A2C91]">
+                        <div className="flex items-start gap-3 sm:gap-6">
                             <div className="p-4 bg-purple-50 rounded-3xl text-[#6A2C91] shadow-inner"><Sparkles size={28} /></div>
                             <div className="flex-1">
-                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6A2C91] mb-2 italic">Synaptic Analysis Result</p>
-                                <p className="text-lg text-gray-800 leading-relaxed font-semibold">{searchResult}</p>
+                                <p className="text-sm sm:text-base text-[10px] font-black uppercase tracking-[0.3em] text-[#6A2C91] mb-2 italic">Synaptic Analysis Result</p>
+                                <p className="text-sm sm:text-base leading-relaxed text-gray-800 leading-relaxed font-semibold">{searchResult}</p>
                             </div>
-                            <button onClick={() => setSearchResult(null)} className="text-gray-300 hover:text-red-500 p-2 transition-colors"><X size={20}/></button>
+                            <button onClick={() => setSearchResult(null)} className="text-white sm:text-gray-300 hover:text-red-500 p-2 transition-colors"><X size={20}/></button>
                         </div>
                     </div>
                 )}
             </form>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3 sm:gap-6">
                  {/* Contextual Actions Area */}
                  <div className="hidden lg:flex items-center gap-2 pr-6 border-r border-white/5">
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="p-2.5 rounded-xl bg-white/5 text-white/40 hover:text-[#C5A059] transition-colors"
+                      className="p-2.5 rounded-xl bg-white/5 text-white sm:text-white/40 hover:text-[#C5A059] transition-colors"
                     >
                       <Bell size={18} />
                     </motion.button>
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="p-2.5 rounded-xl bg-white/5 text-white/40 hover:text-[#C5A059] transition-colors"
+                      className="p-2.5 rounded-xl bg-white/5 text-white sm:text-white/40 hover:text-[#C5A059] transition-colors"
                     >
                       <RefreshCw size={18} />
                     </motion.button>
                  </div>
 
                  <div className="text-right hidden sm:block">
-                     <p className="text-xs font-black text-white uppercase tracking-tighter">{businessProfile.ownerName}</p>
-                     <p className="text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
+                     <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{businessProfile.ownerName}</p>
+                     <p className="text-sm sm:text-base text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
                        <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
                      </p>
                  </div>
-                 <div onClick={() => navigate('/settings/account')} className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
-                    <div className="w-full h-full rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
+                 <div onClick={() => navigate('/settings/account')} className="w-8 h-8 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-x-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)] group cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(197,160,89,0.6)] transition-all">
+                    <div className="w-full h-full rounded-[14px] overflow-x-hidden bg-black flex items-center justify-center">
                         {businessProfile.avatarUrl ? (
                             <img src={businessProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                         ) : (
@@ -306,7 +306,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
         </header>
 
         {businessProfile.status === 'Past Due' && location.pathname !== '/settings/subscription' && (
-            <div className="bg-red-900/90 border-b border-red-500/50 p-4 w-full flex flex-col md:flex-row items-center justify-between px-6 md:px-12 gap-4 z-20 shadow-md">
+            <div className="bg-red-900/90 border-b border-red-500/50 p-4 w-full flex flex-col sm:flex-col sm:flex-row items-center justify-between px-6 md:px-12 gap-3 sm:gap-4 z-20 shadow-md">
                 <div className="flex items-center gap-3 text-red-200">
                     <AlertTriangle size={20} className="text-red-400" />
                     <span className="font-sans font-medium text-sm">
@@ -322,16 +322,16 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
         )}
         
-        <div className="flex-1 p-4 sm:p-6 md:p-4 sm:p-12 max-w-7xl mx-auto relative z-10 w-full overflow-x-hidden">
+        <div className="flex-1 p-4 sm:p-8 md:p-12 max-w-7xl mx-auto relative z-10 w-full overflow-x-hidden">
           {children}
         </div>
         
-        <footer className="w-full py-6 mt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-[11px] uppercase tracking-widest text-white/60 font-bold bg-[#0A0A0A] z-20">
+        <footer className="w-full py-6 sm:py-12 lg:py-16 px-4 sm:px-8 mt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-sm sm:text-base text-white/60 bg-[#0A0A0A] z-20">
             <span>© 2026 LRC ArtisanFlow. All rights reserved.</span>
-            <div className="flex items-center gap-6">
-                <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>
+            <div className="flex items-center gap-3 sm:gap-4">
+                <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>
                 <span className="text-white/20">|</span>
-                <span className="hover:text-[#C5A059] cursor-pointer transition-colors" onClick={() => navigate('/privacy')}>Privacy Policy</span>
+                <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/privacy')}>Privacy Policy</span>
             </div>
         </footer>
       </main>

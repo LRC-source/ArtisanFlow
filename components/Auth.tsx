@@ -37,7 +37,19 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
       return;
     }
 
+    const ADMIN_EMAILS = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
+
     if (view === 'signup') {
+      if (ADMIN_EMAILS.includes(email.toLowerCase())) {
+        try {
+          await signUp({ email, name: 'Admin Hub', password: pass, tier: 'Margin Protection Pro', status: 'Active' });
+          return;
+        } catch (e: any) {
+          toast.error(e.message || "Failed to initialize Admin access.");
+          return;
+        }
+      }
+
       if (selectedTier === 'Free Audit') {
         try {
           await signUp({ email, password: pass, tier: 'Free Audit', status: 'Active' });
@@ -85,6 +97,17 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
       const user = await googleLogin();
       if (user) {
         if (isNewUser) {
+          const ADMIN_EMAILS = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
+          
+          if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+            try {
+              await signUp({ email: user.email, name: user.displayName || 'Admin Hub', password: '', tier: 'Margin Protection Pro', status: 'Active' });
+              return;
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
           if (selectedTier === 'Free Audit') {
             try {
               await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Audit', status: 'Active' });
@@ -148,7 +171,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="min-h-screen flex items-center justify-center bg-black p-6 relative overflow-hidden"
+          className="min-h-screen flex items-center justify-center bg-black p-4 sm:p-6 relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-black"></div>
 
@@ -159,7 +182,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
             className="w-full max-w-md z-10"
           >
             {onBack && (
-              <button onClick={onBack} className="absolute -top-4 sm:p-12 left-0 text-sm font-bold text-white/50 hover:text-white transition-colors">
+              <button onClick={onBack} className="absolute -top-4 sm:p-12 left-0 text-sm font-bold text-white sm:text-white/50 hover:text-white transition-colors">
                 &larr; Back to Platform
               </button>
             )}
@@ -171,7 +194,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                 className="relative mb-8"
               >
                  <div className="flex items-center justify-center cursor-pointer group">
-                     <span className="text-4xl sm:text-5xl tracking-tight flex items-center font-extrabold">
+                     <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl sm:text-5xl tracking-tight flex items-center font-extrabold">
                          <span className="text-white mr-3">LRC</span>
                          <span className="text-white">Artisan</span>
                          <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
@@ -193,8 +216,8 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
             >
-              <Card className="luxury-card p-4 sm:p-8 sm:p-4 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
-                <h2 className="text-lg font-serif text-white mb-8 flex items-center justify-center gap-3 text-center">
+              <Card className="luxury-card p-3.5 sm:p-6 lg:p-12 sm:p-4 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl leading-relaxed font-serif text-white mb-8 flex items-center justify-center gap-3 text-center">
                   {view === 'login' ? <Lock size={18} className="text-[#C5A059]"/> : <Mail size={18} className="text-[#C5A059]"/>}
                   {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
                 </h2>
@@ -202,14 +225,14 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Work Email</label>
-                    <Input type="email" placeholder="alex@artisanflow.ai" value={email} onChange={e => setEmail(e.target.value)} required className="h-12 bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input type="email" placeholder="alex@artisanflow.ai" value={email} onChange={e => setEmail(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Vault Key (Password)</label>
-                    <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="h-12 bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
-                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center h-12 font-black tracking-widest shadow-2xl">
+                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
                     ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
                 </form>
@@ -219,7 +242,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                   <div className="relative flex justify-center text-[10px] font-black uppercase bg-transparent px-4 text-white/20 tracking-[0.2em]">Secure Entry Point</div>
                 </div>
 
-                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center h-12 font-bold border-white/10 hover:bg-white/5 text-white">
+                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold border-white/10 hover:bg-white/5 text-white">
                   <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
                 </Button>
 
@@ -228,14 +251,14 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                     type="button"
                     variant="primary"
                     onClick={() => { setView(view === 'login' ? 'signup' : 'login'); setIsNewUser(view === 'login'); }}
-                    className="w-full md:w-full flex items-center justify-center h-12 font-bold bg-[#6A2C91] hover:bg-purple-800 border-none text-white transition-colors"
+                    className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold bg-[#6A2C91] hover:bg-purple-800 border-none text-white transition-colors"
                   >
                     {view === 'login' ? "Don't have an access key? Initialize here" : "Already Have An Account? Sign In Here"}
                   </Button>
                 </div>
               </Card>
 
-              <div className="mt-12 flex items-center justify-center gap-6 opacity-30">
+              <div className="mt-6 sm:mt-8 lg:mt-12 flex items-center justify-center gap-3 sm:gap-6 opacity-30">
                 <ShieldCheck size={24} className="text-white" />
                 <div className="h-4 w-px bg-white/20"></div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-white">End-to-End Encryption Active</span>
@@ -250,7 +273,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
 
 const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => {
   return (
-    <div className="min-h-screen bg-[#0A0A0A] p-6 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-[#0A0A0A] p-4 sm:p-6 flex flex-col items-center justify-center relative overflow-hidden">
       <div className="carbon-texture"></div>
       <div className="light-streak-top"></div>
       <div className="light-streak-bottom"></div>
@@ -268,8 +291,8 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-20"
         >
-           <h1 className="text-5xl font-serif text-white mb-6 tracking-tight">Select Your Architecture</h1>
-           <p className="text-white/50 text-lg font-sans max-w-2xl mx-auto font-light leading-relaxed">Every great system starts with a solid foundation. Choose the tier that aligns with your operational scale.</p>
+           <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Select Your Architecture</h1>
+           <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Every great system starts with a solid foundation. Choose the tier that aligns with your operational scale.</p>
         </motion.div>
 
         <motion.div 
@@ -278,7 +301,7 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           variants={{
             visible: { transition: { staggerChildren: 0.15 } }
           }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:p-8 lg:gap-4 sm:p-12"
+          className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 lg:gap-4 sm:p-12"
         >
            <TierCard 
              title="Free Audit" 
@@ -319,28 +342,28 @@ const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSele
     }}
     className="h-full"
   >
-    <Card className={`luxury-card relative flex flex-col h-full p-10 bg-black/40 backdrop-blur-3xl border-white/5 ${isPopular ? 'ring-1 ring-[#C5A059]/30' : ''}`}>
+    <Card className={`luxury-card relative flex flex-col h-full p-4 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5 ${isPopular ? 'ring-1 ring-[#C5A059]/30' : ''}`}>
       {isPopular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C5A059] text-white text-[9px] font-sans uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-sm">
           Recommended
         </div>
       )}
       <div className="mb-10">
-        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-white/5 text-white border border-white/10`}>
+        <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center mb-6 bg-white/5 text-white border border-white/10`}>
           <Icon size={24} strokeWidth={1.5} />
         </div>
-        <h3 className="text-2xl font-serif text-white tracking-tight mb-2">{title}</h3>
+        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{title}</h3>
         <div className="flex items-baseline mt-4">
-          <span className="text-4xl font-serif text-white">{price}</span>
+          <span className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{price}</span>
           <span className="text-white/30 text-xs font-sans tracking-widest uppercase ml-2">/month</span>
         </div>
       </div>
 
       <div className="space-y-5 mb-12 flex-1">
         {features.map((f: string) => (
-          <div key={f} className="flex items-start gap-4">
+          <div key={f} className="flex items-start gap-3 sm:gap-4">
             <CheckCircle size={18} className="text-[#C5A059] shrink-0 mt-0.5" strokeWidth={1.5} />
-            <span className="text-sm font-sans text-white/60 leading-relaxed">{f}</span>
+            <span className="text-sm font-sans text-white sm:text-white/60 leading-relaxed">{f}</span>
           </div>
         ))}
       </div>
@@ -348,7 +371,7 @@ const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSele
       <Button 
         variant={isPopular ? 'premium' : 'outline'} 
         onClick={onSelect}
-        className={`w-full h-14 font-sans text-[11px] font-medium tracking-[0.2em] uppercase transition-all duration-300 ${isPopular ? 'shadow-2xl' : 'border-white/10 text-white hover:bg-white/5'}`}
+        className={`w-full w-auto mx-auto py-1 px-3 text-[10px] font-sans text-[11px] font-medium tracking-[0.2em] uppercase transition-all duration-300 ${isPopular ? 'shadow-2xl' : 'border-white/10 text-white hover:bg-white/5'}`}
       >
         Initialize {title}
       </Button>
@@ -403,9 +426,9 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-[#0A0A0A]">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 relative overflow-hidden bg-[#0A0A0A]">
       <div className="carbon-texture"></div>
-      <button onClick={onBack} className="absolute top-4 sm:p-10 left-10 text-sm font-bold text-white/50 hover:text-white transition-colors z-20">
+      <button onClick={onBack} className="absolute top-4 sm:p-6 lg:p-8 left-10 text-sm font-bold text-white sm:text-white/50 hover:text-white transition-colors z-20">
         &larr; Back to Account Creation
       </button>
 
@@ -415,18 +438,18 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         className="w-full max-w-2xl z-10"
       >
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-serif text-white tracking-tight mb-3">Secure Checkout</h2>
-          <p className="text-white/50 font-sans text-sm tracking-widest uppercase">Initializing {tier} Architecture</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Secure Checkout</h2>
+          <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans tracking-widest uppercase">Initializing {tier} Architecture</p>
           <div className="mt-4 inline-block px-6 py-2 rounded-full border border-[#C5A059]/30 bg-[#C5A059]/10">
-            <span className="text-xl font-serif text-[#C5A059]">Total: ${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} / mo</span>
+            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-serif text-[#C5A059]">Total: ${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} / mo</span>
           </div>
         </div>
 
-        <Card className="luxury-card p-4 sm:p-8 sm:p-4 sm:p-10 bg-black/60 backdrop-blur-3xl border-white/10 shadow-2xl">
+        <Card className="luxury-card p-3.5 sm:p-6 lg:p-12 sm:p-4 sm:p-10 bg-black/60 backdrop-blur-3xl border-white/10 shadow-2xl">
           <div className="space-y-8">
             {/* Billing Details */}
             <div className="space-y-4">
-              <h3 className="text-white font-serif text-lg mb-4 border-b border-white/10 pb-2">Billing Details</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2">Billing Details</h3>
               <div className="space-y-2">
                 <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Full Name</label>
                 <Input type="text" placeholder="Alex Morgan" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="bg-white/5 border-white/10 text-white" />
@@ -435,7 +458,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
                 <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Street Address</label>
                 <Input type="text" placeholder="123 Artisan Way" required value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="bg-white/5 border-white/10 text-white" />
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="col-span-1 space-y-2">
                   <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">City</label>
                   <Input type="text" placeholder="New York" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} className="bg-white/5 border-white/10 text-white" />
@@ -453,7 +476,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
 
             {/* Payment Info */}
             <div className="space-y-4 pt-4">
-              <h3 className="text-white font-serif text-lg mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
                 <CreditCard size={18} className="text-[#C5A059]" /> Payment Information
               </h3>
               

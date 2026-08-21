@@ -25,7 +25,7 @@ export const SupplierCommunication = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 animate-in fade-in pb-20">
+    <div className="p-4 sm:p-6 space-y-6 animate-in fade-in pb-8 sm:pb-12 lg:pb-20">
       <Modal isOpen={showAdd} onClose={() => setShowAdd(false)} title="Log Communication">
           <div className="space-y-4">
               <div>
@@ -39,7 +39,7 @@ export const SupplierCommunication = () => {
                    <label className="text-xs text-gray-500">Subject</label>
                    <Input value={newComm.subject} onChange={e => setNewComm({...newComm, subject: e.target.value})} placeholder="e.g. Order #1234 Follow Up" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                       <label className="text-xs text-gray-500">Type</label>
                        <Select value={newComm.type} onChange={e => setNewComm({...newComm, type: e.target.value as any})}>
@@ -62,13 +62,13 @@ export const SupplierCommunication = () => {
           </div>
       </Modal>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
             <div className="flex items-center gap-3">
-                <h1 className="text-3xl font-bold text-white">Supplier Communication</h1>
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-bold text-white">Supplier Communication</h1>
                 <Badge color="gold">Beta</Badge>
             </div>
-            <p className="text-gray-500">Manage all supplier interactions and correspondence</p>
+            <p className="text-sm sm:text-base text-gray-500">Manage all supplier interactions and correspondence</p>
         </div>
         <Button className="bg-[#6A2C91] text-white" onClick={() => setShowAdd(true)}>
             <MessageSquare size={16} className="mr-2" /> New Communication
@@ -88,24 +88,24 @@ export const SupplierCommunication = () => {
       </div>
 
       {supplierCommunications.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[400px]">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                  <MessageSquare size={32} className="text-gray-400" />
+          <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <MessageSquare size={32} className="text-white sm:text-gray-400" />
               </div>
-              <h3 className="text-white font-bold font-medium mb-1">No communications found</h3>
-              <p className="text-gray-400 text-sm">Start a new thread to track supplier conversations</p>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-bold font-medium mb-1">No communications found</h3>
+              <p className="text-sm sm:text-base text-white sm:text-gray-400">Start a new thread to track supplier conversations</p>
           </div>
       ) : (
           <div className="space-y-4">
               {supplierCommunications.map(comm => (
-                  <div key={comm.id} className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center">
-                      <div className="flex items-center gap-4">
+                  <div key={comm.id} className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
+                      <div className="flex items-center gap-3 sm:gap-4">
                           <div className={`p-3 rounded-full ${comm.type === 'Email' ? 'bg-blue-100 text-blue-600' : comm.type === 'Phone' ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'}`}>
                               {comm.type === 'Email' ? <Mail size={20}/> : comm.type === 'Phone' ? <Phone size={20}/> : <Globe size={20}/>}
                           </div>
                           <div>
                               <h4 className="font-bold text-white">{comm.subject}</h4>
-                              <p className="text-sm text-gray-500">{comm.supplierName} • {comm.date}</p>
+                              <p className="text-sm sm:text-base text-gray-500">{comm.supplierName} • {comm.date}</p>
                           </div>
                       </div>
                       <Badge color={comm.status === 'Resolved' ? 'green' : comm.status === 'Pending' ? 'gold' : 'blue'}>

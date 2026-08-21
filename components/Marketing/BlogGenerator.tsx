@@ -104,7 +104,7 @@ export const BlogGenerator = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-12 sm:pb-20 lg:pb-32 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
@@ -115,25 +115,25 @@ export const BlogGenerator = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                 {/* Configuration Panel */}
                 <div className="lg:col-span-5 space-y-6">
-                    <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
                         <div className="space-y-8">
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <FileText size={14} className="mr-2 text-emerald-500" /> Article Topic
                                 </label>
                                 <Input 
                                     value={topic} 
                                     onChange={(e) => setTopic(e.target.value)} 
                                     placeholder="e.g., The Art of Sustainable Sourcing..."
-                                    className="h-14 rounded-2xl bg-white/5 border-white/10 text-white"
+                                    className="w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl bg-white/5 border-white/10 text-white"
                                 />
                             </div>
                             
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Search size={14} className="mr-2 text-[#C5A059]" /> Target SEO Keywords
                                 </label>
                                 <div className="bg-white/5 border border-white/10 rounded-2xl p-2 min-h-[56px] flex flex-wrap gap-2 items-center focus-within:border-[#C5A059]">
@@ -153,7 +153,7 @@ export const BlogGenerator = () => {
                                 </div>
                             </div>
 
-                            <Button onClick={generateOutline} disabled={isGenerating || !!generatedBlog} className="w-full bg-gradient-to-r from-[#111] to-[#222] border border-white/10 text-white h-14 rounded-2xl shadow-lg">
+                            <Button onClick={generateOutline} disabled={isGenerating || !!generatedBlog} className="w-full bg-gradient-to-r from-[#111] to-[#222] border border-white/10 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg">
                                 {isGenerating && !generatedBlog ? <Loader2 className="animate-spin mr-2" /> : <ListTree className="mr-2" />}
                                 {isGenerating && !generatedBlog ? "Analyzing SERP..." : "1. Generate Structure Outline"}
                             </Button>
@@ -164,22 +164,22 @@ export const BlogGenerator = () => {
                     <AnimatePresence>
                         {outline.length > 0 && !generatedBlog && (
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                                <Card className="p-6 bg-[#0A0A0A] border-white/10" title="Proposed Structure">
+                                <Card className="p-4 sm:p-6 bg-[#0A0A0A] border-white/10" title="Proposed Structure">
                                     <div className="space-y-4 mt-6">
                                         {outline.map((node, i) => (
                                             <div key={i} className={`flex items-start gap-3 ${node.type === 'H1' ? 'ml-0' : node.type === 'H2' ? 'ml-6' : 'ml-12'}`}>
                                                 <Badge color={node.type === 'H1' ? 'purple' : 'gray'}>{node.type}</Badge>
                                                 <div>
-                                                    <p className={`text-white font-serif ${node.type === 'H1' ? 'text-lg font-bold' : 'text-md'}`}>{node.title}</p>
+                                                    <p className={`text-white font-serif ${node.type === 'H1' ? 'text-sm sm:text-base leading-relaxed font-bold' : 'text-md'}`}>{node.title}</p>
                                                     {node.keywords && node.keywords.length > 0 && (
-                                                        <p className="text-xs text-emerald-500/70 font-mono mt-1 flex gap-2">
+                                                        <p className="text-sm sm:text-base text-emerald-500/70 font-mono mt-1 flex gap-2">
                                                             {node.keywords.map((k: string) => <span key={k}>#{k}</span>)}
                                                         </p>
                                                     )}
                                                 </div>
                                             </div>
                                         ))}
-                                        <Button onClick={generateFullArticle} disabled={isGenerating} className="w-full mt-6 bg-[#6A2C91] hover:bg-[#5a257a] text-white h-14 rounded-2xl shadow-lg border-none">
+                                        <Button onClick={generateFullArticle} disabled={isGenerating} className="w-full mt-6 bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
                                             {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Sparkles className="mr-2" />}
                                             2. Synthesize Full Article
                                         </Button>
@@ -195,16 +195,16 @@ export const BlogGenerator = () => {
                     <Card className="h-full flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative">
                         {generatedBlog ? (
                             <div className="flex flex-col h-full">
-                                <div className="h-14 bg-[#111] border-b border-white/10 flex items-center px-6 justify-between shrink-0">
-                                    <h3 className="text-white/80 font-serif flex items-center gap-2">
+                                <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-6 justify-between shrink-0">
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2">
                                         <FileText size={18} className="text-emerald-500" /> Article Editor
                                     </h3>
                                     <Badge color="green"><CheckCircle size={12} className="mr-1 inline"/> SEO Optimized</Badge>
                                 </div>
                                 
-                                <div className="flex-1 overflow-y-auto p-8 bg-black/40 space-y-6">
+                                <div className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 bg-black/40 space-y-6">
                                     {featuredImage && (
-                                        <div className="relative w-full h-64 rounded-2xl overflow-hidden group">
+                                        <div className="relative w-full h-[180px] sm:h-64 rounded-2xl overflow-hidden group">
                                             <img src={featuredImage} alt="Featured" className="w-full h-full object-cover" />
                                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
                                                 <Button variant="outline" className="border-white text-white bg-black/50 hover:bg-black/80">
@@ -216,12 +216,12 @@ export const BlogGenerator = () => {
                                     <textarea 
                                         value={generatedBlog}
                                         onChange={(e) => setGeneratedBlog(e.target.value)}
-                                        className="w-full min-h-[800px] bg-transparent border-none text-gray-300 font-sans text-base resize-none focus:outline-none leading-relaxed"
+                                        className="w-full min-h-[800px] bg-transparent border-none text-white sm:text-gray-300 font-sans text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed resize-none focus:outline-none leading-relaxed"
                                     />
                                 </div>
 
-                                <div className="p-6 bg-[#111] border-t border-white/10 flex justify-end gap-4 shrink-0">
-                                    <Button onClick={handleSave} className="h-12 px-8 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-xl font-sans font-medium uppercase tracking-widest text-xs">
+                                <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex justify-end gap-3 sm:gap-4 shrink-0">
+                                    <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-8 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-xl font-sans font-medium uppercase tracking-widest text-xs">
                                         Approve & Schedule
                                     </Button>
                                 </div>
@@ -229,7 +229,7 @@ export const BlogGenerator = () => {
                         ) : (
                             <div className="h-full flex flex-col items-center justify-center opacity-30">
                                 <FileText size={64} className="mx-auto mb-4 text-white" />
-                                <p className="text-white font-serif text-lg">Awaiting SEO Parameters</p>
+                                <p className="text-sm sm:text-base text-white font-serif leading-relaxed">Awaiting SEO Parameters</p>
                             </div>
                         )}
                     </Card>

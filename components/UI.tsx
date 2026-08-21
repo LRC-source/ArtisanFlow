@@ -92,7 +92,7 @@ export const LockedNode: React.FC<{ children: React.ReactNode; isLocked?: boolea
     }
   };
 
-  if (gate.isTierLoading) return <div className="flex items-center justify-center p-20"><Loader2 className="animate-spin text-[#C5A059]" size={32} /></div>;
+  if (gate.isTierLoading) return <div className="flex items-center justify-center p-6 sm:p-20"><Loader2 className="animate-spin text-[#C5A059]" size={32} /></div>;
   if (!effectiveIsLocked) return <>{children}</>;
 
   return (
@@ -123,7 +123,7 @@ export const VaultBanner: React.FC<{
 }> = ({ title, subtitle, badge = "Secure Vault Access", children, className = "" }) => {
   return (
     <div 
-      className={`relative w-full overflow-hidden py-20 px-12 md:px-20 rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(106,44,145,0.2)] ${className}`}
+      className={`relative w-full overflow-hidden py-8 sm:py-20 px-12 md:px-20 rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(106,44,145,0.2)] ${className}`}
     >
       {/* Ombre Brand Background */}
       <div className="absolute inset-0 bg-[#0A0A0A]"></div>
@@ -142,7 +142,7 @@ export const VaultBanner: React.FC<{
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="flex items-center gap-4 mb-8 px-6 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full"
+          className="flex items-center gap-3 sm:gap-4 mb-8 px-6 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full"
         >
            <ShieldCheck size={20} className="text-[#C5A059]" />
            <span className="text-[12px] font-sans uppercase tracking-[0.4em] text-[#C5A059] font-bold">{badge}</span>
@@ -158,7 +158,7 @@ export const VaultBanner: React.FC<{
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-white/70 text-lg md:text-xl font-sans font-light mb-12 max-w-3xl leading-relaxed italic"
+          className="text-white/70 text-lg md:text-xl font-sans font-light mb-12 w-full max-w-3xl leading-relaxed italic"
         >
           {subtitle}
         </motion.p>
@@ -177,7 +177,7 @@ export const VaultBanner: React.FC<{
 
       {/* Static Decorative Elements */}
       <div className="absolute top-4 sm:p-10 left-20 w-32 h-32 border border-[#C5A059]/10 rounded-2xl rotate-12"></div>
-      <div className="absolute bottom-10 right-20 w-48 h-48 border border-[#6A2C91]/10 rounded-full"></div>
+      <div className="absolute bottom-10 right-20 w-full sm:w-48 h-48 border border-[#6A2C91]/10 rounded-full"></div>
     </div>
   );
 };
@@ -218,7 +218,7 @@ export const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (pro
 export const Select: React.FC<React.SelectHTMLAttributes<HTMLSelectElement>> = (props) => (
   <select 
     {...props}
-    className={`bg-white/5 border border-white/10 text-white p-4 rounded-2xl w-full focus:outline-none focus:bg-white/10 focus:ring-1 focus:ring-[#6A2C91]/40 focus:shadow-[0_8px_30px_rgba(0,0,0,0.2)] transition-all duration-500 font-medium text-sm appearance-none ${props.className}`} 
+    className={`w-full h-10 sm:h-11 px-3.5 text-base sm:text-sm rounded-xl border bg-[#0A0A0A] border-white/10 text-white focus:ring-2 focus:ring-[#C5A059] transition-all outline-none appearance-none ${props.className}`} 
   >
     {props.children}
   </select>
@@ -228,7 +228,7 @@ export const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: stri
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-xl z-50 flex items-center justify-center p-6 animate-in fade-in duration-500">
-      <div className="luxury-card bg-[#0A0A0A] border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden relative animate-in zoom-in-95 slide-up-5 duration-700">
+      <div className="fixed inset-x-0 bottom-0 sm:inset-auto sm:relative w-full max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 bg-[#140d24]/95 backdrop-blur-xl border-t border-white/10 rounded-t-2xl sm:rounded-[2.5rem] shadow-2xl z-50 animate-in zoom-in-95 slide-up-5 duration-700">
         <div className="flex justify-between items-center p-4 sm:p-10 pb-6">
           <h3 className="font-serif text-3xl text-white tracking-tight">{title}</h3>
           <button 
@@ -312,7 +312,7 @@ export const FileUploader: React.FC<{
                 accept={acceptedFormats}
             />
             
-            <div className="flex flex-col items-center gap-4 cursor-pointer" onClick={() => inputRef.current?.click()}>
+            <div className="flex flex-col items-center gap-3 sm:gap-4 cursor-pointer" onClick={() => inputRef.current?.click()}>
                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${dragActive ? 'bg-[#6A2C91] text-white shadow-lg shadow-purple-500/20 scale-110' : 'bg-white/10 text-white/30 shadow-sm group-hover:scale-105'}`}>
                     <Upload size={28} strokeWidth={1.5} />
                 </div>
@@ -331,7 +331,7 @@ export const FileUploader: React.FC<{
             <div className="mt-6 space-y-3">
                 {files.map((file, idx) => (
                     <div key={idx} className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.1)] animate-in slide-up duration-500">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-3 sm:gap-4">
                             <div className="p-3 bg-white/5 rounded-xl text-[#6A2C91]">
                                 <FileText size={20} strokeWidth={1.5} />
                             </div>

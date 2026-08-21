@@ -19,12 +19,12 @@ const mockChartData = [
 
 const ProgressBar = ({ label, icon: Icon, percentage, color }: any) => (
   <div className="space-y-2">
-    <div className="flex justify-between items-center text-sm">
+    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center text-sm">
       <div className="flex items-center gap-2 text-white/80">
         <Icon size={14} className={color} />
         <span className="font-sans">{label}</span>
       </div>
-      <span className="text-white/50 font-mono">{percentage}%</span>
+      <span className="text-white sm:text-white/50 font-mono">{percentage}%</span>
     </div>
     <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
       <div className={`h-full ${color.replace('text-', 'bg-')} transition-all duration-1000`} style={{ width: `${percentage}%` }} />
@@ -41,7 +41,7 @@ export const VisualAnalysisNode = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-12 sm:pb-20 lg:pb-32 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
@@ -52,36 +52,36 @@ export const VisualAnalysisNode = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
-                    <div className="flex items-center justify-between mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
+                <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
                         <Badge color="gold">Campaign Reach</Badge>
                         <TrendingUp size={16} className="text-[#C5A059]" />
                     </div>
-                    <div className="text-4xl font-serif text-white mb-2">124.5K</div>
-                    <div className="text-xs text-white/50 uppercase tracking-widest">+14% vs last week</div>
+                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">124.5K</div>
+                    <div className="text-xs text-white sm:text-white/50 uppercase tracking-widest">+14% vs last week</div>
                 </Card>
-                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
-                    <div className="flex items-center justify-between mb-4">
+                <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
                         <Badge color="purple">Avg. Engagement</Badge>
                         <Activity size={16} className="text-purple-500" />
                     </div>
-                    <div className="text-4xl font-serif text-white mb-2">8.2%</div>
-                    <div className="text-xs text-white/50 uppercase tracking-widest">+2.1% across channels</div>
+                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">8.2%</div>
+                    <div className="text-xs text-white sm:text-white/50 uppercase tracking-widest">+2.1% across channels</div>
                 </Card>
-                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
-                    <div className="flex items-center justify-between mb-4">
+                <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
                         <Badge color="green">Revenue Attribution</Badge>
                         <DollarSign size={16} className="text-emerald-500" />
                     </div>
-                    <div className="text-4xl font-serif text-white mb-2">$18,450</div>
-                    <div className="text-xs text-white/50 uppercase tracking-widest">From trackable social links</div>
+                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">$18,450</div>
+                    <div className="text-xs text-white sm:text-white/50 uppercase tracking-widest">From trackable social links</div>
                 </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2 p-8 bg-black/40 border-white/5 backdrop-blur-xl" title="Correlation Matrix: Sales vs Inventory Burn vs Campaign Reach">
-                    <div className="h-80 w-full mt-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6">
+                <Card className="lg:col-span-2 p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl" title="Correlation Matrix: Sales vs Inventory Burn vs Campaign Reach">
+                    <div className="h-[200px] sm:h-80 w-full mt-8">
                         <ResponsiveContainer width="100%" height="100%">
                             <ComposedChart data={mockChartData}>
                                 <defs>
@@ -106,7 +106,7 @@ export const VisualAnalysisNode = () => {
                     </div>
                 </Card>
 
-                <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl" title="Channel Conversion Breakdown">
+                <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl" title="Channel Conversion Breakdown">
                     <div className="mt-8 space-y-8">
                         <ProgressBar label="Instagram Feed & Reels" icon={Instagram} percentage={45} color="text-pink-500" />
                         <ProgressBar label="TikTok Campaigns" icon={Film} percentage={35} color="text-white" />
@@ -114,12 +114,12 @@ export const VisualAnalysisNode = () => {
                         <ProgressBar label="Email Newsletters" icon={BarChart3} percentage={5} color="text-[#C5A059]" />
                     </div>
                     
-                    <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10">
+                    <div className="mt-6 sm:mt-8 lg:mt-12 p-4 sm:p-6 rounded-2xl bg-white/5 border border-white/10">
                         <div className="flex items-center gap-3 mb-4">
                             <Eye className="text-[#C5A059]" size={20} />
                             <h4 className="text-white font-serif tracking-tight">AI Insight</h4>
                         </div>
-                        <p className="text-sm font-sans font-light text-white/70 leading-relaxed">
+                        <p className="text-sm sm:text-base font-sans font-light text-white sm:text-white/70 leading-relaxed">
                             Your recent TikTok campaign caused a 40% spike in inventory burn rate for "Rosehip Oil". Consider throttling ad spend to prevent stockout before the weekend.
                         </p>
                     </div>

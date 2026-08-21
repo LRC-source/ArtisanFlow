@@ -58,7 +58,7 @@ export const FinanceHub: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="space-y-12 pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
+          className="space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 p-4 sm:p-8 lg:p-10 max-w-7xl mx-auto"
         >
             <ContextualTutorialModal
                 hubId="finance"
@@ -72,22 +72,22 @@ export const FinanceHub: React.FC = () => {
                 title={`Initialize ${reportModal.type} Generation`}
             >
                 <div className="space-y-8 py-4">
-                    <div className="bg-[#6A2C91]/10 border border-[#6A2C91]/20 p-6 rounded-3xl flex items-start gap-4">
+                    <div className="bg-[#6A2C91]/10 border border-[#6A2C91]/20 p-4 sm:p-6 rounded-3xl flex items-start gap-3 sm:gap-4">
                         <Sparkles className="text-[#6A2C91] shrink-0 mt-1" size={20} />
-                        <p className="text-white/70 text-sm font-sans font-light leading-relaxed italic">
+                        <p className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/70 w-full w-full max-w-3xl italic mb-8">
                             Our AI is cross-referencing your <span className="text-white font-bold not-italic">Inventory Burn Rates</span> with <span className="text-white font-bold not-italic">Order Velocity</span> to construct a high-fidelity {reportModal.type}.
                         </p>
                     </div>
                     <div className="space-y-4">
-                        <p className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] ml-2">Report Parameters</p>
-                        <Select defaultValue="Full Fiscal Year" className="bg-black/40 text-white border-white/10 h-14 rounded-2xl">
+                        <p className="text-sm sm:text-base text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] ml-2">Report Parameters</p>
+                        <Select defaultValue="Full Fiscal Year" className="bg-black/40 text-white border-white/10 w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl">
                             <option value="Current Quarter" className="bg-[#1A1A1A]">Current Quarter</option>
                             <option value="Full Fiscal Year" className="bg-[#1A1A1A]">Full Fiscal Year</option>
                             <option value="Comparative" className="bg-[#1A1A1A]">Comparative (Last 2 Years)</option>
                         </Select>
                     </div>
                     <Button 
-                        className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white h-16 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all"
+                        className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all"
                         onClick={() => {
                             setIsGenerating(true);
                             setReportModal({ isOpen: false, type: '' });
@@ -104,13 +104,13 @@ export const FinanceHub: React.FC = () => {
             {isGenerating && (
                 <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[100] flex flex-col items-center justify-center">
                     <Loader2 className="animate-spin text-[#6A2C91] mb-8" size={64} strokeWidth={1} />
-                    <h2 className="text-4xl font-serif text-white tracking-tight uppercase italic mb-4">Synthesizing Ledger...</h2>
-                    <p className="text-white/50 text-lg font-sans font-light">Lola is reconciling omnichannel transactions.</p>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Synthesizing Ledger...</h2>
+                    <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Lola is reconciling omnichannel transactions.</p>
                 </div>
             )}
 
-            <div className="flex flex-col gap-4 sm:p-8">
-                <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
+            <div className="flex flex-col gap-3 sm:gap-6">
+                <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-white sm:text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
                     <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Command Center
                 </button>
                 
@@ -119,9 +119,9 @@ export const FinanceHub: React.FC = () => {
                   subtitle="Vault Ledger & High-Precision Financial Architecture. Reconciling craftsmanship with capital growth."
                   badge="Financial Protocol Active"
                 >
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                     <Button 
-                        className="bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.3em] h-16 px-10 rounded-full shadow-2xl shadow-black/10 transition-all uppercase"
+                        className="bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.3em] py-3 px-6 rounded-full shadow-2xl shadow-black/10 transition-all uppercase"
                         onClick={() => navigate('/finance/projections')}
                     >
                         <TrendingUp size={16} className="mr-3"/> GENERATE 5-YEAR PROJECTION
@@ -131,22 +131,22 @@ export const FinanceHub: React.FC = () => {
             </div>
 
             {/* Financial Stat Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:p-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6 sm:p-8">
                 <FinanceCard title="Gross Revenue" value={`$${revenue.toFixed(2)}`} trend="+12.4%" positive icon={DollarSign} color="cyan" />
                 <FinanceCard title="COGS (Interconnected)" value={`$${estimatedCOGS.toFixed(2)}`} trend="-2.1%" positive icon={Package} color="magenta" />
                 <FinanceCard title="Net Profit" value={`$${grossProfit.toFixed(2)}`} trend="+8.5%" positive icon={TrendingUp} color="emerald" />
                 <FinanceCard title="Avg. Margin" value={`${margin.toFixed(1)}%`} trend="Stable" positive icon={Target} color="gold" />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 sm:p-12">
                 {/* Main Cash Flow Visualizer */}
-                <div className="lg:col-span-2 space-y-12">
+                <div className="lg:col-span-2 space-y-6 sm:space-y-10 lg:space-y-12">
                     <div className="p-[1.5px] rounded-[3.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.2)]">
                         <div className="luxury-card bg-[#0A0A0A] p-4 sm:p-12 rounded-[3.5rem] relative overflow-hidden">
                             <div className="mb-10 relative z-10">
-                                <h3 className="text-3xl font-serif text-white tracking-tight">Interconnected Flow Ledger</h3>
+                                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Interconnected Flow Ledger</h3>
                             </div>
-                            <div className="h-96 w-full relative z-10">
+                            <div className="h-[250px] sm:h-96 w-full relative z-10">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <AreaChart data={[
                                         { month: 'Jul', rev: 4500, exp: 2800 },
@@ -179,35 +179,35 @@ export const FinanceHub: React.FC = () => {
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>
-                            <div className="flex gap-4 sm:p-8 mt-10 justify-center relative z-10">
-                                <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#06B6D4] rounded-full shadow-[0_0_10px_#06B6D4]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Omnichannel Revenue</span></div>
-                                <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#C5A059] rounded-full shadow-[0_0_10px_#C5A059]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white/40">Operational Expenses</span></div>
+                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto sm:p-8 mt-10 justify-center relative z-10">
+                                <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#06B6D4] rounded-full shadow-[0_0_10px_#06B6D4]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white sm:text-white/40">Omnichannel Revenue</span></div>
+                                <div className="flex items-center gap-3"><div className="w-3 h-3 bg-[#C5A059] rounded-full shadow-[0_0_10px_#C5A059]"></div> <span className="text-[11px] font-bold font-sans uppercase tracking-[0.3em] text-white sm:text-white/40">Operational Expenses</span></div>
                             </div>
                         </div>
                     </div>
 
                     {/* AI Budget Guard */}
                     <div className="luxury-card bg-[#1A1A1A] border border-[#C5A059]/20 p-4 sm:p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(197,160,89,0.05)] relative overflow-hidden group">
-                         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#C5A059]/10 to-transparent rounded-bl-full opacity-50 -mr-20 -mt-20 pointer-events-none"></div>
+                         <div className="absolute top-0 right-0 w-full sm:w-96 h-[250px] sm:h-96 bg-gradient-to-br from-[#C5A059]/10 to-transparent rounded-bl-full opacity-50 -mr-20 -mt-8 sm:mt-12 lg:mt-20 pointer-events-none"></div>
                          
-                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
+                         <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6 mb-12 relative z-10">
                              <div>
-                                 <h4 className="text-3xl font-serif text-[#C5A059] tracking-tight flex items-center gap-4">
+                                 <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-[#C5A059] tracking-tight flex items-center gap-3 sm:gap-4">
                                      <Wallet size={28} /> Budget Guard™ Active
                                  </h4>
-                                 <p className="text-white/50 font-sans font-light text-lg mt-2">Auto-allocating resources based on high-margin trajectories.</p>
+                                 <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Auto-allocating resources based on high-margin trajectories.</p>
                              </div>
                              <Button 
                                 onClick={runBudgetOptimizer}
                                 disabled={isBudgeting}
-                                className="bg-[#C5A059] hover:bg-[#b08e4d] text-white border-none h-14 rounded-full px-8 font-bold font-sans uppercase text-[11px] tracking-[0.3em] shadow-xl shadow-[#C5A059]/20 transition-all"
+                                className="bg-[#C5A059] hover:bg-[#b08e4d] text-white border-none w-auto mx-auto py-1 px-3 text-[10px] rounded-full px-8 font-bold font-sans uppercase text-[11px] tracking-[0.3em] shadow-xl shadow-[#C5A059]/20 transition-all"
                              >
                                 {isBudgeting ? <Loader2 className="animate-spin mx-auto" /> : 'RECALCULATE ALLOCATION'}
                              </Button>
                          </div>
 
                          {budgetResult ? (
-                             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 relative z-10 animate-in slide-up">
+                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 relative z-10 animate-in slide-up">
                                  <div className="h-72 relative">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <RePieChart>
@@ -232,24 +232,24 @@ export const FinanceHub: React.FC = () => {
                                         </RePieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                        <p className="text-[11px] font-bold font-sans uppercase text-white/40 tracking-[0.3em]">Runway</p>
-                                        <p className="text-4xl font-serif text-white tracking-tighter mt-1">{budgetResult.runwayMonths}mo</p>
+                                        <p className="text-sm sm:text-base text-[11px] font-bold font-sans uppercase text-white sm:text-white/40 tracking-[0.3em]">Runway</p>
+                                        <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{budgetResult.runwayMonths}mo</p>
                                     </div>
                                  </div>
                                  <div className="space-y-6 flex flex-col justify-center">
                                      <h5 className="text-[11px] font-bold font-sans text-[#C5A059] uppercase tracking-[0.3em] border-b border-[#C5A059]/20 pb-4">Optimization Protocol</h5>
                                      {budgetResult.optimizationTips.map((tip: string, i: number) => (
-                                         <div key={i} className="flex gap-4 items-start group">
+                                         <div key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto items-start group">
                                              <div className="p-1.5 bg-[#C5A059]/20 rounded-lg text-[#C5A059] mt-0.5"><CheckCircle size={14} /></div>
-                                             <p className="text-sm text-white/60 font-sans font-light leading-relaxed group-hover:text-white transition-colors">{tip}</p>
+                                             <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed group-hover:text-white transition-colors">{tip}</p>
                                          </div>
                                      ))}
                                  </div>
                              </div>
                          ) : (
-                             <div className="py-24 text-center border border-dashed border-white/10 rounded-[2rem] bg-white/5 relative z-10">
+                             <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center border border-dashed border-white/10 rounded-[2rem] bg-white/5 relative z-10">
                                  <GanttChartSquare size={48} className="text-white/10 mx-auto mb-6" strokeWidth={1} />
-                                 <p className="text-white/30 text-[11px] font-sans font-bold uppercase tracking-[0.3em]">Awaiting Command Initialization</p>
+                                 <p className="text-sm sm:text-base text-white/30 text-[11px] font-sans font-bold uppercase tracking-[0.3em]">Awaiting Command Initialization</p>
                              </div>
                          )}
                     </div>
@@ -259,8 +259,8 @@ export const FinanceHub: React.FC = () => {
                 <div className="lg:col-span-1 space-y-8">
                     <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-10">
                         <div className="mb-8">
-                            <h3 className="text-3xl font-serif text-white tracking-tight mb-4">Synaptic Reports</h3>
-                            <p className="text-white/50 text-sm font-sans font-light italic leading-relaxed">
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Synaptic Reports</h3>
+                            <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">
                                 Generate legally-compliant financial dossiers architected from your real-time database.
                             </p>
                         </div>
@@ -271,16 +271,16 @@ export const FinanceHub: React.FC = () => {
                             <ReportButton label="Inventory Valuation Tax Log" icon={ShieldCheck} onClick={() => handleGenerateReport('Tax Log')} />
                         </div>
                         <div className="mt-10 pt-8 border-t border-white/10">
-                            <div className="bg-black/40 p-6 rounded-3xl border border-white/5">
-                                <h4 className="text-[11px] font-sans font-bold uppercase text-white/40 tracking-[0.3em] mb-4 flex items-center gap-3">
+                            <div className="bg-black/40 p-4 sm:p-6 rounded-3xl border border-white/5">
+                                <h4 className="text-[11px] font-sans font-bold uppercase text-white sm:text-white/40 tracking-[0.3em] mb-4 flex items-center gap-3">
                                     <ShieldCheck className="text-emerald-500" size={16} /> Audit Trail Status
                                 </h4>
-                                <div className="flex items-center justify-between">
+                                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
                                     <div>
-                                        <p className="text-lg font-serif text-white tracking-tight">Systems Synchronized</p>
-                                        <p className="text-[10px] text-white/30 uppercase tracking-widest mt-1">Reconciliation: Today, 09:14 AM</p>
+                                        <p className="text-sm sm:text-base leading-relaxed font-serif text-white tracking-tight">Systems Synchronized</p>
+                                        <p className="text-sm sm:text-base text-[10px] text-white/30 uppercase tracking-widest mt-1">Reconciliation: Today, 09:14 AM</p>
                                     </div>
-                                    <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center">
+                                    <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-emerald-500/10 rounded-full flex items-center justify-center">
                                         <CheckCircle className="text-emerald-500 animate-pulse" size={20} />
                                     </div>
                                 </div>
@@ -289,10 +289,10 @@ export const FinanceHub: React.FC = () => {
                     </div>
 
                     <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-10">
-                        <h3 className="text-2xl font-serif text-white tracking-tight mb-8">System Parameters</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">System Parameters</h3>
                         <div className="space-y-8">
                             <div>
-                                <label className="text-[11px] font-bold font-sans text-white/40 uppercase tracking-[0.3em] block mb-3">Primary Currency</label>
+                                <label className="text-[11px] font-bold font-sans text-white sm:text-white/40 uppercase tracking-[0.3em] block mb-3">Primary Currency</label>
                                 <Select defaultValue="USD" className="bg-black/40 border-white/10 text-white rounded-2xl h-14">
                                     <option className="bg-[#1A1A1A]">USD ($)</option>
                                     <option className="bg-[#1A1A1A]">EUR (€)</option>
@@ -300,7 +300,7 @@ export const FinanceHub: React.FC = () => {
                                 </Select>
                             </div>
                             <div>
-                                <label className="text-[11px] font-bold font-sans text-white/40 uppercase tracking-[0.3em] block mb-3">Fiscal Year Lock</label>
+                                <label className="text-[11px] font-bold font-sans text-white sm:text-white/40 uppercase tracking-[0.3em] block mb-3">Fiscal Year Lock</label>
                                 <Badge color="purple" className="w-full justify-center py-4 text-[11px] bg-[#6A2C91]/20 border-[#6A2C91]/30">DECEMBER 31ST</Badge>
                             </div>
                         </div>
@@ -321,16 +321,16 @@ const FinanceCard = ({ title, value, trend, positive, icon: Icon, color = 'gold'
     };
     
     return (
-    <div className={`luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group transition-all duration-500 flex flex-col justify-between ${glowColors[color]}`}>
-        <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+    <div className={`luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-6 sm:p-8 relative overflow-hidden group transition-all duration-500 flex flex-col justify-between ${glowColors[color]}`}>
+        <div className="absolute top-0 right-0 p-4 sm:p-5 lg:p-6 opacity-[0.03] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
             <Icon size={120} className={`text-${color === 'emerald' ? 'emerald-400' : color === 'cyan' ? '[#06B6D4]' : color === 'magenta' ? '[#D946EF]' : color === 'purple' ? '[#6A2C91]' : '[#C5A059]'}`} />
         </div>
-        <div className="flex justify-between items-start mb-12">
-            <span className="text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em] max-w-[60%] leading-relaxed">{title}</span>
+        <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 sm:gap-0 mb-12">
+            <span className="text-white sm:text-white/40 font-sans font-bold text-[11px] uppercase tracking-[0.3em] max-w-[60%] leading-relaxed">{title}</span>
             <GlassHaloIcon icon={Icon} color={color} size="lg" className="group-hover:scale-110 transition-all duration-500 z-10 shrink-0" />
         </div>
         <div>
-            <div className="text-4xl lg:text-5xl font-serif text-white tracking-tighter mb-4 relative z-10">{value}</div>
+            <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{value}</div>
             <div className="flex items-center gap-2 relative z-10">
                 {positive ? <ArrowUpRight className="text-emerald-400" size={16} /> : <ArrowDownRight className="text-red-400" size={16} />}
                 <span className={`${positive ? 'text-emerald-400' : 'text-red-400'} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`}>{trend}</span>
@@ -342,11 +342,11 @@ const FinanceCard = ({ title, value, trend, positive, icon: Icon, color = 'gold'
 const ReportButton = ({ label, icon: Icon, onClick }: any) => (
     <button 
         onClick={onClick}
-        className="w-full flex items-center justify-between p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/10 hover:shadow-[0_0_30px_rgba(106,44,145,0.2)] transition-all group overflow-hidden relative"
+        className="w-full flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 hover:bg-[#6A2C91]/10 hover:shadow-[0_0_30px_rgba(106,44,145,0.2)] transition-all group overflow-hidden relative"
     >
-        <div className="flex items-center gap-4 relative z-10">
+        <div className="flex items-center gap-3 sm:gap-4 relative z-10">
             <GlassHaloIcon icon={Icon} color="purple" size="md" className="group-hover:scale-110 transition-transform duration-500" />
-            <span className="text-sm font-sans font-bold text-white/70 group-hover:text-white transition-colors tracking-widest uppercase">{label}</span>
+            <span className="text-sm font-sans font-bold text-white sm:text-white/70 group-hover:text-white transition-colors tracking-widest uppercase">{label}</span>
         </div>
         <Download className="text-white/20 group-hover:text-[#6A2C91] relative z-10 transition-colors" size={20} />
     </button>
@@ -411,35 +411,35 @@ CERTIFIED BY LOLA AI SYSTEMS
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-12 pb-20 p-4 sm:p-10 md:p-16 max-w-[1600px] mx-auto"
+            className="space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 p-4 sm:p-8 lg:p-10 max-w-7xl mx-auto"
         >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                <button onClick={() => navigate('/finance')} className="flex items-center gap-3 text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
+            <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6">
+                <button onClick={() => navigate('/finance')} className="flex items-center gap-3 text-white sm:text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
                     <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Finance Hub
                 </button>
                 {!loading && analysis && (
                     <Button 
                         onClick={handleDownloadReport}
-                        className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-bold text-[11px] h-14 rounded-full px-8 tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all uppercase flex items-center justify-center gap-3"
+                        className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-bold text-[11px] w-auto mx-auto py-1 px-3 text-[10px] rounded-full px-8 tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all uppercase flex items-center justify-center gap-3"
                     >
                         <Download size={16} /> DOWNLOAD FINAL DOSSIER
                     </Button>
                 )}
             </div>
 
-            <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-16 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-[#C5A059]/10 rounded-bl-full -mr-20 -mt-20 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#6A2C91]/10 rounded-tr-full -ml-32 -mb-32 pointer-events-none"></div>
+            <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-6 sm:p-16 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-full sm:w-96 h-[250px] sm:h-96 bg-[#C5A059]/10 rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[500px] min-h-[300px] sm:py-8 sm:py-16 px-4 sm:px-8 sm:min-h-[320px] h-auto aspect-video sm:aspect-auto w-full max-w-full overflow-hidden bg-[#6A2C91]/10 rounded-tr-full -ml-32 -mb-32 pointer-events-none"></div>
                 
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start gap-16">
+                <div className="relative z-10 flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start gap-6 sm:gap-10 lg:gap-16">
                     <div className="flex-1 space-y-8">
-                        <div className="flex items-center gap-6">
-                             <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner backdrop-blur-md">
+                        <div className="flex items-center gap-3 sm:gap-6">
+                             <div className="w-8 h-8 sm:w-12 sm:h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner backdrop-blur-md">
                                 <Sparkles size={32} strokeWidth={1.5} />
                              </div>
                              <div>
-                                <h1 className="text-4xl md:text-5xl font-serif text-white tracking-tight">Strategic Projections</h1>
-                                <p className="text-white/50 font-sans font-light text-lg mt-2 italic">Synthesizing recovery paths and dropshipping scalability.</p>
+                                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Strategic Projections</h1>
+                                <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Synthesizing recovery paths and dropshipping scalability.</p>
                              </div>
                         </div>
 
@@ -451,7 +451,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                             </div>
                         ) : (
                             <div className="prose max-w-none">
-                                <p className="text-xl text-white/70 font-sans font-light leading-relaxed italic border-l-2 border-[#C5A059] pl-6">
+                                <p className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/70 w-full w-full max-w-3xl italic mb-8">
                                     "{analysis?.summary || "Analyzing current ledger to establish recovery trajectory..."}"
                                 </p>
                             </div>
@@ -460,12 +460,12 @@ CERTIFIED BY LOLA AI SYSTEMS
                     
                     {!loading && analysis && (
                         <div className="w-full md:w-96 bg-black/40 rounded-[2.5rem] p-4 sm:p-12 border border-white/5 flex flex-col items-center text-center shadow-inner">
-                            <p className="text-[11px] font-sans font-bold text-white/40 uppercase tracking-[0.3em] mb-8">Risk Architecture</p>
+                            <p className="text-sm sm:text-base text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-8">Risk Architecture</p>
                             <div className={`w-32 h-32 rounded-full border-[10px] flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(0,0,0,0.5)] ${analysis.riskLevel === 'Low' ? 'border-emerald-500/20 text-emerald-400' : analysis.riskLevel === 'Medium' ? 'border-amber-500/20 text-amber-400' : 'border-red-500/20 text-red-400'}`}>
                                 <ShieldCheck size={48} strokeWidth={1.5} />
                             </div>
-                            <h3 className={`text-4xl font-serif tracking-tighter ${analysis.riskLevel === 'Low' ? 'text-emerald-400' : analysis.riskLevel === 'Medium' ? 'text-amber-400' : 'text-red-400'}`}>{analysis.riskLevel}</h3>
-                            <p className="text-[11px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-3">Risk Assessment</p>
+                            <h3 className={`text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl font-serif tracking-tighter ${analysis.riskLevel === 'Low' ? 'text-emerald-400' : analysis.riskLevel === 'Medium' ? 'text-amber-400' : 'text-red-400'}`}>{analysis.riskLevel}</h3>
+                            <p className="text-sm sm:text-base text-[11px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-3">Risk Assessment</p>
                         </div>
                     )}
                 </div>
@@ -474,15 +474,15 @@ CERTIFIED BY LOLA AI SYSTEMS
             {/* Strategic Recovery Plans */}
             {!loading && analysis && (
                 <div className="luxury-card bg-[#0A0A0A] border border-[#6A2C91]/20 rounded-[3rem] p-4 sm:p-12 shadow-2xl relative overflow-hidden">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-                        <h3 className="text-3xl font-serif text-white tracking-tight">Recovery Protocols</h3>
+                    <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6 mb-12">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Recovery Protocols</h3>
                         
                         <div className="flex bg-black/60 p-1.5 rounded-2xl border border-white/5 shadow-inner">
                             {(['1', '3', '5'] as const).map(tab => (
                                 <button
                                     key={tab}
                                     onClick={() => setPlanTab(tab)}
-                                    className={`px-8 py-3 rounded-xl text-[11px] font-sans font-bold uppercase tracking-[0.3em] transition-all ${planTab === tab ? 'bg-white/10 text-white shadow-md' : 'text-white/30 hover:text-white/60'}`}
+                                    className={`px-8 py-3 rounded-xl text-[11px] font-sans font-bold uppercase tracking-[0.3em] transition-all ${planTab === tab ? 'bg-white/10 text-white shadow-md' : 'text-white/30 hover:text-white sm:text-white/60'}`}
                                 >
                                     {tab} Year
                                 </button>
@@ -490,12 +490,12 @@ CERTIFIED BY LOLA AI SYSTEMS
                         </div>
                     </div>
 
-                    <div className="p-4 sm:p-10 bg-white/5 rounded-[2rem] border border-white/10 animate-in fade-in zoom-in duration-500 shadow-inner">
-                        <div className="flex items-start gap-4 sm:p-8">
-                            <div className="w-14 h-14 bg-[#6A2C91]/20 rounded-2xl text-[#6A2C91] flex items-center justify-center border border-[#6A2C91]/30 shrink-0"><Map size={24} strokeWidth={1.5}/></div>
+                    <div className="p-3.5 sm:p-6 lg:p-12 bg-white/5 rounded-[2rem] border border-white/10 animate-in fade-in zoom-in duration-500 shadow-inner">
+                        <div className="flex items-start gap-3 sm:gap-6">
+                            <div className="w-8 h-8 sm:w-12 sm:h-12 bg-[#6A2C91]/20 rounded-2xl text-[#6A2C91] flex items-center justify-center border border-[#6A2C91]/30 shrink-0"><Map size={24} strokeWidth={1.5}/></div>
                             <div>
-                                <h4 className="text-2xl font-serif text-white tracking-tight mb-4">{planTab}-Year Strategic Plan</h4>
-                                <p className="text-white/60 font-sans font-light text-lg leading-relaxed">
+                                <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{planTab}-Year Strategic Plan</h4>
+                                <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed leading-relaxed">
                                     {planTab === '1' && analysis.recoveryPlans.oneYear}
                                     {planTab === '3' && analysis.recoveryPlans.threeYear}
                                     {planTab === '5' && analysis.recoveryPlans.fiveYear}
@@ -507,24 +507,24 @@ CERTIFIED BY LOLA AI SYSTEMS
             )}
 
             {/* Projection Chart Section */}
-            <div className="space-y-12">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+            <div className="space-y-6 sm:space-y-10 lg:space-y-12">
+                <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-end gap-3 sm:gap-6">
                     <div>
-                        <h3 className="text-3xl font-serif text-white tracking-tight mb-2">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
                              Projected Revenue Velocity
                         </h3>
-                        <p className="text-white/50 font-sans font-light italic">Comparing standard growth vs. dropshipping optimization strategy.</p>
+                        <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light italic">Comparing standard growth vs. dropshipping optimization strategy.</p>
                     </div>
                     <div className="flex bg-black/40 p-1.5 rounded-2xl border border-white/5">
                         <button 
                             onClick={() => setViewMode('Standard')}
-                            className={`px-8 py-3 rounded-xl text-[11px] font-sans font-bold uppercase tracking-[0.3em] transition-all ${viewMode === 'Standard' ? 'bg-[#6A2C91] text-white shadow-lg' : 'text-white/40 hover:text-white/70'}`}
+                            className={`px-8 py-3 rounded-xl text-[11px] font-sans font-bold uppercase tracking-[0.3em] transition-all ${viewMode === 'Standard' ? 'bg-[#6A2C91] text-white shadow-lg' : 'text-white sm:text-white/40 hover:text-white sm:text-white/70'}`}
                         >
                             Standard
                         </button>
                         <button 
                             onClick={() => setViewMode('Dropshipping')}
-                            className={`px-8 py-3 rounded-xl text-[11px] font-sans font-bold uppercase tracking-[0.3em] transition-all flex items-center gap-2 ${viewMode === 'Dropshipping' ? 'bg-[#C5A059] text-white shadow-lg' : 'text-white/40 hover:text-white/70'}`}
+                            className={`px-8 py-3 rounded-xl text-[11px] font-sans font-bold uppercase tracking-[0.3em] transition-all flex items-center gap-2 ${viewMode === 'Dropshipping' ? 'bg-[#C5A059] text-white shadow-lg' : 'text-white sm:text-white/40 hover:text-white sm:text-white/70'}`}
                         >
                             <Ship size={14} /> Dropshipping
                         </button>
@@ -532,7 +532,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                 </div>
 
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-12">
-                    <div className="h-[500px] w-full">
+                    <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4">
                         {loading ? (
                             <div className="w-full h-full flex items-center justify-center"><Loader2 size={64} strokeWidth={1} className="animate-spin text-white/20" /></div>
                         ) : (
@@ -565,9 +565,9 @@ CERTIFIED BY LOLA AI SYSTEMS
                         )}
                     </div>
                     {viewMode === 'Dropshipping' && (
-                        <div className="mt-12 flex items-start gap-4 p-6 bg-[#C5A059]/10 rounded-[2rem] border border-[#C5A059]/20 shadow-inner">
+                        <div className="mt-6 sm:mt-8 lg:mt-12 flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-[#C5A059]/10 rounded-[2rem] border border-[#C5A059]/20 shadow-inner">
                             <Info size={24} className="text-[#C5A059] shrink-0" strokeWidth={1.5} />
-                            <p className="text-sm text-white/70 font-sans font-light leading-relaxed">
+                            <p className="text-sm sm:text-base text-white sm:text-white/70 font-sans font-light leading-relaxed">
                                 Dropshipping estimates assume a <strong className="text-white font-medium">low-overhead fulfillment model</strong> where stock is managed by the Synaptic Handshake nodes. Profit margins are optimized for high-throughput scaling without proportional inventory risk.
                             </p>
                         </div>

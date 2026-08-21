@@ -71,7 +71,7 @@ export const TutorialOverlay: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center md:items-center p-6 bg-black/40 backdrop-blur-sm animate-in fade-in">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center md:items-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm animate-in fade-in">
       <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg overflow-hidden border border-stone-200 relative animate-in zoom-in slide-up">
         {/* Progress Bar */}
         <div className="absolute top-0 left-0 w-full h-1.5 bg-stone-100">
@@ -83,27 +83,27 @@ export const TutorialOverlay: React.FC = () => {
 
         <button 
           onClick={completeTutorial} 
-          className="absolute top-6 right-6 p-2 text-stone-300 hover:text-red-500 transition-colors"
+          className="absolute top-4 sm:p-6 right-6 p-2 text-stone-300 hover:text-red-500 transition-colors"
         >
           <X size={24} />
         </button>
 
-        <div className="p-4 sm:p-10 space-y-8">
-            <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner">
+        <div className="p-3.5 sm:p-6 lg:p-12 space-y-8">
+            <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-[#6A2C91] shadow-inner">
                     <currentStep.icon size={32} />
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.3em]">Synaptic Onboarding</p>
-                    <h2 className="text-2xl font-black text-white tracking-tighter uppercase italic">{currentStep.title}</h2>
+                    <p className="text-sm sm:text-base text-[10px] font-black text-[#C5A059] uppercase tracking-[0.3em]">Synaptic Onboarding</p>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">{currentStep.title}</h2>
                 </div>
             </div>
 
-            <p className="text-gray-500 text-lg leading-relaxed font-medium">
+            <p className="text-sm sm:text-base text-gray-500 leading-relaxed leading-relaxed font-medium">
                 {currentStep.desc}
             </p>
 
-            <div className="flex items-center justify-between pt-6">
+            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between pt-6">
                 <div className="flex gap-1.5">
                     {STEPS.map((_, i) => (
                         <div 
@@ -117,14 +117,14 @@ export const TutorialOverlay: React.FC = () => {
                         <Button 
                             variant="outline" 
                             onClick={handlePrev} 
-                            className="h-12 px-6 rounded-2xl font-black text-[10px] uppercase tracking-widest border-stone-200 text-stone-400 hover:text-gray-900"
+                            className="w-auto mx-auto py-1 px-3 text-[10px] px-6 rounded-2xl font-black text-[10px] uppercase tracking-widest border-stone-200 text-stone-400 hover:text-gray-900"
                         >
                             <ChevronLeft size={16} /> BACK
                         </Button>
                     )}
                     <Button 
                         onClick={handleNext} 
-                        className="h-12 px-10 rounded-2xl bg-[#6A2C91] text-white font-black text-[10px] uppercase tracking-widest shadow-xl shadow-purple-100 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
+                        className="w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-2xl bg-[#6A2C91] text-white font-black text-[10px] uppercase tracking-widest shadow-xl shadow-purple-100 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
                     >
                         {isLast ? "INITIALIZE SYSTEM" : "NEXT NODE"} <ChevronRight size={16} />
                     </Button>

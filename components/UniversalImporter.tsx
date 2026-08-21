@@ -121,7 +121,7 @@ export const UniversalImporter = () => {
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="p-4 sm:p-8 space-y-12 max-w-5xl mx-auto pb-32"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 max-w-5xl mx-auto pb-12 sm:pb-20 lg:pb-32"
         >
             <ContextualTutorialModal
                 hubId="importer"
@@ -142,17 +142,17 @@ export const UniversalImporter = () => {
                 subtitle="Upload your Craftybase CSV exports (Inventory, Recipes, Vendors). Our system will automatically map your Material Names, Unit Costs, and Recipe Ingredients into the ArtisanFlow Matrix."
                 badge="Data Matrix Synchronization"
             >
-                <div className="flex gap-4">
-                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white h-12 px-8 rounded-full shadow-lg" onClick={() => fileInputRef.current?.click()}>
+                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
+                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full shadow-lg" onClick={() => fileInputRef.current?.click()}>
                          BROWSE FILES
                      </Button>
                 </div>
             </VaultBanner>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6">
                 {/* Upload Zone */}
                 <div 
-                    className={`border-2 border-dashed rounded-3xl p-16 flex flex-col items-center justify-center text-center transition-all duration-300 ${isDragging ? 'border-[#C5A059] bg-[#C5A059]/10' : 'border-white/10 bg-white/5'} ${isSuccess ? 'border-emerald-500/50 bg-emerald-900/10' : ''}`}
+                    className={`border-2 border-dashed rounded-3xl p-6 sm:p-16 flex flex-col items-center justify-center text-center transition-all duration-300 ${isDragging ? 'border-[#C5A059] bg-[#C5A059]/10' : 'border-white/10 bg-white/5'} ${isSuccess ? 'border-emerald-500/50 bg-emerald-900/10' : ''}`}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
@@ -161,26 +161,26 @@ export const UniversalImporter = () => {
                     
                     <AnimatePresence mode="wait">
                         {isSuccess ? (
-                            <motion.div key="success" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-4">
-                                <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center">
+                            <motion.div key="success" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-3 sm:gap-4">
+                                <div className="w-12 h-12 sm:w-20 sm:h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center">
                                     <CheckCircle size={40} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-emerald-400">Migration Complete</h3>
-                                    <p className="text-white/40 text-sm mt-2">Data mapped to ArtisanFlow database schema.</p>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-emerald-400">Migration Complete</h3>
+                                    <p className="text-sm sm:text-base text-white sm:text-white/40 mt-2">Data mapped to ArtisanFlow database schema.</p>
                                 </div>
                             </motion.div>
                         ) : file ? (
-                            <motion.div key="file" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-6 w-full">
-                                <div className="w-20 h-20 bg-[#6A2C91]/20 text-[#C5A059] rounded-full flex items-center justify-center">
+                            <motion.div key="file" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-3 sm:gap-6 w-full">
+                                <div className="w-12 h-12 sm:w-20 sm:h-20 bg-[#6A2C91]/20 text-[#C5A059] rounded-full flex items-center justify-center">
                                     <FileText size={40} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white">{file.name}</h3>
-                                    <p className="text-white/40 text-sm mt-2">{(file.size / 1024).toFixed(2)} KB CSV File</p>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white">{file.name}</h3>
+                                    <p className="text-sm sm:text-base text-white sm:text-white/40 mt-2">{(file.size / 1024).toFixed(2)} KB CSV File</p>
                                 </div>
                                 <Button 
-                                    className="bg-[#C5A059] hover:bg-[#b08d4a] text-black w-full h-14 rounded-xl font-bold tracking-widest uppercase mt-4 flex items-center justify-center gap-3"
+                                    className="bg-[#C5A059] hover:bg-[#b08d4a] text-black w-full w-auto mx-auto py-1 px-3 text-[10px] rounded-xl font-bold tracking-widest uppercase mt-4 flex items-center justify-center gap-3"
                                     onClick={handleUpload}
                                     disabled={isUploading}
                                 >
@@ -188,13 +188,13 @@ export const UniversalImporter = () => {
                                 </Button>
                             </motion.div>
                         ) : (
-                            <motion.div key="empty" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-6 pointer-events-none">
-                                <div className="w-24 h-24 bg-white/5 text-white/20 rounded-full flex items-center justify-center mb-2">
+                            <motion.div key="empty" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-3 sm:gap-6 pointer-events-none">
+                                <div className="w-14 h-14 sm:w-24 sm:h-24 bg-white/5 text-white/20 rounded-full flex items-center justify-center mb-2">
                                     <UploadCloud size={48} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white mb-2">Drag & Drop CSV Export</h3>
-                                    <p className="text-white/40 text-sm max-w-xs mx-auto">Drop your Craftybase CSV file here, or click the Browse button above.</p>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white mb-2">Drag & Drop CSV Export</h3>
+                                    <p className="text-sm sm:text-base text-white sm:text-white/40 max-w-xs mx-auto">Drop your Craftybase CSV file here, or click the Browse button above.</p>
                                 </div>
                             </motion.div>
                         )}
@@ -202,30 +202,30 @@ export const UniversalImporter = () => {
                 </div>
 
                 {/* Info Panel */}
-                <Card className="bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-3xl space-y-8 flex flex-col justify-center">
-                    <h3 className="text-2xl font-serif text-white font-bold tracking-tight flex items-center gap-3">
+                <Card className="bg-black/40 backdrop-blur-xl border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-3xl space-y-8 flex flex-col justify-center">
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
                         <ShieldCheck size={28} className="text-[#C5A059]" /> Automated Schema Mapping
                     </h3>
                     <div className="space-y-6">
-                        <div className="flex items-start gap-4">
-                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 shrink-0"><ArrowRight size={16} /></div>
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white sm:text-white/50 shrink-0"><ArrowRight size={16} /></div>
                             <div>
                                 <h4 className="text-white font-bold text-sm">Inventory Matrix Synchronization</h4>
-                                <p className="text-white/40 text-xs mt-1 leading-relaxed">Craftybase "Material Name" and "SKU" headers are instantly mapped to your active supply nodes.</p>
+                                <p className="text-sm sm:text-base text-white sm:text-white/40 mt-1 leading-relaxed">Craftybase "Material Name" and "SKU" headers are instantly mapped to your active supply nodes.</p>
                             </div>
                         </div>
-                        <div className="flex items-start gap-4">
-                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 shrink-0"><ArrowRight size={16} /></div>
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white sm:text-white/50 shrink-0"><ArrowRight size={16} /></div>
                             <div>
                                 <h4 className="text-white font-bold text-sm">COGS Value Extraction</h4>
-                                <p className="text-white/40 text-xs mt-1 leading-relaxed">Unit costs are extracted and re-calibrated into the Profit Guard™ ledger for real-time margin tracking.</p>
+                                <p className="text-sm sm:text-base text-white sm:text-white/40 mt-1 leading-relaxed">Unit costs are extracted and re-calibrated into the Profit Guard™ ledger for real-time margin tracking.</p>
                             </div>
                         </div>
-                        <div className="flex items-start gap-4">
-                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 shrink-0"><ArrowRight size={16} /></div>
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white sm:text-white/50 shrink-0"><ArrowRight size={16} /></div>
                             <div>
                                 <h4 className="text-white font-bold text-sm">Golden Ratio Ledger (Recipes)</h4>
-                                <p className="text-white/40 text-xs mt-1 leading-relaxed">Recipe ingredients and batch yields are converted into actionable manufacturing nodes.</p>
+                                <p className="text-sm sm:text-base text-white sm:text-white/40 mt-1 leading-relaxed">Recipe ingredients and batch yields are converted into actionable manufacturing nodes.</p>
                             </div>
                         </div>
                     </div>

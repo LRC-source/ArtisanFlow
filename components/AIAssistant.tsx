@@ -177,7 +177,7 @@ export const AIAssistant: React.FC = () => {
     return ( 
       <button 
         onClick={() => setIsOpen(true)} 
-        className="fixed bottom-6 right-6 w-14 h-14 bg-[#6A2C91] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors z-50 animate-float"
+        className="fixed bottom-6 right-6 w-8 h-8 sm:w-12 sm:h-12 bg-[#6A2C91] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors z-50 animate-float"
       >
          <MessageSquare size={24} />
          {pendingTodos > 0 && (
@@ -191,32 +191,32 @@ export const AIAssistant: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 w-80 h-[380px] max-h-[calc(100vh-64px)] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_0_50px_rgba(106,44,145,0.4)] flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 border-t-4 border-t-[#C5A059]">
-      <div className="bg-transparent p-4 flex justify-between items-center relative border-b border-white/10">
+      <div className="bg-transparent p-4 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center relative border-b border-white/10">
         <div className="flex items-center gap-2 pl-2">
             <div className="w-8 h-8 rounded-full overflow-hidden border border-[#C5A059]/30 shadow-[0_0_10px_rgba(197,160,89,0.2)]">
                 <img src="/lola_avatar.jpg" alt="Lola" className="w-full h-full object-cover" />
             </div>
-            <h3 className="font-black text-xs tracking-tight flex items-center gap-1 uppercase italic text-white">
+            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
                 Lola <Sparkles size={10} className="text-[#C5A059]" />
             </h3>
             <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)] ${isSpeaking ? 'bg-amber-400 animate-ping' : 'bg-emerald-500 animate-pulse'} ml-1`}></div>
         </div>
         <div className="flex items-center gap-1.5">
-            <button onClick={() => setIsTtsEnabled(!isTtsEnabled)} className={`p-2 rounded-xl transition-all ${isTtsEnabled ? 'bg-[#C5A059] text-black shadow-lg' : 'text-white/40 hover:text-[#C5A059] hover:bg-white/5'}`} title={isTtsEnabled ? "Disable Voice" : "Enable Voice Output"}>
+            <button onClick={() => setIsTtsEnabled(!isTtsEnabled)} className={`p-2 rounded-xl transition-all ${isTtsEnabled ? 'bg-[#C5A059] text-black shadow-lg' : 'text-white sm:text-white/40 hover:text-[#C5A059] hover:bg-white/5'}`} title={isTtsEnabled ? "Disable Voice" : "Enable Voice Output"}>
                 {isTtsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
-            <button onClick={() => setIsOpen(false)} className="p-2 text-white/40 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"><Minimize2 size={16} /></button>
+            <button onClick={() => setIsOpen(false)} className="p-2 text-white sm:text-white/40 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"><Minimize2 size={16} /></button>
         </div>
       </div>
 
       <div className="bg-white/5 p-2 border-b border-white/5 flex justify-center gap-2">
-          <button onClick={() => setMode('fast')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'fast' ? 'bg-[#6A2C91] text-white' : 'bg-black/50 text-white/50 border border-white/5'}`}>
+          <button onClick={() => setMode('fast')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'fast' ? 'bg-[#6A2C91] text-white' : 'bg-black/50 text-white sm:text-white/50 border border-white/5'}`}>
               <Zap size={10} /> Fast
           </button>
-          <button onClick={() => setMode('deep')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'deep' ? 'bg-[#C5A059] text-black' : 'bg-black/50 text-white/50 border border-white/5'}`}>
+          <button onClick={() => setMode('deep')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'deep' ? 'bg-[#C5A059] text-black' : 'bg-black/50 text-white sm:text-white/50 border border-white/5'}`}>
               <Database size={10} /> Think
           </button>
-          <button onClick={() => setMode('search')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'search' ? 'bg-blue-600 text-white' : 'bg-black/50 text-white/50 border border-white/5'}`}>
+          <button onClick={() => setMode('search')} className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1 transition-all ${mode === 'search' ? 'bg-blue-600 text-white' : 'bg-black/50 text-white sm:text-white/50 border border-white/5'}`}>
               <Search size={10} /> Search
           </button>
       </div>
@@ -239,7 +239,7 @@ export const AIAssistant: React.FC = () => {
               )}
               {msg.isAuditPrompt && (
                 <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
-                   <p className="text-[9px] font-black text-amber-800 flex items-center gap-1.5 uppercase tracking-widest"><Factory size={12} /> CAPACITY ALERT</p>
+                   <p className="text-sm sm:text-base text-[9px] font-black text-amber-800 flex items-center gap-1.5 uppercase tracking-widest"><Factory size={12} /> CAPACITY ALERT</p>
                    <button onClick={() => handleSelectSlot('10:00 AM', 'Manufacturing Audit')} className="w-full bg-[#C5A059] text-white py-2 rounded-lg text-[8px] font-black uppercase tracking-[0.2em] shadow-md shadow-amber-200/50 hover:bg-[#b08e4d] transition-all active:scale-95">Schedule Audit</button>
                 </div>
               )}
@@ -248,7 +248,7 @@ export const AIAssistant: React.FC = () => {
             {msg.role === 'assistant' && msg.followUpQuestions && msg.followUpQuestions.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1.5 px-1 animate-in fade-in slide-up duration-500">
                     {msg.followUpQuestions.map((q, i) => (
-                        <button key={i} onClick={() => handleSend(q)} className="bg-black/40 border border-white/10 text-[9px] font-bold text-white/70 px-3 py-1 rounded-full hover:border-[#C5A059] hover:text-[#C5A059] hover:bg-white/5 transition-all shadow-sm">
+                        <button key={i} onClick={() => handleSend(q)} className="bg-black/40 border border-white/10 text-[9px] font-bold text-white sm:text-white/70 px-3 py-1 rounded-full hover:border-[#C5A059] hover:text-[#C5A059] hover:bg-white/5 transition-all shadow-sm">
                             {q}
                         </button>
                     ))}
@@ -275,7 +275,7 @@ export const AIAssistant: React.FC = () => {
         <div className="flex items-center gap-2 bg-white/5 rounded-2xl px-3 py-1.5 border border-white/10 focus-within:border-[#C5A059] focus-within:bg-black focus-within:ring-2 focus-within:ring-[#C5A059]/20 transition-all">
           <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} placeholder={isListening ? "Listening..." : "Ask Lola..."} className="flex-1 bg-transparent py-2 text-white text-xs outline-none placeholder:text-white/30 font-bold" />
           <div className="flex items-center gap-1.5">
-              <button onClick={toggleDictation} className={`p-2 rounded-xl transition-all ${isListening ? 'bg-emerald-500/20 text-emerald-400 shadow-inner' : 'text-white/40 hover:text-[#C5A059] hover:bg-white/5 shadow-sm border border-transparent hover:border-white/5'}`} title="Voice Input">
+              <button onClick={toggleDictation} className={`p-2 rounded-xl transition-all ${isListening ? 'bg-emerald-500/20 text-emerald-400 shadow-inner' : 'text-white sm:text-white/40 hover:text-[#C5A059] hover:bg-white/5 shadow-sm border border-transparent hover:border-white/5'}`} title="Voice Input">
                 {isListening ? <MicOff size={18} /> : <Mic size={18} />}
               </button>
               <button onClick={() => handleSend()} disabled={isLoading || !input.trim()} className="p-2.5 bg-[#C5A059] text-black rounded-xl hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 flex items-center justify-center shadow-lg shadow-[#C5A059]/20" title="Send (Enter)">

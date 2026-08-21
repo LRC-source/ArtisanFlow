@@ -14,7 +14,7 @@ import { ContextualTutorialModal } from '../ContextualTutorialModal';
 const MarketingGrid = () => {
     const navigate = useNavigate();
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <HubCard 
                 title="Visual Analysis" 
                 icon={Eye} 
@@ -114,9 +114,9 @@ export const MarketingHub = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-10 md:p-16 space-y-16 max-w-[1600px] mx-auto pb-20"
+            className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-8 sm:pb-12 lg:pb-20"
         >
-            <div className="flex flex-col gap-4 sm:p-8">
+            <div className="flex flex-col gap-3 sm:gap-6">
                 <SubPageHeader 
                   title="Marketing Hub"
                   parentTitle="Marketing Studio"
@@ -129,10 +129,10 @@ export const MarketingHub = () => {
                   subtitle="Central nervous system for brand growth and content synchronization. Synchronizing brand craftsmanship with automated growth nodes."
                   badge="Marketing Protocol Active"
                 >
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                     <Button 
                         variant="primary"
-                        className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] h-16 px-10 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all"
+                        className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] py-3 px-6 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all"
                         onClick={() => navigate('/marketing/strategy-report')}
                     >
                         <Sparkles size={16} className="mr-3"/> GENERATE STRATEGY

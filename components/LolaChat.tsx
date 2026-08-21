@@ -43,7 +43,7 @@ export const LolaChat: React.FC = () => {
     return ( 
       <button 
         onClick={() => setIsOpen(true)} 
-        className="fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center transition-all z-50 animate-float p-[1.5px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_50px_rgba(168,85,247,0.6)] hover:scale-105"
+        className="fixed bottom-6 right-6 w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all z-50 animate-float p-[1.5px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_50px_rgba(168,85,247,0.6)] hover:scale-105"
       >
          <div className="w-full h-full bg-[#0A0A0A] rounded-full flex items-center justify-center relative overflow-hidden">
             <span className="absolute inset-0 bg-gradient-to-r from-[#06B6D4] to-[#C5A059] opacity-20 blur-md"></span>
@@ -54,17 +54,17 @@ export const LolaChat: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-black/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
-      <div className="bg-white/5 p-5 border-b border-white/10 flex justify-between items-center">
+    <div className="fixed bottom-6 right-6 w-full sm:w-96 min-h-[300px] sm:py-8 sm:py-16 px-4 sm:px-8 sm:min-h-[320px] h-auto aspect-video sm:aspect-auto w-full max-w-full overflow-hidden bg-black/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+      <div className="bg-white/5 p-5 border-b border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
         <div className="flex items-center gap-3">
             <GlassHaloIcon icon={Sparkles} color="cyan" size="sm" className="animate-pulse" />
             <div>
-                <h3 className="font-serif font-bold text-white tracking-tight text-lg leading-tight">Lola AI</h3>
-                <p className="text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-[#06B6D4]">Systems Architect</p>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif font-bold text-white tracking-tight leading-relaxed leading-tight">Lola AI</h3>
+                <p className="text-sm sm:text-base text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-[#06B6D4]">Systems Architect</p>
             </div>
         </div>
         <div className="flex space-x-2">
-            <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
+            <button onClick={() => setIsOpen(false)} className="text-white sm:text-white/40 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
                 <Minimize2 size={16} />
             </button>
         </div>
@@ -85,7 +85,7 @@ export const LolaChat: React.FC = () => {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white/5 text-white/40 p-4 rounded-[1.5rem] rounded-bl-sm border border-white/10 text-xs italic font-sans flex items-center gap-2">
+            <div className="bg-white/5 text-white sm:text-white/40 p-4 rounded-[1.5rem] rounded-bl-sm border border-white/10 text-xs italic font-sans flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#06B6D4] animate-bounce"></span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#A855F7] animate-bounce delay-75"></span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-bounce delay-150"></span>
@@ -109,7 +109,7 @@ export const LolaChat: React.FC = () => {
           <button 
             onClick={handleSend}
             disabled={isLoading}
-            className="w-12 h-12 rounded-full flex items-center justify-center p-[1px] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] disabled:opacity-50 hover:scale-105 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)]"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center p-[1px] bg-gradient-to-r from-[#06B6D4] to-[#A855F7] disabled:opacity-50 hover:scale-105 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)]"
           >
             <div className="w-full h-full bg-[#0A0A0A] rounded-full flex items-center justify-center">
                 <Send size={16} className="text-white ml-1" />

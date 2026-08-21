@@ -92,7 +92,7 @@ export const SocialMediaCreator = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-12 sm:pb-20 lg:pb-32 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
@@ -103,13 +103,13 @@ export const SocialMediaCreator = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                 {/* LEFT COL: CONFIGURATION */}
                 <div className="lg:col-span-5 space-y-6">
-                    <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
                         <div className="space-y-8">
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Sparkles size={14} className="mr-2 text-[#C5A059]" /> AI Prompt Input
                                 </label>
                                 <textarea 
@@ -132,7 +132,7 @@ export const SocialMediaCreator = () => {
                             </div>
 
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Package size={14} className="mr-2 text-emerald-500" /> Featured Product Link
                                 </label>
                                 <Select value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)} className="h-14">
@@ -143,19 +143,19 @@ export const SocialMediaCreator = () => {
                                 </Select>
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-[#6A2C91] to-[#C5A059] text-white h-14 rounded-2xl shadow-lg border-none">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-[#6A2C91] to-[#C5A059] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
                                 {isGenerating ? "Synthesizing Omnichannel Assets..." : "Generate Campaign"}
                             </Button>
                         </div>
                     </Card>
 
-                    <Card className="p-6 bg-black/40 border-white/5 backdrop-blur-xl" title="Distribution Channels">
-                        <div className="grid grid-cols-2 gap-4 mt-6">
+                    <Card className="p-4 sm:p-6 bg-black/40 border-white/5 backdrop-blur-xl" title="Distribution Channels">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6">
                             {[
                                 { id: 'instagram', label: 'Instagram', icon: Instagram, color: 'text-pink-500' },
                                 { id: 'tiktok', label: 'TikTok', icon: Film, color: 'text-white' },
                                 { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, color: 'text-blue-400' },
-                                { id: 'twitter', label: 'X (Twitter)', icon: Twitter, color: 'text-gray-300' }
+                                { id: 'twitter', label: 'X (Twitter)', icon: Twitter, color: 'text-white sm:text-gray-300' }
                             ].map(platform => (
                                 <label key={platform.id} className={`flex items-center p-4 rounded-xl border cursor-pointer transition-all ${channels[platform.id as keyof typeof channels] ? 'bg-[#6A2C91]/10 border-[#6A2C91]/50' : 'bg-white/5 border-white/10 opacity-60'}`}>
                                     <input 
@@ -177,7 +177,7 @@ export const SocialMediaCreator = () => {
                 <div className="lg:col-span-7 flex flex-col h-full">
                     <Card className="flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative">
                         {/* Browser/Phone Header Frame */}
-                        <div className="h-14 bg-[#111] border-b border-white/10 flex items-center px-4 gap-2">
+                        <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-4 gap-2">
                             <div className="flex gap-1.5 mr-4">
                                 <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
                                 <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
@@ -188,7 +188,7 @@ export const SocialMediaCreator = () => {
                                     <button 
                                         key={tab}
                                         onClick={() => setActiveTab(tab as any)}
-                                        className={`px-4 py-1.5 rounded-md text-xs font-medium uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === tab ? 'bg-white/10 text-white shadow-inner' : 'text-white/40 hover:bg-white/5'}`}
+                                        className={`px-4 py-1.5 rounded-md text-xs font-medium uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === tab ? 'bg-white/10 text-white shadow-inner' : 'text-white sm:text-white/40 hover:bg-white/5'}`}
                                     >
                                         {tab === 'instagram' && <Instagram size={14} />}
                                         {tab === 'tiktok' && <Film size={14} />}
@@ -201,7 +201,7 @@ export const SocialMediaCreator = () => {
                         </div>
 
                         {/* Preview Area */}
-                        <div className="flex-1 p-8 relative flex items-center justify-center bg-[#050505]">
+                        <div className="flex-1 p-4 sm:p-5 lg:p-6 relative flex items-center justify-center bg-[#050505]">
                             {activeContent ? (
                                 <AnimatePresence mode="wait">
                                     <motion.div 
@@ -213,7 +213,7 @@ export const SocialMediaCreator = () => {
                                         className="w-full max-w-sm"
                                     >
                                         {/* Mock Phone Container */}
-                                        <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl overflow-hidden min-h-[500px] flex flex-col relative border-8 border-[#1A1A1A]">
+                                        <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl overflow-hidden min-h-[250px] sm:min-h-[300px] aspect-video sm:aspect-auto w-full max-w-full overflow-hidden flex flex-col relative border-8 border-[#1A1A1A]">
                                             {/* App Header Mock */}
                                             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                                                 <div className="w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white font-serif text-xs">AF</div>
@@ -221,7 +221,7 @@ export const SocialMediaCreator = () => {
                                             </div>
                                             {/* Media Mock */}
                                             <div className="w-full aspect-square bg-gray-100 rounded-xl mb-4 flex items-center justify-center border border-gray-200">
-                                                <ImageIcon size={32} className="text-gray-300" />
+                                                <ImageIcon size={32} className="text-white sm:text-gray-300" />
                                             </div>
                                             {/* Caption */}
                                             <div className="text-sm text-gray-800 font-sans whitespace-pre-wrap leading-relaxed">
@@ -233,17 +233,17 @@ export const SocialMediaCreator = () => {
                             ) : (
                                 <div className="text-center opacity-30">
                                     <LayoutGrid size={64} className="mx-auto mb-4 text-white" />
-                                    <p className="text-white font-serif text-lg">Awaiting Campaign Synthesis</p>
+                                    <p className="text-sm sm:text-base text-white font-serif leading-relaxed">Awaiting Campaign Synthesis</p>
                                 </div>
                             )}
                         </div>
 
                         {/* Action Footer */}
-                        <div className="p-6 bg-[#111] border-t border-white/10 flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-white/50 text-xs">
+                        <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
+                            <div className="flex items-center gap-2 text-white sm:text-white/50 text-xs">
                                 <CheckCircle size={14} className="text-emerald-500" /> Auto-sync enabled for selected channels
                             </div>
-                            <div className="flex gap-4">
+                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                                 <Button variant="outline" onClick={() => handlePublish(true)} disabled={!activeContent}>
                                     <Clock size={16} /> Schedule
                                 </Button>

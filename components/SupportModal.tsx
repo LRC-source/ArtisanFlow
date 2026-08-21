@@ -85,28 +85,28 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg z-[101]"
                     >
                         <Card className="bg-[#111111] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                            <div className="p-6 border-b border-white/5 flex items-center justify-between bg-black/20">
+                            <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between bg-black/20">
                                 <div className="flex items-center gap-3">
                                     <GlassHaloIcon icon={HelpCircle} color="gold" size="md" />
-                                    <h3 className="text-xl font-bold text-white font-serif">ArtisanFlow Support Node</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white font-serif">ArtisanFlow Support Node</h3>
                                 </div>
-                                <button onClick={onClose} className="text-white/50 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5">
+                                <button onClick={onClose} className="text-white sm:text-white/50 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5">
                                     <X size={20} />
                                 </button>
                             </div>
 
                             {isSuccess ? (
-                                <div className="p-4 sm:p-10 flex flex-col items-center justify-center text-center space-y-4">
-                                    <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-4">
+                                <div className="p-3.5 sm:p-6 lg:p-12 flex flex-col items-center justify-center text-center space-y-4">
+                                    <div className="w-12 h-12 sm:w-20 sm:h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-4">
                                         <CheckCircle size={40} />
                                     </div>
-                                    <h4 className="text-2xl font-bold text-white">Ticket Submitted</h4>
-                                    <p className="text-white/50 text-sm max-w-xs mx-auto">Your request has been routed to our support architects. We will be in touch shortly.</p>
+                                    <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-bold text-white">Ticket Submitted</h4>
+                                    <p className="text-sm sm:text-base text-white sm:text-white/50 max-w-xs mx-auto">Your request has been routed to our support architects. We will be in touch shortly.</p>
                                 </div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                                <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5">
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-white/50 uppercase tracking-wider">Issue Type</label>
+                                        <label className="text-xs font-bold text-white sm:text-white/50 uppercase tracking-wider">Issue Type</label>
                                         <select 
                                             value={issueType}
                                             onChange={(e) => setIssueType(e.target.value)}
@@ -120,7 +120,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                                     </div>
 
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-white/50 uppercase tracking-wider">Subject</label>
+                                        <label className="text-xs font-bold text-white sm:text-white/50 uppercase tracking-wider">Subject</label>
                                         <input 
                                             type="text"
                                             value={subject}
@@ -132,7 +132,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                                     </div>
 
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-white/50 uppercase tracking-wider">Description</label>
+                                        <label className="text-xs font-bold text-white sm:text-white/50 uppercase tracking-wider">Description</label>
                                         <textarea 
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
@@ -142,14 +142,14 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                                         />
                                     </div>
 
-                                    <div className="flex items-center justify-between pt-4">
-                                        <button type="button" className="flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors px-3 py-2 rounded-lg hover:bg-white/5">
+                                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between pt-4">
+                                        <button type="button" className="flex items-center gap-2 text-white sm:text-white/40 hover:text-white text-sm transition-colors px-3 py-2 rounded-lg hover:bg-white/5">
                                             <Paperclip size={16} /> Attach File (Optional)
                                         </button>
                                         <Button 
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="bg-[#C5A059] hover:bg-[#b08d4a] text-black px-6 h-12 rounded-xl font-bold tracking-wider uppercase flex items-center justify-center gap-2"
+                                            className="bg-[#C5A059] hover:bg-[#b08d4a] text-black px-6 w-auto mx-auto py-1 px-3 text-[10px] rounded-xl font-bold tracking-wider uppercase flex items-center justify-center gap-2"
                                         >
                                             {isSubmitting ? (
                                                 <>Sending...</>

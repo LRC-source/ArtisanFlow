@@ -50,43 +50,43 @@ export const ContextualTutorialModal: React.FC<ContextualTutorialProps> = ({ hub
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-300">
             <div className="bg-black/60 border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-500 backdrop-blur-3xl">
-                <div className="bg-gradient-to-r from-black/80 to-[#101010] border-b border-white/5 p-6 text-white relative">
-                    <button onClick={handleDismiss} className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors">
+                <div className="bg-gradient-to-r from-black/80 to-[#101010] border-b border-white/5 p-4 sm:p-6 text-white relative">
+                    <button onClick={handleDismiss} className="absolute top-4 right-4 text-white sm:text-white/40 hover:text-white transition-colors">
                         <X size={20} />
                     </button>
                     <div className="flex items-center gap-3 mb-2">
                         <div className="p-2 bg-[#C5A059]/10 border border-[#C5A059]/20 rounded-lg text-[#C5A059]">
                             <Info size={24} />
                         </div>
-                        <h2 className="text-2xl font-serif tracking-tight text-white">{title}</h2>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">{title}</h2>
                     </div>
-                    <p className="text-white/60 font-sans font-light text-sm leading-relaxed">{description}</p>
+                    <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">{description}</p>
                 </div>
-                <div className="p-4 sm:p-8 space-y-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Quick Start Guide</h3>
+                <div className="p-3.5 sm:p-6 lg:p-12 space-y-6">
+                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-[10px] font-black text-white sm:text-white/40 uppercase tracking-[0.2em]">Quick Start Guide</h3>
                         <div className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.2em]">
                             Step {currentStep + 1} of {steps.length}
                         </div>
                     </div>
                     
-                    <div className="min-h-[120px] flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-xl">
+                    <div className="min-h-[120px] flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-white/5 border border-white/10 rounded-xl">
                         <div className="mt-1 text-[#C5A059] shrink-0">
                             <CheckCircle size={20} />
                         </div>
-                        <p className="text-base font-medium text-white/90 leading-relaxed">{steps[currentStep]}</p>
+                        <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-medium text-white/90 leading-relaxed">{steps[currentStep]}</p>
                     </div>
 
-                    <div className="flex gap-4 mt-8 pt-4 border-t border-white/5">
+                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto mt-8 pt-4 border-t border-white/5">
                         <Button 
                             variant="outline" 
                             onClick={handlePrev} 
                             disabled={currentStep === 0}
-                            className={`flex-1 h-12 font-bold tracking-widest ${currentStep === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            className={`flex-1 w-auto mx-auto py-1 px-3 text-[10px] font-bold tracking-widest ${currentStep === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             <ChevronLeft size={18} className="mr-1" /> PREV
                         </Button>
-                        <Button variant="premium" onClick={handleNext} className="flex-1 h-12 font-black tracking-widest shadow-lg shadow-[#C5A059]/20">
+                        <Button variant="premium" onClick={handleNext} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-lg shadow-[#C5A059]/20">
                             {currentStep === steps.length - 1 ? 'GOT IT, LETS GO' : 'NEXT'} {currentStep < steps.length - 1 && <ChevronRight size={18} className="ml-1" />}
                         </Button>
                     </div>

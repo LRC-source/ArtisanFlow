@@ -21,10 +21,10 @@ const ApothecaryFunnel = () => {
     <div className="min-h-screen bg-[#0a0f0d] text-gray-100 font-sans selection:bg-emerald-900 selection:text-emerald-100">
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-[#0a0f0d]/80 backdrop-blur-md border-b border-emerald-900/30">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
           <div className="flex items-center gap-2">
             <Leaf className="w-6 h-6 text-emerald-500" />
-            <span className="text-xl font-semibold tracking-wide text-white">Artisan Flow</span>
+            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-semibold tracking-wide text-white">Artisan Flow</span>
           </div>
           <a 
             href="/auth?tier=Artisan%20Flow%20Basic"
@@ -36,7 +36,7 @@ const ApothecaryFunnel = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+      <section className="relative pt-12 sm:pt-20 lg:pt-32 pb-8 sm:pb-12 lg:pb-20 lg:pt-48 lg:pb-32 w-full max-w-full overflow-x-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/20 via-[#0a0f0d] to-[#0a0f0d] z-10" />
           <img 
@@ -51,23 +51,23 @@ const ApothecaryFunnel = () => {
             initial="initial"
             animate="animate"
             variants={staggerChildren}
-            className="max-w-3xl"
+            className="w-full w-full max-w-3xl"
           >
             <motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-900/30 border border-emerald-800/50 mb-8">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
               <span className="text-emerald-300 text-sm font-medium tracking-wide uppercase">For Botanical & Clean Beauty Brands</span>
             </motion.div>
             
-            <motion.h1 variants={fadeIn} className="text-5xl lg:text-7xl font-light tracking-tight text-white mb-6 leading-tight">
+            <motion.h1 variants={fadeIn} className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">
               Precision in every <br />
               <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-200">botanical drop.</span>
             </motion.h1>
             
-            <motion.p variants={fadeIn} className="text-xl text-gray-400 mb-10 leading-relaxed font-light max-w-2xl">
+            <motion.p variants={fadeIn} className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-white sm:text-gray-400 mb-10 leading-relaxed font-light max-w-2xl">
               Elevate your apothecary formulations with clinical precision. Scale recipes effortlessly, track every organic ingredient, and ensure flawless regulatory compliance for your small-batch cosmetics.
             </motion.p>
             
-            <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4">
+            <motion.div variants={fadeIn} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4">
               <a 
                 href="/auth?tier=Artisan%20Flow%20Basic"
                 className="inline-flex items-center justify-center px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] group"
@@ -81,20 +81,20 @@ const ApothecaryFunnel = () => {
       </section>
 
       {/* Problem Section */}
-      <section className="py-24 bg-[#0d1411]">
+      <section className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 bg-[#0d1411]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center">
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl lg:text-4xl font-light mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-light mb-6">
                 The formulation chaos <br />
                 <span className="font-semibold text-emerald-400">stifling your growth.</span>
               </h2>
-              <p className="text-gray-400 text-lg mb-8 font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed mb-8 font-light leading-relaxed">
                 As your clean beauty brand grows, the margin for error shrinks. Spreadsheets and notebooks can't keep up with the demands of scaling organic formulations while maintaining strict batch integrity.
               </p>
               
@@ -104,13 +104,13 @@ const ApothecaryFunnel = () => {
                   { title: "Compliance Nightmares", desc: "Tracking lot numbers and expiration dates across multiple botanical sources is a logistical headache.", icon: ShieldCheck },
                   { title: "Lost Formula Variations", desc: "Struggling to track iterations of your hero product's formulation history.", icon: FileSignature }
                 ].map((item, i) => (
-                  <li key={i} className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-900/20 border border-red-900/50 flex items-center justify-center text-red-400">
+                  <li key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-900/20 border border-red-900/50 flex items-center justify-center text-red-400">
                       <item.icon className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-1">{item.title}</h4>
-                      <p className="text-gray-500 text-sm font-light">{item.desc}</p>
+                      <p className="text-sm sm:text-base text-gray-500 font-light">{item.desc}</p>
                     </div>
                   </li>
                 ))}
@@ -136,19 +136,19 @@ const ApothecaryFunnel = () => {
       </section>
 
       {/* Solution Section */}
-      <section className="py-24 relative">
+      <section className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 relative">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl lg:text-5xl font-light mb-6">
+          <div className="text-center w-full w-full max-w-3xl mx-auto mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-light mb-6">
               Clinical precision for <br />
               <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-200">botanical artisans.</span>
             </h2>
-            <p className="text-gray-400 text-lg font-light">
+            <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed font-light">
               Artisan Flow provides the exact tools needed to standardize your recipes, trace every ingredient, and formulate with absolute confidence.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4 sm:p-8">
+          <div className="grid md:grid-cols-3 gap-3 sm:gap-6">
             {[
               { 
                 title: "Dynamic Recipe Scaling", 
@@ -172,13 +172,13 @@ const ApothecaryFunnel = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-4 sm:p-8 rounded-3xl bg-[#0d1411] border border-emerald-900/30 hover:border-emerald-500/50 transition-colors group"
+                className="p-3.5 sm:p-6 lg:p-12 rounded-3xl bg-[#0d1411] border border-emerald-900/30 hover:border-emerald-500/50 transition-colors group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-emerald-900/30 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-2xl bg-emerald-900/30 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
                   <feature.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-medium text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400 font-light leading-relaxed">
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-medium text-white mb-3">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-white sm:text-gray-400 font-light leading-relaxed">
                   {feature.desc}
                 </p>
               </motion.div>
@@ -188,22 +188,22 @@ const ApothecaryFunnel = () => {
       </section>
 
       {/* Testimonial Section */}
-      <section className="py-24 bg-[#0d1411] relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-96 bg-emerald-900/20 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-          <Quote className="w-12 h-12 text-emerald-500/50 mx-auto mb-8" />
-          <h3 className="text-2xl lg:text-4xl font-light text-white mb-10 leading-relaxed">
+      <section className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 bg-[#0d1411] relative overflow-x-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-[250px] sm:h-96 bg-emerald-900/20 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="w-full w-full max-w-4xl mx-auto px-6 relative z-10 text-center">
+          <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500/50 mx-auto mb-8" />
+          <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-light text-white mb-10 leading-relaxed">
             "Artisan Flow completely transformed how we manage our apothecary lines. The ability to scale our complex herbal serums precisely has saved us thousands in wasted ingredients. It's the clinical backbone our botanical brand needed."
           </h3>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-3 sm:gap-4">
             <img 
               src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" 
               alt="Sarah Jenkins" 
-              className="w-16 h-16 rounded-full object-cover border-2 border-emerald-500/30"
+              className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-emerald-500/30"
             />
             <div className="text-left">
-              <p className="text-white font-medium">Sarah Jenkins</p>
-              <p className="text-emerald-400 text-sm font-light">Founder, Botanica Clinical</p>
+              <p className="text-sm sm:text-base text-white font-medium">Sarah Jenkins</p>
+              <p className="text-sm sm:text-base text-emerald-400 font-light">Founder, Botanica Clinical</p>
             </div>
           </div>
         </div>
@@ -216,25 +216,25 @@ const ApothecaryFunnel = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="p-4 sm:p-12 md:p-20 rounded-[3rem] bg-gradient-to-b from-[#0d1411] to-[#0a0f0d] border border-emerald-900/50 shadow-2xl relative overflow-hidden"
+            className="p-4 sm:p-12 md:p-20 rounded-[3rem] bg-gradient-to-b from-[#0d1411] to-[#0a0f0d] border border-emerald-900/50 shadow-2xl relative overflow-x-hidden"
           >
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1615397323283-7c337b5879ea?auto=format&fit=crop&q=80&w=1200')] opacity-5 bg-cover bg-center"></div>
             
             <div className="relative z-10">
-              <h2 className="text-4xl lg:text-5xl font-light text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-light text-white mb-6">
                 Ready to elevate your formulations?
               </h2>
-              <p className="text-xl text-gray-400 font-light mb-10 max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white sm:text-gray-400 font-light mb-10 max-w-2xl mx-auto">
                 Join the visionary apothecaries and clean beauty brands standardizing their production with Artisan Flow.
               </p>
               <a 
                 href="/auth?tier=Artisan%20Flow%20Basic"
-                className="inline-flex items-center justify-center px-10 py-5 bg-emerald-600 hover:bg-emerald-500 text-white text-lg font-medium rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.5)] group"
+                className="inline-flex items-center justify-center px-10 py-5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm sm:text-base leading-relaxed font-medium rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.5)] group"
               >
                 Standardize Your Recipes
                 <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
-              <p className="mt-6 text-sm text-gray-500 font-light">
+              <p className="text-sm sm:text-base mt-6 text-gray-500 font-light">
                 Start for free. No credit card required.
               </p>
             </div>

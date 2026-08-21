@@ -19,12 +19,12 @@ export const Locations = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 animate-in fade-in pb-20">
+    <div className="p-4 sm:p-6 space-y-6 animate-in fade-in pb-8 sm:pb-12 lg:pb-20">
       <Modal isOpen={showAdd} onClose={() => setShowAdd(false)} title="Add Location">
           <div className="space-y-4">
               <Input placeholder="Location Name" value={newLoc.name} onChange={e => setNewLoc({...newLoc, name: e.target.value})} />
               <Input placeholder="Address" value={newLoc.address} onChange={e => setNewLoc({...newLoc, address: e.target.value})} />
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                       <label className="text-xs text-gray-500">Type</label>
                       <Select value={newLoc.type} onChange={e => setNewLoc({...newLoc, type: e.target.value as any})}>
@@ -46,10 +46,10 @@ export const Locations = () => {
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-500 hover:text-[#6A2C91] mb-2 font-medium transition-colors">
           <ArrowLeft size={18} /> Back
         </button>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
             <div>
-                <h1 className="text-3xl font-bold text-white">Location Management</h1>
-                <p className="text-gray-500">Manage warehouses and storage locations</p>
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-bold text-white">Location Management</h1>
+                <p className="text-sm sm:text-base text-gray-500">Manage warehouses and storage locations</p>
             </div>
             <Button className="bg-[#6A2C91] text-white" onClick={() => setShowAdd(true)}>
                 <Plus size={16} className="mr-2" /> Add Location
@@ -58,28 +58,28 @@ export const Locations = () => {
       </div>
 
       {locations.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[500px]">
-              <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6">
-                  <MapPin size={40} className="text-gray-300" />
+          <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[250px] sm:min-h-[300px] aspect-video sm:aspect-auto w-full max-w-full overflow-hidden">
+              <div className="w-12 h-12 sm:w-20 sm:h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6">
+                  <MapPin size={40} className="text-white sm:text-gray-300" />
               </div>
-              <h3 className="text-lg font-medium text-white font-bold mb-2">No locations yet. Create your first location to get started.</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed font-medium text-white font-bold mb-2">No locations yet. Create your first location to get started.</h3>
           </div>
       ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
               {locations.map(loc => (
-                  <div key={loc.id} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="flex items-center gap-4 mb-4">
+                  <div key={loc.id} className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="flex items-center gap-3 sm:gap-4 mb-4">
                           <div className="p-3 bg-purple-100 text-purple-600 rounded-lg">
                               <MapPin size={24} />
                           </div>
                           <div>
-                              <h3 className="font-bold text-white">{loc.name}</h3>
-                              <p className="text-xs text-gray-500 uppercase">{loc.type}</p>
+                              <h3 className="text-base sm:text-xl lg:text-3xl font-bold text-white">{loc.name}</h3>
+                              <p className="text-sm sm:text-base text-gray-500 uppercase">{loc.type}</p>
                           </div>
                       </div>
                       <div className="space-y-2 text-sm text-gray-600">
                           <p>{loc.address}</p>
-                          <p className="flex items-center gap-2 text-xs text-gray-500"><Box size={12}/> Capacity: {loc.capacity}</p>
+                          <p className="text-sm sm:text-base flex items-center gap-2 text-gray-500"><Box size={12}/> Capacity: {loc.capacity}</p>
                       </div>
                   </div>
               ))}

@@ -72,9 +72,9 @@ export const ContentCalendar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-10 md:p-16 space-y-12 max-w-[1600px] mx-auto pb-32"
+            className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-12 sm:pb-20 lg:pb-32"
         >
-            <div className="flex flex-col gap-4 sm:p-8">
+            <div className="flex flex-col gap-3 sm:gap-6">
                 <SubPageHeader 
                   title="Content Calendar"
                   parentTitle="Marketing Hub"
@@ -83,11 +83,11 @@ export const ContentCalendar = () => {
                 />
             </div>
 
-            <Card className="luxury-card border-transparent rounded-[2.5rem] p-4 sm:p-10 bg-black/40 backdrop-blur-xl">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-6">
-                    <h2 className="text-3xl font-serif text-white tracking-tight">{monthName} {year}</h2>
+            <Card className="luxury-card border-transparent rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl">
+                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-3 sm:gap-6">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">{monthName} {year}</h2>
                     
-                    <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
+                    <div className="flex items-center gap-3 sm:gap-6 w-auto justify-between sm:justify-end">
                         {/* View Toggle */}
                         <div className="bg-black/40 p-1 rounded-xl flex border border-white/10">
                             {(['month', 'week', 'day'] as const).map(mode => (
@@ -111,13 +111,13 @@ export const ContentCalendar = () => {
 
                 {viewMode === 'month' && (
                     <>
-                        <div className="grid grid-cols-7 gap-4 mb-4">
+                        <div className="grid grid-cols-7 gap-3 sm:gap-4 mb-4">
                             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                                 <div key={day} className="text-center text-[10px] font-sans font-medium text-gray-500 uppercase tracking-widest">{day}</div>
                             ))}
                         </div>
 
-                        <div className="grid grid-cols-7 gap-4">
+                        <div className="grid grid-cols-7 gap-3 sm:gap-4">
                             {Array.from({ length: firstDay }).map((_, i) => (
                                 <div key={`blank-${i}`} className="h-32 rounded-3xl bg-white/5 opacity-30"></div>
                             ))}
@@ -130,7 +130,7 @@ export const ContentCalendar = () => {
                                         onClick={() => setSelectedDay(day)}
                                         className="h-32 rounded-3xl bg-white/5 border border-white/10 hover:border-[#6A2C91] hover:bg-white/10 p-3 transition-all cursor-pointer relative overflow-hidden group flex flex-col shadow-sm"
                                     >
-                                        <span className="text-xs font-sans font-medium text-gray-400 group-hover:text-white transition-colors">{day}</span>
+                                        <span className="text-xs font-sans font-medium text-white sm:text-gray-400 group-hover:text-white transition-colors">{day}</span>
                                         <div className="mt-auto space-y-1 overflow-y-auto hidden-scrollbar">
                                             {dayPosts.map((post, idx) => (
                                                 <div key={idx} className="bg-black/60 rounded p-1.5 flex items-center gap-1.5 overflow-hidden border border-white/5">
@@ -149,9 +149,9 @@ export const ContentCalendar = () => {
                 )}
 
                 {viewMode !== 'month' && (
-                    <div className="py-20 text-center opacity-50">
+                    <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center opacity-50">
                         <Calendar size={48} className="mx-auto mb-4 text-white" />
-                        <p className="font-serif text-white text-lg">Detailed {viewMode} view is currently in development.</p>
+                        <p className="text-sm sm:text-base font-serif text-white leading-relaxed">Detailed {viewMode} view is currently in development.</p>
                     </div>
                 )}
             </Card>
@@ -161,15 +161,15 @@ export const ContentCalendar = () => {
                     {selectedDay && getPostsForDay(selectedDay).length > 0 ? (
                         <div className="space-y-4">
                             {getPostsForDay(selectedDay).map(post => (
-                                <div key={post.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-4">
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-4">
-                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${post.status === 'Published' ? 'bg-emerald-500/20 text-emerald-500' : 'bg-[#6A2C91]/20 text-[#6A2C91]'}`}>
+                                <div key={post.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3 sm:gap-4">
+                                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
+                                        <div className="flex items-center gap-3 sm:gap-4">
+                                            <div className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-xl flex items-center justify-center ${post.status === 'Published' ? 'bg-emerald-500/20 text-emerald-500' : 'bg-[#6A2C91]/20 text-[#6A2C91]'}`}>
                                                 {getPlatformIcon(post.platform)}
                                             </div>
                                             <div>
-                                                <p className="text-white font-sans font-medium text-sm">{post.topic}</p>
-                                                <p className="text-gray-500 font-sans text-[10px] uppercase tracking-widest">{post.status}</p>
+                                                <p className="text-sm sm:text-base text-white font-sans font-medium">{post.topic}</p>
+                                                <p className="text-sm sm:text-base text-gray-500 font-sans text-[10px] uppercase tracking-widest">{post.status}</p>
                                             </div>
                                         </div>
                                         <Badge color={post.status === 'Published' ? 'green' : post.status === 'Draft' ? 'gray' : 'purple' as any}>{post.status}</Badge>
@@ -200,9 +200,9 @@ export const ContentCalendar = () => {
                             ))}
                         </div>
                     ) : (
-                        <p className="text-gray-500 text-sm font-sans text-center py-8">No nodes scheduled for this date.</p>
+                        <p className="text-sm sm:text-base text-gray-500 font-sans text-center py-8">No nodes scheduled for this date.</p>
                     )}
-                    <Button onClick={() => navigate('/marketing/creator')} className="w-full bg-gradient-to-r from-[#C5A059] to-[#b08d4f] text-white h-12 rounded-xl font-sans font-medium text-[10px] uppercase tracking-widest shadow-lg border-none">
+                    <Button onClick={() => navigate('/marketing/creator')} className="w-full bg-gradient-to-r from-[#C5A059] to-[#b08d4f] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-xl font-sans font-medium text-[10px] uppercase tracking-widest shadow-lg border-none">
                         <Plus size={14} className="mr-2" /> Add Campaign Asset
                     </Button>
                 </div>

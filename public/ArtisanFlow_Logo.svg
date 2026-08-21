@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" width="1200" height="300">
+  <defs>
+    <linearGradient id="flowGradient" x1="72%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="33%" stop-color="#A855F7" />
+      <stop offset="66%" stop-color="#D946EF" />
+      <stop offset="100%" stop-color="#C5A059" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="#0d0d0d" />
+  
+  <text x="50" y="95" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" letter-spacing="-1">
+    <tspan fill="#ffffff">LRC </tspan><tspan fill="#ffffff" font-weight="800">Artisan</tspan><tspan fill="url(#flowGradient)" font-weight="900">Flow</tspan>
+  </text>
+</svg>

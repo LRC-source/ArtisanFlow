@@ -25,44 +25,44 @@ export const TaxExporter = () => {
     };
 
     return (
-        <Card className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 sm:p-8 rounded-3xl relative overflow-hidden">
+        <Card className="bg-black/60 backdrop-blur-xl border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-3xl relative overflow-hidden">
             {/* Background Glow */}
-            <div className="absolute -top-32 -right-32 w-64 h-64 bg-emerald-600/20 rounded-full blur-[100px]" />
+            <div className="absolute -top-32 -right-32 w-full sm:w-64 h-[180px] sm:h-64 bg-emerald-600/20 rounded-full blur-[100px]" />
             
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 sm:p-8">
+            <div className="relative z-10 flex flex-col md:flex-col sm:flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6">
                 <div className="space-y-4 flex-1">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
                             <FileText size={24} className="text-[#C5A059]" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-white font-serif">Schedule C Tax Season Helper</h3>
-                            <p className="text-white/50 text-sm">Automated COGS calculation and expense extraction.</p>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white font-serif">Schedule C Tax Season Helper</h3>
+                            <p className="text-sm sm:text-base text-white sm:text-white/50">Automated COGS calculation and expense extraction.</p>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mt-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6">
                         <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                            <p className="text-xs text-white/40 uppercase tracking-widest font-bold mb-1">Ending Inv. Value</p>
-                            <p className="text-xl text-white font-mono">${inventoryValuation.toLocaleString()}</p>
+                            <p className="text-sm sm:text-base text-white sm:text-white/40 uppercase tracking-widest font-bold mb-1">Ending Inv. Value</p>
+                            <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white font-mono">${inventoryValuation.toLocaleString()}</p>
                         </div>
                         <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                            <p className="text-xs text-white/40 uppercase tracking-widest font-bold mb-1">Calculated COGS</p>
-                            <p className="text-xl text-emerald-400 font-mono">${cogs.toLocaleString()}</p>
+                            <p className="text-sm sm:text-base text-white sm:text-white/40 uppercase tracking-widest font-bold mb-1">Calculated COGS</p>
+                            <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-emerald-400 font-mono">${cogs.toLocaleString()}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-4 w-full md:w-auto">
+                <div className="flex flex-col gap-3 sm:gap-4 w-full md:w-auto">
                     <Button 
                         onClick={handleExport}
                         disabled={isExporting}
-                        className="bg-[#C5A059] hover:bg-[#b08d4a] text-black h-14 px-8 rounded-xl font-bold tracking-widest uppercase flex items-center justify-center gap-3 w-full md:w-auto"
+                        className="bg-[#C5A059] hover:bg-[#b08d4a] text-black w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-xl font-bold tracking-widest uppercase flex items-center justify-center gap-3 w-full md:w-auto"
                     >
                         {isExporting ? <Calculator className="animate-spin" size={18} /> : <Download size={18} />}
                         {isExporting ? "GENERATING..." : "EXPORT IRS SUMMARY"}
                     </Button>
-                    <p className="text-[10px] text-white/30 text-center max-w-[200px] mx-auto">
+                    <p className="text-sm sm:text-base text-[10px] text-white/30 text-center max-w-[200px] mx-auto">
                         Generates a structured CSV mapping to IRS Schedule C Line 35-42 requirements.
                     </p>
                 </div>

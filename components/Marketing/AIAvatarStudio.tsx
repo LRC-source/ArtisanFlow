@@ -84,7 +84,7 @@ export const AIAvatarStudio = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 space-y-12 pb-32 max-w-7xl mx-auto"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-12 sm:pb-20 lg:pb-32 max-w-7xl mx-auto"
         >
             <div className="w-full">
                 <SubPageHeader 
@@ -95,14 +95,14 @@ export const AIAvatarStudio = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                 {/* Configuration Panel */}
                 <div className="lg:col-span-5 space-y-6">
-                    <Card className="p-8 bg-black/40 border-white/5 backdrop-blur-xl">
+                    <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
                         <div className="space-y-8">
                             
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <User size={14} className="mr-2 text-magenta-500" /> Persona Appearance
                                 </label>
                                 <textarea 
@@ -114,19 +114,19 @@ export const AIAvatarStudio = () => {
                             </div>
 
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <ImageIcon size={14} className="mr-2 text-emerald-500" /> Source Likeness (Optional)
                                 </label>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-3 sm:gap-4">
                                     <label className="flex-1 cursor-pointer group">
                                         <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
-                                        <div className="w-full h-16 border-2 border-dashed border-white/10 rounded-xl flex items-center justify-center gap-2 text-gray-400 group-hover:border-magenta-500/50 group-hover:bg-magenta-500/10 transition-all bg-white/5">
+                                        <div className="w-full py-3 px-6 border-2 border-dashed border-white/10 rounded-xl flex items-center justify-center gap-2 text-white sm:text-gray-400 group-hover:border-magenta-500/50 group-hover:bg-magenta-500/10 transition-all bg-white/5">
                                             <Upload size={16} />
                                             <span className="text-[10px] font-sans uppercase tracking-widest">{referenceImage ? "Change Reference" : "Upload Face Reference"}</span>
                                         </div>
                                     </label>
                                     {referenceImage && (
-                                        <div className="w-16 h-16 rounded-xl overflow-hidden border border-white/20 relative">
+                                        <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl overflow-hidden border border-white/20 relative">
                                             <img src={referenceImage} alt="Reference" className="w-full h-full object-cover" />
                                             <button onClick={() => setReferenceImage(null)} className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 flex items-center justify-center text-white transition-opacity">
                                                 <X size={16} />
@@ -137,10 +137,10 @@ export const AIAvatarStudio = () => {
                             </div>
 
                             <div>
-                                <label className="flex items-center text-[10px] font-black text-white/40 uppercase tracking-widest mb-3 ml-1">
+                                <label className="flex items-center text-[10px] font-black text-white sm:text-white/40 uppercase tracking-widest mb-3 ml-1">
                                     <Sparkles size={14} className="mr-2 text-[#C5A059]" /> Avatar Pose / Emotion
                                 </label>
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {poses.map(pose => (
                                         <button 
                                             key={pose.id}
@@ -148,13 +148,13 @@ export const AIAvatarStudio = () => {
                                             className={`p-3 rounded-xl border text-left transition-all ${selectedPose === pose.id ? 'bg-[#6A2C91]/20 border-[#6A2C91]/50' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
                                         >
                                             <div className="text-white font-serif text-sm mb-1">{pose.id}</div>
-                                            <div className="text-[10px] text-gray-400 leading-tight">{pose.desc}</div>
+                                            <div className="text-[10px] text-white sm:text-gray-400 leading-tight">{pose.desc}</div>
                                         </button>
                                     ))}
                                 </div>
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white h-14 rounded-2xl shadow-lg border-none">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
                                 {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Sparkles className="mr-2" />}
                                 {isGenerating ? "Synthesizing Persona..." : "Generate Avatar Frame"}
                             </Button>
@@ -167,8 +167,8 @@ export const AIAvatarStudio = () => {
                     <Card className="h-full border-white/10 rounded-[2.5rem] p-0 bg-black/20 backdrop-blur-xl flex flex-col overflow-hidden relative">
                         {generatedImage ? (
                             <div className="flex flex-col h-full">
-                                <div className="flex-1 p-8 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/80 relative">
-                                    <div className="absolute top-6 left-6 flex flex-col gap-2">
+                                <div className="flex-1 p-4 sm:p-5 lg:p-6 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/80 relative">
+                                    <div className="absolute top-4 sm:p-6 left-6 flex flex-col gap-2">
                                         <Badge color="magenta">Pose: {selectedPose}</Badge>
                                         <Badge color="purple">Model: Imagen 3.0 Pro</Badge>
                                     </div>
@@ -186,9 +186,9 @@ export const AIAvatarStudio = () => {
                                     </motion.div>
                                 </div>
                                 
-                                <div className="p-6 bg-[#111] border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-                                    <span className="text-xs text-gray-400 font-sans uppercase tracking-widest">Quick Insert:</span>
-                                    <div className="flex gap-3 w-full sm:w-auto">
+                                <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                                    <span className="text-xs text-white sm:text-gray-400 font-sans uppercase tracking-widest">Quick Insert:</span>
+                                    <div className="flex gap-3 w-auto">
                                         <Button variant="outline" onClick={() => quickInsert('Blog')} className="flex-1 sm:flex-none border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 h-12">
                                             <Send size={14} className="mr-2" /> To Blog Template
                                         </Button>
@@ -201,7 +201,7 @@ export const AIAvatarStudio = () => {
                         ) : (
                             <div className="h-full flex flex-col items-center justify-center opacity-30 py-32">
                                 <User size={80} strokeWidth={0.5} className="text-white mb-8" />
-                                <p className="text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]">Awaiting Neural Synthesis</p>
+                                <p className="text-sm sm:text-base text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]">Awaiting Neural Synthesis</p>
                             </div>
                         )}
                     </Card>

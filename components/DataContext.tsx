@@ -457,7 +457,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
           if (docSnap.exists()) {
             setIsAuthenticated(true);
             const profileData = docSnap.data().profile;
-            const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online'];
+            const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
             
             // Securely grant admin rights if the authenticated Firebase user matches an admin email
             if (user.email && adminEmails.includes(user.email.toLowerCase())) {

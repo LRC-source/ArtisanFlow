@@ -14,7 +14,7 @@ import { ContextualTutorialModal } from '../ContextualTutorialModal';
 const MarketingGrid = () => {
     const navigate = useNavigate();
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <HubCard 
                 title="Visual Analysis" 
                 icon={Eye} 
@@ -132,19 +132,19 @@ const SocialMediaIntegrationManager = () => {
                 subtitle="Synchronize your brand across the digital ecosystem. Manage APIs and automated publishing pipelines."
                 badge="Integration Protocol Active"
             >
-                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto overflow-x-auto pb-4 scrollbar-hide">
                     {platforms.map((platform) => (
                         <div 
                             key={platform.id}
                             onClick={() => !platform.connected && handleConnect(platform.name)}
-                            className={`flex-shrink-0 w-64 p-5 rounded-3xl border flex items-center justify-between cursor-pointer transition-all duration-300 ${platform.connected ? 'bg-white/5 border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.1)]' : 'bg-black/40 border-white/10 hover:border-white/30 hover:bg-white/5'}`}
+                            className={`flex-shrink-0 w-full sm:w-64 p-5 rounded-3xl border flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center cursor-pointer transition-all duration-300 ${platform.connected ? 'bg-white/5 border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.1)]' : 'bg-black/40 border-white/10 hover:border-white/30 hover:bg-white/5'}`}
                         >
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-3 sm:gap-4">
                                 <div className={`p-3 rounded-2xl bg-white/5 ${platform.color}`}>
                                     <platform.icon size={20} strokeWidth={1.5} />
                                 </div>
                                 <div>
-                                    <p className="text-white font-serif tracking-tight text-sm">{platform.name}</p>
+                                    <p className="text-sm sm:text-base text-white font-serif tracking-tight">{platform.name}</p>
                                     <p className={`text-[9px] font-bold uppercase tracking-widest mt-1 ${platform.connected ? 'text-emerald-400' : 'text-white/30'}`}>{platform.status}</p>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@ export const MarketingStudio = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-7xl mx-auto px-4 py-6 space-y-12 pb-20 overflow-visible"
+            className="max-w-7xl mx-auto px-4 py-6 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 overflow-visible"
         >
             <ContextualTutorialModal
                 hubId="marketing_studio"
@@ -172,18 +172,18 @@ export const MarketingStudio = () => {
                 description="Central command for all your marketing and branding efforts."
                 steps={["Access Visual Analysis to audit assets.","Use Marketing Creator for quick designs.","Generate your Brand Voice Profile."]}
             />
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
                 <div>
-                    <h1 className="text-5xl font-serif text-white tracking-tight mb-3 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">Marketing Studio</h1>
-                    <p className="text-white/60 font-sans font-light text-lg max-w-xl leading-relaxed">AI-powered content creation and marketing protocols.</p>
+                    <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Marketing Studio</h1>
+                    <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed max-w-xl leading-relaxed">AI-powered content creation and marketing protocols.</p>
                 </div>
             </div>
             
             <SocialMediaIntegrationManager />
             
             <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-serif text-white tracking-tight">Studio Nodes</h2>
+                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Studio Nodes</h2>
                     <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent ml-8"></div>
                 </div>
                 <MarketingGrid />
