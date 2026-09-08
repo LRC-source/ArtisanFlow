@@ -9,7 +9,7 @@ import {
   ArrowLeft, Bell, MoreHorizontal, Lock, Unlock, AlertTriangle
 } from 'lucide-react';
 import { useArtisanData } from './DataContext';
-import { LRCLogo } from './UI';
+import { LRCLogo, Modal } from './UI';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { searchBusinessData } from '../services/geminiService';
 import { TutorialOverlay } from './TutorialOverlay';
@@ -22,12 +22,34 @@ import { SupportModal } from './SupportModal';
 export default function Layout({ children }: { children?: React.ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { businessProfile, userTier, logout, inventory, orders, getMarginMetrics, startTutorial } = useArtisanData();
+  const { businessProfile, userTier, logout, inventory, orders, getMarginMetrics, startTutorial, upgradePrompt, setUpgradePrompt } = useArtisanData();
   
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+      const gateMap: Record<string, string> = {
+        '/marketing/avatar': 'mktg_avatar',
+        '/forecasting': 'logistics_forecast',
+        '/business-pulse-check': 'dash_diagnostic',
+        '/business-pulse': 'dash_diagnostic',
+        '/budget-guard': 'profit_guard',
+        '/profit-guard': 'profit_guard',
+        '/finance/budget-guard': 'profit_guard'
+      };
+      
+      const feature = gateMap[location.pathname];
+      if (feature) {
+        // Using settimeout to avoid state update during render if they click directly
+        setTimeout(() => {
+           if (!checkFeatureGate(feature)) {
+             navigate('/dashboard', { replace: true });
+           }
+        }, 0);
+      }
+    }, [location.pathname, userTier]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<string | null>(null);
 
@@ -337,6 +359,26 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       </main>
 
       <SupportModal isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
+      {upgradePrompt && (
+        <Modal isOpen={!!upgradePrompt} onClose={() => setUpgradePrompt(null)} title="Tier Limit Reached">
+          <div className="space-y-6">
+             <p className="text-white/80">
+                You have reached the usage limit for <strong className="text-white">{upgradePrompt.feature}</strong> or it is a gated feature. 
+             </p>
+             <p className="text-white/80">
+                Please upgrade your account to <strong className="text-[#C5A059]">{upgradePrompt.requiredTier}</strong> to unlock this capability.
+             </p>
+             <div className="flex gap-4 mt-8">
+               <button onClick={() => setUpgradePrompt(null)} className="flex-1 bg-white/10 hover:bg-white/20 text-white py-3 rounded-full font-bold uppercase tracking-widest text-xs transition-colors">
+                 Maybe Later
+               </button>
+               <button onClick={() => { setUpgradePrompt(null); navigate('/settings/subscription'); }} className="flex-1 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-white py-3 rounded-full font-bold uppercase tracking-widest text-xs hover:opacity-90 transition-opacity">
+                 Upgrade Tier
+               </button>
+             </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

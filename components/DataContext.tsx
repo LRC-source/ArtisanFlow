@@ -264,6 +264,9 @@ interface DataContextType {
   onboardingState: Record<string, boolean>;
   markHubVisited: (hubId: string) => void;
   submitVIPWaitlist: (data: { fullName: string; email: string; businessType: string }) => Promise<boolean>;
+  upgradePrompt: { feature: string; requiredTier: UserTier } | null;
+  setUpgradePrompt: (prompt: { feature: string; requiredTier: UserTier } | null) => void;
+  checkFeatureGate: (feature: string) => boolean;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -281,6 +284,54 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [tutorialStep, setTutorialStepState] = useState(0);
 
   // Read initial onboarding state from localStorage if available
+  const [upgradePrompt, setUpgradePrompt] = useState<{ feature: string; requiredTier: UserTier } | null>(null);
+
+  const checkFeatureGate = (action: string): boolean => {
+    const limits: Record<UserTier, any> = {
+      'Free Audit': {
+        vault_recipes: 5,
+        mktg_ai_actions: 5,
+        mktg_avatar: false,
+        logistics_forecast: false,
+        dash_diagnostic: false,
+        profit_guard: false
+      },
+      'Artisan Flow Basic': {
+        vault_recipes: Infinity,
+        mktg_ai_actions: 100,
+        mktg_avatar: false,
+        logistics_forecast: false,
+        dash_diagnostic: false,
+        profit_guard: false
+      },
+      'Margin Protection Pro': {
+        vault_recipes: Infinity,
+        mktg_ai_actions: Infinity,
+        mktg_avatar: true,
+        logistics_forecast: true,
+        dash_diagnostic: true,
+        profit_guard: true
+      }
+    };
+    
+    const limit = limits[userTier]?.[action];
+    
+    if (typeof limit === 'boolean') {
+      if (!limit) {
+        setUpgradePrompt({ feature: action, requiredTier: 'Margin Protection Pro' });
+        return false;
+      }
+      return true;
+    }
+    
+    if (action === 'vault_recipes' && recipes.length >= limit) {
+      setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Artisan Flow Basic' });
+      return false;
+    }
+    
+    return true;
+  };
+
   const [onboardingState, setOnboardingState] = useState<Record<string, boolean>>(() => {
       if (typeof window !== 'undefined') {
           try {
@@ -783,14 +834,19 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const addRecipe = async (recipe: any) => {
     try {
+      if (!checkFeatureGate('vault_recipes')) {
+        return; // Modal will be shown by checkFeatureGate
+      }
+      
       const res = await fetch('/api/gating', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: userTier.toLowerCase().replace(/ /g, '-'), action: 'ADD_RECIPE', currentCount: recipes.length })
+        body: JSON.stringify({ tier: userTier.toLowerCase().replace(/ /g, '-'), action: 'vault_recipes', currentCount: recipes.length })
       });
       const gate = await res.json();
       if (!gate.allowed) {
-        throw new Error(`Tier limit reached: ${gate.limit}`);
+        setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Artisan Flow Basic' });
+        return;
       }
       
       const newRecipe = { ...recipe, id: `r-${Date.now()}` };

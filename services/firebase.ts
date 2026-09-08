@@ -3,8 +3,8 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBw3tkLQXi6E4d-TRATSlSC7roFLrWhtrw",
-  authDomain: "artisanflow-b6abf.firebaseapp.com",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+  authDomain: "artisanflow.lrcholisticmarketing.online",
   projectId: "artisanflow-b6abf",
   storageBucket: "artisanflow-b6abf.firebasestorage.app",
   messagingSenderId: "202144552685",

@@ -1,63 +1,26 @@
 import React, { useState, useRef } from 'react';
 import { Card, Button, Input } from './UI';
-import { useArtisanData } from './DataContext';
-import { Lock, ArrowRight, Sparkles, CheckCircle, ChevronDown, Activity, Shield, Cpu, FlaskConical, Bot, ShieldCheck, Rocket } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle, ChevronDown, Activity, Shield, Cpu, FlaskConical, Bot, ShieldCheck, Rocket } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AuthGateway } from './Auth';
-
-const CATEGORIES = [
-    "What type of maker are you? Click here",
-    "Skincare or Formulator",
-    "Herbalist & Apothecary",
-    "Candle & Wax Melt Maker",
-    "Soap & Bath Product Artisan",
-    "Perfumer & Fragrance Creator",
-    "Essential Oil & Aromatherapy Blender",
-    "Hair Care & Body Care Artisan",
-    "Herbal Tea & Beverage Formulator",
-    "Tincture & Botanical Extract Craftsman",
-    "Resin & Home Decor Maker",
-    "Ceramic & Pottery Artisan",
-    "Leather Goods Craftsman",
-    "Woodworking & Custom Furniture Maker",
-    "Jewelry & Metal Accessories Designer",
-    "Textile, Fiber & Apparel Artisan",
-    "Custom T-Shirt & Clothing Maker",
-    "Specialty Food & Confectioner",
-    "Gourmet Sauce & Condiment Artisan",
-    "Bakery & Artisan Treats Maker",
-    "Stationery, Paper & Printmaker",
-    "Other Artisan / Handmade Goods"
-];
+import { UserTier } from './DataContext';
 
 export const LandingPage = () => {
-    const { submitVIPWaitlist } = useArtisanData();
-    const navigate = useNavigate();
-    const [view, setView] = useState<'hero' | 'login'>('hero');
-    const [formData, setFormData] = useState({ fullName: '', email: '', businessType: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+        const navigate = useNavigate();
+    const [view, setView] = useState<'hero' | 'login' | 'signup' | 'checkout'>('hero');
+    const [selectedTier, setSelectedTier] = useState<UserTier>('Free Audit');
+                
     
-    const formRef = useRef<HTMLDivElement>(null);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        if (submitVIPWaitlist) {
-             const success = await submitVIPWaitlist(formData);
-             if (success) {
-                 setIsSubmitted(true);
-             }
-        }
-        setIsSubmitting(false);
-    };
-
-    const scrollToForm = () => {
-        formRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
-
+    
+    
     if (view === 'login') {
         return <AuthGateway initialView="login" onBack={() => setView('hero')} />;
+    }
+    if (view === 'signup') {
+        return <AuthGateway initialView="signup" selectedTier={selectedTier} onBack={() => setView('hero')} />;
+    }
+    if (view === 'checkout') {
+        return <AuthGateway initialView="payment" selectedTier={selectedTier} onBack={() => setView('hero')} />;
     }
 
     return (
@@ -67,15 +30,6 @@ export const LandingPage = () => {
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C5A059]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#6A2C91]/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
             
-            {/* Top VIP Announcement Banner */}
-            <div className="w-full bg-gradient-to-r from-[#06B6D4]/30 via-[#A855F7]/30 to-[#C5A059]/30 backdrop-blur-md border-b border-white/15 text-center flex items-center justify-center gap-2 text-white font-bold tracking-wide text-sm py-3 px-6 z-50 relative">
-                <span className="relative inline-flex items-center justify-center w-[26px] h-[26px] rounded-lg bg-white/10 border border-white/25 backdrop-blur-md mr-2 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                    <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-50 blur-[2px] animate-pulse" />
-                    <Rocket className="w-3.5 h-3.5 text-white relative z-10 -rotate-12" />
-                </span>
-                VIP Launch: September 1st
-            </div>
-
             {/* Nav */}
             <nav className="w-full px-8 py-5 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
                 <div className="flex items-center cursor-pointer group">
@@ -89,9 +43,14 @@ export const LandingPage = () => {
                     </span>
                 </div>
                 <div>
-                    <Button variant="outline" onClick={() => setView('login')} className="h-10 px-8 font-bold border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 transition-all duration-300 rounded-full tracking-widest text-xs uppercase">
-                        Sign In
-                    </Button>
+                    <div className="p-[2px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer inline-block">
+                        <button 
+                            onClick={() => setView('login')} 
+                            className="bg-[#0d0d0d] flex items-center justify-center h-10 px-8 rounded-[calc(9999px-2px)] font-bold text-white tracking-widest text-xs uppercase hover:bg-black/50 transition-all duration-300"
+                        >
+                            Sign In
+                        </button>
+                    </div>
                 </div>
             </nav>
 
@@ -102,80 +61,27 @@ export const LandingPage = () => {
                     {/* Left Column: Copy & Form */}
                     <div className="text-left space-y-8 relative z-10">
                         <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">
-                            Precision Manufacturing <br/> For <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Artisanal</span> Brands
+                            Stop Spreadsheet Chaos. <br/> Automate Your <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Manufacturing</span>.
                         </h1>
                         <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed max-w-xl">
-                            Synchronize your inventory, calculate real-time material burn rates, generate high-fidelity marketing assets, and protect your margins with Lola AI. Join the VIP waitlist for exclusive Lifetime Deal access.
+                            Synchronize your inventory, dynamically scale recipe formulations, generate high-fidelity marketing assets, and protect your margins. Built by makers, for makers.
                         </p>
 
-                        {/* Waitlist Form */}
-                        <div ref={formRef} className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl">
-                            {isSubmitted ? (
-                                <div className="text-center py-8 space-y-4 animate-in fade-in zoom-in duration-500">
-                                    <CheckCircle size={48} className="text-[#10B981] mx-auto mb-4" />
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black text-white">You're Officially on the VIP List!</h3>
-                                    <p className="text-sm sm:text-base text-white sm:text-gray-400 max-w-sm mx-auto leading-relaxed">
-                                        We've reserved your priority spot. Keep an eye on your inbox for exclusive behind-the-scenes previews before doors open September 1st @ 10:00 AM EST.
-                                    </p>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="mb-6">
-                                        <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
-                                            <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest">🔒 VIP Spots Claimed: 74 / 100</span>
-                                        </div>
-                                        <div className="h-1 w-full bg-white/10 rounded-full overflow-x-hidden">
-                                            <div className="h-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_15px_rgba(168,85,247,0.4)] rounded-full" style={{ width: '74%' }}></div>
-                                        </div>
-                                    </div>
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white mb-4">Secure Your VIP Spot</h3>
-                                    <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div>
-                                            <Input 
-                                                type="text" 
-                                                placeholder="Full Name" 
-                                                required 
-                                                value={formData.fullName}
-                                                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                                                className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
-                                            />
-                                        </div>
-                                        <div>
-                                            <Input 
-                                                type="email" 
-                                                placeholder="Email Address" 
-                                                required 
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                                className="bg-[#0d0d0d] border-white/10 text-white placeholder:text-gray-600 h-12"
-                                            />
-                                        </div>
-                                        <div className="relative">
-                                            <select 
-                                                required
-                                                value={formData.businessType}
-                                                onChange={(e) => setFormData({...formData, businessType: e.target.value})}
-                                                className="w-full bg-[#0d0d0d] border border-white/10 text-white rounded-xl px-4 w-auto mx-auto py-1 px-3 text-[10px] outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059] transition-all font-medium text-sm appearance-none pr-10"
-                                            >
-                                                {CATEGORIES.map((cat, index) => (
-                                                    <option key={cat} value={index === 0 ? "" : cat} disabled={index === 0} hidden={index === 0}>
-                                                        {cat}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#C5A059] pointer-events-none" />
-                                        </div>
-                                        <Button 
-                                            variant="primary" 
-                                            type="submit" 
-                                            disabled={isSubmitting}
-                                            className="w-full w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] transition-all border-none"
-                                        >
-                                            {isSubmitting ? 'JOINING...' : 'JOIN VIP WAITLIST'} <ArrowRight size={18} className="ml-2" />
-                                        </Button>
-                                    </form>
-                                </>
-                            )}
+                        {/* CTA Buttons */}
+                        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                            <Button 
+                                onClick={() => { setSelectedTier('Free Audit'); setView('signup'); }}
+                                className="py-4 px-8 text-sm font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-[0_0_30px_rgba(197,160,89,0.25)] border-none rounded-full transition-all flex items-center justify-center uppercase"
+                            >
+                                Start Free (Free Audit Tier) <ArrowRight size={18} className="ml-2" />
+                            </Button>
+                            <Button 
+                                variant="outline"
+                                onClick={() => document.getElementById('features-section')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="py-4 px-8 text-sm font-bold border-white/20 text-white hover:bg-white/10 rounded-full tracking-widest uppercase transition-all"
+                            >
+                                Explore Live Platform
+                            </Button>
                         </div>
                     </div>
 
@@ -240,12 +146,12 @@ export const LandingPage = () => {
                 </div>
 
                 {/* Platform Feature Nodes Section */}
-                <div className="mt-8 sm:mt-12 lg:mt-16 md:mt-20 w-full max-w-6xl relative z-10 px-2">
+                <div id="features-section" className="mt-8 sm:mt-12 lg:mt-16 md:mt-20 w-full max-w-6xl relative z-10 px-2">
                     <div className="text-center mb-10 md:mb-16">
                         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">Built For Industrial<br className="md:hidden" /> Manufacturing Precision</h2>
                         <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block">
                             <span className="block bg-[#0d0d0d] rounded-full py-1.5 px-4 md:py-2 md:px-6 text-[#E2C792] text-xs md:text-sm font-black uppercase tracking-widest">
-                               Designed by a Maker, Built for Makers
+                               Built from the ground up at Herbalistic Wellness to solve real-world hurdles
                             </span>
                         </div>
                     </div>
@@ -256,8 +162,8 @@ export const LandingPage = () => {
                                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
                                 <FlaskConical size={24} className="text-[#06B6D4] relative z-10" />
                             </div>
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white mb-2">Operations & Recipe Builder</h3>
-                            <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed">Bill of Materials tracking, automated batch inventory deduction, and supplier quality control ledgers.</p>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white mb-2">Dynamic Recipe Builder & Operations</h3>
+                            <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed">Dynamic Bill of Materials (BOM) tracking, automated inventory deductions, and supplier quality control ledgers.</p>
                         </div>
                         {/* Lola AI */}
                         <div className="group bg-white/[0.02] border border-white/10 p-4 sm:p-6 rounded-2xl hover:border-white/30 transition-all flex flex-col items-start text-left">
@@ -278,55 +184,89 @@ export const LandingPage = () => {
                             <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed">Real-time margin anomaly detection that alerts you before raw material cost increases destroy your margins.</p>
                         </div>
                     </div>
+
+                    {/* Marketing Hub Callout */}
+                    <div className="mt-3 sm:mt-6 w-full group bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 p-6 sm:p-10 rounded-2xl hover:border-white/30 transition-all flex flex-col md:flex-row items-center md:items-start text-left gap-6 sm:gap-8 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#A855F7]/10 blur-[80px] pointer-events-none rounded-full"></div>
+                        <div className="relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/[0.05] border border-white/20 backdrop-blur-xl flex items-center justify-center group-hover:scale-105 transition-all duration-300">
+                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-60 transition-all" />
+                            <Rocket size={32} className="text-white relative z-10" />
+                        </div>
+                        <div className="flex-1 relative z-10">
+                            <h3 className="text-xl sm:text-2xl lg:text-3xl text-white font-bold mb-3 flex flex-wrap items-center gap-3">
+                                Built-In Marketing Hub 
+                                <span className="bg-gradient-to-r from-[#06B6D4] to-[#A855F7] text-transparent bg-clip-text text-[10px] sm:text-xs uppercase tracking-widest font-black px-3 py-1 rounded-full border border-white/10 bg-white/5">The Industry Game Changer</span>
+                            </h3>
+                            <p className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-4xl">
+                                Unlike standard inventory spreadsheets or traditional MRPs that stop at tracking numbers, Artisan Flow recognizes that making your product is only half the battle. Our Built-In Marketing Hub integrates your product catalog directly with Lola AI, transforming newly formulated recipes into compelling, ready-to-publish social campaigns, blog posts, and SEO content. It's the first platform to seamlessly bridge the critical gap between back-of-house operations and front-of-house sales.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                {/* LTD Teaser Cards Section */}
+                {/* Transparent Pricing Tier Matrix */}
                 <div className="mt-8 sm:mt-12 lg:mt-20 md:mt-32 w-full max-w-6xl relative z-10 mb-20 px-2">
                     <div className="text-center mb-10 md:mb-16">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">Lifetime Deal Tiers</h2>
-                        <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed max-w-2xl mx-auto px-2">Lock in lifetime access for a single payment. Limited to 100 licenses. Prices reveal on launch day.</p>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">Pricing Tiers</h2>
+                        <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed max-w-2xl mx-auto px-2">Select a live plan that scales with your manufacturing needs. Free forever baseline, with powerful pro upgrades.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
-                        <LTDCert 
-                            title="Starter Maker LTD"
+                        <PricingCard 
+                            title="Free Audit"
+                            price="$0"
+                            subtitle="Baseline access to get started"
+                            isSelected={selectedTier === 'Free Audit'}
+                            onClick={() => setSelectedTier('Free Audit')}
                             features={[
-                                "Precision Bill of Materials (BOM) Recipe Costing",
-                                "Automated Batch Inventory Deduction",
-                                "Warehouse Stock Ledger & Low-Stock Alerts",
-                                "Universal CSV Importer (Craftybase Migration)",
-                                "Track Up to 500 Active SKUs"
+                                "Dynamic Recipe Builder (BOM)",
+                                "Baseline Inventory Tracking",
+                                "Basic Pulse Check",
+                                "Universal CSV Importer"
                             ]}
                         />
-                        <LTDCert 
-                            title="Artisan Pro LTD"
-                            isFeatured
+                        <PricingCard 
+                            title="Artisan Flow Basic"
+                            price="$49"
+                            subtitle="For scaling artisans"
+                            isSelected={selectedTier === 'Artisan Flow Basic'}
+                            onClick={() => { setSelectedTier('Artisan Flow Basic'); setView('checkout'); }}
                             features={[
-                                "Everything in Starter Maker, PLUS:",
-                                "Lola AI Marketing Suite (Social, Blogs, Scripts)",
-                                "Kanban Production Scheduler & Curing Workflow",
-                                "Supplier QC Ledgers & Purchase Orders",
-                                "Square SDK Omnichannel Sales Sync"
+                                "Full Operations Command Center",
+                                "Automated Inventory Deductions",
+                                "Lola AI Marketing Hub",
+                                "Supplier & QC Ledgers",
+                                "Omnichannel Sales Sync"
                             ]}
                         />
-                        <LTDCert 
-                            title="Master Formulator LTD"
+                        <PricingCard 
+                            title="Margin Protection Pro"
+                            price="$149"
+                            subtitle="Advanced enterprise suite"
+                            isSelected={selectedTier === 'Margin Protection Pro'}
+                            onClick={() => { setSelectedTier('Margin Protection Pro'); setView('checkout'); }}
                             features={[
-                                "Everything in Artisan Pro, PLUS:",
-                                "Profit Guard™ Real-Time Margin Protection",
-                                "Predictive Raw Material Reordering Alerts",
+                                "Everything in Basic, PLUS:",
+                                "Profit Guard™ Real-Time Margin Alerts",
+                                "Advanced Predictive Forecasting",
                                 "Multi-Location Warehouse Tracking",
-                                "Unlimited SKUs & Priority VIP Concierge Support"
+                                "Priority Concierge Support"
                             ]}
                         />
                     </div>
 
                     <div className="mt-8 sm:mt-12 lg:mt-16 flex justify-center">
                         <Button 
-                            onClick={scrollToForm}
-                            className="w-auto mx-auto py-1 px-3 text-[10px] px-10 font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-xl shadow-[#C5A059]/20 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] border-none rounded-full transition-all"
+                            onClick={() => {
+                                if (selectedTier === 'Free Audit') {
+                                    setView('signup');
+                                } else {
+                                    setView('checkout');
+                                }
+                            }}
+                            className="w-auto mx-auto py-3 px-8 text-sm font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-[0_0_30px_rgba(197,160,89,0.2)] border-none rounded-full transition-all"
                         >
-                            JOIN VIP WAITLIST <ArrowRight size={18} className="ml-2" />
+                            GET STARTED NOW <ArrowRight size={18} className="ml-2 inline" />
                         </Button>
                     </div>
                 </div>
@@ -335,32 +275,27 @@ export const LandingPage = () => {
     );
 };
 
-const LTDCert = ({ title, features, isFeatured }: { title: string, features: string[], isFeatured?: boolean }) => {
-    const containerClasses = isFeatured 
-        ? "p-[2px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_35px_rgba(168,85,247,0.15)] scale-105 z-10" 
-        : "border border-white/10 hover:border-white/30 p-4 sm:p-5 lg:p-6";
+const PricingCard = ({ title, price, subtitle, features, isFeatured, isSelected, onClick }: { title: string, price: string, subtitle: string, features: string[], isFeatured?: boolean, isSelected?: boolean, onClick?: () => void }) => {
+    const isOmbre = isSelected || isFeatured;
+    const containerClasses = isOmbre
+        ? "p-[2px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_35px_rgba(168,85,247,0.15)] scale-105 z-10 cursor-pointer" 
+        : "border border-white/10 hover:border-white/30 p-4 sm:p-5 lg:p-6 cursor-pointer opacity-70 hover:opacity-100";
 
     return (
-        <div className={`group relative flex flex-col h-full rounded-[2rem] transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`}>
-            <div className={`flex flex-col h-full relative ${isFeatured ? 'bg-[#0d0d0d] rounded-[calc(2rem-2px)] p-4 sm:p-5 lg:p-6' : ''}`}>
+        <div onClick={onClick} className={`group relative flex flex-col h-full rounded-[2rem] transition-all duration-500 bg-white/[0.02] backdrop-blur-xl ${containerClasses}`}>
+            <div className={`flex flex-col h-full relative ${(isSelected || isFeatured) ? 'bg-[#0d0d0d] rounded-[calc(2rem-2px)] p-4 sm:p-5 lg:p-6' : ''}`}>
                 {isFeatured && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-black text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
                         Most Popular
                     </div>
                 )}
-                <div className="mb-6">
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight mb-6 text-center">{title}</h3>
+                <div className="mb-6 text-center">
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight mb-2">{title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-400 mb-6">{subtitle}</p>
                     
-                    {/* Locked Price UI */}
-                    <div className="relative overflow-x-hidden rounded-2xl p-4 flex items-center justify-center min-h-[100px] w-full">
-                        <div className="absolute inset-0 backdrop-blur-[6px] z-10 flex flex-col items-center justify-center">
-                            <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.35)]">
-                                <div className="bg-[#0d0d0d]/90 backdrop-blur-md text-[#E2C792] px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                                    <Lock size={12} className="text-[#06B6D4]" /> VIP PRICE REVEALED SEP 1ST @ 10:00 AM EST
-                                </div>
-                            </div>
-                        </div>
-                        <span className="text-4xl sm:text-6xl lg:text-8xl font-black text-white/10 blur-sm">$???</span>
+                    <div className="flex justify-center items-baseline gap-1">
+                        <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">{price}</span>
+                        {price !== "Custom" && price !== "$0" && <span className="text-gray-400 font-medium">/mo</span>}
                     </div>
                 </div>
                 

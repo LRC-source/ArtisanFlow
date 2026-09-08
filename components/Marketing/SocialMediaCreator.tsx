@@ -32,6 +32,7 @@ export const SocialMediaCreator = () => {
     ];
 
     const handleGenerate = async () => {
+        if (!checkFeatureGate('mktg_ai_actions')) return;
         if (!topic && !selectedProduct) return toast.error("Please enter a topic or select a product.");
         setIsGenerating(true);
         const toastId = toast.loading("Synthesizing multi-platform campaign...");

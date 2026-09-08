@@ -22,6 +22,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [isNewUser, setIsNewUser] = useState(!!activeTier);
+  const [hasPaid, setHasPaid] = useState(false);
 
   const authSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
@@ -57,7 +58,15 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
           toast.error("Account creation failed. You may already have an account with this email.");
         }
       } else if (selectedTier) {
-        setView('payment');
+        if (hasPaid) {
+            try {
+              await signUp({ email, password: pass, tier: selectedTier, status: 'Active' });
+            } catch (e) {
+              toast.error("Account creation failed.");
+            }
+        } else {
+            setView('payment');
+        }
       } else {
         setView('tiers');
       }
@@ -115,8 +124,16 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
               console.error(e);
             }
           } else if (selectedTier) {
-            setEmail(user.email); // Pre-fill the email state for the payment gateway
-            setView('payment');
+            if (hasPaid) {
+              try {
+                await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: selectedTier, status: 'Active' });
+              } catch (e) {
+                console.error(e);
+              }
+            } else {
+              setEmail(user.email); // Pre-fill the email state for the payment gateway
+              setView('payment');
+            }
           } else {
             setEmail(user.email);
             setView('tiers');
@@ -154,12 +171,9 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
           <PaymentGateway 
              tier={selectedTier} 
              email={email}
-             onSuccess={async () => {
-               try {
-                 await signUp({ email, password: pass, tier: selectedTier, status: 'Active' });
-               } catch (e) {
-                 alert("Account creation failed. You may already have an account with this email.");
-               }
+             onSuccess={() => {
+                 setHasPaid(true);
+                 setView('signup');
              }}
              onBack={() => setView('signup')} 
           />

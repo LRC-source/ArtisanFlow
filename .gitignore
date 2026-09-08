@@ -1,6 +1,44 @@
-node_modules
-dist
+# Operations & Security
 .env
+.env.production
 .env.local
+firebase-keys.json
+service_account.json
+credentials.json
+client_secret.json
 
-.vercel
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Builds & Caches
+dist/
+build/
+.next/
+.cache/
+.vercel/
+out/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE & Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs & Databases
+*.log
+*.sqlite
+*.db
+local_database_dumps/
+
+*-key.json
+firebase-applet-config.json

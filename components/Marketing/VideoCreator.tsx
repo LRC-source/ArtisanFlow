@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 export const VideoCreator = () => {
     const navigate = useNavigate();
-    const { addMarketingPost } = useArtisanData();
+    const { addMarketingPost, checkFeatureGate } = useArtisanData();
     const [isGenerating, setIsGenerating] = useState(false);
     
     // Form State
@@ -31,6 +31,7 @@ export const VideoCreator = () => {
     ];
 
     const handleGenerate = async () => {
+        if (!checkFeatureGate('mktg_ai_actions')) return;
         if (!topic) return toast.error("Please enter a video topic.");
         setIsGenerating(true);
         const toastId = toast.loading("Synthesizing script and storyboard frames...");
