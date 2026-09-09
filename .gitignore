@@ -42,3 +42,5 @@ local_database_dumps/
 
 *-key.json
 firebase-applet-config.json
+dist-server/
+migrated_prompt_history/
