@@ -26,7 +26,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
 
   const authSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
-    pass: z.string().min(8, { message: "Vault Key (Password) must be at least 8 characters long" })
+    pass: z.string().min(8, { message: "Password must be at least 8 characters long" })
   });
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -71,7 +71,10 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
         setView('tiers');
       }
     } else {
-      await login(email, pass);
+      const success = await login(email, pass);
+      if (!success) {
+        toast.error("That email and password don't match. Try again or reset your password.");
+      }
     }
   };
 
@@ -238,11 +241,11 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
 
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Work Email</label>
+                    <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Email</label>
                     <Input type="email" placeholder="alex@artisanflow.ai" value={email} onChange={e => setEmail(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Vault Key (Password)</label>
+                    <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Password</label>
                     <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
@@ -256,8 +259,8 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                   <div className="relative flex justify-center text-[10px] font-black uppercase bg-transparent px-4 text-white/20 tracking-[0.2em]">Secure Entry Point</div>
                 </div>
 
-                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold border-white/10 hover:bg-white/5 text-white">
-                  <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
+                <Button type="button" variant="outline" onClick={() => toast.info("Google Sign-in is coming soon.")} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold border-white/10 hover:bg-white/5 text-white opacity-50 cursor-not-allowed">
+                  <Chrome size={18} className="mr-2 text-[#4285F4]" /> Google Sign-in (Coming Soon)
                 </Button>
 
                 <div className="mt-4">

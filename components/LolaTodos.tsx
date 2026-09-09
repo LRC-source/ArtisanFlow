@@ -102,7 +102,7 @@ export const LolaTodos: React.FC = () => {
                                                     {todo.category}
                                                 </div>
                                             </div>
-                                            <p className="text-sm sm:text-base text-[10px] text-stone-400 font-bold uppercase tracking-widest mt-1">
+                                            <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest mt-1">
                                                 Created: {new Date(todo.createdDate).toLocaleDateString()} • {todo.completed ? 'Synchronized' : 'Awaiting Input'}
                                             </p>
                                         </div>

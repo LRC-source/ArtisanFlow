@@ -90,21 +90,21 @@ export const Recipes = () => {
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-8 relative z-10">
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
-                              <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Batch Yield</p>
+                              <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Batch Yield</p>
                               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white">{recipe.yield}</p>
                           </div>
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
-                              <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Landed Cost</p>
+                              <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Landed Cost</p>
                               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-emerald-400">${recipe.totalCost.toFixed(2)}</p>
                           </div>
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
-                              <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Labor</p>
+                              <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Labor</p>
                               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-[#C5A059]">{recipe.productionTime}m</p>
                           </div>
                       </div>
 
                       <div className="space-y-4 border-t border-white/5 pt-8 relative z-10">
-                          <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] flex items-center gap-2"><Box size={14} className="text-[#6A2C91]" /> Bill of Materials ({recipe.ingredients.length} Nodes)</p>
+                          <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] flex items-center gap-2"><Box size={14} className="text-[#6A2C91]" /> Bill of Materials ({recipe.ingredients.length} Nodes)</p>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                               {recipe.ingredients.map((ing, i) => (
                                   <div key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
@@ -125,7 +125,7 @@ export const Recipes = () => {
 const StatBox = ({ label, val, color, icon: Icon, haloColor }: any) => (
     <div className="luxury-card bg-black/40 backdrop-blur-xl p-3.5 sm:p-6 lg:p-12 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#6A2C91]/30 transition-all">
         <GlassHaloIcon icon={Icon} color={haloColor || 'gold'} size="md" className="mb-6 group-hover:scale-110 transition-all" />
-        <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
+        <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
         <p className={`text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight ${color}`}>{val}</p>
     </div>
 );

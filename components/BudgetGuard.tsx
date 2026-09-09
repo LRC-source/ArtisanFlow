@@ -113,7 +113,7 @@ export const BudgetGuard: React.FC = () => {
                             
                             <div className="pt-6 border-t border-stone-100">
                                 <div className="flex justify-between items-end mb-2">
-                                    <p className="text-sm sm:text-base text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest">Target Utilization</p>
+                                    <p className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest">Target Utilization</p>
                                     <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-black text-gray-900">{utilization.toFixed(1)}%</p>
                                 </div>
                                 <div className="w-full bg-stone-100 h-3 rounded-full overflow-hidden">
@@ -135,7 +135,7 @@ export const BudgetGuard: React.FC = () => {
                          {isAnalyzing ? (
                              <div className="flex flex-col items-center py-10">
                                  <Loader2 className="animate-spin text-amber-400 mb-4" size={32} />
-                                 <p className="text-sm sm:text-base text-[10px] font-black uppercase text-stone-500 tracking-widest">Querying Vault Nodes...</p>
+                                 <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Querying Vault Nodes...</p>
                              </div>
                          ) : aiAnalysis ? (
                              <div className="space-y-6 animate-in slide-up">
@@ -163,7 +163,7 @@ export const BudgetGuard: React.FC = () => {
                             <div className="mt-4 relative z-10">
                                 {aiAnalysis ? (
                                     <>
-                                        <p className="text-sm sm:text-base text-[10px] font-black text-purple-400 uppercase tracking-widest mb-1">Recommended Adjust.</p>
+                                        <p className="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-1">Recommended Adjust.</p>
                                         <p className={`text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl font-black tracking-tighter ${aiAnalysis.suggestedIncrease ? 'text-emerald-600' : 'text-red-600'}`}>
                                             {aiAnalysis.suggestedIncrease ? '+' : '-'}${aiAnalysis.amount.toFixed(2)}
                                         </p>
@@ -215,7 +215,7 @@ export const BudgetGuard: React.FC = () => {
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm sm:text-base font-black text-gray-900">${item.amount.toFixed(2)}</p>
-                                        <p className="text-sm sm:text-base text-[9px] text-white sm:text-gray-400 uppercase font-black">Forecasted Spend</p>
+                                        <p className="text-[9px] text-white sm:text-gray-400 uppercase font-black">Forecasted Spend</p>
                                     </div>
                                 </div>
                             ))}

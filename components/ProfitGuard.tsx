@@ -203,7 +203,7 @@ const AnalysisCard = ({ title, value, subtitle, icon: Icon, highlight }: any) =>
 
 const StatMini = ({ label, value }: any) => (
     <div>
-        <p className="text-sm sm:text-base text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mb-1">{label}</p>
+        <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mb-1">{label}</p>
         <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{value}</p>
     </div>
 );

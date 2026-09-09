@@ -170,7 +170,7 @@ export const SupplierManager: React.FC = () => {
                             <div className="flex items-center gap-3"><Phone size={14} className="text-emerald-500" /> {supplier.phone}</div>
                         </div>
                         <div className="border-t border-stone-50 pt-8 relative z-10">
-                            <p className="text-sm sm:text-base text-[10px] font-black text-white sm:text-gray-400 uppercase flex items-center gap-2"><Layers size={14} /> Linked Materials ({linkedItems.length})</p>
+                            <p className="text-[10px] font-black text-white sm:text-gray-400 uppercase flex items-center gap-2"><Layers size={14} /> Linked Materials ({linkedItems.length})</p>
                             <div className="flex flex-wrap gap-2">
                                 {linkedItems.length > 0 ? linkedItems.map((item, i) => (
                                     <span key={i} className="px-3 py-1 bg-stone-50 text-[10px] font-bold text-gray-600 rounded-lg border border-stone-100 uppercase">{item.name}</span>
@@ -188,7 +188,7 @@ export const SupplierManager: React.FC = () => {
 
 const StatMini = ({ label, val, color }: any) => (
     <div className="bg-white p-4 sm:p-6 rounded-[2rem] border border-stone-100 shadow-sm flex flex-col items-start group hover:border-[#6A2C91] transition-all">
-        <p className="text-sm sm:text-base text-[10px] text-white sm:text-gray-400 font-black uppercase tracking-[0.2em] mb-1">{label}</p>
+        <p className="text-[10px] text-white sm:text-gray-400 font-black uppercase tracking-[0.2em] mb-1">{label}</p>
         <p className={`text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-black tracking-tighter ${color}`}>{val}</p>
     </div>
 );

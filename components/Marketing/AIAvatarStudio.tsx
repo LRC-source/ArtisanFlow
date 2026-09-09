@@ -201,7 +201,7 @@ export const AIAvatarStudio = () => {
                         ) : (
                             <div className="h-full flex flex-col items-center justify-center opacity-30 py-32">
                                 <User size={80} strokeWidth={0.5} className="text-white mb-8" />
-                                <p className="text-sm sm:text-base text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]">Awaiting Neural Synthesis</p>
+                                <p className="text-[14px] font-sans font-medium text-gray-500 uppercase tracking-[0.5em]">Awaiting Neural Synthesis</p>
                             </div>
                         )}
                     </Card>

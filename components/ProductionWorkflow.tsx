@@ -32,19 +32,19 @@ export const ProductionWorkflow = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6">
-              <p className="text-sm sm:text-base text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">Active Production Jobs</p>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">Active Production Jobs</p>
               <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{productionStats.active}</p>
           </div>
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6">
-              <p className="text-sm sm:text-base text-[10px] text-purple-400 font-bold uppercase tracking-widest mb-2">Pending Curing Batches</p>
+              <p className="text-[10px] text-purple-400 font-bold uppercase tracking-widest mb-2">Pending Curing Batches</p>
               <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{productionStats.inProgress}</p>
           </div>
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6">
-              <p className="text-sm sm:text-base text-[10px] text-amber-400 font-bold uppercase tracking-widest mb-2">Recipe BOM Library</p>
+              <p className="text-[10px] text-amber-400 font-bold uppercase tracking-widest mb-2">Recipe BOM Library</p>
               <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{recipes.length}</p>
           </div>
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-4 sm:p-6 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
-              <p className="text-sm sm:text-base text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-2">Batch Deductions Ledger</p>
+              <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-2">Batch Deductions Ledger</p>
               <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{productionStats.completed}</p>
           </div>
       </div>

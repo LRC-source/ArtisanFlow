@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Input, Select, Badge, VaultBanner } from '../UI';
-import { CheckCircle, FileText, Loader2, Target, Sliders, Users, Sparkles, Wand2 } from 'lucide-react';
+import { CheckCircle, FileText, Loader2, Target, Sliders, Users, Sparkles, Wand2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SubPageHeader } from '../SubPageHeader';

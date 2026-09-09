@@ -16,7 +16,7 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
     return await response.json();
   } catch (error) {
     console.error("Lola Node Error:", error);
-    return { text: "Node communication error. Verify API connection.", isError: true, followUpQuestions: [] };
+    return { text: "I'm having trouble connecting right now. Please verify your connection.", isError: true, followUpQuestions: [] };
   }
 };
 

@@ -194,7 +194,7 @@ export const AdvancedContentGenerator = () => {
                                             {activeTab === 'newsletter' && <Mail size={64} className="text-white mb-6" />}
                                             {activeTab === 'press' && <FileText size={64} className="text-white mb-6" />}
                                             {activeTab === 'landing' && <Globe size={64} className="text-white mb-6" />}
-                                            <p className="text-sm sm:text-base text-[11px] font-sans font-medium text-white uppercase tracking-[0.2em]">Awaiting {activeTab} parameters</p>
+                                            <p className="text-[11px] font-sans font-medium text-white uppercase tracking-[0.2em]">Awaiting {activeTab} parameters</p>
                                         </div>
                                     )}
                                 </motion.div>

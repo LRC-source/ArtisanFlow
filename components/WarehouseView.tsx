@@ -47,12 +47,12 @@ export const WarehouseView = () => {
                     </div>
                     <div className="mt-8 space-y-4">
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
-                            <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Incoming</p>
+                            <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Incoming</p>
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">2 Shipments</p>
-                            <p className="text-sm sm:text-base text-[10px] text-[#C5A059] font-sans font-bold uppercase tracking-widest mt-2">Expected 2:00 PM</p>
+                            <p className="text-[10px] text-[#C5A059] font-sans font-bold uppercase tracking-widest mt-2">Expected 2:00 PM</p>
                         </div>
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
-                            <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Raw Stock</p>
+                            <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Raw Stock</p>
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{rawMaterials} Items</p>
                             <Badge color="red" className="mt-3 w-fit flex gap-2 items-center text-[9px] uppercase tracking-widest"><AlertCircle size={10} /> 1 Low Stock</Badge>
                         </div>
@@ -71,7 +71,7 @@ export const WarehouseView = () => {
                                 <Layers className="text-[#6A2C91] relative z-10" size={32} strokeWidth={1.5} />
                             </div>
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{activeBatches} Batches Active</p>
-                            <p className="text-sm sm:text-base text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-[#6A2C91] mt-2">Mixing Station</p>
+                            <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-[#6A2C91] mt-2">Mixing Station</p>
                         </div>
                         <div className="h-px w-24 bg-white/20 border-t border-dashed"></div>
                         <div className="text-center opacity-50">
@@ -79,7 +79,7 @@ export const WarehouseView = () => {
                                 <Package className="text-white sm:text-white/40 relative z-10" size={32} strokeWidth={1.5} />
                             </div>
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">Packaging</p>
-                            <p className="text-sm sm:text-base text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-2">Idle</p>
+                            <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-2">Idle</p>
                         </div>
                     </div>
                 </div>
@@ -91,14 +91,14 @@ export const WarehouseView = () => {
                     </div>
                     <div className="mt-8 space-y-4">
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
-                            <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Pending Orders</p>
+                            <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Pending Orders</p>
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{pendingOrders}</p>
                             <div className="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
                                 <div className="bg-[#06B6D4] h-full w-2/3 shadow-[0_0_10px_#06B6D4]"></div>
                             </div>
                         </div>
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
-                            <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Ready to Ship</p>
+                            <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Ready to Ship</p>
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">12 Parcels</p>
                             <Button onClick={() => toast.success('Labels sent to printer queue.')} className="w-full h-10 rounded-xl bg-white/10 hover:bg-[#06B6D4] text-white border-none font-sans font-bold text-[9px] uppercase tracking-widest transition-colors">Print Labels</Button>
                         </div>
@@ -112,16 +112,16 @@ export const WarehouseView = () => {
                     </div>
                     <div>
                         <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{inventoryCount}</p>
-                        <p className="text-sm sm:text-base text-[10px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] mt-2">Total Units</p>
+                        <p className="text-[10px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] mt-2">Total Units</p>
                     </div>
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto sm:p-5 lg:p-6">
                         <div className="text-center">
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">98%</p>
-                            <p className="text-sm sm:text-base text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mt-1">Capacity</p>
+                            <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mt-1">Capacity</p>
                         </div>
                         <div className="text-center">
                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">$7.1k</p>
-                            <p className="text-sm sm:text-base text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mt-1">Value</p>
+                            <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mt-1">Value</p>
                         </div>
                     </div>
                 </div>

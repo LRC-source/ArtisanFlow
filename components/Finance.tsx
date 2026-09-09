@@ -79,7 +79,7 @@ export const FinanceHub: React.FC = () => {
                         </p>
                     </div>
                     <div className="space-y-4">
-                        <p className="text-sm sm:text-base text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] ml-2">Report Parameters</p>
+                        <p className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] ml-2">Report Parameters</p>
                         <Select defaultValue="Full Fiscal Year" className="bg-black/40 text-white border-white/10 w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl">
                             <option value="Current Quarter" className="bg-[#1A1A1A]">Current Quarter</option>
                             <option value="Full Fiscal Year" className="bg-[#1A1A1A]">Full Fiscal Year</option>
@@ -232,7 +232,7 @@ export const FinanceHub: React.FC = () => {
                                         </RePieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                        <p className="text-sm sm:text-base text-[11px] font-bold font-sans uppercase text-white sm:text-white/40 tracking-[0.3em]">Runway</p>
+                                        <p className="text-[11px] font-bold font-sans uppercase text-white sm:text-white/40 tracking-[0.3em]">Runway</p>
                                         <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{budgetResult.runwayMonths}mo</p>
                                     </div>
                                  </div>
@@ -278,7 +278,7 @@ export const FinanceHub: React.FC = () => {
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
                                     <div>
                                         <p className="text-sm sm:text-base leading-relaxed font-serif text-white tracking-tight">Systems Synchronized</p>
-                                        <p className="text-sm sm:text-base text-[10px] text-white/30 uppercase tracking-widest mt-1">Reconciliation: Today, 09:14 AM</p>
+                                        <p className="text-[10px] text-white/30 uppercase tracking-widest mt-1">Reconciliation: Today, 09:14 AM</p>
                                     </div>
                                     <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-emerald-500/10 rounded-full flex items-center justify-center">
                                         <CheckCircle className="text-emerald-500 animate-pulse" size={20} />
@@ -460,12 +460,12 @@ CERTIFIED BY LOLA AI SYSTEMS
                     
                     {!loading && analysis && (
                         <div className="w-full md:w-96 bg-black/40 rounded-[2.5rem] p-4 sm:p-12 border border-white/5 flex flex-col items-center text-center shadow-inner">
-                            <p className="text-sm sm:text-base text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-8">Risk Architecture</p>
+                            <p className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-8">Risk Architecture</p>
                             <div className={`w-32 h-32 rounded-full border-[10px] flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(0,0,0,0.5)] ${analysis.riskLevel === 'Low' ? 'border-emerald-500/20 text-emerald-400' : analysis.riskLevel === 'Medium' ? 'border-amber-500/20 text-amber-400' : 'border-red-500/20 text-red-400'}`}>
                                 <ShieldCheck size={48} strokeWidth={1.5} />
                             </div>
                             <h3 className={`text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl font-serif tracking-tighter ${analysis.riskLevel === 'Low' ? 'text-emerald-400' : analysis.riskLevel === 'Medium' ? 'text-amber-400' : 'text-red-400'}`}>{analysis.riskLevel}</h3>
-                            <p className="text-sm sm:text-base text-[11px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-3">Risk Assessment</p>
+                            <p className="text-[11px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-3">Risk Assessment</p>
                         </div>
                     )}
                 </div>

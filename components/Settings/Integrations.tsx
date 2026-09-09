@@ -159,7 +159,7 @@ export const Integrations = () => {
                         <div className="flex-1 space-y-4 relative z-10">
                             <div>
                                 <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{int.name}</h4>
-                                <p className="text-sm sm:text-base text-[9px] font-sans font-bold text-[#C5A059] uppercase tracking-widest mt-2">{int.category}</p>
+                                <p className="text-[9px] font-sans font-bold text-[#C5A059] uppercase tracking-widest mt-2">{int.category}</p>
                             </div>
                             
                             <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">
@@ -171,7 +171,7 @@ export const Integrations = () => {
                                     <Sparkles size={16} />
                                 </div>
                                 <div>
-                                    <p className="text-sm sm:text-base text-[9px] font-sans font-bold text-[#6A2C91] uppercase tracking-widest mb-1">Synaptic Intelligence</p>
+                                    <p className="text-[9px] font-sans font-bold text-[#6A2C91] uppercase tracking-widest mb-1">Synaptic Intelligence</p>
                                     <p className="text-sm sm:text-base font-sans font-bold text-white">{int.aiCapability}</p>
                                 </div>
                             </div>
@@ -204,19 +204,17 @@ export const Integrations = () => {
                                     if (int.status === 'Connected') {
                                         toggleIntegrationStatus(int.id);
                                     } else {
-                                        setActiveModalIntegration(int);
+                                        toast.info(`${int.name} integration coming soon!`);
                                     }
                                 }}
-                                className={`w-full w-auto mx-auto py-1 px-3 text-[10px] text-[10px] font-sans font-bold tracking-widest uppercase transition-all duration-500 rounded-full ${
+                                disabled={int.status !== 'Connected'}
+                                className={`w-full py-2 px-6 text-[10px] font-sans font-bold tracking-widest uppercase transition-all duration-500 rounded-full ${
                                     int.status === 'Connected' 
                                         ? 'bg-white/10 text-white hover:bg-white/20 border border-white/10' 
-                                        : 'bg-[#6A2C91] text-white hover:bg-[#5a257a]'
+                                        : 'bg-black/50 text-white/30 border border-white/5 cursor-not-allowed'
                                 }`} 
                             >
-                                {businessProfile?.role === 'admin' 
-                                    ? (int.status === 'Connected' ? 'RECONFIGURE PROTOCOL' : 'INITIALIZE HANDSHAKE')
-                                    : (int.status === 'Connected' ? 'UPDATE SETTINGS' : 'CONNECT ACCOUNT')
-                                }
+                                {int.status === 'Connected' ? 'UPDATE SETTINGS' : 'COMING SOON'}
                             </Button>
                             
                             <button className="w-full flex items-center justify-center gap-2 text-[10px] font-sans font-bold text-white/30 uppercase tracking-widest hover:text-[#C5A059] transition-colors mt-4">

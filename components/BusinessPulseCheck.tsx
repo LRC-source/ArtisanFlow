@@ -42,7 +42,7 @@ export const BusinessPulseCheck = () => {
                 <div className="p-4 bg-gradient-to-br from-[#1A1A1A] to-[#333333] rounded-full text-[#C5A059] shadow-xl">
                     <Sparkles size={24} strokeWidth={1.5} />
                 </div>
-                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Synaptic Pulse Check</h1>
+                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Pulse Check</h1>
             </div>
             <p className="text-sm sm:text-base text-gray-500 font-sans font-light leading-relaxed">Lola AI is establishing operational health benchmarks. Deployment: 60 Seconds.</p>
             
@@ -213,17 +213,17 @@ export const BusinessPulseCheck = () => {
                     <div className="absolute bottom-0 left-1/2 w-6 h-6 bg-stone-900 rounded-full -translate-x-1/2 translate-y-1/2 z-20 border-4 border-white shadow-xl"></div>
                 </div>
                 
-                <div className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl font-serif text-red-600 tracking-tight mb-4">85</div>
-                <p className="text-sm sm:text-base text-[10px] text-stone-400 font-sans font-medium uppercase tracking-[0.3em]">Synaptic Risk Index</p>
+                <div className="text-5xl sm:text-6xl lg:text-7xl font-black font-serif text-red-600 tracking-tight mb-4">85</div>
+                <p className="text-[10px] text-stone-400 font-sans font-medium uppercase tracking-[0.3em]">Synaptic Risk Index</p>
 
-                <div className="mt-6 sm:mt-8 lg:mt-12 bg-red-50/50 border border-red-100/50 rounded-[3rem] p-3.5 sm:p-6 lg:p-12 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center gap-3 sm:gap-6 text-left relative overflow-hidden group">
+                <div className="mt-6 sm:mt-8 lg:mt-12 bg-red-50/50 border border-red-100/50 rounded-[3rem] p-3.5 sm:p-6 lg:p-12 flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-left relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-3.5 sm:p-6 lg:p-12 opacity-[0.03] text-red-600 group-hover:rotate-12 transition-transform duration-700"><AlertTriangle size={100} strokeWidth={1}/></div>
                     <div className="w-12 h-12 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center text-red-500 shadow-[0_8px_30px_rgba(239,68,68,0.15)] shrink-0 relative z-10">
                         <Activity size={32} strokeWidth={1.5} />
                     </div>
                     <div className="relative z-10">
                         <span className="text-[10px] font-sans font-medium uppercase text-red-400 tracking-[0.2em] mb-2 block">Lola's Critical Audit</span>
-                        <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-red-700 tracking-tight mb-3">HIGH RISK: BURNOUT PROTOCOL</h4>
+                        <h4 className="text-xl sm:text-2xl font-black font-serif text-red-700 tracking-tight mb-3">HIGH RISK: BURNOUT PROTOCOL</h4>
                         <p className="text-sm sm:text-base text-red-800/70 font-sans font-light leading-relaxed">
                             Revenue is scaling but operational entropy is critical. You are currently working harder for diminishing returns. Systems are approaching failure.
                         </p>
@@ -232,14 +232,14 @@ export const BusinessPulseCheck = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 mt-6 sm:mt-8 lg:mt-12">
                     <div className="bg-[#6A2C91]/5 p-3.5 sm:p-6 lg:p-12 rounded-[3rem] border border-[#6A2C91]/10 group hover:bg-white transition-all duration-500">
-                        <p className="text-sm sm:text-base text-[9px] text-[#6A2C91]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Omnichannel Flow</p>
+                        <p className="text-[9px] text-[#6A2C91]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Omnichannel Flow</p>
                         <p className="text-sm sm:text-base font-black font-serif text-[#6A2C91] tracking-tight mb-2">30.0%</p>
-                        <p className="text-sm sm:text-base text-[10px] text-[#6A2C91]/80 font-sans font-medium uppercase tracking-[0.2em]">Conversion Rate</p>
+                        <p className="text-[10px] text-[#6A2C91]/80 font-sans font-medium uppercase tracking-[0.2em]">Conversion Rate</p>
                     </div>
                     <div className="bg-[#C5A059]/5 p-3.5 sm:p-6 lg:p-12 rounded-[3rem] border border-[#C5A059]/10 group hover:bg-white transition-all duration-500">
-                        <p className="text-sm sm:text-base text-[9px] text-[#C5A059]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Network Liquidity</p>
+                        <p className="text-[9px] text-[#C5A059]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Network Liquidity</p>
                         <p className="text-sm sm:text-base font-black font-serif text-[#C5A059] tracking-tight mb-2">$15.00</p>
-                        <p className="text-sm sm:text-base text-[10px] text-[#C5A059]/80 font-sans font-medium uppercase tracking-[0.2em]">Avg Order Value</p>
+                        <p className="text-[10px] text-[#C5A059]/80 font-sans font-medium uppercase tracking-[0.2em]">Avg Order Value</p>
                     </div>
                 </div>
             </Card>
@@ -268,7 +268,7 @@ export const BusinessPulseCheck = () => {
                         <Sparkles size={18} className="mr-3" strokeWidth={1.5} /> SYNTHESIZE MARKETING ARCHITECTURE
                     </Button>
                     
-                    <p className="text-sm sm:text-base text-[10px] text-stone-400 mt-10 font-sans font-medium uppercase tracking-[0.3em] flex items-center justify-center gap-3">
+                    <p className="text-[10px] text-stone-400 mt-10 font-sans font-medium uppercase tracking-[0.3em] flex items-center justify-center gap-3">
                         <Lock size={14} strokeWidth={1.5} /> Full Vault Access Required
                     </p>
                 </div>

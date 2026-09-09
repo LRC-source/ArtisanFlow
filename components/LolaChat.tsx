@@ -60,7 +60,7 @@ export const LolaChat: React.FC = () => {
             <GlassHaloIcon icon={Sparkles} color="cyan" size="sm" className="animate-pulse" />
             <div>
                 <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif font-bold text-white tracking-tight leading-relaxed leading-tight">Lola AI</h3>
-                <p className="text-sm sm:text-base text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-[#06B6D4]">Systems Architect</p>
+                <p className="text-[9px] font-sans font-bold uppercase tracking-[0.2em] text-[#06B6D4]">Systems Architect</p>
             </div>
         </div>
         <div className="flex space-x-2">

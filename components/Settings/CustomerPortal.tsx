@@ -37,7 +37,7 @@ export const CustomerPortal = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-serif text-white font-bold text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg tracking-tight">Custom Domain Active</h4>
-                                    <p className="text-sm sm:text-base text-[10px] text-[#C5A059] font-sans font-bold tracking-widest mt-1 uppercase">wholesale.herbalisticwellness.com</p>
+                                    <p className="text-[10px] text-[#C5A059] font-sans font-bold tracking-widest mt-1 uppercase">wholesale.herbalisticwellness.com</p>
                                 </div>
                             </div>
                             <Button variant="outline" className="text-[10px] h-10 px-6 font-sans font-bold tracking-widest uppercase rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 hover:text-white transition-colors">RE-ROUTE</Button>

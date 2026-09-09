@@ -37,7 +37,7 @@ export const PrivacyGovernance = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed tracking-tight">Two-Factor Authentication</p>
-                                    <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-widest mt-1">Mandatory for all vault access.</p>
+                                    <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-widest mt-1">Mandatory for all vault access.</p>
                                 </div>
                             </div>
                             <Badge color="green" className="shadow-sm font-sans font-bold text-[9px] tracking-widest uppercase px-3 py-1 border-emerald-500/20">Active</Badge>
@@ -50,7 +50,7 @@ export const PrivacyGovernance = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed tracking-tight">GDPR & CCPA Handshake</p>
-                                    <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-widest mt-1">Data residency: USA-East-1.</p>
+                                    <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-widest mt-1">Data residency: USA-East-1.</p>
                                 </div>
                             </div>
                             <Badge color="blue" className="shadow-sm font-sans font-bold text-[9px] tracking-widest uppercase px-3 py-1 border-blue-500/20">Compliant</Badge>

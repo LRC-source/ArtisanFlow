@@ -84,7 +84,7 @@ export const SubscriptionManagement = () => {
                </div>
                <div className="flex flex-col items-center md:items-end gap-3 sm:gap-4 relative z-10">
                    <div className="text-center md:text-right mb-4">
-                      <p className="text-sm sm:text-base text-[10px] font-sans text-white sm:text-white/50 font-bold uppercase tracking-widest mb-1">Access Initialized</p>
+                      <p className="text-[10px] font-sans text-white sm:text-white/50 font-bold uppercase tracking-widest mb-1">Access Initialized</p>
                       <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white/80 tracking-tight">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                    </div>
                    {userTier !== 'Margin Protection Pro' && (

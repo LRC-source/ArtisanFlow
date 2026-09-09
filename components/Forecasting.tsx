@@ -98,7 +98,7 @@ export const Forecasting = () => {
                 </div>
              </VaultBanner>
 
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 sm:p-12">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6">
                  <motion.div
                      initial={{ opacity: 0, x: -20 }}
                      animate={{ opacity: 1, x: 0 }}
@@ -287,12 +287,12 @@ export const Forecasting = () => {
                                 <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Active Projection: Q4 Protocol</h4>
                                 <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm font-sans tracking-widest uppercase border-[#C5A059]/20">Needs Review</Badge>
                             </div>
-                            <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
+                            <p className="text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
                         </div>
                     </div>
                     <div className="text-left sm:text-right relative z-10 w-full sm:w-auto flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 border-t border-white/5 sm:border-0 pt-4 sm:pt-0">
                          <div className="flex flex-col items-center md:items-end">
-                             <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
+                             <p className="text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
                              <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]">$1,976.70</p>
                          </div>
                          <GlassHaloIcon icon={ChevronRight} color="gold" size="md" className="group-hover:bg-white/10 transition-colors" />

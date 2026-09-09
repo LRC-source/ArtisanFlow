@@ -139,7 +139,7 @@ export const Reports = () => {
                   <div className="bg-white/5 border border-dashed border-white/10 rounded-[3rem] p-6 sm:p-12 flex flex-col items-center justify-center min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden">
                       <GlassHaloIcon icon={History} color="purple" size="lg" className="mb-8 w-14 h-14 sm:w-24 sm:h-24 [&>svg]:w-12 [&>svg]:w-auto mx-auto py-1 px-3 text-[10px] opacity-50" />
                       <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">No Reports Archieved</h3>
-                      <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Generate a report to see it here</p>
+                      <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Generate a report to see it here</p>
                   </div>
               ) : (
                   <div className="grid grid-cols-1 gap-3 sm:gap-6">
@@ -277,7 +277,7 @@ export const Reports = () => {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6 mb-12">
                         {currentReport.summaryStats.map((stat, i) => (
                             <div key={i} className="p-3.5 sm:p-6 lg:p-12 rounded-[2rem] border border-white/5 bg-white/5 shadow-inner hover:bg-white/10 transition-colors">
-                                <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">{stat.label}</p>
+                                <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">{stat.label}</p>
                                 <p className={`text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight ${stat.color || 'text-white'}`}>{stat.value}</p>
                             </div>
                         ))}
@@ -308,7 +308,7 @@ export const Reports = () => {
                                 </tbody>
                             </table></div>
                         </div>
-                        <p className="text-sm sm:text-base text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mt-6 text-center">Report archived to synaptic history securely.</p>
+                        <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mt-6 text-center">Report archived to synaptic history securely.</p>
                     </div>
                 </div>
             </div>

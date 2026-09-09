@@ -102,17 +102,17 @@ export const QualityControl = () => {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8 relative z-10">
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
-                              <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Inspector Sign-off</p>
+                              <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Inspector Sign-off</p>
                               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white">{check.inspector}</p>
                           </div>
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
-                              <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Status Node</p>
+                              <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Status Node</p>
                               <p className={`text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-serif ${check.status === 'Passed' ? 'text-emerald-400' : 'text-amber-400'}`}>{check.status}</p>
                           </div>
                       </div>
 
                       <div className="space-y-4 border-t border-white/5 pt-8 relative z-10">
-                          <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] flex items-center gap-2"><History size={14} className="text-[#C5A059]" /> Timestamp: {check.date}</p>
+                          <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] flex items-center gap-2"><History size={14} className="text-[#C5A059]" /> Timestamp: {check.date}</p>
                       </div>
                   </div>
               ))}
@@ -125,7 +125,7 @@ export const QualityControl = () => {
 const StatBox = ({ label, val, color, haloColor, icon: Icon }: any) => (
     <div className="luxury-card bg-black/40 backdrop-blur-xl p-3.5 sm:p-6 lg:p-12 rounded-[2rem] border border-white/10 shadow-lg flex flex-col items-start group hover:border-[#C5A059]/30 transition-all">
         <GlassHaloIcon icon={Icon} color={haloColor} size="md" className="mb-6 group-hover:scale-110 transition-all" />
-        <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
+        <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mb-2">{label}</p>
         <p className={`text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight ${color}`}>{val}</p>
     </div>
 );

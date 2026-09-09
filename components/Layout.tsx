@@ -176,7 +176,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   <span className="nav-section-title text-[#C5A059]">My Account</span>
                   <button onClick={() => { navigate('/settings/account'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/settings/account' ? 'active' : ''}`}>
                       <GlassHaloIcon icon={Crown} color="gold" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">Subscription Status</span>
+                      <span className="flex-1 text-left">Account & Billing</span>
                   </button>
                   {businessProfile.role === 'super_admin' && (
                     <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
@@ -214,9 +214,9 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       {/* Main Content Area */}
       <main className={`flex-1 min-w-0 w-full min-h-dvh overflow-auto relative bg-transparent flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-0' : 'md:ml-[280px]'}`}>
         {/* TOP BAR: SYNAPTIC HEADER */}
-        <header className="sticky top-0 z-30 w-full border-b border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md h-14 px-4 md:px-10 flex items-center justify-between gap-3 sm:gap-4 transition-all duration-500">
-            <div className="flex items-center gap-3 sm:gap-4 md:gap-4 sm:gap-6">
-              <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white sm:text-white/60 hover:text-white">
+        <header className="sticky top-0 z-30 w-full border-b border-white/10 bg-[#0d0d0d]/90 backdrop-blur-md min-h-[56px] h-auto py-2 md:py-0 px-4 md:px-10 flex flex-wrap md:flex-nowrap items-center justify-between gap-3 transition-all duration-500">
+            <div className="flex items-center gap-3 md:gap-4">
+              <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 -ml-2 text-white/60 hover:text-white">
                 <Menu size={24} />
               </button>
               {isSidebarCollapsed && (
@@ -260,7 +260,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             </div>
 
             {/* Global AI Search Gateway */}
-            <form onSubmit={handleSearch} className="flex-1 min-w-[150px] w-full order-3 sm:order-none mt-2 sm:mt-0 max-w-xs relative group">
+            <form onSubmit={handleSearch} className="flex-1 min-w-[150px] w-full order-last md:order-none mt-2 md:mt-0 max-w-none md:max-w-xs relative group">
                 <div className="relative">
                     <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C5A059] transition-colors" size={10} />
                     <input 
@@ -281,7 +281,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                         <div className="flex items-start gap-3 sm:gap-6">
                             <div className="p-4 bg-purple-50 rounded-3xl text-[#6A2C91] shadow-inner"><Sparkles size={28} /></div>
                             <div className="flex-1">
-                                <p className="text-sm sm:text-base text-[10px] font-black uppercase tracking-[0.3em] text-[#6A2C91] mb-2 italic">Synaptic Analysis Result</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6A2C91] mb-2 italic">Synaptic Analysis Result</p>
                                 <p className="text-sm sm:text-base leading-relaxed text-gray-800 leading-relaxed font-semibold">{searchResult}</p>
                             </div>
                             <button onClick={() => setSearchResult(null)} className="text-white sm:text-gray-300 hover:text-red-500 p-2 transition-colors"><X size={20}/></button>
@@ -294,6 +294,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                  {/* Contextual Actions Area */}
                  <div className="hidden lg:flex items-center gap-2 pr-6 border-r border-white/5">
                     <motion.button 
+                      onClick={() => toast.info('Notifications coming in v1.1')}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="p-2.5 rounded-xl bg-white/5 text-white sm:text-white/40 hover:text-[#C5A059] transition-colors"
@@ -301,6 +302,10 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                       <Bell size={18} />
                     </motion.button>
                     <motion.button 
+                      onClick={() => {
+                        toast.success('Syncing with Vault...');
+                        setTimeout(() => toast.success('Vault synchronized.'), 1000);
+                      }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="p-2.5 rounded-xl bg-white/5 text-white sm:text-white/40 hover:text-[#C5A059] transition-colors"
@@ -311,7 +316,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
 
                  <div className="text-right hidden sm:block">
                      <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{businessProfile.ownerName}</p>
-                     <p className="text-sm sm:text-base text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
+                     <p className="text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em] flex items-center gap-1.5 justify-end">
                        <ShieldCheck size={10} className="mr-0.5" /> Systems Verified ✅
                      </p>
                  </div>

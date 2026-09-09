@@ -190,7 +190,7 @@ export const Orders = () => {
                     <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
                         <Package size={64} className="text-white/10 mx-auto mb-6" strokeWidth={0.5} />
                         <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-serif text-white tracking-tight mb-2">No Transactional History</h3>
-                        <p className="text-sm sm:text-base text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em]">Adjust your scan parameters.</p>
+                        <p className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em]">Adjust your scan parameters.</p>
                     </div>
                 ) : (
                     filteredOrders.map((order) => (
@@ -209,20 +209,20 @@ export const Orders = () => {
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10">
                                         <div className="space-y-4">
-                                            <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
+                                            <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
                                             <div className="flex items-center gap-3 sm:gap-4">
                                                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[1rem] bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059] font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black border border-[#C5A059]/30 shadow-inner">
                                                     {order.customer.charAt(0)}
                                                 </div>
                                                 <div>
                                                     <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{order.customer}</p>
-                                                    <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans uppercase tracking-[0.2em] mt-1">{order.location}</p>
+                                                    <p className="text-[10px] text-white sm:text-white/40 font-sans uppercase tracking-[0.2em] mt-1">{order.location}</p>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="space-y-4">
-                                            <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Manifest</p>
+                                            <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Manifest</p>
                                             <div className="space-y-3">
                                                 {order.items.map((item, idx) => (
                                                     <div key={idx} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center text-sm border-b border-white/5 pb-2">
@@ -234,9 +234,9 @@ export const Orders = () => {
                                         </div>
 
                                         <div className="space-y-4 lg:text-right">
-                                            <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Settlement</p>
+                                            <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Settlement</p>
                                             <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${order.total.toFixed(2)}</p>
-                                            <p className="text-sm sm:text-base text-[9px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 inline-block">Fully Captured</p>
+                                            <p className="text-[9px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 inline-block">Fully Captured</p>
                                         </div>
                                     </div>
                                 </div>

@@ -62,7 +62,7 @@ export const TaxExporter = () => {
                         {isExporting ? <Calculator className="animate-spin" size={18} /> : <Download size={18} />}
                         {isExporting ? "GENERATING..." : "EXPORT IRS SUMMARY"}
                     </Button>
-                    <p className="text-sm sm:text-base text-[10px] text-white/30 text-center max-w-[200px] mx-auto">
+                    <p className="text-[10px] text-white/30 text-center max-w-[200px] mx-auto">
                         Generates a structured CSV mapping to IRS Schedule C Line 35-42 requirements.
                     </p>
                 </div>

@@ -128,7 +128,7 @@ export const CRM = () => {
                           </div>
                       </div>
                       <div className="text-right">
-                          <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 uppercase font-sans font-bold tracking-[0.3em] mb-3">Lifetime Value</p>
+                          <p className="text-[11px] text-white sm:text-white/40 uppercase font-sans font-bold tracking-[0.3em] mb-3">Lifetime Value</p>
                           <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${customer.totalSpent.toFixed(2)}</p>
                       </div>
                   </div>
@@ -142,7 +142,7 @@ export const CRM = () => {
                               <div key={order.id} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-4 sm:p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 transition-all duration-500 group">
                                   <div>
                                       <p className="text-sm sm:text-base font-sans font-bold text-white uppercase text-[11px] tracking-[0.2em] mb-2">Order {order.id}</p>
-                                      <p className="text-sm sm:text-base text-[10px] text-white/30 font-sans uppercase tracking-[0.2em] flex items-center gap-2"><Calendar size={12}/> {order.date}</p>
+                                      <p className="text-[10px] text-white/30 font-sans uppercase tracking-[0.2em] flex items-center gap-2"><Calendar size={12}/> {order.date}</p>
                                   </div>
                                   <div className="text-right">
                                       <p className="text-sm sm:text-base font-serif text-white font-black tracking-tight mb-2">${order.total.toFixed(2)}</p>
@@ -163,17 +163,17 @@ export const CRM = () => {
                       <div className="space-y-8 flex-1">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                               <div className="bg-black/40 p-4 sm:p-6 rounded-[2rem] border border-white/5">
-                                <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-3">First Interaction</p>
+                                <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-3">First Interaction</p>
                                 <p className="text-sm sm:text-base font-serif tracking-tight text-white font-black">{customer.orders.length > 0 ? customer.orders[customer.orders.length-1].date : 'Today'}</p>
                               </div>
                               <div className="bg-black/40 p-4 sm:p-6 rounded-[2rem] border border-white/5">
-                                <p className="text-sm sm:text-base text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-3">Latest Update</p>
+                                <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-3">Latest Update</p>
                                 <p className="text-sm sm:text-base font-serif tracking-tight text-white font-black">{customer.orders.length > 0 ? customer.orders[0].date : 'Today'}</p>
                               </div>
                           </div>
                           
                           <div className="bg-[#6A2C91]/10 p-3.5 sm:p-6 lg:p-12 rounded-[2rem] border border-[#6A2C91]/20 mt-auto">
-                              <p className="text-sm sm:text-base text-[11px] text-[#C5A059] font-sans font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+                              <p className="text-[11px] text-[#C5A059] font-sans font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
                                   <Sparkles size={16} /> Vault Strategy Insight
                               </p>
                               <p className="text-sm sm:text-base font-sans font-light text-white/80 leading-relaxed italic">
@@ -258,9 +258,9 @@ export const CRM = () => {
               { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'magenta' }
             ].map((kpi, i) => (
               <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
-                <GlassHaloIcon icon={kpi.icon} color={kpi.color as any} size="lg" className="mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10" />
-                <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
-                <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{kpi.val}</p>
+                <GlassHaloIcon icon={kpi.icon} color={kpi.color as any} size="lg" className="mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10" />
+                <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
+                <p className="text-3xl sm:text-4xl font-black font-serif tracking-tight text-white">{kpi.val}</p>
               </div>
             ))}
         </div>
@@ -300,11 +300,11 @@ export const CRM = () => {
                         
                         <div className="pt-8 border-t border-white/10 flex justify-between items-end relative z-10 group-hover:border-white/20 transition-colors">
                             <div>
-                                <p className="text-sm sm:text-base text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Order Nodes</p>
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Order Nodes</p>
                                 <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed">{c.orderCount}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-sm sm:text-base text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Lifetime Value</p>
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Lifetime Value</p>
                                 <p className="text-sm sm:text-base font-serif text-[#C5A059] font-black tracking-tighter">${c.totalSpent.toFixed(2)}</p>
                             </div>
                         </div>

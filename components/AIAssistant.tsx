@@ -160,7 +160,7 @@ export const AIAssistant: React.FC = () => {
         setMessages(prev => [...prev, assistantMsg]);
         if (isTtsEnabled) setTimeout(() => playLolaVoice(response.text), 50);
     } catch (error) {
-        setMessages(prev => [...prev, { role: 'assistant', text: "Node communication error." }]);
+        setMessages(prev => [...prev, { role: 'assistant', text: "I'm having trouble connecting to the network right now. Please try again." }]);
     } finally {
         setIsLoading(false);
     }
@@ -190,7 +190,7 @@ export const AIAssistant: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-80 h-[380px] max-h-[calc(100vh-64px)] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_0_50px_rgba(106,44,145,0.4)] flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 border-t-4 border-t-[#C5A059]">
+    <div className="fixed bottom-6 right-6 w-96 h-[420px] max-h-[calc(100vh-64px)] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_0_50px_rgba(106,44,145,0.4)] flex flex-col overflow-hidden z-50 animate-in slide-in-from-bottom-10 border-t-4 border-t-[#C5A059]">
       <div className="bg-transparent p-4 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center relative border-b border-white/10">
         <div className="flex items-center gap-2 pl-2">
             <div className="w-8 h-8 rounded-full overflow-hidden border border-[#C5A059]/30 shadow-[0_0_10px_rgba(197,160,89,0.2)]">
@@ -239,7 +239,7 @@ export const AIAssistant: React.FC = () => {
               )}
               {msg.isAuditPrompt && (
                 <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
-                   <p className="text-sm sm:text-base text-[9px] font-black text-amber-800 flex items-center gap-1.5 uppercase tracking-widest"><Factory size={12} /> CAPACITY ALERT</p>
+                   <p className="text-[9px] font-black text-amber-800 flex items-center gap-1.5 uppercase tracking-widest"><Factory size={12} /> CAPACITY ALERT</p>
                    <button onClick={() => handleSelectSlot('10:00 AM', 'Manufacturing Audit')} className="w-full bg-[#C5A059] text-white py-2 rounded-lg text-[8px] font-black uppercase tracking-[0.2em] shadow-md shadow-amber-200/50 hover:bg-[#b08e4d] transition-all active:scale-95">Schedule Audit</button>
                 </div>
               )}

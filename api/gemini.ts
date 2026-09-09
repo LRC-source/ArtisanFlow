@@ -20,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       case 'chatWithLola': {
         const { message, context, mode = 'fast' } = payload;
         
-        let model = 'gemini-2.5-flash-lite-latest';
+        let model = 'gemini-2.5-flash';
         let config: any = { 
           responseMimeType: "application/json",
           responseSchema: {
@@ -38,10 +38,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         };
 
         if (mode === 'deep') {
-          model = 'gemini-3-pro-preview';
+          model = 'gemini-2.5-pro';
           config.thinkingConfig = { thinkingBudget: 32768 };
         } else if (mode === 'search') {
-          model = 'gemini-3-flash-preview';
+          model = 'gemini-2.5-flash';
           config.tools = [{ googleSearch: {} }];
         }
 
@@ -99,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       case 'analyzeLolaImage': {
         const { imageB64, prompt } = payload;
         const response = await ai.models.generateContent({
-          model: 'gemini-3-pro-preview',
+          model: 'gemini-2.5-pro',
           contents: [
             { inlineData: { data: imageB64.split(',')[1], mimeType: 'image/jpeg' } },
             { text: `You are the ArtisanFlow Visual Analyst. Analyze this image in the context of artisanal manufacturing. Prompt: ${prompt}` }

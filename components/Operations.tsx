@@ -99,7 +99,7 @@ export const MarginGuard = () => {
                           <h5 className={`font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black mb-3 tracking-tighter ${isWarning ? 'text-amber-500' : 'text-emerald-400'}`}>
                               {isWarning ? 'Low Margin' : 'Margin Secure'}
                           </h5>
-                          <p className="text-sm sm:text-base text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-8">Planned Profitability</p>
+                          <p className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-8">Planned Profitability</p>
                           <Badge color={isWarning ? 'gold' : 'green'} className="text-[12px] font-sans font-bold px-8 py-3 uppercase tracking-[0.3em] rounded-full shadow-xl">
                               {currentMultiplier.toFixed(2)}x Markup
                           </Badge>

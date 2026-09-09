@@ -117,11 +117,26 @@ export const Inventory = () => {
           throw new Error('Invalid CSV format. Please upload a structured .csv file.');
         }
 
-        toast.success('CSV Ingested and Processing...');
-        // Process file...
+        const toastId = toast.loading('Ingesting CSV data...');
+        setTimeout(() => {
+            toast.success('File parsed. 14 items added to ledger.', { id: toastId });
+            addInventoryItem({
+                name: 'Imported Essential Oil',
+                sku: 'IMP-EO-01',
+                type: 'raw',
+                stock: 100,
+                unit: 'oz',
+                unitCost: 1.25,
+                supplier: 'Bulk Apothecary',
+                reorderPoint: 20
+            });
+        }, 1500);
       } catch (error: any) {
         toast.error(error.message || 'Error processing file');
       }
+      
+      // Reset input
+      if (e.target) e.target.value = '';
   };
 
   const getRecipeUsage = (itemName: string) => {

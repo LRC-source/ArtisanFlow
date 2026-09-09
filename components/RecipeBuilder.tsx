@@ -85,13 +85,14 @@ export const RecipeBuilder: React.FC = () => {
   const calculateTotalCost = () => {
     const materialCost = ingredients.reduce((sum, ing) => {
       const mat = materials.find(m => m.id.toString() === ing.inventoryItemId.toString());
-      return sum + (mat ? mat.unitCost * ing.quantity : 0);
+      return sum + (mat ? mat.unitCost * (Number(ing.quantity) || 0) : 0);
     }, 0);
     return materialCost + Number(laborCost);
   };
 
   const totalCost = calculateTotalCost();
-  const costPerUnit = yieldQty > 0 ? totalCost / yieldQty : 0;
+  const safeYieldQty = Number(yieldQty) || 1;
+  const costPerUnit = safeYieldQty > 0 ? totalCost / safeYieldQty : 0;
   const targetRetail = costPerUnit * 2.2;
 
   const recipeSchema = z.object({
@@ -223,8 +224,9 @@ export const RecipeBuilder: React.FC = () => {
                     <label className="text-[9px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Qty Required</label>
                     <Input 
                       type="number" 
+                      step="any"
                       value={ing.quantity} 
-                      onChange={e => updateIngredient(idx, 'quantity', parseFloat(e.target.value))} 
+                      onChange={e => updateIngredient(idx, 'quantity', e.target.value)} 
                       className="rounded-xl"
                     />
                   </div>
@@ -264,8 +266,9 @@ export const RecipeBuilder: React.FC = () => {
                    <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Manufacturing Labor ($)</label>
                    <Input 
                       type="number" 
+                      step="any"
                       value={laborCost} 
-                      onChange={e => setLaborCost(parseFloat(e.target.value))} 
+                      onChange={e => setLaborCost(e.target.value)} 
                       className="rounded-xl font-black"
                    />
                 </div>
@@ -274,8 +277,9 @@ export const RecipeBuilder: React.FC = () => {
                    <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Standard Batch Yield</label>
                    <Input 
                       type="number" 
+                      step="any"
                       value={yieldQty} 
-                      onChange={e => setYieldQty(parseFloat(e.target.value))} 
+                      onChange={e => setYieldQty(e.target.value)} 
                       className="rounded-xl font-black"
                    />
                 </div>
@@ -286,11 +290,11 @@ export const RecipeBuilder: React.FC = () => {
                       <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-black text-[#6A2C91] tracking-tighter">${totalCost.toFixed(2)}</span>
                    </div>
                    <div className="bg-emerald-50 p-4 sm:p-6 rounded-3xl border border-emerald-100">
-                      <p className="text-sm sm:text-base text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">True Unit Cost (COGS)</p>
+                      <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">True Unit Cost (COGS)</p>
                       <p className="text-sm sm:text-base font-black font-black text-emerald-700 tracking-tighter">${costPerUnit.toFixed(2)}</p>
                    </div>
                    <div className="bg-amber-50 p-4 sm:p-6 rounded-3xl border border-amber-100">
-                      <p className="text-sm sm:text-base text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Margin Guard™ Rec (2.2x)</p>
+                      <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Margin Guard™ Rec (2.2x)</p>
                       <p className="text-sm sm:text-base font-black font-black text-amber-700 tracking-tighter">${targetRetail.toFixed(2)}</p>
                    </div>
                 </div>
@@ -308,9 +312,19 @@ export const RecipeBuilder: React.FC = () => {
                   <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic">AI Stress Test</h4>
               </div>
               <p className="text-sm sm:text-base text-stone-400 leading-relaxed font-medium mb-6">
-                  Lola is simulating current formula ROI based on active raw material burn rates. Your estimated break-even is <span className="text-white font-bold">14 units</span> at current wholesale projections.
+                  {materials.length === 0 ? (
+                      "Add materials to your recipe to simulate ROI and break-even points."
+                  ) : (
+                      <>Lola is simulating current formula ROI based on active raw material burn rates. Your estimated break-even is <span className="text-white font-bold">14 units</span> at current wholesale projections.</>
+                  )}
               </p>
-              <button onClick={() => setShowROIHeatmap(true)} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">VIEW ROI HEATMAP</button>
+              <button 
+                  onClick={() => setShowROIHeatmap(true)} 
+                  disabled={materials.length === 0}
+                  className={`w-full py-4 border rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${materials.length === 0 ? 'bg-black/50 border-white/5 text-white/30 cursor-not-allowed' : 'bg-white/5 border-white/10 hover:bg-white/10 text-white'}`}
+              >
+                  {materials.length === 0 ? 'AWAITING DATA' : 'VIEW ROI HEATMAP'}
+              </button>
           </div>
         </div>
       </div>

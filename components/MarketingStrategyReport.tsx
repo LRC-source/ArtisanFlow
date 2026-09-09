@@ -371,7 +371,7 @@ export const MarketingStrategyReport = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-white font-serif">{platform.name}</h4>
-                                    <p className="text-sm sm:text-base text-[10px] font-black text-[#C5A059] uppercase tracking-widest">{platform.freq}</p>
+                                    <p className="text-[10px] font-black text-[#C5A059] uppercase tracking-widest">{platform.freq}</p>
                                 </div>
                             </div>
                             <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans font-light">{platform.focus}</p>

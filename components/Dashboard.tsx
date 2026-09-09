@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, TrendingUp, Sparkles, Factory, User } from 'lucide-react';
+import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, TrendingUp, Sparkles, Factory, User, CheckCircle2, Circle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from 'recharts';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion } from 'framer-motion';
 import { Badge, Button, VaultBanner } from './UI';
+import { useArtisanData } from './DataContext';
 
 const DATA = [
   { name: 'Mon', val: 4000 },
@@ -18,6 +19,9 @@ const DATA = [
 
 export const Dashboard = () => {
   const navigate = useNavigate();
+  const { getTotalRevenue } = useArtisanData();
+  const hasData = getTotalRevenue() > 0;
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -37,6 +41,45 @@ export const Dashboard = () => {
             Run Diagnostic <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
         </Button>
       </VaultBanner>
+
+      {!hasData && (
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 mt-6">
+              <h3 className="text-xl font-serif font-black text-white mb-4">Guided Setup</h3>
+              <p className="text-sm text-white/50 mb-6">Complete these steps to get your store up and running.</p>
+              <div className="space-y-4">
+                  <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors" onClick={() => navigate('/settings/integrations')}>
+                      <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                          <CheckCircle2 size={16} />
+                      </div>
+                      <div className="flex-1">
+                          <h4 className="text-sm font-bold text-white">Connect Storefront</h4>
+                          <p className="text-xs text-white/40">Link Shopify, WooCommerce, or Etsy.</p>
+                      </div>
+                      <ArrowRight size={16} className="text-white/20" />
+                  </div>
+                  <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors" onClick={() => navigate('/inventory')}>
+                      <div className="w-8 h-8 rounded-full bg-white/5 text-white/40 flex items-center justify-center border border-white/10">
+                          <Circle size={16} />
+                      </div>
+                      <div className="flex-1">
+                          <h4 className="text-sm font-bold text-white">Add Inventory</h4>
+                          <p className="text-xs text-white/40">Import your raw materials and stock.</p>
+                      </div>
+                      <ArrowRight size={16} className="text-white/20" />
+                  </div>
+                  <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors" onClick={() => navigate('/recipes')}>
+                      <div className="w-8 h-8 rounded-full bg-white/5 text-white/40 flex items-center justify-center border border-white/10">
+                          <Circle size={16} />
+                      </div>
+                      <div className="flex-1">
+                          <h4 className="text-sm font-bold text-white">Create Recipes</h4>
+                          <p className="text-xs text-white/40">Build your BOMs and formulations.</p>
+                      </div>
+                      <ArrowRight size={16} className="text-white/20" />
+                  </div>
+              </div>
+          </div>
+      )}
 
       {/* Primary Navigation Portals */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10">
@@ -90,11 +133,20 @@ export const Dashboard = () => {
               <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-12">
               <div>
                   <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Revenue Trajectory</h3>
-                  <p className="text-sm sm:text-base text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mt-2">7-Day rolling performance audit</p>
+                  <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mt-2">7-Day rolling performance audit</p>
               </div>
               <GlassHaloIcon icon={TrendingUp} color="gold" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
           </div>
           <div className="w-full min-h-[300px] sm:py-8 sm:py-16 px-4 sm:px-8 sm:min-h-[320px] h-auto w-full max-w-full overflow-hidden">
+            {!hasData ? (
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-white/20">
+                        <TrendingUp size={32} />
+                    </div>
+                    <p className="text-white/60 font-medium">Awaiting first sale data...</p>
+                    <p className="text-white/40 text-sm">Your revenue chart will appear here once you process an order.</p>
+                </div>
+            ) : (
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
@@ -115,6 +167,8 @@ export const Dashboard = () => {
                 <Area type="monotone" dataKey="val" stroke="#6A2C91" strokeWidth={4} fillOpacity={1} fill="url(#colorVal)" animationDuration={2000} />
               </AreaChart>
             </ResponsiveContainer>
+            )}
+          </div>
           </div>
         </motion.div>
 
@@ -132,11 +186,11 @@ export const Dashboard = () => {
               </div>
               <div className="space-y-10 relative z-10">
                 <div className="group/item">
-                    <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-stone-500 uppercase tracking-[0.3em] mb-4">Inventory Protocol</p>
+                    <p className="text-[10px] font-sans font-bold text-stone-500 uppercase tracking-[0.3em] mb-4">Inventory Protocol</p>
                     <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-stone-300 font-sans font-light leading-relaxed border-l-2 border-[#C5A059] pl-6 group-hover/item:border-white transition-all duration-500">Reorder <strong className="text-white font-medium">Lavender Oil</strong> by Tuesday to prevent supply chain disruption.</p>
                 </div>
                 <div className="group/item">
-                    <p className="text-sm sm:text-base text-[10px] font-sans font-bold text-stone-500 uppercase tracking-[0.3em] mb-4">Margin Strategy</p>
+                    <p className="text-[10px] font-sans font-bold text-stone-500 uppercase tracking-[0.3em] mb-4">Margin Strategy</p>
                     <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-stone-300 font-sans font-light leading-relaxed border-l-2 border-[#6A2C91] pl-6 group-hover/item:border-white transition-all duration-500">Overall manufacturing margins increased by <strong className="text-white font-medium">4.2%</strong> this audit cycle.</p>
                 </div>
               </div>
