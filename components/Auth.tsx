@@ -29,21 +29,31 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     pass: z.string().min(8, { message: "Password must be at least 8 characters long" })
   });
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const emailVal = (formData.get('email') as string || email).trim();
+    const passVal = formData.get('password') as string || pass;
     
-    const result = authSchema.safeParse({ email, pass });
+    setEmail(emailVal);
+    setPass(passVal);
+    
+    const result = authSchema.safeParse({ email: emailVal, pass: passVal });
     if (!result.success) {
       toast.error(result.error.issues[0].message);
       return;
     }
+    
+    // Use the extracted values for the rest of the flow
+    const currentEmail = emailVal;
+    const currentPass = passVal;
 
     const ADMIN_EMAILS = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
 
     if (view === 'signup') {
-      if (ADMIN_EMAILS.includes(email.toLowerCase())) {
+      if (ADMIN_EMAILS.includes(currentEmail.toLowerCase())) {
         try {
-          await signUp({ email, name: 'Admin Hub', password: pass, tier: 'Margin Protection Pro', status: 'Active' });
+          await signUp({ email: currentEmail, name: 'Admin Hub', password: currentPass, tier: 'Margin Protection Pro', status: 'Active' });
           return;
         } catch (e: any) {
           toast.error(e.message || "Failed to initialize Admin access.");
@@ -53,14 +63,14 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
 
       if (selectedTier === 'Free Audit') {
         try {
-          await signUp({ email, password: pass, tier: 'Free Audit', status: 'Active' });
+          await signUp({ email: currentEmail, password: currentPass, tier: 'Free Audit', status: 'Active' });
         } catch (e) {
           toast.error("Account creation failed. You may already have an account with this email.");
         }
       } else if (selectedTier) {
         if (hasPaid) {
             try {
-              await signUp({ email, password: pass, tier: selectedTier, status: 'Active' });
+              await signUp({ email: currentEmail, password: currentPass, tier: selectedTier, status: 'Active' });
             } catch (e) {
               toast.error("Account creation failed.");
             }
@@ -71,7 +81,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
         setView('tiers');
       }
     } else {
-      const success = await login(email, pass);
+      const success = await login(currentEmail, currentPass);
       if (!success) {
         toast.error("That email and password don't match. Try again or reset your password.");
       }
@@ -253,14 +263,21 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Email</label>
-                    <Input type="email" autoComplete="email" placeholder="alex@artisanflow.ai" value={email} onChange={e => setEmail(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input type="email" name="email" autoComplete="email" defaultValue={email} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Password</label>
-                    <Input type="password" autoComplete={view === 'login' ? 'current-password' : 'new-password'} placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input type="password" name="password" autoComplete={view === 'login' ? 'current-password' : 'new-password'} defaultValue={pass} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
-                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
+                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" onClick={(e) => {
+                    // Ensures clicks always trigger form submission even if nested
+                    const form = e.currentTarget.closest('form');
+                    if (form && form.requestSubmit) {
+                       e.preventDefault();
+                       form.requestSubmit();
+                    }
+                  }} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
                     ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
                 </form>
@@ -509,8 +526,8 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
               </h3>
               
               <PaymentForm
-                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sq0idp-Xv5GTHrrJ5sC2kVOm2wR-g'}
-                locationId={(import.meta as any).env.VITE_SQUARE_LOCATION_ID || 'L7APSEDCE2RJX'}
+                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sandbox-sq0idb-placeholder'}
+                locationId={(import.meta as any).env.VITE_SQUARE_LOCATION_ID || 'sandbox-location-id'}
                 cardTokenizeResponseReceived={async (tokenResult: any, verifiedBuyer?: any) => {
                   if (tokenResult.status === 'OK') {
                     await handlePayment(tokenResult.token);

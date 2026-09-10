@@ -503,8 +503,9 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setIsSessionVerifying(false);
       return;
     }
+    let isInitialCheck = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setIsSessionVerifying(true);
+      if (isInitialCheck) setIsSessionVerifying(true);
       if (user) {
         // Load user profile from Firestore (Phase 3 implementation)
         try {
@@ -553,7 +554,10 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       } else {
         setIsAuthenticated(false);
       }
-      setIsSessionVerifying(false);
+      if (isInitialCheck) {
+        setIsSessionVerifying(false);
+        isInitialCheck = false;
+      }
     });
     return () => unsubscribe();
   }, []);
