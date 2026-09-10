@@ -11,6 +11,7 @@ import {
   AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from 'recharts';
 
+import { Toaster } from 'sonner';
 import Layout from './components/Layout';
 import { 
     MarketingStudio as MarketingPage, 
