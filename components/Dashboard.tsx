@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, TrendingUp, Sparkles, Factory, User, CheckCircle2, Circle } from 'lucide-react';
+import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, TrendingUp, Sparkles, Factory, User, CheckCircle2, Circle, X } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from 'recharts';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion } from 'framer-motion';
@@ -19,8 +19,44 @@ const DATA = [
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { getTotalRevenue } = useArtisanData();
+  const { getTotalRevenue, inventory, recipes } = useArtisanData();
   const hasData = getTotalRevenue() > 0;
+
+  // Guided setup: dismissed state persisted in localStorage so it never reappears after skip
+  const [setupDismissed, setSetupDismissed] = React.useState(() => {
+    return localStorage.getItem('artisanflow_setup_dismissed') === 'true';
+  });
+
+  const dismissSetup = () => {
+    localStorage.setItem('artisanflow_setup_dismissed', 'true');
+    setSetupDismissed(true);
+  };
+
+  // Step completion derived from real data
+  const hasInventory = inventory.length > 0;
+  const hasRecipes = recipes.length > 0;
+  const setupSteps = [
+    {
+      title: 'Add Inventory',
+      desc: 'Import your raw materials and stock so the app can track costs.',
+      done: hasInventory,
+      route: '/inventory',
+    },
+    {
+      title: 'Create a Recipe',
+      desc: 'Build your first formula or BOM linking materials to a finished product.',
+      done: hasRecipes,
+      route: '/recipes',
+    },
+    {
+      title: 'Review Finance Hub',
+      desc: 'Explore your P&L, margins, and revenue once you have real orders.',
+      done: hasData,
+      route: '/finance',
+    },
+  ];
+  const allComplete = setupSteps.every(s => s.done);
+  const showSetup = !setupDismissed && !allComplete;
 
   return (
     <motion.div 
@@ -42,43 +78,44 @@ export const Dashboard = () => {
         </Button>
       </VaultBanner>
 
-      {!hasData && (
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 mt-6">
-              <h3 className="text-xl font-serif font-black text-white mb-4">Guided Setup</h3>
-              <p className="text-sm text-white/50 mb-6">Complete these steps to get your store up and running.</p>
-              <div className="space-y-4">
-                  <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors" onClick={() => navigate('/settings/integrations')}>
-                      <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
-                          <CheckCircle2 size={16} />
-                      </div>
-                      <div className="flex-1">
-                          <h4 className="text-sm font-bold text-white">Connect Storefront</h4>
-                          <p className="text-xs text-white/40">Link Shopify, WooCommerce, or Etsy.</p>
-                      </div>
-                      <ArrowRight size={16} className="text-white/20" />
+      {showSetup && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 mt-6"
+          >
+              <div className="flex items-center justify-between mb-4">
+                  <div>
+                      <h3 className="text-xl font-serif font-black text-white">Get Started</h3>
+                      <p className="text-xs text-white/40 mt-1">{setupSteps.filter(s => s.done).length} of {setupSteps.length} steps complete</p>
                   </div>
-                  <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors" onClick={() => navigate('/inventory')}>
-                      <div className="w-8 h-8 rounded-full bg-white/5 text-white/40 flex items-center justify-center border border-white/10">
-                          <Circle size={16} />
-                      </div>
-                      <div className="flex-1">
-                          <h4 className="text-sm font-bold text-white">Add Inventory</h4>
-                          <p className="text-xs text-white/40">Import your raw materials and stock.</p>
-                      </div>
-                      <ArrowRight size={16} className="text-white/20" />
-                  </div>
-                  <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors" onClick={() => navigate('/recipes')}>
-                      <div className="w-8 h-8 rounded-full bg-white/5 text-white/40 flex items-center justify-center border border-white/10">
-                          <Circle size={16} />
-                      </div>
-                      <div className="flex-1">
-                          <h4 className="text-sm font-bold text-white">Create Recipes</h4>
-                          <p className="text-xs text-white/40">Build your BOMs and formulations.</p>
-                      </div>
-                      <ArrowRight size={16} className="text-white/20" />
-                  </div>
+                  <button
+                    onClick={dismissSetup}
+                    className="text-white/30 hover:text-white/60 transition-colors text-[10px] font-sans uppercase tracking-widest flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/5"
+                  >
+                    Skip setup <X size={12} />
+                  </button>
               </div>
-          </div>
+              <div className="space-y-3">
+                  {setupSteps.map((step, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl cursor-pointer hover:bg-black/60 transition-colors group"
+                        onClick={() => navigate(step.route)}
+                      >
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border flex-shrink-0 transition-colors ${step.done ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-white/5 text-white/40 border-white/10'}`}>
+                              {step.done ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                              <h4 className={`text-sm font-bold ${step.done ? 'text-white/50 line-through' : 'text-white'}`}>{step.title}</h4>
+                              <p className="text-xs text-white/30 truncate">{step.desc}</p>
+                          </div>
+                          {!step.done && <ArrowRight size={16} className="text-white/20 group-hover:text-[#C5A059] transition-colors flex-shrink-0" />}
+                      </div>
+                  ))}
+              </div>
+          </motion.div>
       )}
 
       {/* Primary Navigation Portals */}

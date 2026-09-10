@@ -411,23 +411,23 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       id: 'shopify', 
       name: 'Shopify', 
       category: 'E-commerce', 
-      status: 'Connected', 
+      status: 'Connect', 
       logo: 'https://logo.clearbit.com/shopify.com', 
       description: 'Unified storefront commerce logic.',
       aiCapability: 'Predictive Stock Reconciliation',
       features: ['Real-time Order Ingestion', 'Inventory Sync'],
-      lastSync: 'Today, 09:12 AM'
+      lastSync: undefined
     },
     { 
       id: 'woocommerce', 
       name: 'WooCommerce', 
       category: 'Wholesale', 
-      status: 'Connected', 
+      status: 'Connect', 
       logo: 'https://logo.clearbit.com/woocommerce.com', 
       description: 'Daily metadata sync active.',
       aiCapability: 'Profit Margin Shield',
       features: ['Daily Metadata Sync', 'Bidirectional Stock Push'],
-      lastSync: 'Today, 04:12 AM'
+      lastSync: undefined
     },
     { 
       id: 'etsy', 
@@ -455,23 +455,23 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       id: 'firebase_auth',
       name: 'Firebase Auth',
       category: 'System',
-      status: 'Connected',
+      status: 'Connect',
       logo: 'https://logo.clearbit.com/firebase.google.com',
       description: 'Secure user identity and session management.',
       aiCapability: 'Anomaly Login Detection',
       features: ['Google OAuth', 'JWT Session Management'],
-      lastSync: 'Today, 08:00 AM'
+      lastSync: undefined
     },
     {
       id: 'email_smtp',
       name: 'Email / SMTP',
       category: 'System',
-      status: 'Connected',
+      status: 'Connect',
       logo: 'https://logo.clearbit.com/sendgrid.com',
       description: 'Transactional email routing.',
       aiCapability: 'Smart Bounce Handling',
       features: ['Automated Receipts', 'Supplier Comms'],
-      lastSync: 'Today, 10:15 AM'
+      lastSync: undefined
     },
     {
       id: 'api_login_cards',

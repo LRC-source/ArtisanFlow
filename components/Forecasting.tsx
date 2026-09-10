@@ -20,6 +20,9 @@ export const Forecasting = () => {
     const navigate = useNavigate();
     const { orders, inventory } = useArtisanData();
 
+    const hasInventory = inventory.length > 0;
+    const hasOrders = orders.length > 0;
+
     let totalUnits = 0;
     orders.forEach(o => {
         if (o.items) {
@@ -29,12 +32,12 @@ export const Forecasting = () => {
         }
     });
 
-    const activeUnits = totalUnits > 0 ? totalUnits : 640;
-    const averageUnitsPerInterval = Math.round(activeUnits / 4);
+    // Only use real data — no fake fallbacks
+    const averageUnitsPerInterval = hasOrders ? Math.round(totalUnits / 4) : 0;
 
-    const averageMaterialCost = inventory.length > 0
+    const averageMaterialCost = hasInventory
         ? inventory.reduce((sum, item) => sum + (item.unitCost || 0), 0) / inventory.length
-        : 14.50;
+        : 0;
 
     const [aiScenario, setAiScenario] = React.useState('Baseline');
 
@@ -50,18 +53,23 @@ export const Forecasting = () => {
         const projectedSold = Math.round(averageUnitsPerInterval * growthFactor);
         const projectedCost = Math.round(projectedSold * averageMaterialCost * 2.2);
 
-        return {
-            name,
-            sold: projectedSold,
-            cost: projectedCost
-        };
+        return { name, sold: projectedSold, cost: projectedCost };
     });
 
-    const procurementSuggestions = [
-        { item: 'Rosemary Extract', required: '240 oz', current: '50 oz', shortfall: '190 oz', cost: '$180.50' },
-        { item: 'Glass Vials (50ml)', required: '500 units', current: '120 units', shortfall: '380 units', cost: '$342.00' },
-        { item: 'Beeswax Blocks', required: '100 lbs', current: '80 lbs', shortfall: '20 lbs', cost: '$65.00' }
-    ];
+    // Live procurement shortfalls from actual inventory — only items below reorder point
+    const procurementSuggestions = inventory
+        .filter(item => item.stock <= item.reorderPoint && item.type === 'raw')
+        .map(item => {
+            const shortfall = item.reorderPoint - item.stock;
+            const estCost = shortfall * (item.unitCost || 0);
+            return {
+                item: item.name,
+                required: `${item.reorderPoint} ${item.unit || 'units'}`,
+                current: `${item.stock} ${item.unit || 'units'}`,
+                shortfall: `${shortfall} ${item.unit || 'units'}`,
+                cost: `$${estCost.toFixed(2)}`
+            };
+        });
 
     return (
         <motion.div 
@@ -182,64 +190,82 @@ export const Forecasting = () => {
                  </motion.div>
              </div>
 
-             {/* Material Procurement Suggestions */}
+
              <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.35, duration: 0.6 }}
              >
                  <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Predicted Shortfalls & Procurement</h3>
-                     <div className="w-full">
-                         {/* Mobile View: Stacked Cards */}
-                         <div className="block sm:hidden space-y-4">
-                             {procurementSuggestions.map((item, idx) => (
-                                 <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
-                                     <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                                         <span className="font-serif text-white text-base font-bold">{item.item}</span>
-                                         <span className="text-emerald-400 font-bold text-sm">{item.cost}</span>
-                                     </div>
-                                     <div className="grid grid-cols-2 gap-2 text-xs">
-                                         <div><span className="text-white/50 block">Required</span><span className="text-white">{item.required}</span></div>
-                                         <div><span className="text-white/50 block">In Stock</span><span className="text-white">{item.current}</span></div>
-                                     </div>
-                                     <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
-                                         <div className="text-amber-500 font-bold text-xs"><span className="text-white/50 block font-normal">Shortfall</span>{item.shortfall}</div>
-                                         <Button onClick={() => navigate('/supplier_manager')} className="h-8 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-lg text-[9px] font-black uppercase tracking-widest px-4">Order</Button>
-                                     </div>
-                                 </div>
-                             ))}
+                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Predicted Shortfalls &amp; Procurement</h3>
+                     {!hasInventory ? (
+                         <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
+                             <AlertCircle size={32} className="text-white/20" />
+                             <p className="text-white/40 text-sm font-sans font-medium">No inventory data yet.</p>
+                             <p className="text-white/30 text-xs">Add raw materials to Inventory Hub to enable shortfall forecasting.</p>
+                             <Button onClick={() => navigate('/inventory')} className="mt-2 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-full px-8 py-2 font-sans font-bold text-[10px] uppercase tracking-widest">Add Inventory</Button>
                          </div>
-                         {/* Desktop View: Table */}
-                         <div className="hidden sm:block overflow-x-auto w-full"><table className="w-full min-w-[650px] text-left border-collapse">
-                             <thead>
-                                 <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em]">
-                                     <th className="pb-6 pl-4">Material Node</th>
-                                     <th className="pb-6">Required (90D)</th>
-                                     <th className="pb-6">Current Stock</th>
-                                     <th className="pb-6 text-amber-500">Projected Shortfall</th>
-                                     <th className="pb-6">Est. Cost</th>
-                                     <th className="pb-6 text-right pr-4">Action</th>
-                                 </tr>
-                             </thead>
-                             <tbody>
+                     ) : procurementSuggestions.length === 0 ? (
+                         <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
+                             <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                                 <AlertCircle size={24} className="text-emerald-400" />
+                             </div>
+                             <p className="text-white/60 text-sm font-sans font-medium">All raw materials are above reorder thresholds.</p>
+                             <p className="text-white/30 text-xs">No shortfalls predicted at this time. Check back as stock levels change.</p>
+                         </div>
+                     ) : (
+                         <div className="w-full">
+                             {/* Mobile View: Stacked Cards */}
+                             <div className="block sm:hidden space-y-4">
                                  {procurementSuggestions.map((item, idx) => (
-                                     <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                                         <td className="py-6 pl-4 font-serif text-white text-base leading-relaxed tracking-tight group-hover:text-[#C5A059] transition-colors">{item.item}</td>
-                                         <td className="py-6 text-white/70 font-medium">{item.required}</td>
-                                         <td className="py-6 text-white/70 font-medium">{item.current}</td>
-                                         <td className="py-6 text-amber-500 font-bold">{item.shortfall}</td>
-                                         <td className="py-6 text-emerald-400 font-bold">{item.cost}</td>
-                                         <td className="py-6 text-right pr-4">
-                                             <Button onClick={() => navigate('/supplier_manager')} className="h-10 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-6 transition-colors">Order Now</Button>
-                                         </td>
-                                     </tr>
+                                     <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
+                                         <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                                             <span className="font-serif text-white text-base font-bold">{item.item}</span>
+                                             <span className="text-emerald-400 font-bold text-sm">{item.cost}</span>
+                                         </div>
+                                         <div className="grid grid-cols-2 gap-2 text-xs">
+                                             <div><span className="text-white/50 block">Required</span><span className="text-white">{item.required}</span></div>
+                                             <div><span className="text-white/50 block">In Stock</span><span className="text-white">{item.current}</span></div>
+                                         </div>
+                                         <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+                                             <div className="text-amber-500 font-bold text-xs"><span className="text-white/50 block font-normal">Shortfall</span>{item.shortfall}</div>
+                                             <Button onClick={() => navigate('/supplier_manager')} className="h-8 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-lg text-[9px] font-black uppercase tracking-widest px-4">Order</Button>
+                                         </div>
+                                     </div>
                                  ))}
-                             </tbody>
-                         </table></div>
-                     </div>
+                             </div>
+                             {/* Desktop View: Table */}
+                             <div className="hidden sm:block overflow-x-auto w-full"><table className="w-full min-w-[650px] text-left border-collapse">
+                                 <thead>
+                                     <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em]">
+                                         <th className="pb-6 pl-4">Material Node</th>
+                                         <th className="pb-6">Required (90D)</th>
+                                         <th className="pb-6">Current Stock</th>
+                                         <th className="pb-6 text-amber-500">Projected Shortfall</th>
+                                         <th className="pb-6">Est. Cost</th>
+                                         <th className="pb-6 text-right pr-4">Action</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     {procurementSuggestions.map((item, idx) => (
+                                         <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                                             <td className="py-6 pl-4 font-serif text-white text-base leading-relaxed tracking-tight group-hover:text-[#C5A059] transition-colors">{item.item}</td>
+                                             <td className="py-6 text-white/70 font-medium">{item.required}</td>
+                                             <td className="py-6 text-white/70 font-medium">{item.current}</td>
+                                             <td className="py-6 text-amber-500 font-bold">{item.shortfall}</td>
+                                             <td className="py-6 text-emerald-400 font-bold">{item.cost}</td>
+                                             <td className="py-6 text-right pr-4">
+                                                 <Button onClick={() => navigate('/supplier_manager')} className="h-10 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-6 transition-colors">Order Now</Button>
+                                             </td>
+                                         </tr>
+                                     ))}
+                                 </tbody>
+                             </table></div>
+                         </div>
+                     )}
                  </Card>
              </motion.div>
+
 
              <motion.div
                  initial={{ opacity: 0, y: 20 }}

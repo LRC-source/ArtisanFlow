@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ContextualTutorialModal } from '../ContextualTutorialModal';
-import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
+import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail, HelpCircle } from 'lucide-react';
 import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
 import { useArtisanData, Integration, UserTier } from '../DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export const AccountSettings = () => {
-    const { businessProfile, updateBusinessProfile } = useArtisanData();
+    const { businessProfile, updateBusinessProfile, startTutorial } = useArtisanData();
     const [formData, setFormData] = useState({ fullName: businessProfile.ownerName, email: businessProfile.email, avatarUrl: businessProfile.avatarUrl });
     const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
@@ -83,6 +83,28 @@ export const AccountSettings = () => {
                             <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white px-12 rounded-full shadow-md font-sans font-medium text-[10px] uppercase tracking-widest transition-all" onClick={handleSave}>Save Profile</Button>
                             {isSuccess && <span className="text-emerald-400 text-[10px] font-sans font-bold uppercase tracking-widest flex items-center gap-2 animate-in slide-up"><CheckCircle size={16}/> Saved</span>}
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Support & Tutorial */}
+            <div className="w-full md:w-1/2">
+                <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-[2.5rem]">
+                    <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-white mb-6">Support &amp; Help</h3>
+                    <div className="space-y-4">
+                        <Button
+                            variant="outline"
+                            className="w-full border-white/10 text-white/60 hover:text-white hover:border-[#6A2C91]/50 justify-start gap-3"
+                            onClick={() => {
+                                startTutorial();
+                                toast.success('Tutorial started! Look for the panel in the top-right corner.');
+                            }}
+                        >
+                            <HelpCircle size={16} /> Replay App Tutorial
+                        </Button>
+                        <p className="text-white/30 text-xs font-sans pl-1">
+                            Re-launches the non-blocking quick-tour panel that guides you through the main features.
+                        </p>
                     </div>
                 </div>
             </div>

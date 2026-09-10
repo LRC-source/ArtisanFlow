@@ -29,6 +29,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showNotifications, setShowNotifications] = useState(false);
 
     useEffect(() => {
       const gateMap: Record<string, string> = {
@@ -295,14 +296,38 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
             <div className="flex items-center gap-3 sm:gap-6">
                  {/* Contextual Actions Area */}
                  <div className="hidden lg:flex items-center gap-2 pr-6 border-r border-white/5">
-                    <motion.button 
-                      onClick={() => toast.info('Notifications coming in v1.1')}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-2.5 rounded-xl bg-white/5 text-white sm:text-white/40 hover:text-[#C5A059] transition-colors"
-                    >
-                      <Bell size={18} />
-                    </motion.button>
+                    <div className="relative">
+                     <motion.button 
+                       onClick={() => setShowNotifications(prev => !prev)}
+                       whileHover={{ scale: 1.05 }}
+                       whileTap={{ scale: 0.95 }}
+                       className="relative p-3 min-w-[44px] min-h-[44px] rounded-xl bg-white/5 text-white/40 hover:text-[#C5A059] transition-colors flex items-center justify-center cursor-pointer"
+                       aria-label="Notifications"
+                     >
+                       <Bell size={18} />
+                     </motion.button>
+                     <AnimatePresence>
+                       {showNotifications && (
+                         <motion.div
+                           initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                           animate={{ opacity: 1, y: 0, scale: 1 }}
+                           exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                           transition={{ duration: 0.2 }}
+                           className="absolute top-full right-0 mt-3 w-72 bg-[#0f0f0f] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden"
+                         >
+                           <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
+                             <p className="text-[10px] font-sans font-black uppercase tracking-widest text-white/60">Notifications</p>
+                             <button onClick={() => setShowNotifications(false)} className="text-white/30 hover:text-white transition-colors p-1"><X size={14} /></button>
+                           </div>
+                           <div className="flex flex-col items-center justify-center py-10 gap-3">
+                             <Bell size={24} className="text-white/10" />
+                             <p className="text-white/30 text-xs font-sans">No notifications yet.</p>
+                             <p className="text-white/20 text-[10px] text-center max-w-[180px]">Activity updates will appear here when your account has live data.</p>
+                           </div>
+                         </motion.div>
+                       )}
+                     </AnimatePresence>
+                  </div>
                     <motion.button 
                       onClick={() => {
                         toast.success('Syncing with Vault...');

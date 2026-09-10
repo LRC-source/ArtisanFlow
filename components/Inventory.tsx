@@ -305,29 +305,42 @@ export const Inventory = () => {
             description="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
           />
           
+          {/* Hidden file input outside VaultBanner so ref is always mounted and accessible */}
+          <input
+            id="csv-file-input"
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            accept=".csv"
+            onChange={handleFileChange}
+          />
+
           <VaultBanner 
             title="Inventory Hub"
             subtitle="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
             badge="Asset Management Protocol Active"
           >
-            {/* Hidden file input always mounted so the ref is always valid */}
-            <input type="file" ref={fileInputRef} className="hidden" accept=".csv" onChange={handleFileChange} />
             <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-auto">
-              <Button 
-                onClick={() => {
-                  if (userTier === 'Free Audit') {
+              {userTier === 'Free Audit' ? (
+                <Button
+                  onClick={() => {
                     setRequiredTier('Artisan Flow Basic');
                     setUpgradeLimit(50);
                     setShowUpgradeModal(true);
-                  } else {
-                    fileInputRef.current?.click();
-                  }
-                }} 
-                variant="outline" 
-                className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto"
-              >
-                <Upload size={16} className="mr-3"/> INGEST CSV
-              </Button>
+                  }}
+                  variant="outline"
+                  className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer"
+                >
+                  <Upload size={16} className="mr-3"/> INGEST CSV
+                </Button>
+              ) : (
+                <label
+                  htmlFor="csv-file-input"
+                  className="rounded-full border border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"
+                >
+                  <Upload size={16} className="mr-3"/> INGEST CSV
+                </label>
+              )}
               <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
             </div>
           </VaultBanner>
