@@ -159,29 +159,6 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     }
   };
 
-  const handleGoogleAuth = async () => {
-    try {
-      const user = await googleLogin();
-      if (!user) return;
-      
-      const currentEmail = user.email || '';
-      setEmail(currentEmail);
-      
-      if (view === 'signup') {
-        if (selectedTier === 'Free Audit') {
-          await signUp({ email: currentEmail, tier: 'Free Audit', status: 'Active' });
-        } else if (selectedTier) {
-          setView('payment');
-        } else {
-          setView('tiers');
-        }
-      }
-      // If it's login, onAuthStateChanged will automatically pick up the existing Firestore profile
-    } catch (e: any) {
-      toast.error(e.message || "Google Sign-in failed.");
-    }
-  };
-
   return (
     <AnimatePresence mode="wait">
       {view === 'tiers' ? (
