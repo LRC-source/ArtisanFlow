@@ -455,7 +455,33 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         throw new Error(result.error || 'Payment authorization was declined by the gateway.');
       }
 
-      // Payment successfully captured by Square backend! Proceed with granting access.
+      // Payment successfully captured by Square backend! 
+      
+      // LOG TO GOOGLE SHEETS
+      const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
+      if (gasUrl) {
+        try {
+          fetch(gasUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'syncPayment',
+              payload: {
+                email: email,
+                tier: tier,
+                amount: 25, // currently hardcoded for test, update when final pricing goes live
+                status: 'Successful',
+                date: new Date().toISOString(),
+                transactionId: result.paymentId || 'square_tx_captured'
+              }
+            })
+          }).catch(console.error);
+        } catch (e) {
+          console.error("Failed to log payment to GAS", e);
+        }
+      }
+
       setIsProcessing(false);
       onSuccess();
     } catch (error: any) {
