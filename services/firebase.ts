@@ -3,12 +3,12 @@ import { getAuth, Auth } from "firebase/auth";
 import { getFirestore, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "artisanflow.lrcholisticmarketing.online",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "artisanflow-b6abf",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "artisanflow-b6abf.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "202144552685",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:202144552685:web:7cab6681811d210aa15ee4"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAR3lLvfKpc5Cey2NPiph54AVNTc7a9TN8",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "official-artisanflow.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "official-artisanflow",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "official-artisanflow.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "518242670072",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:518242670072:web:d0956f031c2f359f30f20d"
 };
 
 // Only initialize Firebase if an API key is present — prevents build-time crash on Vercel
