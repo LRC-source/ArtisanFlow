@@ -253,11 +253,11 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Email</label>
-                    <Input type="email" placeholder="alex@artisanflow.ai" value={email} onChange={e => setEmail(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input type="email" autoComplete="email" placeholder="alex@artisanflow.ai" value={email} onChange={e => setEmail(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Password</label>
-                    <Input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input type="password" autoComplete={view === 'login' ? 'current-password' : 'new-password'} placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
                   <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">

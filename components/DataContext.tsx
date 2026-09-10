@@ -498,6 +498,11 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   ]);
 
   useEffect(() => {
+    if (!auth) {
+      console.error("[Auth] Firebase Auth is not initialized. Check VITE_FIREBASE_API_KEY in Vercel.");
+      setIsSessionVerifying(false);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setIsSessionVerifying(true);
       if (user) {
@@ -532,12 +537,14 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               setBusinessProfile(prev => ({ ...prev, ...defaultProfile }));
               setUserTier('Margin Protection Pro');
             } else {
-              auth.signOut();
-              toast.error("Account incomplete. Please finish checkout.");
+              // No Firestore doc yet — user may be mid-signup (just created Auth, hasn't selected a tier yet).
+              // Do NOT sign them out here; let the signup flow complete the Firestore write.
+              setIsAuthenticated(false);
             }
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
+          setIsAuthenticated(false);
         }
         
         setDemandInsights([
