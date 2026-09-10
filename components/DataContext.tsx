@@ -592,8 +592,18 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       let user = auth.currentUser;
       // First, create the auth user if this is a standard email/password signup
       if (data.password) {
-        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
-        user = userCredential.user;
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+          user = userCredential.user;
+        } catch (authError: any) {
+          if (authError.code === 'auth/email-already-in-use') {
+            // Recover: User exists in Auth but maybe failed a previous Firestore write. Sign them in to continue.
+            const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+            user = userCredential.user;
+          } else {
+            throw authError;
+          }
+        }
       }
       
       if (!user) {

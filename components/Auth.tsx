@@ -160,7 +160,18 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="w-full min-h-screen"
         >
-          <TierSelection onSelect={(tier) => signUp({ email, password: pass, tier, status: 'Active' })} />
+          <TierSelection onSelect={async (tier) => {
+            try {
+              if (tier === 'Free Audit') {
+                await signUp({ email, password: pass, tier, status: 'Active' });
+              } else {
+                setSelectedTier(tier);
+                setView('payment');
+              }
+            } catch (error: any) {
+              toast.error(error.message || "Account creation failed. Please try again.");
+            }
+          }} />
         </motion.div>
       ) : view === 'payment' && selectedTier ? (
         <motion.div
