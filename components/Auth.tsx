@@ -509,7 +509,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
               </h3>
               
               <PaymentForm
-                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sandbox-sq0idb-app-id'}
+                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sq0idp-Xv5GTHrrJ5sC2kVOm2wR-g'}
                 locationId={(import.meta as any).env.VITE_SQUARE_LOCATION_ID || 'L7APSEDCE2RJX'}
                 cardTokenizeResponseReceived={async (tokenResult: any, verifiedBuyer?: any) => {
                   if (tokenResult.status === 'OK') {
