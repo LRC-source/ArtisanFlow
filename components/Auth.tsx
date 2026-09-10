@@ -29,61 +29,49 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     pass: z.string().min(8, { message: "Password must be at least 8 characters long" })
   });
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const emailVal = (formData.get('email') as string || email).trim();
-    const passVal = formData.get('password') as string || pass;
-    
-    setEmail(emailVal);
-    setPass(passVal);
-    
-    const result = authSchema.safeParse({ email: emailVal, pass: passVal });
-    if (!result.success) {
-      toast.error(result.error.issues[0].message);
-      return;
-    }
-    
-    // Use the extracted values for the rest of the flow
-    const currentEmail = emailVal;
-    const currentPass = passVal;
+
+    const trimmedEmail = email.trim();
+    const trimmedPass = pass.trim();
+
+    if (!trimmedEmail) { toast.error("Please enter your email."); return; }
+    if (trimmedPass.length < 8) { toast.error("Password must be at least 8 characters."); return; }
 
     const ADMIN_EMAILS = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
 
     if (view === 'signup') {
-      if (ADMIN_EMAILS.includes(currentEmail.toLowerCase())) {
+      if (ADMIN_EMAILS.includes(trimmedEmail.toLowerCase())) {
         try {
-          await signUp({ email: currentEmail, name: 'Admin Hub', password: currentPass, tier: 'Margin Protection Pro', status: 'Active' });
-          return;
+          await signUp({ email: trimmedEmail, name: 'Admin Hub', password: trimmedPass, tier: 'Margin Protection Pro', status: 'Active' });
         } catch (e: any) {
           toast.error(e.message || "Failed to initialize Admin access.");
-          return;
         }
+        return;
       }
-
       if (selectedTier === 'Free Audit') {
         try {
-          await signUp({ email: currentEmail, password: currentPass, tier: 'Free Audit', status: 'Active' });
-        } catch (e) {
-          toast.error("Account creation failed. You may already have an account with this email.");
+          await signUp({ email: trimmedEmail, password: trimmedPass, tier: 'Free Audit', status: 'Active' });
+        } catch (e: any) {
+          toast.error(e.message || "Account creation failed. You may already have an account.");
         }
       } else if (selectedTier) {
         if (hasPaid) {
-            try {
-              await signUp({ email: currentEmail, password: currentPass, tier: selectedTier, status: 'Active' });
-            } catch (e) {
-              toast.error("Account creation failed.");
-            }
+          try {
+            await signUp({ email: trimmedEmail, password: trimmedPass, tier: selectedTier, status: 'Active' });
+          } catch (e: any) {
+            toast.error(e.message || "Account creation failed.");
+          }
         } else {
-            setView('payment');
+          setView('payment');
         }
       } else {
         setView('tiers');
       }
     } else {
-      const success = await login(currentEmail, currentPass);
+      const success = await login(trimmedEmail, trimmedPass);
       if (!success) {
-        toast.error("That email and password don't match. Try again or reset your password.");
+        toast.error("That email and password don't match. Try again.");
       }
     }
   };
@@ -260,16 +248,29 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                   {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
                 </h2>
 
-                <form onSubmit={handleLogin} className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-6" noValidate>
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Email</label>
-                    <Input type="email" name="email" autoComplete="email" defaultValue={email} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input
+                      type="email"
+                      autoComplete="email"
+                      placeholder="alex@artisanflow.ai"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Password</label>
-                    <Input type="password" name="password" autoComplete={view === 'login' ? 'current-password' : 'new-password'} defaultValue={pass} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
+                    <Input
+                      type="password"
+                      autoComplete={view === 'login' ? 'current-password' : 'new-password'}
+                      placeholder="••••••••"
+                      value={pass}
+                      onChange={e => setPass(e.target.value)}
+                      className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all"
+                    />
                   </div>
-
                   <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
                     ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
