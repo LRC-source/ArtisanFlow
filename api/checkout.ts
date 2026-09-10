@@ -3,7 +3,7 @@ import { SquareClient, SquareEnvironment } from 'square';
 import crypto from 'crypto';
 
 const squareClient = new SquareClient({
-  environment: process.env.SQUARE_ENVIRONMENT === 'production' ? SquareEnvironment.Production : SquareEnvironment.Sandbox,
+  environment: process.env.NODE_ENV === 'production' ? SquareEnvironment.Production : SquareEnvironment.Sandbox,
   token: process.env.SQUARE_ACCESS_TOKEN,
 });
 

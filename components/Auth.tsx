@@ -159,6 +159,29 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     }
   };
 
+  const handleGoogleAuth = async () => {
+    try {
+      const user = await googleLogin();
+      if (!user) return;
+      
+      const currentEmail = user.email || '';
+      setEmail(currentEmail);
+      
+      if (view === 'signup') {
+        if (selectedTier === 'Free Audit') {
+          await signUp({ email: currentEmail, tier: 'Free Audit', status: 'Active' });
+        } else if (selectedTier) {
+          setView('payment');
+        } else {
+          setView('tiers');
+        }
+      }
+      // If it's login, onAuthStateChanged will automatically pick up the existing Firestore profile
+    } catch (e: any) {
+      toast.error(e.message || "Google Sign-in failed.");
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       {view === 'tiers' ? (
@@ -287,8 +310,8 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                   <div className="relative flex justify-center text-[10px] font-black uppercase bg-transparent px-4 text-white/20 tracking-[0.2em]">Secure Entry Point</div>
                 </div>
 
-                <Button type="button" variant="outline" onClick={() => toast.info("Google Sign-in is coming soon.")} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold border-white/10 hover:bg-white/5 text-white opacity-50 cursor-not-allowed">
-                  <Chrome size={18} className="mr-2 text-[#4285F4]" /> Google Sign-in (Coming Soon)
+                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold border-white/10 hover:bg-white/5 text-white transition-colors">
+                  <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
                 </Button>
 
                 <div className="mt-4">
@@ -448,7 +471,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           sourceId: token,
-          amount: tier === 'Margin Protection Pro' ? 14900 : 4900, // in cents
+          amount: 50, // LIVE PRODUCTION TEST: 50 cents ($0.50) for all paid tiers
           currency: 'USD'
         }),
       });
@@ -526,8 +549,8 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
               </h3>
               
               <PaymentForm
-                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sandbox-sq0idb-placeholder'}
-                locationId={(import.meta as any).env.VITE_SQUARE_LOCATION_ID || 'sandbox-location-id'}
+                applicationId={(import.meta as any).env.VITE_SQUARE_APP_ID || 'sq0idp-Xv5GTHrrJ5sC2kVOm2wR-g'}
+                locationId={(import.meta as any).env.VITE_SQUARE_LOCATION_ID || 'L7APSEDCE2RJX'}
                 cardTokenizeResponseReceived={async (tokenResult: any, verifiedBuyer?: any) => {
                   if (tokenResult.status === 'OK') {
                     await handlePayment(tokenResult.token);
@@ -554,7 +577,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
                   }}
                   focus="cardNumber"
                 >
-                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} & INITIALIZE`}
+                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $0.50 & INITIALIZE (LIVE TEST)`}
                 </SquareCreditCard>
               </PaymentForm>
             </div>
