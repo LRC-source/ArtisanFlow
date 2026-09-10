@@ -270,14 +270,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                     <Input type="password" name="password" autoComplete={view === 'login' ? 'current-password' : 'new-password'} defaultValue={pass} required className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all" />
                   </div>
 
-                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" onClick={(e) => {
-                    // Ensures clicks always trigger form submission even if nested
-                    const form = e.currentTarget.closest('form');
-                    if (form && form.requestSubmit) {
-                       e.preventDefault();
-                       form.requestSubmit();
-                    }
-                  }} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
+                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
                     ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
                 </form>
