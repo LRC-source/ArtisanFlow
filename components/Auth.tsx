@@ -444,7 +444,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           sourceId: token,
-          amount: 50, // LIVE PRODUCTION TEST: 50 cents ($0.50) for all paid tiers
+          amount: 25, // LIVE PRODUCTION TEST: 25 cents ($0.25) for all paid tiers
           currency: 'USD'
         }),
       });
@@ -550,7 +550,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
                   }}
                   focus="cardNumber"
                 >
-                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $0.50 & INITIALIZE (LIVE TEST)`}
+                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $0.25 & INITIALIZE (LIVE TEST)`}
                 </SquareCreditCard>
               </PaymentForm>
             </div>
