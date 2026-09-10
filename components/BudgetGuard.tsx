@@ -186,11 +186,11 @@ export const BudgetGuard: React.FC = () => {
                             <div className="mt-4 space-y-4">
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-stone-50 rounded-xl">
                                     <span className="text-[10px] font-black text-white sm:text-gray-400 uppercase">Burn Rate</span>
-                                    <span className="font-bold text-gray-900">Optimal</span>
+                                    <span className="font-bold text-gray-900">{getTotalRevenue() > 0 ? "Optimal" : "—"}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-stone-50 rounded-xl">
                                     <span className="text-[10px] font-black text-white sm:text-gray-400 uppercase">Forecast Integrity</span>
-                                    <span className="font-bold text-emerald-600">94%</span>
+                                    <span className={`font-bold ${getTotalRevenue() > 0 ? 'text-emerald-600' : 'text-gray-900'}`}>{getTotalRevenue() > 0 ? "94%" : "—"}</span>
                                 </div>
                             </div>
                         </Card>
