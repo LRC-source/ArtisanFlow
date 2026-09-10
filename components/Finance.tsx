@@ -132,11 +132,12 @@ export const FinanceHub: React.FC = () => {
 
             {/* Financial Stat Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6 sm:p-8">
-                <FinanceCard title="Gross Revenue" value={`$${revenue.toFixed(2)}`} trend="+12.4%" positive icon={DollarSign} color="cyan" />
-                <FinanceCard title="COGS (Interconnected)" value={`$${estimatedCOGS.toFixed(2)}`} trend="-2.1%" positive icon={Package} color="magenta" />
-                <FinanceCard title="Net Profit" value={`$${grossProfit.toFixed(2)}`} trend="+8.5%" positive icon={TrendingUp} color="emerald" />
-                <FinanceCard title="Avg. Margin" value={`${margin.toFixed(1)}%`} trend="Stable" positive icon={Target} color="gold" />
+                <FinanceCard title="Gross Revenue" value={`$${revenue.toFixed(2)}`} trend={revenue > 0 ? "+12.4%" : undefined} positive icon={DollarSign} color="cyan" />
+                <FinanceCard title="COGS (Interconnected)" value={`$${estimatedCOGS.toFixed(2)}`} trend={revenue > 0 ? "-2.1%" : undefined} positive icon={Package} color="magenta" />
+                <FinanceCard title="Net Profit" value={`$${grossProfit.toFixed(2)}`} trend={revenue > 0 ? "+8.5%" : undefined} positive icon={TrendingUp} color="emerald" />
+                <FinanceCard title="Avg. Margin" value={revenue > 0 ? `${margin.toFixed(1)}%` : "—"} trend={revenue > 0 ? "Stable" : undefined} positive icon={Target} color="gold" />
             </div>
+
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 sm:p-12">
                 {/* Main Cash Flow Visualizer */}

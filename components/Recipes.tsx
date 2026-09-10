@@ -15,32 +15,43 @@ export const Recipes = () => {
   const { recipes, inventory, produceBatch } = useArtisanData();
   const navigate = useNavigate();
 
+  // Compute real stats from actual recipe data
+  const prodReadyCount = recipes.filter(r => r.yieldValue && r.yieldValue > 0).length;
+  const avgMargin = recipes.length > 0
+    ? Math.round(recipes.reduce((sum, r) => {
+        const cogs = r.totalCost || 0;
+        const retail = cogs * 2.2;
+        return sum + (retail > 0 ? ((retail - cogs) / retail) * 100 : 0);
+      }, 0) / recipes.length)
+    : null;
+
   return (
     <div className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-8 sm:pb-12 lg:pb-20">
       <div className="flex flex-col gap-3 sm:gap-6">
         <SubPageHeader 
-          title="Golden Ratio Ledger"
-          parentTitle="Resource Hub"
+          title="Recipe Lab & Formula Builder"
+          parentTitle="Manufacturing"
           onBack={() => navigate('/inventory')}
           description="BOM Architecture: Bridging Material Costs with Finished Value."
         />
         
         <VaultBanner 
-          title="Golden Ratio Ledger"
+          title="Recipe Lab & Formula Builder"
           subtitle="BOM Architecture: Bridging Material Costs with Finished Value."
           badge="Formula Protocol Active"
         >
           <Button className="bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] py-3 px-6 rounded-full shadow-2xl shadow-black/10 transition-all uppercase" onClick={() => navigate('/recipes/builder')}>
-              <Plus size={16} className="mr-3"/> INITIALIZE FORMULA
+              <Plus size={16} className="mr-3"/> NEW FORMULA
           </Button>
         </VaultBanner>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
           <StatBox label="Active Formulas" val={recipes.length} color="text-purple-400" icon={Layers} />
-          <StatBox label="Optimal Margins" val="88%" color="text-emerald-400" icon={Target} />
-          <StatBox label="Production Ready" val="12 SKU" color="text-amber-400" icon={Zap} />
+          <StatBox label="Optimal Margins" val={avgMargin !== null ? `${avgMargin}%` : "—"} color="text-emerald-400" icon={Target} />
+          <StatBox label="Production Ready" val={recipes.length > 0 ? `${prodReadyCount} SKU` : "—"} color="text-amber-400" icon={Zap} />
       </div>
+
 
       {recipes.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-6 sm:p-12 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
@@ -63,8 +74,8 @@ export const Recipes = () => {
                           </div>
                           <div className="flex items-center gap-3">
                               <button 
-                                onClick={() => {
-                                    const result = produceBatch(recipe.id, 1);
+                                onClick={async () => {
+                                    const result = await produceBatch(recipe.id, 1);
                                     if (result.success) {
                                         if (result.warnings.length > 0) {
                                             toast.warning(`Batch Produced with Warnings:\n${result.warnings.join('\n')}`);

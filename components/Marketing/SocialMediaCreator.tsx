@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 export const SocialMediaCreator = () => {
     const navigate = useNavigate();
-    const { addMarketingPost, inventory } = useArtisanData();
+    const { addMarketingPost, inventory, checkFeatureGate } = useArtisanData();
     const [isGenerating, setIsGenerating] = useState(false);
     
     // Form State

@@ -3,9 +3,10 @@ import React from 'react';
 interface GlassHaloIconProps {
   icon: React.ElementType;
   color?: 'cyan' | 'purple' | 'gold' | 'magenta' | 'emerald';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 }
+
 
 const colorStyles = {
   cyan: {

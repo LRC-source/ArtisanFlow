@@ -27,8 +27,9 @@ export const QualityControl = () => {
   };
 
   const passRate = qualityChecks.length > 0 
-    ? Math.round((qualityChecks.filter(c => c.status === 'Passed').length / qualityChecks.length) * 100) 
-    : 100;
+    ? `${Math.round((qualityChecks.filter(c => c.status === 'Passed').length / qualityChecks.length) * 100)}%`
+    : '—';
+
 
   return (
     <div className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-8 sm:pb-12 lg:pb-20">
@@ -74,7 +75,7 @@ export const QualityControl = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
           <StatBox label="Total Audits" val={qualityChecks.length} color="text-[#C5A059]" haloColor="gold" icon={ClipboardList} />
-          <StatBox label="Pass Velocity" val={`${passRate}%`} color="text-emerald-400" haloColor="emerald" icon={ShieldCheck} />
+          <StatBox label="Pass Velocity" val={passRate} color="text-emerald-400" haloColor="emerald" icon={ShieldCheck} />
           <StatBox label="Failure Waste" val="$0.00" color="text-red-400" haloColor="magenta" icon={AlertTriangle} />
           <StatBox label="Pending QA" val={qualityChecks.filter(c => c.status === 'Pending').length} color="text-blue-400" haloColor="cyan" icon={Clock} />
       </div>

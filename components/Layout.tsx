@@ -22,7 +22,8 @@ import { SupportModal } from './SupportModal';
 export default function Layout({ children }: { children?: React.ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { businessProfile, userTier, logout, inventory, orders, getMarginMetrics, startTutorial, upgradePrompt, setUpgradePrompt } = useArtisanData();
+  const { businessProfile, userTier, logout, inventory, orders, getMarginMetrics, startTutorial, upgradePrompt, setUpgradePrompt, checkFeatureGate } = useArtisanData();
+
   
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
@@ -138,7 +139,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   </button>
                   <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
                       <GlassHaloIcon icon={Factory} color="cyan" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">Manufacturing</span>
+                      <span className="flex-1 text-left">Recipe Lab</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
@@ -148,9 +149,10 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   </button>
                   <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
                       <GlassHaloIcon icon={TrendingUp} color="gold" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">Orders & Finance</span>
+                      <span className="flex-1 text-left">Finance Hub</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
+
               </div>
 
               <div className="nav-section-group">
@@ -178,7 +180,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                       <GlassHaloIcon icon={Crown} color="gold" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Account & Billing</span>
                   </button>
-                  {businessProfile.role === 'super_admin' && (
+                  {(businessProfile.role as string) === 'super_admin' && (
                     <button onClick={() => { navigate('/super-admin'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/super-admin' ? 'active' : ''}`}>
                         <GlassHaloIcon icon={ShieldCheck} color="cyan" size="sm" className="mr-3" />
                         <span className="flex-1 text-left">Super-Admin</span>

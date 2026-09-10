@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Input, Select, Badge } from '../UI';
-import { Video, Loader2, Film, Music, Mic, Play, Send, Clapperboard, MonitorPlay, Save } from 'lucide-react';
+import { Video, Loader2, Film, Music, Mic, Play, Send, Clapperboard, MonitorPlay, Save, Layers } from 'lucide-react';
+
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { chatWithLola } from '../../services/geminiService';

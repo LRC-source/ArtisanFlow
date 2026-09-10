@@ -520,7 +520,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
           } else {
             const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
             if (user.email && adminEmails.includes(user.email.toLowerCase())) {
-              const defaultProfile = { name: 'Admin Hub', email: user.email, role: 'admin' };
+              const defaultProfile = { name: 'Admin Hub', email: user.email, role: 'admin' as const };
               await setDoc(docRef, {
                 email: user.email,
                 tier: 'Margin Protection Pro',
@@ -819,7 +819,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       try {
           await Promise.all([
               ...itemsToUpdate.map(item => dataLayer.update('inventory', String(item.id), item)),
-              dataLayer.update('orders', id, { status: 'Shipped' })
+              dataLayer.update('orders', id, { status: 'Shipped' } as any)
           ]);
       } catch (err) {
           console.error("Failed to persist order processing to backend:", err);
@@ -979,7 +979,10 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,
       connectedChannels,
       toggleChannelConnection,
-      submitVIPWaitlist
+      submitVIPWaitlist,
+      upgradePrompt,
+      setUpgradePrompt,
+      checkFeatureGate,
     }}>
       {children}
     </DataContext.Provider>

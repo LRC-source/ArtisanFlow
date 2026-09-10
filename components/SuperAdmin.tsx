@@ -30,7 +30,7 @@ export const SuperAdmin = () => {
 
     useEffect(() => {
         const fetchDashboardData = async () => {
-            if (businessProfile.role !== 'super_admin') {
+            if ((businessProfile.role as string) !== 'super_admin') {
                 toast.error("Unauthorized Access: Super Admin privileges required.");
                 navigate('/');
                 return;

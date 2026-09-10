@@ -68,9 +68,15 @@ export const RecipeBuilder: React.FC = () => {
   }, [id, recipes]);
 
   const addIngredient = () => {
-    if (materials.length === 0) return;
+    if (materials.length === 0) {
+      toast.error('No raw materials found. Add inventory items first before building a BOM.', {
+        action: { label: 'Go to Inventory', onClick: () => navigate('/inventory') }
+      });
+      return;
+    }
     setIngredients([...ingredients, { inventoryItemId: materials[0].id.toString(), quantity: 1, unit: materials[0].unit || 'oz' }]);
   };
+
 
   const updateIngredient = (index: number, field: keyof RecipeIngredient, value: any) => {
     const newIngredients = [...ingredients];
