@@ -29,8 +29,8 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     pass: z.string().min(8, { message: "Password must be at least 8 characters long" })
   });
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async (e?: React.FormEvent) => {
+    if (e && e.preventDefault) e.preventDefault();
 
     const trimmedEmail = email.trim();
     const trimmedPass = pass.trim();
@@ -248,7 +248,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                   {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
                 </h2>
 
-                <form onSubmit={handleLogin} className="space-y-6" noValidate>
+                <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Email</label>
                     <Input
@@ -257,6 +257,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                       placeholder="alex@artisanflow.ai"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                       className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all"
                     />
                   </div>
@@ -268,13 +269,14 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                       placeholder="••••••••"
                       value={pass}
                       onChange={e => setPass(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                       className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all"
                     />
                   </div>
-                  <Button variant={view === 'login' ? 'success' : 'premium'} type="submit" className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
+                  <Button variant={view === 'login' ? 'success' : 'premium'} type="button" onClick={handleLogin} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
                     ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
-                </form>
+                </div>
 
                 <div className="relative my-8">
                   <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
