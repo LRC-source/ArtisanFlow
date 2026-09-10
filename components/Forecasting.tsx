@@ -295,36 +295,38 @@ export const Forecasting = () => {
                  </Card>
              </motion.div>
 
-             <motion.div 
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.5, duration: 0.6 }}
-                 className="space-y-8"
-             >
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
-                    <GlassHaloIcon icon={HistoryIcon} color="gold" size="md" /> Historical Synthesis
-                </h3>
-                <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-3.5 sm:p-6 lg:p-12 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-3.5 sm:p-6 lg:p-12 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity"><RefreshCw size={120} className="animate-spin-slow"/></div>
-                    <div className="flex items-center gap-3 sm:gap-6 relative z-10">
-                        <GlassHaloIcon icon={RefreshCw} color="purple" size="xl" className="group-hover:scale-105 transition-all duration-700" />
-                        <div>
-                            <div className="flex items-center gap-3 sm:gap-4 mb-3">
-                                <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Active Projection: Q4 Protocol</h4>
-                                <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm font-sans tracking-widest uppercase border-[#C5A059]/20">Needs Review</Badge>
+             {hasOrders && (
+                 <motion.div 
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ delay: 0.5, duration: 0.6 }}
+                     className="space-y-8"
+                 >
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+                        <GlassHaloIcon icon={HistoryIcon} color="gold" size="md" /> Historical Synthesis
+                    </h3>
+                    <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-3.5 sm:p-6 lg:p-12 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-3.5 sm:p-6 lg:p-12 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity"><RefreshCw size={120} className="animate-spin-slow"/></div>
+                        <div className="flex items-center gap-3 sm:gap-6 relative z-10">
+                            <GlassHaloIcon icon={RefreshCw} color="purple" size="xl" className="group-hover:scale-105 transition-all duration-700" />
+                            <div>
+                                <div className="flex items-center gap-3 sm:gap-4 mb-3">
+                                    <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Active Projection: Q4 Protocol</h4>
+                                    <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm font-sans tracking-widest uppercase border-[#C5A059]/20">Needs Review</Badge>
+                                </div>
+                                <p className="text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
                             </div>
-                            <p className="text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
+                        </div>
+                        <div className="text-left sm:text-right relative z-10 w-full sm:w-auto flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 border-t border-white/5 sm:border-0 pt-4 sm:pt-0">
+                             <div className="flex flex-col items-center md:items-end">
+                                 <p className="text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
+                                 <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]">$1,976.70</p>
+                             </div>
+                             <GlassHaloIcon icon={ChevronRight} color="gold" size="md" className="group-hover:bg-white/10 transition-colors" />
                         </div>
                     </div>
-                    <div className="text-left sm:text-right relative z-10 w-full sm:w-auto flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 border-t border-white/5 sm:border-0 pt-4 sm:pt-0">
-                         <div className="flex flex-col items-center md:items-end">
-                             <p className="text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
-                             <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]">$1,976.70</p>
-                         </div>
-                         <GlassHaloIcon icon={ChevronRight} color="gold" size="md" className="group-hover:bg-white/10 transition-colors" />
-                    </div>
-                </div>
-             </motion.div>
+                 </motion.div>
+             )}
         </motion.div>
     );
 };

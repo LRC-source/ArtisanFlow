@@ -124,9 +124,9 @@ export const SupplierManager: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
           <StatMini label="Active Vendors" val={suppliers.length} color="text-purple-600" />
-          <StatMini label="Reliability Pass" val="94%" color="text-emerald-600" />
+          <StatMini label="Reliability Pass" val={suppliers.length > 0 ? "94%" : "—"} color="text-emerald-600" />
           <StatMini label="Total Material Nodes" val={inventory.filter(i => i.type === 'raw').length} color="text-amber-600" />
-          <StatMini label="Avg. Lead Time" val="9.2d" color="text-[#C5A059]" />
+          <StatMini label="Avg. Lead Time" val={suppliers.length > 0 ? "9.2d" : "—"} color="text-[#C5A059]" />
       </div>
 
       {suppliers.length === 0 ? (

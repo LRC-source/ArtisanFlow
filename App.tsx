@@ -187,7 +187,7 @@ const DashboardPage = () => {
       </VaultBanner>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <StatCard title="Revenue" value={`$${revenue.toFixed(2)}`} icon={DollarSign} color="text-emerald-400" trend="+12%" />
+          <StatCard title="Revenue" value={`$${revenue.toFixed(2)}`} icon={DollarSign} color="text-emerald-400" trend={revenue > 0 ? "+12%" : "—"} />
           <StatCard title="Inventory" value={totalStock.toString()} icon={Package} color="text-purple-400" trend="Units" />
           <StatCard title="Orders" value={pendingOrders.toString()} icon={ShoppingBag} color="text-blue-400" trend="Pending" />
           <StatCard title="Status" value="Active" icon={Activity} color="text-[#C5A059]" trend="Batches" />
