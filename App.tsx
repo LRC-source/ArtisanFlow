@@ -540,6 +540,7 @@ const AppContent = () => {
 export const AppWithoutRouter = () => (
   <ArtisanDataProvider>
     <TierProvider>
+      <Toaster position="top-right" richColors expand={false} />
       <AppContent />
     </TierProvider>
   </ArtisanDataProvider>
