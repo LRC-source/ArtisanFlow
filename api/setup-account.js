@@ -1,4 +1,4 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -24,7 +24,7 @@ if (!getApps().length) {
     }
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
     
     try {
@@ -57,8 +57,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             const fpDocs = await db.collection('users').where('deviceFingerprint', '==', deviceFingerprint).get();
             
             let abuseDetected = false;
-            emailDocs.forEach((d: any) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
-            fpDocs.forEach((d: any) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
+            emailDocs.forEach((d) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
+            fpDocs.forEach((d) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
             
             if (abuseDetected) {
                 return res.status(403).json({ error: 'Our system indicates you have already utilized a Free Trial.' });
@@ -81,7 +81,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
         return res.status(200).json({ success: true });
         
-    } catch (e: any) {
+    } catch (e) {
         return res.status(500).json({ error: 'Handler error: ' + e.message });
     }
 }
