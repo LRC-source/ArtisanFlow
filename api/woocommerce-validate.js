@@ -1,7 +1,5 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getAuth } from 'firebase-admin/auth';
 
 if (!getApps().length) {
     try {
@@ -24,16 +22,28 @@ if (!getApps().length) {
     }
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
   try {
     const token = req.headers.authorization?.split('Bearer ')[1];
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
-    const decoded = await getAuth().verifyIdToken(token);
+    
+    const FIREBASE_API_KEY = process.env.VITE_FIREBASE_API_KEY || "AIzaSyAR3lLvfKpc5Cey2NPiph54AVNTc7a9TN8";
+    const verifyRes = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken: token })
+    });
+    const verifyData = await verifyRes.json();
+    if (!verifyData.users || !verifyData.users.length) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+    const uid = verifyData.users[0].localId;
+    
     const db = getFirestore();
-    const docSnap = await db.collection('users').doc(decoded.uid).get();
+    const docSnap = await db.collection('users').doc(uid).get();
     return res.status(200).json({ success: true, tier: docSnap.data()?.tier || 'Free Trial' });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 }
