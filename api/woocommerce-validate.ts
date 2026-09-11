@@ -2,7 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import * as admin from 'firebase-admin';
 const adminAny = admin as any;
 
-if (!adminAny.apps.length) {
+if (!adminAny.apps || !adminAny.apps.length) {
   try {
     const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
     if (serviceAccountKey) {

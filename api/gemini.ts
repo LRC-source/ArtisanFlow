@@ -4,7 +4,7 @@ import * as admin from 'firebase-admin';
 const adminAny = admin as any;
 
 // Initialize Firebase Admin if not already initialized
-if (!adminAny.apps.length) {
+if (!adminAny.apps || !adminAny.apps.length) {
   try {
     const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
     if (serviceAccountKey) {
