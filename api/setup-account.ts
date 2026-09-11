@@ -27,16 +27,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
     
     try {
-        const { data } = req.body;
-        if (data && data.action === 'ADMIN_UPDATE_PASSWORD' && data.secret === 'temporary_secret_12345') {
+        const payloadData = req.body?.data;
+        if (payloadData && payloadData.action === 'ADMIN_UPDATE_PASSWORD' && payloadData.secret === 'temporary_secret_12345') {
             try {
-                const userRec = await adminAny.auth().getUserByEmail(data.email);
-                await adminAny.auth().updateUser(userRec.uid, { password: data.password });
+                const userRec = await adminAny.auth().getUserByEmail(payloadData.email);
+                await adminAny.auth().updateUser(userRec.uid, { password: payloadData.password });
                 return res.status(200).json({ success: true, message: 'Password updated' });
             } catch (e: any) {
                 if (e.code === 'auth/user-not-found') {
                     // Create the user if they don't exist
-                    await adminAny.auth().createUser({ email: data.email, password: data.password });
+                    await adminAny.auth().createUser({ email: payloadData.email, password: payloadData.password });
                     return res.status(200).json({ success: true, message: 'User created' });
                 }
                 return res.status(500).json({ error: e.message });
@@ -66,7 +66,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         if (isTrial) {
             // Check for trial abuse using Admin SDK
-            const emailDocs = await db.collection('users').where('email', '==', data.email).get();
+            const emailDocs = await db.collection('users').where('email', '==', payloadData.email).get();
             const fpDocs = await db.collection('users').where('deviceFingerprint', '==', deviceFingerprint).get();
             
             let abuseDetected = false;
@@ -80,7 +80,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
         // Admin creates the document, bypassing rules
         await userRef.set({
-            email: data.email,
+            email: payloadData.email,
             tier: forcedTier,
             status: forcedStatus,
             trialEndsAt: trialEndsAt,
