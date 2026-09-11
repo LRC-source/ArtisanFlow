@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
     
     try {
-                const { data, deviceFingerprint } = req.body;
+                
         
         if (data && data.action === 'ADMIN_UPDATE_PASSWORD' && data.secret === 'temporary_secret_12345') {
             try {
