@@ -323,6 +323,7 @@ export const LandingPage = () => {
                     <div className="mt-8 sm:mt-12 lg:mt-16 flex justify-center">
                         <Button 
                             onClick={() => {
+                                setSelectedTier('Free Trial');
                                 setView('signup');
                             }}
                             className="w-auto mx-auto py-4 px-10 text-sm font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-[0_0_30px_rgba(197,160,89,0.2)] border-none rounded-full transition-all uppercase"

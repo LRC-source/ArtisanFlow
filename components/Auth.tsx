@@ -565,24 +565,24 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
               <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2">Billing Details</h3>
               <div className="space-y-2">
                 <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Full Name</label>
-                <Input type="text" placeholder="Alex Morgan" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="bg-white/5 border-white/10 text-white" />
+                <Input type="text" placeholder="" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="bg-white/5 border-white/10 text-white" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Street Address</label>
-                <Input type="text" placeholder="123 Artisan Way" required value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="bg-white/5 border-white/10 text-white" />
+                <Input type="text" placeholder="" required value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="bg-white/5 border-white/10 text-white" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="col-span-1 space-y-2">
                   <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">City</label>
-                  <Input type="text" placeholder="New York" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} className="bg-white/5 border-white/10 text-white" />
+                  <Input type="text" placeholder="" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} className="bg-white/5 border-white/10 text-white" />
                 </div>
                 <div className="col-span-1 space-y-2">
                   <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">State</label>
-                  <Input type="text" placeholder="NY" required value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} className="bg-white/5 border-white/10 text-white" />
+                  <Input type="text" placeholder="" required value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} className="bg-white/5 border-white/10 text-white" />
                 </div>
                 <div className="col-span-1 space-y-2">
                   <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">ZIP</label>
-                  <Input type="text" placeholder="10001" required value={formData.zip} onChange={e => setFormData({...formData, zip: e.target.value})} className="bg-white/5 border-white/10 text-white" />
+                  <Input type="text" placeholder="" required value={formData.zip} onChange={e => setFormData({...formData, zip: e.target.value})} className="bg-white/5 border-white/10 text-white" />
                 </div>
               </div>
             </div>
@@ -622,7 +622,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
                   }}
                   focus="cardNumber"
                 >
-                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $0.25 & INITIALIZE (LIVE TEST)`}
+                  {isProcessing ? "PROCESSING SECURE PAYMENT..." : `PAY $${(finalAmountInCents / 100).toFixed(2)} & INITIALIZE`}
                 </SquareCreditCard>
               </PaymentForm>
             </div>

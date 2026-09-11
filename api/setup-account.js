@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         if (!token) return res.status(401).json({ error: 'Unauthorized' });
         
         // Use REST API to verify token to avoid firebase-admin/auth ESM require crash on Vercel Node 24
-        const FIREBASE_API_KEY = process.env.VITE_FIREBASE_API_KEY || "AIzaSyAR3lLvfKpc5Cey2NPiph54AVNTc7a9TN8";
+        const FIREBASE_API_KEY = process.env.VITE_FIREBASE_API_KEY;
         const verifyRes = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
