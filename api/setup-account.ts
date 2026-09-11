@@ -7,7 +7,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     let adminAny = admin as any;
     if (!adminAny) {
-        // Fallback if import is weird
         return res.status(500).json({ error: 'Admin is undefined' });
     }
     if (adminAny.default) adminAny = adminAny.default;
