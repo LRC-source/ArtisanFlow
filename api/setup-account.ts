@@ -1,14 +1,16 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+// @ts-ignore
+import admin from 'firebase-admin';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
     
-    let adminAny: any;
-    try {
-        adminAny = require('firebase-admin');
-    } catch (e: any) {
-        return res.status(500).json({ error: 'Failed to require firebase-admin: ' + e.message });
+    let adminAny = admin as any;
+    if (!adminAny) {
+        // Fallback if import is weird
+        return res.status(500).json({ error: 'Admin is undefined' });
     }
+    if (adminAny.default) adminAny = adminAny.default;
 
     try {
         if (!adminAny.apps || !adminAny.apps.length) {
