@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import * as admin from 'firebase-admin';
-const adminAny = admin as any;
+import * as adminNamespace from 'firebase-admin';
+const adminAny = (adminNamespace as any).default || adminNamespace;
 
 if (!adminAny.apps.length) {
   try {
