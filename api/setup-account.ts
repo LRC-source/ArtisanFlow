@@ -1,47 +1,42 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-// @ts-ignore
-import admin from 'firebase-admin';
+import { initializeApp, credential, getApps } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
+
+if (!getApps().length) {
+    try {
+        const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+        if (serviceAccountKey) {
+            initializeApp({
+                credential: credential.cert(JSON.parse(serviceAccountKey))
+            });
+        } else {
+            initializeApp({
+                credential: credential.cert({
+                    projectId: process.env.FIREBASE_PROJECT_ID,
+                    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+                    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+                }),
+            });
+        }
+    } catch (error) {
+        console.error("Firebase admin init error", error);
+    }
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
     
-    let adminAny = admin as any;
-    if (!adminAny) {
-        return res.status(500).json({ error: 'Admin is undefined' });
-    }
-    if (adminAny.default) adminAny = adminAny.default;
-
-    try {
-        if (!adminAny.apps || !adminAny.apps.length) {
-            const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-            if (serviceAccountKey) {
-                adminAny.initializeApp({
-                    credential: adminAny.credential.cert(JSON.parse(serviceAccountKey))
-                });
-            } else {
-                adminAny.initializeApp({
-                    credential: adminAny.credential.cert({
-                        projectId: process.env.FIREBASE_PROJECT_ID,
-                        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-                        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-                    }),
-                });
-            }
-        }
-    } catch (e: any) {
-        return res.status(500).json({ error: 'Init error: ' + e.message });
-    }
-
     try {
         const payloadData = req.body?.data;
         if (payloadData && payloadData.action === 'ADMIN_UPDATE_PASSWORD' && payloadData.secret === 'temporary_secret_12345') {
             try {
-                const userRec = await adminAny.auth().getUserByEmail(payloadData.email);
-                await adminAny.auth().updateUser(userRec.uid, { password: payloadData.password });
+                const userRec = await getAuth().getUserByEmail(payloadData.email);
+                await getAuth().updateUser(userRec.uid, { password: payloadData.password });
                 return res.status(200).json({ success: true, message: 'Password updated' });
             } catch (e: any) {
                 if (e.code === 'auth/user-not-found') {
-                    await adminAny.auth().createUser({ email: payloadData.email, password: payloadData.password });
+                    await getAuth().createUser({ email: payloadData.email, password: payloadData.password });
                     return res.status(200).json({ success: true, message: 'User created' });
                 }
                 return res.status(500).json({ error: 'Auth error: ' + e.message });
@@ -51,7 +46,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const token = req.headers.authorization?.split('Bearer ')[1];
         if (!token) return res.status(401).json({ error: 'Unauthorized' });
         
-        const decoded = await adminAny.auth().verifyIdToken(token);
+        const decoded = await getAuth().verifyIdToken(token);
         const uid = decoded.uid;
         
         const { deviceFingerprint } = req.body || {};
@@ -61,7 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const forcedStatus = 'trialing';
         const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
         
-        const db = adminAny.firestore();
+        const db = getFirestore();
         
         const userRef = db.collection('users').doc(uid);
         const docSnap = await userRef.get();
