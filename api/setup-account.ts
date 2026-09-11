@@ -1,31 +1,36 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import * as adminNamespace from 'firebase-admin';
-const adminAny = (adminNamespace as any).default || adminNamespace;
-
-if (!adminAny.apps || !adminAny.apps.length) {
-  try {
-    const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    if (serviceAccountKey) {
-      adminAny.initializeApp({
-        credential: adminAny.credential.cert(JSON.parse(serviceAccountKey))
-      });
-    } else {
-      adminAny.initializeApp({
-          credential: adminAny.credential.cert({
-              projectId: process.env.FIREBASE_PROJECT_ID,
-              clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-              privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-          }),
-      });
-    }
-  } catch (error) {
-    console.error("Firebase admin init error", error);
-  }
-}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
     
+    let adminAny: any;
+    try {
+        adminAny = require('firebase-admin');
+    } catch (e: any) {
+        return res.status(500).json({ error: 'Failed to require firebase-admin: ' + e.message });
+    }
+
+    try {
+        if (!adminAny.apps || !adminAny.apps.length) {
+            const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+            if (serviceAccountKey) {
+                adminAny.initializeApp({
+                    credential: adminAny.credential.cert(JSON.parse(serviceAccountKey))
+                });
+            } else {
+                adminAny.initializeApp({
+                    credential: adminAny.credential.cert({
+                        projectId: process.env.FIREBASE_PROJECT_ID,
+                        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+                        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+                    }),
+                });
+            }
+        }
+    } catch (e: any) {
+        return res.status(500).json({ error: 'Init error: ' + e.message });
+    }
+
     try {
         const payloadData = req.body?.data;
         if (payloadData && payloadData.action === 'ADMIN_UPDATE_PASSWORD' && payloadData.secret === 'temporary_secret_12345') {
@@ -35,11 +40,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 return res.status(200).json({ success: true, message: 'Password updated' });
             } catch (e: any) {
                 if (e.code === 'auth/user-not-found') {
-                    // Create the user if they don't exist
                     await adminAny.auth().createUser({ email: payloadData.email, password: payloadData.password });
                     return res.status(200).json({ success: true, message: 'User created' });
                 }
-                return res.status(500).json({ error: e.message });
+                return res.status(500).json({ error: 'Auth error: ' + e.message });
             }
         }
 
@@ -49,9 +53,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const decoded = await adminAny.auth().verifyIdToken(token);
         const uid = decoded.uid;
         
-        const { data, deviceFingerprint } = req.body;
+        const { deviceFingerprint } = req.body || {};
         
-        const isTrial = true; // Forced trial on signup
+        const isTrial = true;
         const forcedTier = 'Free Trial';
         const forcedStatus = 'trialing';
         const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
@@ -65,20 +69,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         if (isTrial) {
-            // Check for trial abuse using Admin SDK
             const emailDocs = await db.collection('users').where('email', '==', payloadData.email).get();
             const fpDocs = await db.collection('users').where('deviceFingerprint', '==', deviceFingerprint).get();
             
             let abuseDetected = false;
-            emailDocs.forEach(d => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
-            fpDocs.forEach(d => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
+            emailDocs.forEach((d: any) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
+            fpDocs.forEach((d: any) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
             
             if (abuseDetected) {
                 return res.status(403).json({ error: 'Our system indicates you have already utilized a Free Trial.' });
             }
         }
         
-        // Admin creates the document, bypassing rules
         await userRef.set({
             email: payloadData.email,
             tier: forcedTier,
@@ -86,9 +88,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             trialEndsAt: trialEndsAt,
             deviceFingerprint: deviceFingerprint,
             profile: {
-              name: data.name || 'New Artisan Business',
-              ownerName: data.ownerName || 'Business Owner',
-              niche: data.niche || '',
+              name: payloadData.name || 'New Artisan Business',
+              ownerName: payloadData.ownerName || 'Business Owner',
+              niche: payloadData.niche || '',
               currency: 'USD'
             }
         });
@@ -96,6 +98,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json({ success: true });
         
     } catch (e: any) {
-        return res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: 'Handler error: ' + e.message });
     }
 }
