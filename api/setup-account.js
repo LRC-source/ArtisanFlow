@@ -1,6 +1,4 @@
-
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
 if (!getApps().length) {
@@ -29,13 +27,21 @@ export default async function handler(req, res) {
     
     try {
         const payloadData = req.body?.data;
-
-
         const token = req.headers.authorization?.split('Bearer ')[1];
         if (!token) return res.status(401).json({ error: 'Unauthorized' });
         
-        const decoded = await getAuth().verifyIdToken(token);
-        const uid = decoded.uid;
+        // Use REST API to verify token to avoid firebase-admin/auth ESM require crash on Vercel Node 24
+        const FIREBASE_API_KEY = process.env.VITE_FIREBASE_API_KEY || "AIzaSyAR3lLvfKpc5Cey2NPiph54AVNTc7a9TN8";
+        const verifyRes = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken: token })
+        });
+        const verifyData = await verifyRes.json();
+        if (!verifyData.users || !verifyData.users.length) {
+            return res.status(401).json({ error: 'Invalid token' });
+        }
+        const uid = verifyData.users[0].localId;
         
         const { deviceFingerprint } = req.body || {};
         
