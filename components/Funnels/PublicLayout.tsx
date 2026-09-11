@@ -23,7 +23,7 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
               Login
             </Button>
             <Button variant="premium" className="px-6 rounded-full uppercase tracking-widest text-xs font-bold" onClick={() => navigate('/auth')}>
-              Start Free Audit
+              Start Free Trial
             </Button>
           </div>
         </div>

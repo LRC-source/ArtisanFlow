@@ -17,7 +17,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   onClose, 
   featureName, 
   currentLimit,
-  requiredTier = "Artisan Flow Basic"
+  requiredTier = "Basic Artisan"
 }) => {
   const navigate = useNavigate();
 

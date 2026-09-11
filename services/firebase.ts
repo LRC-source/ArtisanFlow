@@ -4,7 +4,7 @@ import { getFirestore, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAR3lLvfKpc5Cey2NPiph54AVNTc7a9TN8",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "official-artisanflow.firebaseapp.com",
+  authDomain: 'artisanflow.lrcholisticmarketing.online',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "official-artisanflow",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "official-artisanflow.firebasestorage.app",
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "518242670072",

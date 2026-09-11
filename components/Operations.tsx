@@ -91,7 +91,7 @@ export const MarginGuard = () => {
                 </div>
 
                 <div className="h-full flex flex-col">
-                    <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => {}}>
+                    <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => {}}>
                       <div className={`flex-1 rounded-[2.5rem] border border-transparent p-4 sm:p-10 flex flex-col items-center justify-center text-center transition-all duration-1000 shadow-inner ${isWarning ? 'bg-amber-500/10' : 'bg-emerald-500/10'}`}>
                           <div className={`w-12 h-12 sm:w-20 sm:h-20 rounded-3xl flex items-center justify-center mb-8 shadow-lg transition-transform duration-700 hover:scale-110 ${isWarning ? 'bg-amber-500/20 text-amber-500' : 'bg-emerald-500/20 text-emerald-500'}`}>
                               {isWarning ? <AlertTriangle size={36} strokeWidth={1.2} /> : <ShieldCheck size={36} strokeWidth={1.2} />}
@@ -148,7 +148,7 @@ export const Operations = () => {
           <HubNode icon={ClipboardList} title="Production Queue" desc="Real-time orchestration of active manufacturing batches and archival schedules." delay={0.3} />
           <HubNode icon={Package} title="Formula Manager" desc="High-precision BOM management and proprietary recipe encryption." delay={0.4} />
           
-          <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => {}}>
+          <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => {}}>
              <HubNode icon={Crown} title="Strategic Intel" desc="AI-driven market positioning and competitor margin diagnostics." color="gold" bg="bg-white/5" delay={0.5} />
           </LockedNode>
       </div>

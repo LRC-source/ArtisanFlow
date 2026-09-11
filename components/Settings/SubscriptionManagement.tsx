@@ -87,8 +87,8 @@ export const SubscriptionManagement = () => {
                       <p className="text-[10px] font-sans text-white sm:text-white/50 font-bold uppercase tracking-widest mb-1">Access Initialized</p>
                       <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white/80 tracking-tight">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                    </div>
-                   {userTier !== 'Margin Protection Pro' && (
-                     <Button variant="premium" onClick={() => setSelectedUpgrade('Margin Protection Pro')} className="w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full font-sans font-medium text-[10px] uppercase tracking-widest shadow-md">
+                   {userTier !== 'Pro Artisan' && (
+                     <Button variant="premium" onClick={() => setSelectedUpgrade('Pro Artisan')} className="w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full font-sans font-medium text-[10px] uppercase tracking-widest shadow-md">
                         Activate Pro Access <Crown size={16} className="ml-2"/>
                      </Button>
                    )}

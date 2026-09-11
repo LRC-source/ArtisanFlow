@@ -17,21 +17,21 @@ export const AppOverview = () => {
 
   const tiers = [
     {
-      name: "Free Audit",
+      name: "Free Trial",
       price: "$0/mo",
       description: "Baseline access to start organizing your artisanal business.",
       features: ["Inventory Hub", "Recipe Builder (BOM)", "Basic Production Workflow", "CRM", "Lola AI Assistant"],
       locked: ["Operations Command Center", "Quality Control", "Marketing Studio", "Profit Guard™"]
     },
     {
-      name: "Artisan Flow Basic",
+      name: "Basic Artisan",
       price: "$29/mo",
       description: "The complete ecosystem for scaling makers and botanical formulators.",
       features: ["Operations Command Center", "Full Marketing Hub (Social, Blog, Video)", "Finance Projections", "Supplier Management", "Quality Control"],
       locked: ["Profit Guard™", "Inventory Forecasting"]
     },
     {
-      name: "Margin Protection Pro",
+      name: "Pro Artisan",
       price: "$99/mo",
       description: "Enterprise-grade analytics to protect your margins at scale.",
       features: ["Profit Guard™", "Predictive Inventory Forecasting", "Real-time Anomaly Detection", "White-glove Support"],
@@ -84,11 +84,11 @@ export const AppOverview = () => {
             </div>
             <h3 className="text-2xl font-serif mb-4">Finance Hub & Profit Guard™</h3>
             <p className="text-white/50 font-light leading-relaxed mb-6">
-              AI-assisted cash flow analysis. Upgrade to Margin Protection Pro for high-precision margin anomaly detection and predictive inventory forecasting.
+              AI-assisted cash flow analysis. Upgrade to Pro Artisan for high-precision margin anomaly detection and predictive inventory forecasting.
             </p>
             <ul className="space-y-3">
               <li className="flex items-center text-sm text-white/70"><CheckCircle2 size={16} className="text-[#C5A059] mr-3" /> Financial Projections</li>
-              <li className="flex items-center text-sm text-white/70"><CheckCircle2 size={16} className="text-[#C5A059] mr-3" /> Margin Protection Pro</li>
+              <li className="flex items-center text-sm text-white/70"><CheckCircle2 size={16} className="text-[#C5A059] mr-3" /> Pro Artisan</li>
             </ul>
           </Card>
 

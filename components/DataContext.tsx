@@ -8,7 +8,7 @@ import {
   signInWithPopup, 
   onAuthStateChanged 
 } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import { db as dataLayer } from '../services/dataLayer';
 import { toast } from 'sonner';
 
@@ -16,7 +16,7 @@ import { toast } from 'sonner';
  * ArtisanFlow Architecture 1.1 - Lola Intelligence Node
  */
 
-export type UserTier = 'Free Audit' | 'Artisan Flow Basic' | 'Margin Protection Pro';
+export type UserTier = 'Free Trial' | 'Basic Artisan' | 'Pro Artisan' | 'Master Artisan';
 
 export interface TodoItem {
   id: string;
@@ -25,6 +25,59 @@ export interface TodoItem {
   category: 'orders' | 'inventory' | 'marketing' | 'recipes' | 'general';
   createdDate: string;
 }
+
+export interface Lot {
+  id: string;
+  lotNumber: string;
+  supplierId?: string;
+  receivedDate: string;
+  quantity: number;
+  originalQuantity: number;
+  unitCost: number;
+  expirationDate?: string;
+  status: 'Active' | 'Quarantined' | 'Depleted';
+}
+
+export interface ProductionBatch {
+  id: string;
+  batchNumber: string;
+  recipeId: string;
+  yieldQuantity: number;
+  actualTotalCost: number;
+  actualUnitCost: number;
+  ingredientsConsumed: {
+    itemId: string;
+    lotId?: string;
+    quantity: number;
+    costCalculated: number;
+  }[];
+  producedDate: string;
+  status: 'In Progress' | 'Completed' | 'Quarantined';
+}
+
+export const calculateDerivedStockAndCost = (item: InventoryItem): { stock: number, unitCost: number, stockValue: number, hasExpiredLots: boolean } => {
+  if (!item.isLotTracked || !item.lots || item.lots.length === 0) {
+    return { stock: item.stock || 0, unitCost: item.unitCost || 0, stockValue: (item.stock || 0) * (item.unitCost || 0), hasExpiredLots: false };
+  }
+  
+  let totalStock = 0;
+  let totalValue = 0;
+  let hasExpiredLots = false;
+  
+  item.lots.forEach(lot => {
+    if (lot.expirationDate) {
+      const expDate = new Date(lot.expirationDate);
+      if (expDate < new Date() && lot.quantity > 0) {
+        hasExpiredLots = true;
+      }
+    }
+    totalStock += lot.quantity;
+    totalValue += (lot.quantity * lot.unitCost);
+  });
+  
+  const unitCost = totalStock > 0 ? (totalValue / totalStock) : (item.unitCost || 0);
+  return { stock: totalStock, unitCost, stockValue: totalValue, hasExpiredLots };
+};
 
 export interface InventoryItem {
   id: string | number;
@@ -42,6 +95,9 @@ export interface InventoryItem {
   lowStock?: boolean;
   description?: string;
   supplier?: string;
+  isLotTracked?: boolean;
+  migratedToLots?: boolean;
+  lots?: Lot[];
 }
 
 export interface Order {
@@ -73,7 +129,8 @@ export interface BusinessProfile {
   industry: string;
   tier: UserTier;
   role?: 'admin' | 'user';
-  status: 'Active' | 'Inactive' | 'Past Due';
+  status: 'Active' | 'Inactive' | 'Past Due' | 'Pending Payment' | 'trialing';
+  trialEndsAt?: string;
   brandVoice: { adjectives: string[]; restrictedWords: string[] };
   receptionistLogic: { qualificationQuestions: string[] };
 }
@@ -175,6 +232,8 @@ export interface Recipe {
   productionTime: number;
   ingredients: { name: string; qty: string }[];
   rawIngredients?: { inventoryItemId: string; quantity: number; unit: string }[];
+  subRecipes?: { recipeId: string; quantity: number; unit: string }[];
+  finishedGoodsItemId?: string;
 }
 
 export interface Appointment {
@@ -195,6 +254,9 @@ export interface BudgetConfig {
 }
 
 interface DataContextType {
+  isDemoMode: boolean;
+  loadDemoData: () => void;
+  clearDemoData: () => void;
   inventory: InventoryItem[];
   orders: Order[];
   manualCustomers: ManualCustomer[];
@@ -210,6 +272,7 @@ interface DataContextType {
   locations: Location[];
   supplierCommunications: SupplierCommunication[];
   recipes: Recipe[];
+  productionBatches: ProductionBatch[];
   appointments: Appointment[];
   isSessionVerifying: boolean;
   demandInsights: any[];
@@ -222,6 +285,7 @@ interface DataContextType {
   logout: () => void;
   signUp: (data: any) => Promise<void>;
   updateTier: (tier: UserTier) => Promise<void>;
+  activateAccount: () => Promise<void>;
   updateBusinessProfile: (updates: Partial<BusinessProfile>) => void;
   getInventoryValue: () => number;
   getTotalRevenue: () => number;
@@ -244,6 +308,8 @@ interface DataContextType {
   generateSchedule: () => void;
   produceBatch: (recipeId: string, multiplier: number) => Promise<{ success: boolean; warnings: string[] }>;
   processOrder: (id: string) => Promise<void>;
+  migrateInventoryToLots: () => Promise<void>;
+  getRecipeActualCost: (recipeId: string, visited?: Set<string>, depth?: number) => number;
   syncWooCommerce: () => Promise<{ success: boolean; count?: number; error?: string }>;
   addRecipe: (recipe: any) => Promise<void>;
   updateRecipe: (id: string, updates: any) => void;
@@ -272,14 +338,20 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isDemoMode, setIsDemoMode] = React.useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('artisanflow_demo_mode') === 'true';
+    }
+    return false;
+  });
+  const [realDataBackup, setRealDataBackup] = React.useState<any>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
-  const [userTier, setUserTier] = useState<UserTier>('Artisan Flow Basic');
+  const [userTier, setUserTier] = useState<UserTier>('Basic Artisan');
   const [isSessionVerifying, setIsSessionVerifying] = useState(true);
   const [demandInsights, setDemandInsights] = useState<any[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [manualCustomers, setManualCustomers] = useState<ManualCustomer[]>([]);
   const [todos, setTodos] = useState<TodoItem[]>([]);
-  
   const [isTutorialActive, setIsTutorialActive] = useState(false);
   const [tutorialStep, setTutorialStepState] = useState(0);
 
@@ -288,44 +360,24 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const checkFeatureGate = (action: string): boolean => {
     const limits: Record<UserTier, any> = {
-      'Free Audit': {
-        vault_recipes: 5,
-        mktg_ai_actions: 5,
-        mktg_avatar: false,
-        logistics_forecast: false,
-        dash_diagnostic: false,
-        profit_guard: false
-      },
-      'Artisan Flow Basic': {
-        vault_recipes: Infinity,
-        mktg_ai_actions: 100,
-        mktg_avatar: false,
-        logistics_forecast: false,
-        dash_diagnostic: false,
-        profit_guard: false
-      },
-      'Margin Protection Pro': {
-        vault_recipes: Infinity,
-        mktg_ai_actions: Infinity,
-        mktg_avatar: true,
-        logistics_forecast: true,
-        dash_diagnostic: true,
-        profit_guard: true
-      }
+      'Free Trial': { vault_recipes: 5, mktg_ai_actions: 5, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
+      'Basic Artisan': { vault_recipes: Infinity, mktg_ai_actions: 100, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
+      'Pro Artisan': { vault_recipes: Infinity, mktg_ai_actions: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true },
+      'Master Artisan': { vault_recipes: Infinity, mktg_ai_actions: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true }
     };
     
     const limit = limits[userTier]?.[action];
     
     if (typeof limit === 'boolean') {
       if (!limit) {
-        setUpgradePrompt({ feature: action, requiredTier: 'Margin Protection Pro' });
+        setUpgradePrompt({ feature: action, requiredTier: 'Pro Artisan' });
         return false;
       }
       return true;
     }
     
     if (action === 'vault_recipes' && recipes.length >= limit) {
-      setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Artisan Flow Basic' });
+      setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Basic Artisan' });
       return false;
     }
     
@@ -370,7 +422,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     ownerName: '', 
     email: '', 
     industry: 'Skincare',
-    tier: 'Free Audit',
+    tier: 'Free Trial',
     role: 'user',
     status: 'Active',
     brandVoice: { adjectives: ['Artisanal', 'Luxurious'], restrictedWords: [] },
@@ -403,6 +455,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [supplierCommunications, setSupplierCommunications] = useState<SupplierCommunication[]>([]);
   
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [productionBatches, setProductionBatches] = useState<ProductionBatch[]>([]);
   
   const [systemUsers, setSystemUsers] = useState<SystemUser[]>([]);
 
@@ -522,21 +575,21 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
             }
             
             setBusinessProfile(prev => ({ ...prev, ...profileData }));
-            setUserTier(docSnap.data().tier || 'Artisan Flow Basic');
+            setUserTier(docSnap.data().tier || 'Basic Artisan');
           } else {
             const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
             if (user.email && adminEmails.includes(user.email.toLowerCase())) {
               const defaultProfile = { name: 'Admin Hub', email: user.email, role: 'admin' as const };
-              await setDoc(docRef, {
+              if (!isDemoMode) await setDoc(docRef, {
                 email: user.email,
-                tier: 'Margin Protection Pro',
+                tier: 'Pro Artisan',
                 status: 'Active',
                 profile: defaultProfile,
                 createdAt: new Date().toISOString()
               });
               setIsAuthenticated(true);
               setBusinessProfile(prev => ({ ...prev, ...defaultProfile }));
-              setUserTier('Margin Protection Pro');
+              setUserTier('Pro Artisan');
             } else {
               // No Firestore doc yet — user may be mid-signup (just created Auth, hasn't selected a tier yet).
               // Do NOT sign them out here; let the signup flow complete the Firestore write.
@@ -562,13 +615,159 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     return () => unsubscribe();
   }, []);
 
+
+  const loadDemoData = () => {
+    if (!isDemoMode && inventory.length > 0) {
+       if (typeof window !== 'undefined') {
+           const confirm = window.confirm("You have real data. Loading demo data will temporarily hide it. Continue?");
+           if (!confirm) return;
+       }
+    }
+    
+    const backup = {
+      inventory, orders, recipes, productionStats, budgets, todos, businessProfile, suppliers, marketingPosts
+    };
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('artisanflow_real_data_backup', JSON.stringify(backup));
+        localStorage.setItem('artisanflow_demo_mode', 'true');
+    }
+    setIsDemoMode(true);
+  };
+
+  const clearDemoData = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('artisanflow_demo_mode');
+    }
+    setIsDemoMode(false);
+    
+    if (typeof window !== 'undefined') {
+        const backupStr = localStorage.getItem('artisanflow_real_data_backup');
+        if (backupStr) {
+          try {
+            const backup = JSON.parse(backupStr);
+            setInventory(backup.inventory || []);
+            setOrders(backup.orders || []);
+            setRecipes(backup.recipes || []);
+            setProductionStats(backup.productionStats || { active: 0, inProgress: 0, awaiting: 0, completed: 0, pending: 0 });
+            setBudgets(backup.budgets || { daily: 0, weekly: 0, monthly: 0, yearly: 0 });
+            setTodos(backup.todos || []);
+            setBusinessProfile(backup.businessProfile || { name: 'Artisan Business', ownerName: 'Owner', niche: '', currency: 'USD' });
+            setSuppliers(backup.suppliers || []);
+            setMarketingPosts(backup.marketingPosts || []);
+          } catch (e) {
+            console.warn("Failed to restore real data backup", e);
+          }
+          localStorage.removeItem('artisanflow_real_data_backup');
+        } else {
+          setInventory([]); setOrders([]); setRecipes([]);
+        }
+    } else {
+        setInventory([]); setOrders([]); setRecipes([]);
+    }
+  };
+
+  const getRecipeActualCost = (recipeId: string, visited: Set<string> = new Set(), depth: number = 0): number => {
+    if (depth > 10) throw new Error("Maximum recipe depth exceeded. Check for circular dependencies.");
+    if (visited.has(recipeId)) throw new Error("Circular dependency detected in recipe.");
+    
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (!recipe) return 0;
+    
+    visited.add(recipeId);
+    let totalCost = 0;
+    
+    if (recipe.rawIngredients) {
+      recipe.rawIngredients.forEach(ing => {
+        const item = inventory.find(i => i.id === ing.inventoryItemId);
+        if (item) {
+          const { unitCost } = calculateDerivedStockAndCost(item);
+          totalCost += (unitCost * ing.quantity);
+        }
+      });
+    }
+    
+    if (recipe.subRecipes) {
+      recipe.subRecipes.forEach(sub => {
+        const subCost = getRecipeActualCost(sub.recipeId, new Set(visited), depth + 1);
+        const subRecipe = recipes.find(r => r.id === sub.recipeId);
+        if (subRecipe && subRecipe.yieldValue) {
+           const costPerUnit = subCost / subRecipe.yieldValue;
+           totalCost += (costPerUnit * sub.quantity);
+        }
+      });
+    }
+    
+    totalCost += (recipe.laborCost || 0);
+    return totalCost;
+  };
+
+  const migrateInventoryToLots = async () => {
+    if (!auth.currentUser) return;
+    const uid = auth.currentUser.uid;
+    const batch = [];
+    
+    for (const item of inventory) {
+      if (!item.migratedToLots && item.type === 'raw') {
+        const legacyLot: Lot = {
+          id: `legacy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          lotNumber: 'LEGACY-01',
+          receivedDate: new Date().toISOString(),
+          quantity: item.stock,
+          originalQuantity: item.stock,
+          unitCost: item.unitCost,
+          status: 'Active'
+        };
+        
+        try {
+          if (!isDemoMode) {
+            await setDoc(doc(db, 'users', uid, 'inventory', String(item.id)), {
+              isLotTracked: true,
+              migratedToLots: true,
+              lots: [legacyLot]
+            }, { merge: true });
+          }
+          batch.push(item.id);
+        } catch (e) {
+          console.error("Migration failed for item", item.id, e);
+        }
+      }
+    }
+    
+    if (batch.length > 0) {
+      setInventory(prev => prev.map(item => {
+        if (batch.includes(item.id)) {
+          return {
+            ...item,
+            isLotTracked: true,
+            migratedToLots: true,
+            lots: [{
+              id: `legacy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+              lotNumber: 'LEGACY-01',
+              receivedDate: new Date().toISOString(),
+              quantity: item.stock,
+              originalQuantity: item.stock,
+              unitCost: item.unitCost,
+              status: 'Active'
+            }]
+          };
+        }
+        return item;
+      }));
+      toast.success(`Migrated ${batch.length} items to Lot Tracking.`);
+    }
+  };
+
   const login = async (email: string, pass: string) => { 
     try {
       await signInWithEmailAndPassword(auth, email, pass);
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login Error:", error);
-      return false;
+      let msg = error.message;
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        msg = "That email and password don't match. Try again.";
+      }
+      throw new Error(msg);
     }
   };
 
@@ -601,39 +800,48 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const signUp = async (data: any) => {
     try {
       let user = auth.currentUser;
-      // First, create the auth user if this is a standard email/password signup
       if (data.password) {
         try {
           const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
           user = userCredential.user;
         } catch (authError: any) {
           if (authError.code === 'auth/email-already-in-use') {
-            // Recover: User exists in Auth but maybe failed a previous Firestore write. Sign them in to continue.
             const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
             user = userCredential.user;
           } else {
-            throw authError;
+            // Map Firebase auth errors
+            let msg = authError.message;
+            if (authError.code === 'auth/weak-password') msg = 'Password is too weak. Minimum 6 characters.';
+            if (authError.code === 'auth/invalid-email') msg = 'Invalid email address.';
+            throw new Error(msg);
           }
         }
       }
       
-      if (!user) {
-         throw new Error("No authenticated user found for signup.");
-      }
+      if (!user) throw new Error("No authenticated user found for signup.");
 
-      // Then save their profile to Firestore
-      await setDoc(doc(db, 'users', user.uid), {
-        email: data.email,
-        tier: data.tier,
-        status: data.status,
-        profile: {
-          name: data.name || 'New Artisan Business',
-          ownerName: data.ownerName || 'Business Owner',
-          email: data.email,
-        },
-        createdAt: new Date().toISOString(),
-        isNewUser: true // explicitly marking as new user for the database if needed
-      });
+      // Fingerprinting
+      const nav = window.navigator;
+      const screen = window.screen;
+      const deviceFingerprint = btoa(`${nav.userAgent}-${nav.language}-${screen.colorDepth}-${screen.width}x${screen.height}-${new Date().getTimezoneOffset()}`);
+
+      if (!isDemoMode) {
+        const token = await user.getIdToken();
+        const { password, ...safeData } = data;
+        const res = await fetch('/api/setup-account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ data: safeData, deviceFingerprint })
+        });
+        
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.error || "Failed to initialize account. Please try again.");
+        }
+      }
 
       // SYNC TO GOOGLE SHEET
       const dbUrl = (import.meta as any).env?.VITE_GAS_DATABASE_URL;
@@ -673,9 +881,20 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setBusinessProfile(prev => ({ ...prev, tier }));
     if (auth.currentUser) {
       try {
-        await setDoc(doc(db, 'users', auth.currentUser.uid), { tier }, { merge: true });
+        if (!isDemoMode) await setDoc(doc(db, 'users', auth.currentUser.uid), { tier }, { merge: true });
       } catch (e) {
         console.error("Failed to sync tier upgrade", e);
+      }
+    }
+  };
+
+  const activateAccount = async () => {
+    setBusinessProfile(prev => ({ ...prev, status: 'Active' }));
+    if (auth.currentUser) {
+      try {
+        if (!isDemoMode) await setDoc(doc(db, 'users', auth.currentUser.uid), { status: 'Active' }, { merge: true });
+      } catch (e) {
+        console.error("Failed to activate account", e);
       }
     }
   };
@@ -711,7 +930,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       
       const newItem = { ...item, id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`, stockValue: (item.stock || 0) * (item.unitCost || 0) };
       setInventory(prev => [...prev, newItem]);
-      await dataLayer.create('inventory', newItem);
+      if (!isDemoMode) await dataLayer.create('inventory', newItem);
     } catch (e: any) {
       toast.error(e.message || 'Failed to add inventory item');
       throw e;
@@ -741,74 +960,184 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const generateSchedule = () => setProductionStats(prev => ({ ...prev, active: prev.active + 1 }));
   
   const produceBatch = async (recipeId: string, multiplier: number) => {
-      const recipe = recipes.find(r => r.id === recipeId);
-      if (!recipe) return { success: false, warnings: ['Recipe not found.'] };
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (!recipe) return { success: false, warnings: ['Recipe not found.'] };
 
-      const warnings: string[] = [];
-      let newInventory = [...inventory];
-      const itemsToUpdate: any[] = [];
-      const itemsToCreate: any[] = [];
+    if (!auth.currentUser) return { success: false, warnings: ['Not authenticated.'] };
+    const uid = auth.currentUser.uid;
+    const warnings: string[] = [];
+    let isQuarantined = false;
 
-      // 1. Deduct Raw Materials
-      recipe.ingredients.forEach(ing => {
-          const invItemIndex = newInventory.findIndex(i => i.name.toLowerCase() === ing.name.toLowerCase() || i.sku === ing.name);
-          const deduction = parseFloat(ing.qty) * multiplier;
+    const newBatch: ProductionBatch = {
+      id: `batch-${Date.now()}`,
+      batchNumber: `BAT-${Date.now().toString().slice(-6)}`,
+      recipeId,
+      yieldQuantity: (recipe.yieldValue || 1) * multiplier,
+      actualTotalCost: 0,
+      actualUnitCost: 0,
+      ingredientsConsumed: [],
+      producedDate: new Date().toISOString(),
+      status: 'Completed'
+    };
+
+    let actualTotal = 0;
+    const updatesToSave: { item: InventoryItem; newLots: Lot[]; newStock: number }[] = [];
+
+    const flattenRequirements = (rId: string, mult: number): { [itemId: string]: number } => {
+       const reqs: { [itemId: string]: number } = {};
+       const rec = recipes.find(x => x.id === rId);
+       if (!rec) return reqs;
+       
+       if (rec.rawIngredients) {
+          rec.rawIngredients.forEach(ing => {
+             reqs[ing.inventoryItemId] = (reqs[ing.inventoryItemId] || 0) + (ing.quantity * mult);
+          });
+       }
+       if (rec.subRecipes) {
+          rec.subRecipes.forEach(sub => {
+             const subRec = recipes.find(x => x.id === sub.recipeId);
+             if (subRec && subRec.yieldValue) {
+                 const subMult = (sub.quantity * mult) / subRec.yieldValue;
+                 const subReqs = flattenRequirements(sub.recipeId, subMult);
+                 for (const [sId, sQty] of Object.entries(subReqs)) {
+                     reqs[sId] = (reqs[sId] || 0) + sQty;
+                 }
+             }
+          });
+       }
+       return reqs;
+    };
+
+    const flatReqs = flattenRequirements(recipeId, multiplier);
+    
+    for (const [itemId, qtyNeeded] of Object.entries(flatReqs)) {
+        const item = inventory.find(i => i.id === itemId || i.id.toString() === itemId);
+        if (!item) {
+          warnings.push(`Missing ingredient: ${itemId}`);
+          continue;
+        }
+
+        if (item.isLotTracked && item.lots && item.lots.length > 0) {
+          let remainingNeeded = qtyNeeded;
+          const newLots = JSON.parse(JSON.stringify(item.lots)) as Lot[];
+          newLots.sort((a, b) => new Date(a.receivedDate).getTime() - new Date(b.receivedDate).getTime());
           
-          if (invItemIndex >= 0) {
-              const currentStock = newInventory[invItemIndex].stock;
-              const newStock = currentStock - deduction;
-              if (newStock < 0) {
-                  warnings.push(`Negative stock warning: ${newInventory[invItemIndex].name} dropped to ${newStock.toFixed(2)} units.`);
-              }
-              newInventory[invItemIndex] = { ...newInventory[invItemIndex], stock: newStock, stockValue: newStock * newInventory[invItemIndex].unitCost };
-              itemsToUpdate.push(newInventory[invItemIndex]);
-          } else {
-              warnings.push(`Material not found in inventory: ${ing.name}. Batch will proceed without deduction for this item.`);
+          for (const lot of newLots) {
+            if (remainingNeeded <= 0) break;
+            if (lot.quantity <= 0) continue;
+            
+            if (lot.expirationDate && new Date(lot.expirationDate) < new Date()) {
+                warnings.push(`Quarantine Warning: Pulled from expired lot ${lot.lotNumber} for ${item.name}.`);
+                isQuarantined = true;
+            }
+
+            const take = Math.min(lot.quantity, remainingNeeded);
+            lot.quantity -= take;
+            remainingNeeded -= take;
+            
+            const cost = take * lot.unitCost;
+            actualTotal += cost;
+            
+            if (lot.quantity === 0) {
+              lot.status = 'Depleted';
+            }
+            
+            newBatch.ingredientsConsumed.push({
+              itemId: item.id.toString(),
+              lotId: lot.id,
+              quantity: take,
+              costCalculated: cost
+            });
           }
-      });
+          
+          if (remainingNeeded > 0) {
+            warnings.push(`Not enough stock in lots for ${item.name}.`);
+          }
+          
+          const newStock = newLots.reduce((acc, l) => acc + l.quantity, 0);
+          updatesToSave.push({ item, newLots, newStock });
+          
+        } else {
+          if (item.stock < qtyNeeded) {
+            warnings.push(`Not enough stock for ${item.name}.`);
+          }
+          const cost = qtyNeeded * item.unitCost;
+          actualTotal += cost;
+          newBatch.ingredientsConsumed.push({
+            itemId: item.id.toString(),
+            quantity: qtyNeeded,
+            costCalculated: cost
+          });
+          
+          updatesToSave.push({ item, newLots: item.lots || [], newStock: Math.max(0, item.stock - qtyNeeded) });
+        }
+    }
+    
+    const getLaborCost = (rId: string, mult: number): number => {
+       let labor = 0;
+       const rec = recipes.find(x => x.id === rId);
+       if (!rec) return 0;
+       labor += (rec.laborCost || 0) * mult;
+       if (rec.subRecipes) {
+          rec.subRecipes.forEach(sub => {
+             const subRec = recipes.find(x => x.id === sub.recipeId);
+             if (subRec && subRec.yieldValue) {
+                const subMult = (sub.quantity * mult) / subRec.yieldValue;
+                labor += getLaborCost(sub.recipeId, subMult);
+             }
+          });
+       }
+       return labor;
+    };
 
-      // 2. Add Finished Goods Yield
-      const yieldAmount = (parseFloat(recipe.yield) || 1) * multiplier;
-      const finishedProductIndex = newInventory.findIndex(i => i.name.toLowerCase() === recipe.name.toLowerCase());
+    actualTotal += getLaborCost(recipeId, multiplier);
+    newBatch.actualTotalCost = actualTotal;
+    newBatch.actualUnitCost = actualTotal / newBatch.yieldQuantity;
+    if (isQuarantined) {
+       newBatch.status = 'Quarantined';
+    }
+    
+    try {
+      for (const update of updatesToSave) {
+        if (!isDemoMode) {
+          await setDoc(doc(db, 'users', uid, 'inventory', String(update.item.id)), {
+             stock: update.newStock,
+             lots: update.newLots
+          }, { merge: true });
+        }
+        setInventory(prev => prev.map(invItem => invItem.id === update.item.id ? { ...invItem, stock: update.newStock, lots: update.newLots } : invItem));
+      }
       
-      if (finishedProductIndex >= 0) {
-          const newStock = newInventory[finishedProductIndex].stock + yieldAmount;
-          newInventory[finishedProductIndex] = { ...newInventory[finishedProductIndex], stock: newStock, stockValue: newStock * newInventory[finishedProductIndex].unitCost };
-          itemsToUpdate.push(newInventory[finishedProductIndex]);
+      if (!isDemoMode) await setDoc(doc(db, 'users', uid, 'productionBatches', newBatch.id), newBatch);
+      setProductionBatches(prev => [...prev, newBatch]);
+      
+      let fgItem: InventoryItem | undefined;
+      if (recipe.finishedGoodsItemId) {
+         fgItem = inventory.find(i => String(i.id) === String(recipe.finishedGoodsItemId));
+      }
+      if (fgItem) {
+          const finishedProductIndex = inventory.findIndex(i => i.id === fgItem.id);
+          const newStock = fgItem.stock + newBatch.yieldQuantity;
+          if (!isDemoMode) await setDoc(doc(db, 'users', uid, 'inventory', String(fgItem.id)), { stock: newStock }, { merge: true });
+          setInventory(prev => {
+             const copy = [...prev];
+             copy[finishedProductIndex] = { ...copy[finishedProductIndex], stock: newStock };
+             return copy;
+          });
       } else {
-          // Auto-create finished product if it doesn't exist
-          const newItem = {
-              id: Date.now(),
-              name: recipe.name,
-              sku: recipe.sku || `SKU-${Date.now()}`,
-              type: 'finished',
-              category: 'Finished Goods',
-              stock: yieldAmount,
-              unitCost: recipe.totalCost / (parseFloat(recipe.yield) || 1),
-              retailPrice: recipe.totalCost * 2.5, // Default markup
-              stockValue: recipe.totalCost * multiplier,
-              unit: 'pcs',
-              reorderPoint: 5
-          };
-          newInventory.push(newItem as any);
-          itemsToCreate.push(newItem);
+          warnings.push("Formula is not explicitly linked to a Finished Good asset. Stock not incremented.");
       }
-
-      setInventory(newInventory);
-      setProductionStats(prev => ({ ...prev, active: prev.active + 1, completed: prev.completed + 1 }));
-
-      // Persist changes asynchronously
-      try {
-          await Promise.all([
-              ...itemsToUpdate.map(item => dataLayer.update('inventory', String(item.id), item)),
-              ...itemsToCreate.map(item => dataLayer.create('inventory', item))
-          ]);
-      } catch (err) {
-          console.error("Failed to persist batch production to backend:", err);
-          warnings.push("Backend persistence failed. Data may be lost on reload.");
+      
+      if (isQuarantined) {
+         toast.error(`Batch ${newBatch.batchNumber} produced but marked QUARANTINED due to expired lots.`);
+      } else {
+         toast.success(`Batch ${newBatch.batchNumber} produced successfully.`);
       }
-
       return { success: true, warnings };
+    } catch (e: any) {
+      console.error(e);
+      return { success: false, warnings: ['Database write failed'] };
+    }
   };
 
   const processOrder = async (id: string) => {
@@ -839,8 +1168,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       // Persist changes asynchronously
       try {
           await Promise.all([
-              ...itemsToUpdate.map(item => dataLayer.update('inventory', String(item.id), item)),
-              dataLayer.update('orders', id, { status: 'Shipped' } as any)
+              ...itemsToUpdate.map(item => !isDemoMode ? dataLayer.update('inventory', String(item.id), item) : Promise.resolve()),
+              (!isDemoMode ? dataLayer.update('orders', id, { status: 'Shipped' } as any) : Promise.resolve())
           ]);
       } catch (err) {
           console.error("Failed to persist order processing to backend:", err);
@@ -866,13 +1195,13 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       });
       const gate = await res.json();
       if (!gate.allowed) {
-        setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Artisan Flow Basic' });
+        setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Basic Artisan' });
         return;
       }
       
       const newRecipe = { ...recipe, id: `r-${Date.now()}` };
       setRecipes(prev => [...prev, newRecipe]);
-      await dataLayer.create('recipes', newRecipe);
+      if (!isDemoMode) await dataLayer.create('recipes', newRecipe);
       completeTodoByCategory('recipes');
     } catch (e: any) {
       toast.error(e.message || 'Failed to add formula');
@@ -970,7 +1299,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       // 2. Write to Firestore (Don't let permissions block success message)
       try {
         const waitlistRef = doc(db, 'vip_waitlist', data.email);
-        await setDoc(waitlistRef, {
+        if (!isDemoMode) await setDoc(waitlistRef, {
           ...data,
           timestamp: new Date().toISOString()
         });
@@ -991,7 +1320,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     <DataContext.Provider value={{ 
       inventory, orders, manualCustomers, businessProfile, isAuthenticated, userTier, reports, productionStats,
       suppliers, marketingPosts, integrations, qualityChecks, locations, supplierCommunications, recipes, appointments, 
-      isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, updateBusinessProfile,
+      isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, activateAccount, updateBusinessProfile,
       onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
       importData, addInventoryItem, updateInventory, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
@@ -1003,7 +1332,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       submitVIPWaitlist,
       upgradePrompt,
       setUpgradePrompt,
-      checkFeatureGate,
+      checkFeatureGate, isDemoMode, loadDemoData, clearDemoData,
+      productionBatches, migrateInventoryToLots, getRecipeActualCost,
     }}>
       {children}
     </DataContext.Provider>

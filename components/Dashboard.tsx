@@ -19,7 +19,7 @@ const DATA = [
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { getTotalRevenue, inventory, recipes } = useArtisanData();
+  const { getTotalRevenue, inventory, recipes, productionStats, integrations, loadDemoData, isDemoMode, onboardingState } = useArtisanData();
   const hasData = getTotalRevenue() > 0;
 
   // Guided setup: dismissed state persisted in localStorage so it never reappears after skip
@@ -32,28 +32,43 @@ export const Dashboard = () => {
     setSetupDismissed(true);
   };
 
-  // Step completion derived from real data
-  const hasInventory = inventory.length > 0;
-  const hasRecipes = recipes.length > 0;
+  const hasStoreConnected = integrations && integrations.some(i => i.status === 'Connected');
+  const hasInventory = inventory && inventory.length > 0;
+  const hasRecipes = recipes && recipes.length > 0;
+  const hasManufactured = productionStats && productionStats.completed > 0;
+  const hasViewedMargin = onboardingState?.['profit_guard_viewed'] === true;
+
   const setupSteps = [
     {
-      title: 'Add Inventory',
-      desc: 'Import your raw materials and stock so the app can track costs.',
+      title: 'Connect Store',
+      desc: 'Link Etsy, Shopify, or Woo to auto-sync orders.',
+      done: hasStoreConnected,
+      route: '/settings/integrations',
+    },
+    {
+      title: 'Import your CSV',
+      desc: 'Map and migrate your legacy inventory & materials.',
       done: hasInventory,
-      route: '/inventory',
+      route: '/settings/integrations#migration-tool',
     },
     {
       title: 'Create a Recipe',
-      desc: 'Build your first formula or BOM linking materials to a finished product.',
+      desc: 'Build your first formula linking materials to a product.',
       done: hasRecipes,
       route: '/recipes',
     },
     {
-      title: 'Review Finance Hub',
-      desc: 'Explore your P&L, margins, and revenue once you have real orders.',
-      done: hasData,
-      route: '/finance',
+      title: 'Record Manufacture',
+      desc: 'Produce a batch and watch costs automatically calculate.',
+      done: hasManufactured,
+      route: '/recipes',
     },
+    {
+      title: 'See Margin Report',
+      desc: 'Review true profitability in the Profit Guard ledger.',
+      done: hasViewedMargin,
+      route: '/finance',
+    }
   ];
   const allComplete = setupSteps.every(s => s.done);
   const showSetup = !setupDismissed && !allComplete;
@@ -70,12 +85,23 @@ export const Dashboard = () => {
         subtitle="The pulse of your artisan enterprise is currently optimized. Strategic nodes are stable."
         badge="Architect Authorization Confirmed"
       >
-        <Button 
-            onClick={() => navigate('/business-pulse')}
-            className="bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-full px-12 py-6 font-sans font-bold text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 transition-all flex items-center gap-3 sm:gap-4 group"
-        >
-            Run Diagnostic <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-        </Button>
+        <div className="flex gap-4 flex-wrap">
+            <Button 
+                onClick={() => navigate('/business-pulse')}
+                className="bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-full px-8 py-3 font-sans font-bold text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-[#6A2C91]/20 transition-all flex items-center gap-2 group"
+            >
+                Run Diagnostic <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </Button>
+            {!isDemoMode && (
+                <Button 
+                    onClick={loadDemoData}
+                    variant="outline"
+                    className="border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 rounded-full px-6 py-3 font-sans font-bold text-[11px] uppercase tracking-[0.1em] transition-all flex items-center gap-2"
+                >
+                    <Sparkles size={14} /> Explore with Demo Data
+                </Button>
+            )}
+        </div>
       </VaultBanner>
 
       {showSetup && (

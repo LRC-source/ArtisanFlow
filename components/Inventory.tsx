@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Package, Search, Filter, MoreVertical, Plus, Layers, Box, ArrowLeft, AlertTriangle, Upload, Download, RefreshCw, DollarSign, Tag, Edit2, Trash2, X, BarChart, TrendingUp, ShieldCheck, MapPin, Activity, Clock, Zap, ChevronRight, Sparkles, Save } from 'lucide-react';
 import { Card, Badge, Button, Input, FileUploader, Modal, Select, VaultBanner } from './UI';
 import { useNavigate } from 'react-router-dom';
-import { useArtisanData, InventoryItem } from './DataContext';
+import { useArtisanData, InventoryItem, Lot, calculateDerivedStockAndCost } from './DataContext';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion } from 'framer-motion';
 import { SubPageHeader } from './SubPageHeader';
@@ -18,7 +18,7 @@ import { UpgradeModal } from './UpgradeModal';
 type ViewMode = 'overview' | 'raw_materials' | 'finished_products' | 'detail';
 
 export const Inventory = () => {
-  const { inventory, getInventoryValue, addInventoryItem, updateInventory, recipes, userTier } = useArtisanData();
+  const { inventory, getInventoryValue, addInventoryItem, updateInventory, recipes, userTier, migrateInventoryToLots } = useArtisanData();
   const [view, setView] = useState<ViewMode>('overview');
   const [showAddItem, setShowAddItem] = useState(false);
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
@@ -28,7 +28,7 @@ export const Inventory = () => {
   const [adjustAmount, setAdjustAmount] = useState(0);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [upgradeLimit, setUpgradeLimit] = useState(50);
-  const [requiredTier, setRequiredTier] = useState("Artisan Flow Basic");
+  const [requiredTier, setRequiredTier] = useState("Basic Artisan");
 
   const [newItem, setNewItem] = useState<Partial<InventoryItem>>(() => {
     const saved = sessionStorage.getItem('draft_inventory_item');
@@ -93,7 +93,7 @@ export const Inventory = () => {
         if (e.message.includes("Tier limit reached")) {
            const limitMatch = e.message.match(/\d+/);
            setUpgradeLimit(limitMatch ? parseInt(limitMatch[0]) : 50);
-           setRequiredTier(userTier === 'Free Audit' ? 'Artisan Flow Basic' : 'Margin Protection Pro');
+           setRequiredTier(userTier === 'Free Trial' ? 'Basic Artisan' : 'Pro Artisan');
            setShowUpgradeModal(true);
         }
       }
@@ -229,20 +229,72 @@ export const Inventory = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-                        <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
-                            <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Stock Integrity</p>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${selectedItem.unitCost.toFixed(2)}</p>
-                        </div>
-                        <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
-                            <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Node Value</p>
-                            <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight">${selectedItem.stockValue.toFixed(2)}</p>
-                        </div>
-                        <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
-                            <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Safety Threshold</p>
-                            <p className="text-sm sm:text-base font-black font-serif text-amber-500 tracking-tight">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-sans font-light">{selectedItem.unit}</span></p>
-                        </div>
-                    </div>
+                    {(() => {
+                        const { stock, unitCost, stockValue, hasExpiredLots } = calculateDerivedStockAndCost(selectedItem);
+                        return (
+                          <>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
+                              <div className={`luxury-card bg-white/5 border p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 ${hasExpiredLots ? 'border-red-500/50' : 'border-white/10'}`}>
+                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Current Stock</p>
+                                  <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{stock} <span className="text-white/50">{selectedItem.unit}</span></p>
+                                  {hasExpiredLots && <p className="text-[9px] font-bold text-red-500 mt-1 flex items-center uppercase tracking-widest"><AlertTriangle size={12} className="mr-1"/> Quarantined Lots Detected</p>}
+                              </div>
+                              <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
+                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Node Value</p>
+                                  <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight">${stockValue.toFixed(2)}</p>
+                                  <p className="text-[9px] text-white/50 font-bold tracking-widest uppercase mt-2">@ ${unitCost.toFixed(2)}/{selectedItem.unit}</p>
+                              </div>
+                              <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
+                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Safety Threshold</p>
+                                  <p className="text-sm sm:text-base font-black font-serif text-amber-500 tracking-tight">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-sans font-light">{selectedItem.unit}</span></p>
+                              </div>
+                          </div>
+                          
+                          {selectedItem.isLotTracked && selectedItem.lots && (
+                              <div className="mt-10 luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden p-6">
+                                  <h3 className="text-lg font-black font-serif tracking-tight text-white mb-6 uppercase">Active Lot Traceability</h3>
+                                  <div className="overflow-x-auto">
+                                      <table className="w-full text-left text-sm">
+                                          <thead>
+                                              <tr className="border-b border-white/10">
+                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Lot Number</th>
+                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Received</th>
+                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Expires</th>
+                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Unit Cost</th>
+                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Remaining</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              {selectedItem.lots.filter((l: any) => l.quantity > 0).map((lot: any) => {
+                                                  const isExpired = lot.expirationDate && new Date(lot.expirationDate) < new Date();
+                                                  return (
+                                                    <tr key={lot.id} className={`border-b border-white/5 ${isExpired ? 'bg-red-500/10' : ''}`}>
+                                                        <td className="py-4 font-medium text-white">{lot.lotNumber}</td>
+                                                        <td className="py-4 text-white/60">{new Date(lot.receivedDate).toLocaleDateString()}</td>
+                                                        <td className="py-4">
+                                                            {lot.expirationDate ? (
+                                                                <span className={isExpired ? 'text-red-400 font-bold flex items-center' : 'text-white/60'}>
+                                                                    {isExpired && <AlertTriangle size={12} className="mr-1"/>}
+                                                                    {new Date(lot.expirationDate).toLocaleDateString()}
+                                                                </span>
+                                                            ) : <span className="text-white/30">-</span>}
+                                                        </td>
+                                                        <td className="py-4 text-white/80">${lot.unitCost.toFixed(2)}</td>
+                                                        <td className="py-4 font-bold text-emerald-400">{lot.quantity} <span className="text-white/40 font-normal">{selectedItem.unit}</span></td>
+                                                    </tr>
+                                                  )
+                                              })}
+                                              {selectedItem.lots.filter((l: any) => l.quantity > 0).length === 0 && (
+                                                  <tr><td colSpan={5} className="py-8 text-center text-white/30 text-xs font-bold uppercase tracking-widest">No active lots in inventory.</td></tr>
+                                              )}
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          )}
+                          </>
+                        );
+                    })()}
 
                     <div className="space-y-6">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between px-2">
@@ -321,10 +373,10 @@ export const Inventory = () => {
             badge="Asset Management Protocol Active"
           >
             <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-auto">
-              {userTier === 'Free Audit' ? (
+              {userTier === 'Free Trial' ? (
                 <Button
                   onClick={() => {
-                    setRequiredTier('Artisan Flow Basic');
+                    setRequiredTier('Basic Artisan');
                     setUpgradeLimit(50);
                     setShowUpgradeModal(true);
                   }}
@@ -342,6 +394,7 @@ export const Inventory = () => {
                 </label>
               )}
               <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
+              <Button variant="outline" onClick={migrateInventoryToLots} className="rounded-full border-white/20 hover:border-white/40 bg-[#6A2C91]/30 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"><RefreshCw size={16} className="mr-3"/> MIGRATE TO LOTS</Button>
             </div>
           </VaultBanner>
         </div>

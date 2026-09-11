@@ -1,305 +1,160 @@
-import React, { useState, useRef } from 'react';
-import { ContextualTutorialModal } from '../ContextualTutorialModal';
-import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
-import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
-import { GlassHaloIcon } from '../ui/GlassHaloIcon';
-import { useArtisanData, Integration, UserTier } from '../DataContext';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { PaymentGateway } from '../Auth';
+import { useArtisanData } from '../DataContext';
+import { db, auth } from '../../services/firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { ShoppingBag, Globe, Share2, ArrowLeft, Loader2, Link as LinkIcon, Database, HardDrive, Bell } from 'lucide-react';
+import { Button, Card, Badge, Modal, Input } from '../UI';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { UniversalImporter } from '../UniversalImporter';
 
 export const Integrations = () => {
+    const { isDemoMode } = useArtisanData();
     const navigate = useNavigate();
-    const { integrations, toggleIntegrationStatus, businessProfile } = useArtisanData();
-    const [activeTab, setActiveTab] = useState('All');
-    const [isDiagnosticRunning, setIsDiagnosticRunning] = useState<string | null>(null);
-    const [activeModalIntegration, setActiveModalIntegration] = useState<Integration | null>(null);
-    const [integrationEmail, setIntegrationEmail] = useState('');
-    const [integrationPassword, setIntegrationPassword] = useState('');
-    const [integrationKey, setIntegrationKey] = useState('');
-    const [isConnecting, setIsConnecting] = useState(false);
+    const [notifyEmail, setNotifyEmail] = useState('');
+    const [activeModal, setActiveModal] = useState<string | null>(null);
 
-    const categories = ['All', 'E-commerce', 'Marketplace', 'Wholesale', 'POS', 'System'];
-    
-    const filteredIntegrations = integrations.filter(int => 
-        activeTab === 'All' || int.category === activeTab
-    );
+    const platformCards = [
+        { id: 'etsy', name: 'Etsy', icon: <ShoppingBag size={24} />, category: 'Marketplace', status: 'Coming Soon', desc: 'Sync orders and update stock back to Etsy instantly.' },
+        { id: 'shopify', name: 'Shopify', icon: <Globe size={24} />, category: 'E-commerce', status: 'Coming Soon', desc: 'Two-way sync for materials, products, and fulfillment.' },
+        { id: 'woocommerce', name: 'WooCommerce', icon: <Share2 size={24} />, category: 'E-commerce', status: 'Connect API', desc: 'Connect your self-hosted WooCommerce store using REST API.' },
+        { id: 'square', name: 'Square POS', icon: <Database size={24} />, category: 'POS', status: 'Coming Soon', desc: 'Sync in-person sales and deduct from master inventory.' },
+        { id: 'gdrive', name: 'Google Drive', icon: <HardDrive size={24} />, category: 'Storage', status: 'Coming Soon', desc: 'Auto-backup your ledger and store recipe attachments.' },
+    ];
 
-    const runDiagnostic = (id: string) => {
-        setIsDiagnosticRunning(id);
-        setTimeout(() => setIsDiagnosticRunning(null), 2500);
+    const handleNotifyMe = async () => {
+        if (!notifyEmail) {
+            toast.error("Please enter your email to be notified.");
+            return;
+        }
+        
+        try {
+            const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
+            if (!isDemoMode) await addDoc(collection(db, 'integrationWaitlist'), {
+                email: notifyEmail,
+                platform: activeModal,
+                uid: uid,
+                createdAt: new Date().toISOString()
+            });
+            toast.success("You will be notified as soon as this integration is live!");
+            setActiveModal(null);
+            setNotifyEmail('');
+        } catch (e: any) {
+            toast.error("Failed to join waitlist. Please try again.");
+            console.error(e);
+        }
     };
+    
+    const [wooUrl, setWooUrl] = useState('');
+    const [wooKey, setWooKey] = useState('');
+    const [wooSecret, setWooSecret] = useState('');
+    
+    const handleWooConnect = async () => {
+        if (!wooUrl || !wooKey || !wooSecret) {
+            toast.error("Please fill out all fields.");
+            return;
+        }
+        
+        try {
+            const token = auth.currentUser ? await auth.currentUser.getIdToken() : '';
+            const res = await fetch('/api/woocommerce-validate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ url: wooUrl, key: wooKey, secret: wooSecret })
+            });
+            
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.error || "Failed to validate WooCommerce store.");
+            }
+            
+            toast.success("WooCommerce Store Connected Successfully!");
+            setActiveModal(null);
+            
+            // Mark connected in UI
+            const el = document.getElementById('woocommerce-status');
+            if (el) el.innerHTML = 'Connected';
+            
+        } catch (e: any) {
+            toast.error(e.message || "Failed to connect.");
+        }
+    };
+
 
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-8 sm:pb-12 lg:pb-20"
         >
-            <ContextualTutorialModal
-                hubId="integrations"
-                title="Integrations Hub"
-                description="Connect ArtisanFlow to your external tools."
-                steps={["Link your Shopify or WooCommerce stores.","Connect accounting software like QuickBooks.","Enable social media channels for auto-posting."]}
-            />
-            <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6">
-                <div className="w-full md:w-1/2">
-                    <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white sm:text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
-                        <ArrowLeft size={16} /> Back to Command Center
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
+                        <ArrowLeft size={16} /> Back to Dashboard
                     </button>
-                    <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Integrations</h1>
-                    <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light leading-relaxed">Synchronizing external manufacturing and commerce nodes.</p>
-                </div>
-                <div className="bg-emerald-900/20 px-6 py-3 rounded-full border border-emerald-500/20 flex items-center gap-3 shadow-sm">
-                    <RefreshCw size={16} className="text-emerald-400 animate-spin-slow" />
-                    <span className="text-[10px] font-sans font-bold uppercase text-emerald-400 tracking-widest">Synaptic Link Online</span>
-                </div>
-            </div>
-
-            <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] relative overflow-hidden p-4 sm:p-12">
-                <div className="absolute top-0 right-0 w-80 h-[200px] sm:h-80 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 pointer-events-none"></div>
-                <div className="relative z-10 space-y-6">
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
-                        <ShieldCheck className="text-[#6A2C91]" size={28} /> The Omnichannel Handshake
-                    </h3>
-                    <p className="text-sm sm:text-base text-white sm:text-white/60 w-full w-full max-w-4xl leading-relaxed leading-relaxed font-sans font-light">
-                        LRC Artisan Flow synthesizes your omnichannel operations, bridging the void between digital storefronts and the manufacturing floor. Ingest orders automatically and maintain surgical stock levels across every connected node.
+                    <h1 className="text-3xl lg:text-5xl font-bold font-serif tracking-tight text-white mb-4">Connections Hub</h1>
+                    <p className="text-base text-white/40 font-sans font-light max-w-2xl">
+                        Connect Artisan Flow to your storefronts and migrate your legacy data. We are building native integrations to keep your stock perfectly synced.
                     </p>
-                    
-                    {businessProfile?.role === 'admin' && (
-                        <div className="mt-6 p-4 sm:p-6 bg-[#6A2C91]/10 border border-[#6A2C91]/30 rounded-2xl w-full w-full w-full max-w-4xl">
-                            <p className="text-sm sm:text-base text-white sm:text-white/70 font-sans font-bold text-[10px] uppercase tracking-widest mb-2">Webhook URL (For Shopify, Etsy, Square Webhooks)</p>
-                            <div className="flex items-center gap-3">
-                                <Input value={`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`} readOnly className="w-full font-mono text-sm bg-black/50 border-[#6A2C91]/30 text-emerald-400" />
-                                <Button onClick={() => {
-                                    navigator.clipboard.writeText(`${import.meta.env.VITE_GAS_DATABASE_URL || 'https://script.google.com/macros/s/.../exec'}?action=handleStoreOrder`);
-                                    toast.success("Webhook URL copied to clipboard");
-                                }} variant="outline" className="border-[#6A2C91]/30 hover:bg-[#6A2C91]/20">Copy</Button>
-                            </div>
-                            <p className="text-sm sm:text-base text-white sm:text-white/40 font-light mt-2">Paste this URL into your storefront's webhook settings to enable automatic raw material deduction on new orders.</p>
-                        </div>
-                    )}
-
-                    <div className="flex flex-wrap gap-3 sm:gap-6 pt-6">
-                        <div className="flex items-center gap-3 text-[10px] font-sans font-bold uppercase tracking-widest text-white sm:text-white/50">
-                            <div className="w-2 h-2 rounded-full bg-[#6A2C91]" /> Bidirectional Stock Sync
-                        </div>
-                        <div className="flex items-center gap-3 text-[10px] font-sans font-bold uppercase tracking-widest text-white sm:text-white/50">
-                            <div className="w-2 h-2 rounded-full bg-[#6A2C91]" /> Material Auto-Deduction
-                        </div>
-                        <div className="flex items-center gap-3 text-[10px] font-sans font-bold uppercase tracking-widest text-white sm:text-white/50">
-                            <div className="w-2 h-2 rounded-full bg-[#6A2C91]" /> Real-time Fee Reconciliation
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <div className="flex overflow-x-auto pb-4 gap-3 scrollbar-hide">
-                {categories.map(cat => (
-                    <button
-                        key={cat}
-                        onClick={() => setActiveTab(cat)}
-                        className={`px-8 py-3 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
-                            activeTab === cat 
-                                ? 'bg-[#6A2C91] text-white shadow-lg shadow-[#6A2C91]/20 border border-transparent' 
-                                : 'bg-white/5 text-white sm:text-white/50 border border-white/10 hover:border-[#6A2C91] hover:text-white'
-                        }`}
-                    >
-                        {cat}
-                    </button>
-                ))}
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-                {filteredIntegrations.map((int, index) => (
-                    <motion.div 
-                        key={int.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1, duration: 0.6 }}
-                        className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] flex flex-col group relative hover:-translate-y-1 transition-all duration-500 overflow-hidden hover:border-[#6A2C91]/50 hover:shadow-2xl hover:shadow-[#6A2C91]/10"
-                    >
-                        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full group-hover:bg-[#6A2C91]/10 transition-colors duration-700 pointer-events-none"></div>
-                        
-                        <div className="flex justify-between items-start mb-8 relative z-10">
-                            <div className="relative group-hover:scale-110 transition-transform duration-500 mb-6">
-                                <GlassHaloIcon 
-                                    icon={
-                                        int.category === 'E-commerce' ? ShoppingBag :
-                                        int.category === 'Marketplace' ? Globe :
-                                        int.category === 'Wholesale' ? Layers :
-                                        int.category === 'POS' ? CreditCard :
-                                        int.category === 'System' ? Server :
-                                        int.category === 'Payment' ? CreditCard :
-                                        int.category === 'Accounting' ? BarChart3 : Layers
-                                    } 
-                                    color="cyan" 
-                                    size="md" 
-                                />
-                                {int.status === 'Connected' && (
-                                    <div className="absolute -top-1 -right-1 bg-emerald-500 text-black rounded-full p-1 border-2 border-black shadow-sm animate-in zoom-in duration-300 z-20">
-                                        <CheckCircle2 size={12} />
-                                    </div>
-                                )}
-                            </div>
-                            {int.status === 'Connected' ? (
-                                <Badge color="green" className="uppercase font-sans font-bold text-[9px] tracking-widest px-3 py-1 flex items-center gap-1.5 shadow-sm border-emerald-500/20">
-                                    <Activity size={10} className="animate-pulse" /> Verified Node
-                                </Badge>
-                            ) : (
-                                <Badge color="gray" className="uppercase font-sans font-bold text-[9px] tracking-widest px-3 py-1 shadow-sm border-white/10 bg-white/5 text-white sm:text-white/50">
-                                    Available
-                                </Badge>
-                            )}
-                        </div>
-
-                        <div className="flex-1 space-y-4 relative z-10">
+            {/* Direct Connect Platforms */}
+            <div>
+                <h2 className="text-xl font-bold text-white mb-6 font-serif">Native Integrations</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {platformCards.map(platform => (
+                        <Card key={platform.id} className="bg-white/5 border border-white/10 p-6 flex flex-col justify-between hover:bg-white/10 transition-colors">
                             <div>
-                                <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{int.name}</h4>
-                                <p className="text-[9px] font-sans font-bold text-[#C5A059] uppercase tracking-widest mt-2">{int.category}</p>
-                            </div>
-                            
-                            <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">
-                                "{int.description}"
-                            </p>
-
-                            <div className="bg-[#6A2C91]/10 border border-[#6A2C91]/20 p-5 rounded-2xl flex items-start gap-3 sm:gap-4 group/ai hover:bg-[#6A2C91]/20 transition-all duration-500">
-                                <div className="p-2.5 bg-[#6A2C91]/20 rounded-xl text-[#6A2C91] shadow-sm group-hover/ai:bg-[#6A2C91] group-hover/ai:text-white transition-colors duration-500">
-                                    <Sparkles size={16} />
-                                </div>
-                                <div>
-                                    <p className="text-[9px] font-sans font-bold text-[#6A2C91] uppercase tracking-widest mb-1">Synaptic Intelligence</p>
-                                    <p className="text-sm sm:text-base font-sans font-bold text-white">{int.aiCapability}</p>
-                                </div>
-                            </div>
-
-                            <div className="space-y-3 py-4">
-                                {int.features.map((feat, i) => (
-                                    <div key={i} className="flex items-center gap-3 text-xs font-sans font-light text-white sm:text-white/50 group-hover:text-white sm:text-white/70 transition-colors">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-[#6A2C91] transition-colors duration-500"></div>
-                                        {feat}
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white">
+                                        {platform.icon}
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="mt-8 space-y-4 relative z-10">
-                            {int.status === 'Connected' && (
-                                <Button 
-                                    onClick={() => runDiagnostic(int.id)}
-                                    disabled={!!isDiagnosticRunning}
-                                    variant="outline"
-                                    className="w-full w-auto mx-auto py-1 px-3 text-[10px] border-white/20 text-white sm:text-white/70 font-sans font-bold text-[10px] tracking-widest uppercase rounded-full hover:bg-white/5 hover:border-white/30 hover:text-white transition-colors"
-                                >
-                                    {isDiagnosticRunning === int.id 
-                                        ? <><Loader2 size={14} className="animate-spin mr-2" /> {businessProfile?.role === 'admin' ? 'ANALYZING LINK...' : 'VERIFYING...'}</> 
-                                        : <><Cpu size={14} className="mr-2" /> {businessProfile?.role === 'admin' ? 'TEST SYNAPTIC LINK' : 'VERIFY CONNECTION'}</>}
-                                </Button>
-                            )}
-                            <Button 
-                                onClick={() => {
-                                    if (int.status === 'Connected') {
-                                        toggleIntegrationStatus(int.id);
-                                    } else {
-                                        toast.info(`${int.name} integration coming soon!`);
-                                    }
-                                }}
-                                disabled={int.status !== 'Connected'}
-                                className={`w-full py-2 px-6 text-[10px] font-sans font-bold tracking-widest uppercase transition-all duration-500 rounded-full ${
-                                    int.status === 'Connected' 
-                                        ? 'bg-white/10 text-white hover:bg-white/20 border border-white/10' 
-                                        : 'bg-black/50 text-white/30 border border-white/5 cursor-not-allowed'
-                                }`} 
-                            >
-                                {int.status === 'Connected' ? 'UPDATE SETTINGS' : 'COMING SOON'}
-                            </Button>
-                            
-                            <button className="w-full flex items-center justify-center gap-2 text-[10px] font-sans font-bold text-white/30 uppercase tracking-widest hover:text-[#C5A059] transition-colors mt-4">
-                                LEARN ARCHITECTURE <ArrowRight size={14} />
-                            </button>
-                        </div>
-
-                        {int.lastSync && (
-                            <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-widest">
-                                <span className="flex items-center gap-2"><RefreshCw size={12} className="animate-spin-slow text-emerald-400" /> Synced</span>
-                                <span>{int.lastSync}</span>
-                            </div>
-                        )}
-                    </motion.div>
-                ))}
-            </div>
-        
-            <Modal isOpen={!!activeModalIntegration} onClose={() => setActiveModalIntegration(null)} title={`Initialize ${activeModalIntegration?.name} Link`}>
-                <div className="space-y-6">
-                    <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light">
-                        Please provide your credentials to securely link {activeModalIntegration?.name} into the Artisan Flow network.
-                    </p>
-                    
-                    {activeModalIntegration?.category === 'System' ? (
-                        <>
-                            <Input 
-                                placeholder="Email Address" 
-                                value={integrationEmail} 
-                                onChange={(e) => setIntegrationEmail(e.target.value)} 
-                                className="w-full"
-                            />
-                            <Input 
-                                placeholder="Password" 
-                                type="password"
-                                value={integrationPassword} 
-                                onChange={(e) => setIntegrationPassword(e.target.value)} 
-                                className="w-full"
-                            />
-                        </>
-                    ) : (
-                        <div className="space-y-4">
-                            {activeModalIntegration?.id === 'square' && (
-                                <div className="p-4 bg-[#C5A059]/10 border border-[#C5A059]/30 rounded-xl mb-4 text-xs text-[#C5A059] font-sans">
-                                    <strong>OAuth Permissions Required:</strong>
-                                    <ul className="list-disc pl-5 mt-2 space-y-1 text-white sm:text-white/70 font-light">
-                                        <li><code className="text-[#C5A059]">ORDERS_READ</code>: To track multi-channel sales</li>
-                                        <li><code className="text-[#C5A059]">INVENTORY_READ</code>: To sync matrix levels</li>
-                                        <li><code className="text-[#C5A059]">PAYMENTS_READ</code>: To parse transaction fees</li>
-                                    </ul>
+                                    <Badge id={`${platform.id}-status`} color="gray" className="text-[10px] uppercase">{platform.status}</Badge>
                                 </div>
-                            )}
-                            <Input 
-                                placeholder="API Key / Access Token" 
-                                type="password"
-                                value={integrationKey} 
-                                onChange={(e) => setIntegrationKey(e.target.value)} 
-                                className="w-full font-mono text-sm"
-                            />
-                            <div className="text-xs text-white sm:text-white/40 flex items-center gap-2">
-                                <Lock size={12} /> Encrypted at rest via AES-256
+                                <h3 className="text-lg font-bold text-white mb-2">{platform.name}</h3>
+                                <p className="text-sm text-white/50">{platform.desc}</p>
                             </div>
-                        </div>
-                    )}
-                    
-                    <Button 
-                        onClick={() => {
-                            if (!activeModalIntegration) return;
-                            setIsConnecting(true);
-                            setTimeout(() => {
-                                toggleIntegrationStatus(activeModalIntegration.id);
-                                setIsConnecting(false);
-                                setActiveModalIntegration(null);
-                                setIntegrationEmail('');
-                                setIntegrationPassword('');
-                                setIntegrationKey('');
-                            }, 1500);
-                        }} 
-                        disabled={isConnecting}
-                        className="w-full w-auto mx-auto py-1 px-3 text-[10px] bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl"
-                    >
-                        {isConnecting ? <Loader2 size={16} className="animate-spin mx-auto" /> : 'Authenticate Connection'}
+                            <Button 
+                                variant="outline" 
+                                className="w-full mt-6 border-white/20 text-white hover:bg-white/10"
+                                onClick={() => setActiveModal(platform.name)}
+                            >
+                                {platform.id === "woocommerce" ? <><LinkIcon size={16} className="mr-2" /> Connect</> : <><Bell size={16} className="mr-2" /> Notify Me</>}
+                            </Button>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+
+            <hr className="border-white/10 my-12" />
+
+            {/* Universal Importer Module */}
+            <div id="migration-tool">
+                <UniversalImporter />
+            </div>
+
+            {/* Notify Modal */}
+            <Modal isOpen={!!activeModal} onClose={() => setActiveModal(null)} title={`${activeModal} Integration`}>
+                <div className="space-y-4">
+                    <p className="text-sm text-white/70">
+                        We're building this integration now. Enter your email to be notified when it goes live. for our <strong>{activeModal}</strong>. 
+                        Enter your email below to get early access the moment it goes live.
+                    </p>
+                    <Input 
+                        placeholder="your@email.com" 
+                        value={notifyEmail} 
+                        onChange={(e: any) => setNotifyEmail(e.target.value)} 
+                    />
+                    <Button className="w-full bg-[#C5A059] text-black hover:bg-[#b08d4a]" onClick={handleNotifyMe}>
+                        Notify Me
                     </Button>
                 </div>
             </Modal>
         </motion.div>
     );
 };
-

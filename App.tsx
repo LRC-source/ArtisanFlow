@@ -82,18 +82,18 @@ const OperationsDashboard = () => {
   const { userTier } = useArtisanData();
   
   const MODULES = [
-    { id: 'orders', title: 'Orders', icon: ShoppingBag, desc: 'Process commerce orders', color: 'text-purple-600', route: '/operations/orders', requiredTier: 'Artisan Flow Basic' },
-    { id: 'crm', title: 'CRM', icon: Users, desc: 'Customer Relationships', color: 'text-[#C5A059]', route: '/operations/crm', requiredTier: 'Artisan Flow Basic' },
-    { id: 'inventory', title: 'Inventory Hub', icon: Boxes, desc: 'Stock overview', color: 'text-emerald-600', route: '/inventory', requiredTier: 'Artisan Flow Basic' },
-    { id: 'recipes', title: 'Recipes (BOM)', icon: FileText, desc: 'Formulas & Costs', color: 'text-gray-600', route: '/recipes', requiredTier: 'Artisan Flow Basic' },
-    { id: 'production_scheduler', title: 'Scheduler', icon: Calendar, desc: 'Daily batches', color: 'text-pink-600', route: '/production_scheduler', requiredTier: 'Artisan Flow Basic' },
-    { id: 'production_workflow', title: 'Workflow', icon: Layers, desc: 'Kanban active jobs', color: 'text-cyan-600', route: '/production_workflow', requiredTier: 'Artisan Flow Basic' },
-    { id: 'supplier_manager', title: 'Suppliers', icon: Truck, desc: 'Vendor database', color: 'text-orange-600', route: '/supplier_manager', requiredTier: 'Artisan Flow Basic' },
-    { id: 'qc', title: 'Quality Control', icon: ClipboardList, desc: 'Pass/Fail logs', color: 'text-red-600', route: '/qc', requiredTier: 'Artisan Flow Basic' },
+    { id: 'orders', title: 'Orders', icon: ShoppingBag, desc: 'Process commerce orders', color: 'text-purple-600', route: '/operations/orders', requiredTier: 'Basic Artisan' },
+    { id: 'crm', title: 'CRM', icon: Users, desc: 'Customer Relationships', color: 'text-[#C5A059]', route: '/operations/crm', requiredTier: 'Basic Artisan' },
+    { id: 'inventory', title: 'Inventory Hub', icon: Boxes, desc: 'Stock overview', color: 'text-emerald-600', route: '/inventory', requiredTier: 'Basic Artisan' },
+    { id: 'recipes', title: 'Recipes (BOM)', icon: FileText, desc: 'Formulas & Costs', color: 'text-gray-600', route: '/recipes', requiredTier: 'Basic Artisan' },
+    { id: 'production_scheduler', title: 'Scheduler', icon: Calendar, desc: 'Daily batches', color: 'text-pink-600', route: '/production_scheduler', requiredTier: 'Basic Artisan' },
+    { id: 'production_workflow', title: 'Workflow', icon: Layers, desc: 'Kanban active jobs', color: 'text-cyan-600', route: '/production_workflow', requiredTier: 'Basic Artisan' },
+    { id: 'supplier_manager', title: 'Suppliers', icon: Truck, desc: 'Vendor database', color: 'text-orange-600', route: '/supplier_manager', requiredTier: 'Basic Artisan' },
+    { id: 'qc', title: 'Quality Control', icon: ClipboardList, desc: 'Pass/Fail logs', color: 'text-red-600', route: '/qc', requiredTier: 'Basic Artisan' },
   ];
 
   const handleNavigate = (mod: any) => {
-      if (userTier === 'Free Audit' && mod.requiredTier !== 'Free Audit') {
+      if (userTier === 'Free Trial' && mod.requiredTier !== 'Free Trial') {
           navigate('/settings/subscription');
           return;
       }
@@ -123,7 +123,7 @@ const OperationsDashboard = () => {
             <div key={mod.id} className="relative group h-full">
                 <div 
                     onClick={() => handleNavigate(mod)}
-                    className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 cursor-pointer group flex flex-col h-full overflow-hidden transition-all duration-500 hover:border-[#C5A059]/50 ${userTier === 'Free Audit' ? 'opacity-50' : ''}`}
+                    className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 cursor-pointer group flex flex-col h-full overflow-hidden transition-all duration-500 hover:border-[#C5A059]/50 ${userTier === 'Free Trial' ? 'opacity-50' : ''}`}
                 >
                     <div className="absolute top-0 left-0 w-1 h-full bg-[#C5A059] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className={`w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-white/10`}>
@@ -135,7 +135,7 @@ const OperationsDashboard = () => {
                     <p className="text-sm font-sans font-light text-white/50 leading-relaxed flex-1">
                         {mod.desc}
                     </p>
-                    {userTier === 'Free Audit' && <div className="absolute top-6 right-6"><Shield size={16} className="text-white/30" strokeWidth={1.5} /></div>}
+                    {userTier === 'Free Trial' && <div className="absolute top-6 right-6"><Shield size={16} className="text-white/30" strokeWidth={1.5} /></div>}
                 </div>
             </div>
           ))}
@@ -318,6 +318,18 @@ const AppContent = () => {
   const publicRoutes = ['/makers', '/apothecaries', '/scale', '/auth', '/overview'];
   const isPublicRoute = publicRoutes.includes(location.pathname);
 
+  // BILLING WALL LOGIC
+  if (isAuthenticated) {
+      const trialEndsAt = businessProfile?.trialEndsAt ? new Date(businessProfile.trialEndsAt) : null;
+      const isTrialExpired = trialEndsAt !== null && trialEndsAt < new Date();
+      
+      // If payment is pending OR trial expired and no active payment status
+      if (businessProfile?.status === 'Pending Payment' || (isTrialExpired && businessProfile?.status !== 'Active')) {
+          // Force them to the Auth gateway payment view
+          return <AuthGateway initialView="payment" selectedTier={businessProfile.tier as any} />;
+      }
+  }
+
   // If user is not authenticated and trying to access a protected route, show the general landing page (or auth)
   if (!isAuthenticated && !isPublicRoute && location.pathname !== '/') {
       return <LandingPage />;
@@ -370,7 +382,7 @@ const AppContent = () => {
             <Route path="/business-pulse-check" element={<BusinessPulseCheck />} />
         
         <Route path="/command-center" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <DashboardPage />
             </LockedNode>
         } />
@@ -379,118 +391,118 @@ const AppContent = () => {
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/recipes/builder/:id?" element={<RecipeBuilder />} />
         <Route path="/supplier_manager" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <SupplierManager />
             </LockedNode>
         } />
         <Route path="/qc" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <QualityControl />
             </LockedNode>
         } />
         
         <Route path="/operations" element={<OperationsDashboard />} />
         <Route path="/operations/warehouse" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <WarehouseView />
             </LockedNode>
         } />
         <Route path="/operations/orders" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <Orders />
             </LockedNode>
         } />
         <Route path="/operations/crm" element={<CRM />} />
         <Route path="/production_scheduler" element={
-             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+             <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ProductionScheduler />
              </LockedNode>
         } />
         <Route path="/production_workflow" element={<ProductionWorkflow />} />
         
         <Route path="/marketing" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <MarketingPage />
             </LockedNode>
         } />
         <Route path="/marketing/hub" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <MarketingHub />
             </LockedNode>
         } />
         <Route path="/marketing/strategy-report" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <MarketingStrategyReport />
             </LockedNode>
         } />
         <Route path="/marketing/brand-voice" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <BrandVoiceProfile />
             </LockedNode>
         } />
         <Route path="/marketing/receptionist" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ReceptionistLogic />
             </LockedNode>
         } />
         <Route path="/marketing/calendar" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ContentCalendar />
             </LockedNode>
         } />
         <Route path="/marketing/creator" element={
-            <LockedNode requiredTier="Artisan Flow Basic" featureKey="marketing_creator" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Basic Artisan" featureKey="marketing_creator" onUpgrade={() => navigate('/settings/subscription')}>
                 <MarketingCreator />
             </LockedNode>
         } />
         <Route path="/marketing/analysis" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <VisualAnalysisNode />
             </LockedNode>
         } />
         <Route path="/marketing/social" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <SocialMediaCreator />
             </LockedNode>
         } />
         <Route path="/marketing/video" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <VideoCreator />
             </LockedNode>
         } />
         <Route path="/marketing/blog" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <BlogGenerator />
             </LockedNode>
         } />
         <Route path="/marketing/avatar" element={
-            <LockedNode requiredTier="Artisan Flow Basic" featureKey="ai_avatar_studio" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Basic Artisan" featureKey="ai_avatar_studio" onUpgrade={() => navigate('/settings/subscription')}>
                 <AIAvatarStudio />
             </LockedNode>
         } />
         <Route path="/marketing/advanced" element={
-            <LockedNode requiredTier="Artisan Flow Basic" featureKey="advanced_synthesis" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode requiredTier="Basic Artisan" featureKey="advanced_synthesis" onUpgrade={() => navigate('/settings/subscription')}>
                 <AdvancedContentGenerator />
             </LockedNode>
         } />
         <Route path="/marketing/approvals" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ContentApprovals />
             </LockedNode>
         } />
 
         <Route path="/finance" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <FinanceHub />
             </LockedNode>
         } />
         <Route path="/finance/projections" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <FinancialProjections />
             </LockedNode>
         } />
         <Route path="/finance/budget-guard" element={
-            <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <BudgetGuard />
             </LockedNode>
         } />
@@ -501,12 +513,12 @@ const AppContent = () => {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         
         <Route path="/profit-guard" element={
-            <LockedNode isLocked={userTier !== 'Margin Protection Pro'} requiredTier="Margin Protection Pro" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier !== 'Pro Artisan'} requiredTier="Pro Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ProfitGuardPage />
             </LockedNode>
         } />
         <Route path="/forecasting" element={
-            <LockedNode isLocked={userTier !== 'Margin Protection Pro'} requiredTier="Margin Protection Pro" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier !== 'Pro Artisan'} requiredTier="Pro Artisan" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
                 <Forecasting />
             </LockedNode>
         } />
@@ -515,12 +527,12 @@ const AppContent = () => {
         <Route path="/settings/business" element={<BusinessSetup />} />
         <Route path="/settings/subscription" element={<SubscriptionManagement />} />
         <Route path="/settings/integrations" element={
-             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+             <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <Integrations />
              </LockedNode>
         } />
         <Route path="/settings/portal" element={
-             <LockedNode isLocked={userTier === 'Free Audit'} requiredTier="Artisan Flow Basic" onUpgrade={() => navigate('/settings/subscription')}>
+             <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <CustomerPortal />
              </LockedNode>
         } />

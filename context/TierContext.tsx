@@ -1,141 +1,150 @@
-/// <reference types="vite/client" />
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useArtisanData } from '../components/DataContext';
 import { toast } from 'sonner';
 
-export interface TierPermissions {
-  [featureKey: string]: boolean;
+export type TierName = 'Free Trial' | 'Basic Artisan' | 'Pro Artisan' | 'Master Artisan';
+
+export interface TierConfig {
+  name: TierName;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  lolaDailyLimit: number;
+  allowedLolaModes: ('FAST' | 'THINK' | 'SEARCH')[];
+  features: string[];
+  caps: {
+    images: number;
+    videos: number;
+    articles: number;
+    posts: number;
+  };
 }
 
+export const TIER_CONFIGS: Record<TierName, TierConfig> = {
+  'Free Trial': {
+    name: 'Free Trial',
+    monthlyPrice: 0,
+    yearlyPrice: 0,
+    lolaDailyLimit: 25,
+    allowedLolaModes: ['FAST', 'THINK'], // Trial gets Pro features
+    features: ['operations', 'finance', 'marketing', 'profit_guard'],
+    caps: {
+      images: 50,
+      videos: 2,
+      articles: 15,
+      posts: 50
+    }
+  },
+  'Basic Artisan': {
+    name: 'Basic Artisan',
+    monthlyPrice: 15,
+    yearlyPrice: 147,
+    lolaDailyLimit: 15,
+    allowedLolaModes: ['FAST'],
+    features: ['operations', 'finance', 'marketing'], // No Profit Guard
+    caps: {
+      images: 50,
+      videos: 2,
+      articles: 10,
+      posts: 30
+    }
+  },
+  'Pro Artisan': {
+    name: 'Pro Artisan',
+    monthlyPrice: 29,
+    yearlyPrice: 297,
+    lolaDailyLimit: 50,
+    allowedLolaModes: ['FAST', 'THINK'],
+    features: ['operations', 'finance', 'marketing', 'profit_guard'],
+    caps: {
+      images: 100,
+      videos: 5,
+      articles: 30,
+      posts: 100
+    }
+  },
+  'Master Artisan': {
+    name: 'Master Artisan',
+    monthlyPrice: 79,
+    yearlyPrice: 797,
+    lolaDailyLimit: 150,
+    allowedLolaModes: ['FAST', 'THINK', 'SEARCH'],
+    features: ['operations', 'finance', 'marketing', 'profit_guard', 'all_future_modules', 'priority_support'],
+    caps: {
+      images: 200,
+      videos: 10,
+      articles: 60,
+      posts: 200
+    }
+  }
+};
+
 interface TierContextType {
-  currentTier: string;
-  permissionsMap: TierPermissions;
-  usage: Record<string, number>;
-  checkAccess: (featureKey: string) => boolean;
-  incrementUsage: (featureKey: string) => Promise<boolean>;
-  getProUsageStatus: () => { isPro: boolean; creditsUsed: number; softCap: number; showWarning: boolean };
-  isTierLoading: boolean;
+  currentTier: TierName;
+  tierConfig: TierConfig;
+  lolaUsage: number;
+  incrementLolaUsage: () => boolean;
+  hasAccess: (feature: string) => boolean;
+  isTrialActive: boolean;
 }
 
 const TierContext = createContext<TierContextType | undefined>(undefined);
 
 export const TierProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { businessProfile, isAuthenticated } = useArtisanData();
-  const [currentTier, setCurrentTier] = useState<string>('Free Audit');
-  const [permissionsMap, setPermissionsMap] = useState<TierPermissions>({});
-  const [usage, setUsage] = useState<Record<string, number>>({});
-  const [isTierLoading, setIsTierLoading] = useState<boolean>(true);
+  const [lolaUsage, setLolaUsage] = useState<number>(0);
 
-  // Fallback defaults in case GAS is unreachable
-  const defaultPermissions: TierPermissions = {
-    'marketing_studio': true,
-    'visual_analysis': true,
-    'marketing_creator': true,
-    'ai_avatar_studio': false, // Locked for free/basic
-    'advanced_synthesis': false,
-    'inventory_forecasting': false,
+  // Default to Free Trial if not authenticated or no tier
+  let currentTier = (businessProfile?.tier as TierName) || 'Free Trial';
+  
+  // Enforce tier normalization just in case bad data exists
+  if (!TIER_CONFIGS[currentTier]) {
+    // Migration logic for old names
+    if (currentTier as any === 'Free Trial') currentTier = 'Free Trial';
+    else if (currentTier as any === 'Basic Artisan') currentTier = 'Basic Artisan';
+    else if (currentTier as any === 'Pro Artisan') currentTier = 'Pro Artisan';
+    else if (currentTier as any === 'Master Artisan') currentTier = 'Master Artisan';
+    else currentTier = 'Free Trial';
+  }
+
+  // Determine Trial Status
+  const trialEndsAt = businessProfile?.trialEndsAt ? new Date(businessProfile.trialEndsAt) : null;
+  const isTrialActive = trialEndsAt !== null && trialEndsAt > new Date();
+
+  const tierConfig = TIER_CONFIGS[currentTier];
+
+  const hasAccess = (feature: string) => {
+    // Admins get everything
+    if (businessProfile?.role === 'admin') return true;
+    return tierConfig.features.includes(feature);
   };
 
-  useEffect(() => {
-    const fetchTierData = async () => {
-      if (!isAuthenticated || !businessProfile.email) {
-        setIsTierLoading(false);
-        return;
-      }
-      
-      setIsTierLoading(true);
-      const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
-      
-      if (!gasUrl) {
-        console.warn('VITE_GAS_DATABASE_URL is not set. Using fallback tier config.');
-        setCurrentTier(businessProfile.tier);
-        setPermissionsMap(defaultPermissions);
-        setIsTierLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch(`${gasUrl}?action=getUserTier&userId=${encodeURIComponent(businessProfile.email)}`);
-        const data = await response.json();
-        
-        if (data.success) {
-          setCurrentTier(data.tier);
-          setPermissionsMap(data.permissions);
-          setUsage(data.usage || {});
-        } else {
-          setCurrentTier(businessProfile.tier);
-          setPermissionsMap(defaultPermissions);
-        }
-      } catch (error) {
-        console.error("Error fetching tier from GAS:", error);
-        setCurrentTier(businessProfile.tier);
-        setPermissionsMap(defaultPermissions);
-      } finally {
-        setIsTierLoading(false);
-      }
-    };
-
-    fetchTierData();
-  }, [isAuthenticated, businessProfile.email, businessProfile.tier]);
-
-  const checkAccess = (featureKey: string): boolean => {
-    if (businessProfile.role === 'admin') return true; // Admins override everything
-    return !!permissionsMap[featureKey];
-  };
-
-  const incrementUsage = async (featureKey: string): Promise<boolean> => {
-    if (businessProfile.role === 'admin') return true; // Admins unlimited
-
-    const gasUrl = import.meta.env.VITE_GAS_DATABASE_URL;
-    if (!gasUrl) {
-      return true; // if no url, just simulate success for now
+  const incrementLolaUsage = () => {
+    if (lolaUsage >= tierConfig.lolaDailyLimit && businessProfile?.role !== 'admin') {
+      toast.error(`Daily Lola AI limit reached (${tierConfig.lolaDailyLimit}/${tierConfig.lolaDailyLimit}). Please upgrade your tier for more questions.`);
+      return false;
     }
-
-    try {
-      const res = await fetch(gasUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'incrementUsage',
-          userId: businessProfile.email,
-          featureKey: featureKey
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setUsage(prev => ({ ...prev, [featureKey]: (prev[featureKey] || 0) + 1 }));
-        return true;
-      } else {
-        toast.error(`Usage limit reached for ${featureKey}. Please upgrade your tier.`);
-        return false;
-      }
-    } catch (e) {
-      console.error("Failed to increment usage", e);
-      return false; // Fail safe
-    }
-  };
-
-  const getProUsageStatus = () => {
-    const isPro = currentTier === 'Margin Protection Pro';
-    const softCap = 2500;
-    // Aggregate total usage across all features (mocked logic for credit count)
-    const creditsUsed = Object.values(usage).reduce((a, b) => a + b, 0);
-    const showWarning = isPro && creditsUsed >= softCap * 0.9;
-    
-    return { isPro, creditsUsed, softCap, showWarning };
+    setLolaUsage(prev => prev + 1);
+    return true;
   };
 
   return (
-    <TierContext.Provider value={{ currentTier, permissionsMap, usage, checkAccess, incrementUsage, getProUsageStatus, isTierLoading }}>
+    <TierContext.Provider value={{
+      currentTier,
+      tierConfig,
+      lolaUsage,
+      incrementLolaUsage,
+      hasAccess,
+      isTrialActive
+    }}>
       {children}
     </TierContext.Provider>
   );
 };
 
-export const useTierContext = () => {
+export const useTier = () => {
   const context = useContext(TierContext);
-  if (!context) {
-    throw new Error('useTierContext must be used within a TierProvider');
+  if (context === undefined) {
+    throw new Error('useTier must be used within a TierProvider');
   }
   return context;
 };

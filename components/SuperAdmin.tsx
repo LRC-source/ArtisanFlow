@@ -89,7 +89,7 @@ export const SuperAdmin = () => {
     // Invite Modal State
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const [inviteEmail, setInviteEmail] = useState('');
-    const [inviteTier, setInviteTier] = useState('Free Audit');
+    const [inviteTier, setInviteTier] = useState('Free Trial');
     const [isInviting, setIsInviting] = useState(false);
 
     // Edit Modal State
@@ -117,7 +117,7 @@ export const SuperAdmin = () => {
             setIsInviting(false);
             setIsInviteModalOpen(false);
             setInviteEmail('');
-            setInviteTier('Free Audit');
+            setInviteTier('Free Trial');
         }, 800);
     };
 
@@ -232,7 +232,7 @@ export const SuperAdmin = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
                 <AdminStatCard title="Total Platform Users" value={liveUsers.length.toString()} icon={Users} haloColor="purple" trend="+1 This Week" />
-                <AdminStatCard title="Pro Tier Subscribers" value={liveUsers.filter(u => u.tier === 'Margin Protection Pro').length.toString()} icon={CrownIcon} haloColor="gold" trend="Margin Protection Pro" color="text-[#C5A059]" border="border-[#C5A059]/20" />
+                <AdminStatCard title="Pro Tier Subscribers" value={liveUsers.filter(u => u.tier === 'Pro Artisan').length.toString()} icon={CrownIcon} haloColor="gold" trend="Pro Artisan" color="text-[#C5A059]" border="border-[#C5A059]/20" />
                 <AdminStatCard title="Global Volume Processed" value="$187,020" icon={Activity} haloColor="emerald" trend="+14% MoM" color="text-emerald-400" />
                 <AdminStatCard title="System Health" value="100%" icon={Server} haloColor="cyan" trend="All Nodes Online" color="text-blue-400" />
             </div>
@@ -284,7 +284,7 @@ export const SuperAdmin = () => {
                                         <td className="p-4 sm:p-6 font-mono text-xs text-white sm:text-white/50">{u.id}</td>
                                         <td className="p-4 sm:p-6 text-white/90">{u.email}</td>
                                         <td className="p-4 sm:p-6">
-                                            <Badge color={u.tier === 'Margin Protection Pro' ? 'gold' : u.tier === 'Artisan Flow Basic' ? 'purple' : 'gray'} className="text-[9px] uppercase tracking-widest px-3 py-1">
+                                            <Badge color={u.tier === 'Pro Artisan' ? 'gold' : u.tier === 'Basic Artisan' ? 'purple' : 'gray'} className="text-[9px] uppercase tracking-widest px-3 py-1">
                                                 {u.tier}
                                             </Badge>
                                         </td>
@@ -480,7 +480,7 @@ export const SuperAdmin = () => {
                             onChange={(e) => setInviteTier(e.target.value)}
                             className="bg-white/5 border-white/10 text-white w-full rounded-xl"
                         >
-                            {['Free Audit', 'Artisan Flow Basic', 'Margin Protection Pro'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
+                            {['Free Trial', 'Basic Artisan', 'Pro Artisan'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
                         </Select>
                     </div>
                     <Button onClick={handleInvite} className="w-full bg-[#6A2C91] hover:bg-[#6A2C91]/80 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-xl border border-[#6A2C91]/50" disabled={isInviting}>
@@ -508,7 +508,7 @@ export const SuperAdmin = () => {
                                 onChange={(e) => setEditingUser({ ...editingUser, tier: e.target.value })}
                                 className="bg-white/5 border-white/10 text-white w-full rounded-xl"
                             >
-                                {['Free Audit', 'Artisan Flow Basic', 'Margin Protection Pro'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
+                                {['Free Trial', 'Basic Artisan', 'Pro Artisan'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
                             </Select>
                         </div>
                         <div>

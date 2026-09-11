@@ -206,7 +206,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <GlassHaloIcon icon={User} color="purple" size="sm" className="mr-3" />
               <div className="user-details text-left flex-1 min-w-0">
                   <span className="user-name truncate">{businessProfile.ownerName || 'LaToya Carter'}</span>
-                  <span className="user-role truncate">Sovereign Architect</span>
+                  <span className="user-role truncate">Master Artisan</span>
               </div>
               <button onClick={logout} className="ml-2 p-2 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-full transition-colors" title="Revoke Access">
                   <LogOut size={16} />

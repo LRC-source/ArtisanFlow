@@ -63,7 +63,7 @@ export const CRM = () => {
   };
 
   const handleAddManual = () => {
-      if (userTier === 'Free Audit' && allCustomers.length >= 25) {
+      if (userTier === 'Free Trial' && allCustomers.length >= 25) {
           setIsAddModalOpen(false);
           setShowUpgradeModal(true);
           return;
@@ -317,7 +317,7 @@ export const CRM = () => {
                 onClose={() => setShowUpgradeModal(false)}
                 featureName="CRM Contacts"
                 currentLimit={25}
-                requiredTier="Artisan Flow Basic"
+                requiredTier="Basic Artisan"
             />
         </div>
     </motion.div>

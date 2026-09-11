@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Input, LRCLogo } from './UI';
 import { useArtisanData, UserTier } from './DataContext';
+import { TIER_CONFIGS, TierName } from '../context/TierContext';
 import { Chrome, Mail, Lock, ArrowRight, ShieldCheck, Zap, Crown, CheckCircle, CreditCard, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { z } from 'zod';
@@ -16,7 +17,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
   
   const { login, googleLogin, signUp } = useArtisanData();
   const [view, setView] = useState<'login' | 'signup' | 'tiers' | 'payment'>(
-    activeTier ? (activeTier === 'Free Audit' ? 'signup' : 'payment') : initialView
+    activeTier ? (activeTier === 'Free Trial' ? 'signup' : 'payment') : initialView
   );
   const [selectedTier, setSelectedTier] = useState<UserTier | undefined>(activeTier);
   const [email, setEmail] = useState('');
@@ -43,35 +44,35 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     if (view === 'signup') {
       if (ADMIN_EMAILS.includes(trimmedEmail.toLowerCase())) {
         try {
-          await signUp({ email: trimmedEmail, name: 'Admin Hub', password: trimmedPass, tier: 'Margin Protection Pro', status: 'Active' });
+          await signUp({ email: trimmedEmail, name: 'Admin Hub', password: trimmedPass, tier: 'Pro Artisan', status: 'Active' });
         } catch (e: any) {
           toast.error(e.message || "Failed to initialize Admin access.");
         }
         return;
       }
-      if (selectedTier === 'Free Audit') {
+      if (selectedTier === 'Free Trial') {
         try {
-          await signUp({ email: trimmedEmail, password: trimmedPass, tier: 'Free Audit', status: 'Active' });
+          await signUp({ email: trimmedEmail, password: trimmedPass, tier: 'Free Trial', status: 'Active' });
         } catch (e: any) {
           toast.error(e.message || "Account creation failed. You may already have an account.");
         }
       } else if (selectedTier) {
-        if (hasPaid) {
-          try {
-            await signUp({ email: trimmedEmail, password: trimmedPass, tier: selectedTier, status: 'Active' });
-          } catch (e: any) {
-            toast.error(e.message || "Account creation failed.");
-          }
-        } else {
+        // ALWAYS CREATE ACCOUNT FIRST (Pending Payment state)
+        try {
+          await signUp({ email: trimmedEmail, password: trimmedPass, tier: selectedTier, status: 'Pending Payment' });
+          // If successful, transition view to payment
           setView('payment');
+        } catch (e: any) {
+          toast.error(e.message || "Account creation failed.");
         }
       } else {
         setView('tiers');
       }
     } else {
-      const success = await login(trimmedEmail, trimmedPass);
-      if (!success) {
-        toast.error("That email and password don't match. Try again.");
+      try {
+        await login(trimmedEmail, trimmedPass);
+      } catch (err: any) {
+        toast.error(err.message || "Failed to sign in. Please check your credentials.");
       }
     }
   };
@@ -111,29 +112,26 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
           
           if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
             try {
-              await signUp({ email: user.email, name: user.displayName || 'Admin Hub', password: '', tier: 'Margin Protection Pro', status: 'Active' });
+              await signUp({ email: user.email, name: user.displayName || 'Admin Hub', password: '', tier: 'Pro Artisan', status: 'Active' });
               return;
             } catch (e) {
               console.error(e);
             }
           }
 
-          if (selectedTier === 'Free Audit') {
+          if (selectedTier === 'Free Trial') {
             try {
-              await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Audit', status: 'Active' });
+              await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Trial', status: 'Active' });
             } catch (e) {
               console.error(e);
             }
           } else if (selectedTier) {
-            if (hasPaid) {
-              try {
-                await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: selectedTier, status: 'Active' });
-              } catch (e) {
-                console.error(e);
-              }
-            } else {
+            try {
+              await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: selectedTier, status: 'Pending Payment' });
               setEmail(user.email); // Pre-fill the email state for the payment gateway
               setView('payment');
+            } catch (e) {
+              console.error(e);
             }
           } else {
             setEmail(user.email);
@@ -160,7 +158,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
         >
           <TierSelection onSelect={async (tier) => {
             try {
-              if (tier === 'Free Audit') {
+              if (tier === 'Free Trial') {
                 await signUp({ email, password: pass, tier, status: 'Active' });
               } else {
                 setSelectedTier(tier);
@@ -313,6 +311,8 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
 };
 
 const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => {
+  const [isYearly, setIsYearly] = useState(true);
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-4 sm:p-6 flex flex-col items-center justify-center relative overflow-hidden">
       <div className="carbon-texture"></div>
@@ -320,7 +320,6 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
       <div className="light-streak-bottom"></div>
       <div className="light-streak-left"></div>
 
-      {/* Ombre Brand Background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#6A2C91_0%,transparent_60%)] opacity-30"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,#C5A059_0%,transparent_60%)] opacity-20"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#10b981_0%,transparent_70%)] opacity-10"></div>
@@ -330,10 +329,24 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-20"
+          className="text-center mb-10"
         >
            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Select Your Architecture</h1>
-           <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Every great system starts with a solid foundation. Choose the tier that aligns with your operational scale.</p>
+           <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-8">Every great system starts with a solid foundation. Choose the tier that aligns with your operational scale.</p>
+           
+           <div className="flex justify-center items-center gap-4 mb-4">
+               <span className={`text-sm font-semibold tracking-wider ${!isYearly ? 'text-white' : 'text-gray-500'}`}>MONTHLY</span>
+               <button 
+                   onClick={() => setIsYearly(!isYearly)}
+                   className="w-16 h-8 bg-white/10 rounded-full p-1 relative transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
+               >
+                   <div className={`w-6 h-6 bg-gradient-to-r from-[#A855F7] to-[#C5A059] rounded-full shadow-md transform transition-transform duration-300 ${isYearly ? 'translate-x-8' : 'translate-x-0'}`} />
+               </button>
+               <span className={`text-sm font-semibold tracking-wider ${isYearly ? 'text-white' : 'text-gray-500'}`}>ANNUALLY <span className="text-[#10b981] ml-2 text-xs">(-20%)</span></span>
+           </div>
+           <div className="inline-block bg-[#C5A059]/20 text-[#C5A059] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-[#C5A059]/50 shadow-[0_0_15px_rgba(197,160,89,0.2)]">
+               🔥 Charter Offer: First 25 Makers get 50% OFF Year One!
+           </div>
         </motion.div>
 
         <motion.div 
@@ -342,40 +355,48 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           variants={{
             visible: { transition: { staggerChildren: 0.15 } }
           }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 lg:gap-4 sm:p-12"
+          className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 lg:gap-4 sm:px-12"
         >
            <TierCard 
-             title="Free Audit" 
-             price="$0" 
+             title="Basic Artisan" 
+             price={isYearly ? "$147" : "$15"}
+             period={isYearly ? "/yr" : "/mo"}
              icon={ShieldCheck} 
              color="bg-slate-500"
-             features={['Public Resources', 'Initial Strategy Session', 'Manual Batch Entry', 'Basic Inventory List']}
-             onSelect={() => onSelect('Free Audit')}
+             features={['Core Vault Modules (Ops, Fin, Mktg)', 'Lola AI: FAST Mode Only', '15 AI Questions / Day', 'Universal CSV Importer', 'Inventory Tracking']}
+             onSelect={() => onSelect('Basic Artisan' as any)}
            />
            <TierCard 
-             title="Artisan Flow Basic" 
-             price="$49" 
+             title="Pro Artisan" 
+             price={isYearly ? "$297" : "$29"}
+             period={isYearly ? "/yr" : "/mo"}
              isPopular 
              icon={Zap}
-             color="bg-[#6A2C91]"
-             features={['Omnichannel Sync', 'Automated Inventory', 'Lola AI Basic Access', 'Production Scheduler']}
-             onSelect={() => onSelect('Artisan Flow Basic')}
+             color="bg-[#A855F7]"
+             features={['Everything in Basic, plus:', 'Profit GuardT Real-Time Alerts', 'Lola AI: FAST + THINK Modes', '50 AI Questions / Day', 'Advanced Demand Forecasting']}
+             onSelect={() => onSelect('Pro Artisan' as any)}
            />
            <TierCard 
-             title="Margin Protection Pro" 
-             price="$149" 
+             title="Master Artisan" 
+             price={isYearly ? "$797" : "$79"}
+             period={isYearly ? "/yr" : "/mo"}
              icon={Crown}
              color="bg-[#C5A059]"
-             features={['Everything in Basic', 'Margin Anomaly Detection', 'AI Competitive Intelligence', 'Advanced Forecast Generator']}
-             onSelect={() => onSelect('Margin Protection Pro')}
+             features={['Everything in Pro, plus:', 'Lola AI: SEARCH Mode (Live Web)', '150 AI Questions / Day', 'All Current & Future Vault Modules', 'Priority Support & Onboarding']}
+             onSelect={() => onSelect('Master Artisan' as any)}
            />
         </motion.div>
+        
+        <div className="mt-8 text-center">
+            <button onClick={() => onSelect('Free Trial' as any)} className="text-sm text-gray-400 hover:text-white underline decoration-gray-600 transition-colors">
+                Or start with a 14-Day Free Trial (No Credit Card Required)
+            </button>
+        </div>
       </div>
     </div>
   );
 };
-
-const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSelect }: any) => (
+const TierCard = ({ title, price, period, features, icon: Icon, color, isPopular, onSelect }: any) => (
   <motion.div
     variants={{
       hidden: { opacity: 0, y: 30 },
@@ -422,6 +443,7 @@ const TierCard = ({ title, price, features, icon: Icon, color, isPopular, onSele
 
 export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserTier, email: string, onSuccess: () => void, onBack: () => void }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const { activateAccount } = useArtisanData();
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -432,6 +454,10 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
     expiry: '',
     cvc: ''
   });
+
+  const [isYearly, setIsYearly] = useState(false);
+  const tierConfig = TIER_CONFIGS[tier as TierName] || TIER_CONFIGS['Pro Artisan'];
+  const finalAmountInCents = isYearly ? tierConfig.yearlyPrice * 100 : tierConfig.monthlyPrice * 100;
 
   const handlePayment = async (token?: string) => {
     setIsProcessing(true);
@@ -444,7 +470,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           sourceId: token,
-          amount: 25, // LIVE PRODUCTION TEST: 25 cents ($0.25) for all paid tiers
+          amount: finalAmountInCents,
           currency: 'USD'
         }),
       });
@@ -454,6 +480,9 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
       if (!response.ok || !result.success) {
         throw new Error(result.error || 'Payment authorization was declined by the gateway.');
       }
+
+      // Activate the account locally and in Firestore now that payment cleared!
+      await activateAccount();
 
       // Payment successfully captured by Square backend! 
       
@@ -466,11 +495,13 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              action: 'syncPayment',
+              action: 'processPayment', // Updated to match user's GAS script
               payload: {
-                email: email,
+                userId: email, // Changed from email to userId to match processPayment
+                email: email, // Kept for safety
+                customerName: email,
                 tier: tier,
-                amount: 25, // currently hardcoded for test, update when final pricing goes live
+                amount: finalAmountInCents, 
                 status: 'Successful',
                 date: new Date().toISOString(),
                 transactionId: result.paymentId || 'square_tx_captured'
@@ -507,8 +538,23 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         <div className="text-center mb-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Secure Checkout</h2>
           <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans tracking-widest uppercase">Initializing {tier} Architecture</p>
-          <div className="mt-4 inline-block px-6 py-2 rounded-full border border-[#C5A059]/30 bg-[#C5A059]/10">
-            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-serif text-[#C5A059]">Total: ${tier === 'Margin Protection Pro' ? '149.00' : '49.00'} / mo</span>
+          <div className="mt-6 flex flex-col items-center gap-4">
+            <div className="flex items-center justify-center gap-4 text-sm font-bold tracking-widest uppercase">
+              <span className={!isYearly ? "text-white" : "text-gray-500"}>Monthly</span>
+              <button 
+                  onClick={() => setIsYearly(!isYearly)}
+                  className="relative w-14 h-7 bg-white/10 rounded-full flex items-center transition-all p-1"
+              >
+                  <div className={`w-5 h-5 bg-gradient-to-r from-[#06B6D4] to-[#A855F7] rounded-full shadow-lg transform transition-transform ${isYearly ? 'translate-x-7' : 'translate-x-0'}`} />
+              </button>
+              <span className={isYearly ? "text-white flex items-center gap-2" : "text-gray-500 flex items-center gap-2"}>
+                  Yearly <span className="bg-gradient-to-r from-[#06B6D4] to-[#A855F7] text-transparent bg-clip-text text-[10px] bg-white/10 border border-white/20 px-2 py-0.5 rounded-full">Save ~15%</span>
+              </span>
+            </div>
+            
+            <div className="inline-block px-8 py-3 rounded-full border border-[#C5A059]/50 bg-[#C5A059]/20 shadow-[0_0_15px_rgba(197,160,89,0.3)]">
+              <span className="text-xl sm:text-2xl font-black tracking-widest text-[#E2C792]">TOTAL: ${(finalAmountInCents / 100).toFixed(2)} {isYearly ? '/ yr' : '/ mo'}</span>
+            </div>
           </div>
         </div>
 

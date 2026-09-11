@@ -1,24 +1,24 @@
-import { useTierContext } from '../context/TierContext';
+import { useTier } from '../context/TierContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export const useFeatureGate = (featureKey: string) => {
-  const { checkAccess, incrementUsage, isTierLoading } = useTierContext();
+  const { hasAccess, incrementLolaUsage } = useTier();
   const navigate = useNavigate();
 
-  const isLocked = !isTierLoading && !checkAccess(featureKey);
+  const isLocked = !hasAccess(featureKey);
 
   const executeAction = async (action: () => void | Promise<void>, isMetered = false) => {
     if (isLocked) {
       toast.error('Feature locked. Please upgrade your subscription tier.');
-      navigate('/settings'); // Adjust to wherever subscription status lives
+      navigate('/settings/subscription');
       return;
     }
 
     if (isMetered) {
-      const allowed = await incrementUsage(featureKey);
+      const allowed = incrementLolaUsage();
       if (!allowed) {
-        navigate('/settings');
+        navigate('/settings/subscription');
         return;
       }
     }

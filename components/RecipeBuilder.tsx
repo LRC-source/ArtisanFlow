@@ -16,7 +16,7 @@ import { UpgradeModal } from './UpgradeModal';
 export const RecipeBuilder: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { inventory, recipes, addRecipe, updateRecipe, userTier } = useArtisanData();
+  const { inventory, recipes, addRecipe, updateRecipe, userTier, addInventoryItem } = useArtisanData();
   const [materials, setMaterials] = useState<InventoryItem[]>([]);
   
   const loadDraft = () => {
@@ -29,23 +29,26 @@ export const RecipeBuilder: React.FC = () => {
   const draft = loadDraft();
 
   const [ingredients, setIngredients] = useState<RecipeIngredient[]>(draft?.ingredients || []);
+  const [subRecipes, setSubRecipes] = useState<{ recipeId: string; quantity: number; unit: string }[]>(draft?.subRecipes || []);
+  const [cycleError, setCycleError] = useState<string | null>(null);
   const [yieldQty, setYieldQty] = useState(draft?.yieldQty || 1);
   const [laborCost, setLaborCost] = useState(draft?.laborCost || 0);
   const [recipeName, setRecipeName] = useState(draft?.recipeName || '');
   const [sku, setSku] = useState(draft?.sku || '');
+  const [finishedGoodsItemId, setFinishedGoodsItemId] = useState<string>(draft?.finishedGoodsItemId || '');
   const [isEditing, setIsEditing] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [upgradeLimit, setUpgradeLimit] = useState(5);
-  const [requiredTier, setRequiredTier] = useState("Artisan Flow Basic");
+  const [requiredTier, setRequiredTier] = useState("Basic Artisan");
   const [showROIHeatmap, setShowROIHeatmap] = useState(false);
 
   useEffect(() => {
     if (!isEditing) {
       sessionStorage.setItem('draft_recipe', JSON.stringify({
-        ingredients, yieldQty, laborCost, recipeName, sku
+        ingredients, subRecipes, yieldQty, laborCost, recipeName, sku, finishedGoodsItemId
       }));
     }
-  }, [ingredients, yieldQty, laborCost, recipeName, sku, isEditing]);
+  }, [ingredients, subRecipes, yieldQty, laborCost, recipeName, sku, finishedGoodsItemId, isEditing]);
 
   useEffect(() => {
     setMaterials(inventory.filter(i => i.type === 'raw'));
@@ -62,6 +65,12 @@ export const RecipeBuilder: React.FC = () => {
             setLaborCost(existing.laborCost || 0);
             if (existing.rawIngredients) {
                 setIngredients(existing.rawIngredients);
+            }
+            if (existing.subRecipes) {
+                setSubRecipes(existing.subRecipes);
+            }
+            if (existing.finishedGoodsItemId) {
+                setFinishedGoodsItemId(existing.finishedGoodsItemId);
             }
         }
     }
@@ -88,11 +97,40 @@ export const RecipeBuilder: React.FC = () => {
     setIngredients(ingredients.filter((_, i) => i !== index));
   };
 
+  const { getRecipeActualCost } = useArtisanData();
+  
+  useEffect(() => {
+    let hasError = false;
+    subRecipes.forEach(sub => {
+      try {
+        getRecipeActualCost(sub.recipeId);
+      } catch (e: any) {
+        setCycleError(e.message);
+        hasError = true;
+      }
+    });
+    if (!hasError) setCycleError(null);
+  }, [subRecipes, getRecipeActualCost]);
+
   const calculateTotalCost = () => {
-    const materialCost = ingredients.reduce((sum, ing) => {
+    let materialCost = 0;
+    ingredients.forEach(ing => {
       const mat = materials.find(m => m.id.toString() === ing.inventoryItemId.toString());
-      return sum + (mat ? mat.unitCost * (Number(ing.quantity) || 0) : 0);
-    }, 0);
+      if (mat) materialCost += mat.unitCost * (Number(ing.quantity) || 0);
+    });
+    
+    subRecipes.forEach(sub => {
+      const rec = recipes.find(r => r.id === sub.recipeId);
+      if (rec && rec.yieldValue) {
+        try {
+          const subCost = getRecipeActualCost(sub.recipeId);
+          materialCost += (subCost / rec.yieldValue) * (Number(sub.quantity) || 0);
+        } catch (e: any) {
+          // cycle handled in useEffect
+        }
+      }
+    });
+    
     return materialCost + Number(laborCost);
   };
 
@@ -114,12 +152,51 @@ export const RecipeBuilder: React.FC = () => {
   });
 
   const handleSave = async () => {
-    if (!isEditing && userTier === 'Free Audit' && recipes.length >= 5) {
+    if (!isEditing && userTier === 'Free Trial' && recipes.length >= 5) {
       setShowUpgradeModal(true);
       return;
     }
 
     const defaultSku = 'BOM-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+    if (cycleError) {
+      toast.error("Circular Dependency Detected! " + cycleError);
+      return;
+    }
+    
+    const checkCycleOnSave = () => {
+      // Create a temporary mock function for cycle detection with current edits
+      const detectCycle = (recId: string, visited: Set<string>) => {
+         if (visited.has(recId)) throw new Error(`Cycle involving ${recId}`);
+         visited.add(recId);
+         
+         // If checking the current recipe being edited
+         if (recId === id) {
+            subRecipes.forEach(s => detectCycle(s.recipeId, new Set(visited)));
+            return;
+         }
+         
+         const r = recipes.find(x => x.id === recId);
+         if (r && r.subRecipes) {
+            r.subRecipes.forEach(s => detectCycle(s.recipeId, new Set(visited)));
+         }
+      };
+      
+      if (id) {
+        try {
+          detectCycle(id, new Set());
+        } catch (e: any) {
+          throw new Error("Cannot save: " + e.message);
+        }
+      }
+    };
+    
+    try {
+       checkCycleOnSave();
+    } catch(e: any) {
+       toast.error(e.message);
+       return;
+    }
+
     const result = recipeSchema.safeParse({
       name: recipeName,
       sku: sku || defaultSku,
@@ -136,17 +213,46 @@ export const RecipeBuilder: React.FC = () => {
       return;
     }
     
-    const recipePayload: any = {
+        let finalFgId = finishedGoodsItemId;
+    if (finalFgId === 'AUTO_CREATE') {
+       const fgPayload = {
+          id: `fg-${Date.now()}-${Math.random().toString(36).substr(2,9)}`,
+          name: result.data.name,
+          sku: result.data.sku || defaultSku,
+          type: 'finished',
+          stock: 0,
+          unitCost: costPerUnit,
+          reorderPoint: 5,
+          unit: 'pcs'
+       };
+       try {
+          await addInventoryItem(fgPayload);
+          finalFgId = String(fgPayload.id);
+       } catch (e: any) {
+          toast.error("Failed to auto-create Finished Good: " + e.message);
+          return;
+       }
+    }
+    
+const recipePayload: any = {
       name: result.data.name,
       sku: result.data.sku,
       version: isEditing ? '2.0' : '1.0',
       yield: `${result.data.yieldQty} Units`,
       yieldValue: result.data.yieldQty,
-      ingredients: result.data.ingredients.map(ing => ({
-          name: materials.find(m => m.id.toString() === ing.inventoryItemId.toString())?.name || 'Unknown',
-          qty: `${ing.quantity} ${ing.unit}`
-      })),
+      ingredients: [
+          ...result.data.ingredients.map(ing => ({
+              name: materials.find(m => m.id.toString() === ing.inventoryItemId.toString())?.name || 'Unknown',
+              qty: `${ing.quantity} ${ing.unit}`
+          })),
+          ...subRecipes.map(sub => ({
+              name: recipes.find(r => r.id === sub.recipeId)?.name || 'Unknown Sub-Recipe',
+              qty: `${sub.quantity} ${sub.unit}`
+          }))
+      ],
       rawIngredients: result.data.ingredients,
+      subRecipes: subRecipes,
+      finishedGoodsItemId: finalFgId,
       materialCost: totalCost - result.data.laborCost,
       laborCost: result.data.laborCost,
       totalCost: totalCost,
@@ -167,10 +273,29 @@ export const RecipeBuilder: React.FC = () => {
       if (e.message.includes("Tier limit reached")) {
         const limitMatch = e.message.match(/\d+/);
         setUpgradeLimit(limitMatch ? parseInt(limitMatch[0]) : 5);
-        setRequiredTier(userTier === 'Free Audit' ? 'Artisan Flow Basic' : 'Margin Protection Pro');
+        setRequiredTier(userTier === 'Free Trial' ? 'Basic Artisan' : 'Pro Artisan');
         setShowUpgradeModal(true);
       }
     }
+  };
+
+
+  const addSubRecipe = () => {
+    if (recipes.length === 0) {
+      toast.error("You don't have any other formulas yet.");
+      return;
+    }
+    setSubRecipes([...subRecipes, { recipeId: recipes[0].id, quantity: 1, unit: 'batch' }]);
+  };
+
+  const updateSubRecipe = (index: number, field: string, value: string) => {
+    const updated = [...subRecipes];
+    (updated[index] as any)[field] = value;
+    setSubRecipes(updated);
+  };
+
+  const removeSubRecipe = (index: number) => {
+    setSubRecipes(subRecipes.filter((_, i) => i !== index));
   };
 
   return (
@@ -206,6 +331,23 @@ export const RecipeBuilder: React.FC = () => {
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Asset SKU Reference</label>
                 <Input value={sku} onChange={e => setSku(e.target.value)} placeholder="SRM-MID-V1" className="rounded-2xl py-4" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:gap-6 mt-6">
+              <div className="space-y-1">
+                <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Target Finished Good (Required)</label>
+                <Select 
+                  value={finishedGoodsItemId}
+                  onChange={(e) => setFinishedGoodsItemId(e.target.value)}
+                  className="rounded-2xl"
+                >
+                  <option value="">-- Select Finished Good to Link --</option>
+                  <option value="AUTO_CREATE">++ Auto-create New Finished Good ++</option>
+                  {inventory.filter(i => i.type === 'finished').map(fg => (
+                     <option key={fg.id} value={fg.id}>{fg.name.toUpperCase()} (SKU: {fg.sku})</option>
+                  ))}
+                </Select>
+                {!finishedGoodsItemId && <p className="text-red-400 text-xs font-bold mt-1">Must link to a Finished Good to enable stock incrementing.</p>}
               </div>
             </div>
           </Card>

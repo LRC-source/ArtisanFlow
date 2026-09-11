@@ -6,9 +6,10 @@ import { AuthGateway } from './Auth';
 import { UserTier } from './DataContext';
 
 export const LandingPage = () => {
-        const navigate = useNavigate();
-    const [view, setView] = useState<'hero' | 'login' | 'signup' | 'checkout'>('hero');
-    const [selectedTier, setSelectedTier] = useState<UserTier>('Free Audit');
+    const [view, setView] = useState<'hero' | 'signup' | 'login' | 'checkout'>('hero');
+    const [selectedTier, setSelectedTier] = useState<UserTier>('Pro Artisan');
+    const [isYearly, setIsYearly] = useState(false);
+    const navigate = useNavigate();
                 
     if (view === 'login') {
         return <AuthGateway initialView="login" onBack={() => setView('hero')} />;
@@ -69,7 +70,7 @@ export const LandingPage = () => {
                         {/* CTA Buttons */}
                         <div className="mt-8 flex flex-col sm:flex-row gap-4">
                             <Button 
-                                onClick={() => { setSelectedTier('Free Audit'); setView('signup'); }}
+                                onClick={() => { setSelectedTier('Free Trial'); setView('signup'); }}
                                 className="py-4 px-8 text-sm font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-[0_0_30px_rgba(197,160,89,0.25)] border-none rounded-full transition-all flex items-center justify-center uppercase"
                             >
                                 Start Free — No Credit Card <ArrowRight size={18} className="ml-2" />
@@ -233,7 +234,7 @@ export const LandingPage = () => {
                         <p className="text-white/40 text-sm font-medium uppercase tracking-widest mb-4">Are you an early maker?</p>
                         <p className="text-white/70 text-base mb-6">Join as a founding member and help shape ArtisanFlow. Your story could be first.</p>
                         <Button
-                            onClick={() => { setSelectedTier('Free Audit'); setView('signup'); }}
+                            onClick={() => { setSelectedTier('Free Trial'); setView('signup'); }}
                             className="py-3 px-8 text-sm font-black tracking-widest bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full transition-all uppercase inline-flex items-center gap-2"
                         >
                             Become a Founding Maker <ArrowRight size={16} />
@@ -245,49 +246,76 @@ export const LandingPage = () => {
                 <div className="mt-16 w-full max-w-6xl relative z-10 mb-20 px-2">
                     <div className="text-center mb-10 md:mb-16">
                         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">Simple, Honest Pricing</h2>
-                        <p className="text-base text-slate-400 leading-relaxed max-w-2xl mx-auto px-2">Free forever to start. Upgrade when you're ready to scale.</p>
+                        
+                        <div className="inline-block bg-gradient-to-r from-[#06B6D4]/20 via-[#A855F7]/20 to-[#C5A059]/20 border border-[#A855F7]/30 rounded-full px-6 py-3 mb-6 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+                            <p className="text-sm font-bold text-white relative z-10">
+                                🌟 CHARTER OFFER: First 25 makers get 50% OFF YEAR ONE in exchange for a testimonial + feedback call.
+                            </p>
+                        </div>
+                        
+                        <p className="text-base text-slate-400 leading-relaxed max-w-2xl mx-auto px-2 mb-8">Start with a 14-day free trial on any tier. Upgrade when you're ready to scale.</p>
+                        
+                        {/* Toggle */}
+                        <div className="flex items-center justify-center gap-4 text-sm font-bold tracking-widest uppercase mb-10">
+                            <span className={!isYearly ? "text-white" : "text-gray-500"}>Monthly</span>
+                            <button 
+                                onClick={() => setIsYearly(!isYearly)}
+                                className="relative w-14 h-7 bg-white/10 rounded-full flex items-center transition-all p-1"
+                            >
+                                <div className={`w-5 h-5 bg-gradient-to-r from-[#06B6D4] to-[#A855F7] rounded-full shadow-lg transform transition-transform ${isYearly ? 'translate-x-7' : 'translate-x-0'}`} />
+                            </button>
+                            <span className={isYearly ? "text-white flex items-center gap-2" : "text-gray-500 flex items-center gap-2"}>
+                                Yearly <span className="bg-gradient-to-r from-[#06B6D4] to-[#A855F7] text-transparent bg-clip-text text-[10px] bg-white/10 border border-white/20 px-2 py-0.5 rounded-full">Save ~15%</span>
+                            </span>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
                         <PricingCard 
-                            title="Free Audit"
-                            price="$0"
-                            subtitle="Start immediately, no card needed"
-                            isSelected={selectedTier === 'Free Audit'}
-                            onClick={() => setSelectedTier('Free Audit')}
+                            title="Basic Artisan"
+                            price={isYearly ? "$147" : "$15"}
+                            isYearly={isYearly}
+                            subtitle="Core command center for growing makers"
+                            isSelected={selectedTier === 'Basic Artisan'}
+                            onClick={() => { setSelectedTier('Basic Artisan'); setView('signup'); }}
                             features={[
-                                "Recipe Builder & BOM",
-                                "Inventory Tracking",
-                                "Business Pulse Check",
-                                "Universal CSV Importer"
+                                "Core Vault Modules (Ops, Fin, Mktg)",
+                                "Lola AI: FAST Mode Only",
+                                "15 AI Questions / Day",
+                                "Universal CSV Importer",
+                                "Inventory Tracking"
                             ]}
                         />
                         <PricingCard 
-                            title="Artisan Flow Basic"
-                            price="$49"
-                            subtitle="For makers ready to grow"
-                            isSelected={selectedTier === 'Artisan Flow Basic'}
-                            onClick={() => { setSelectedTier('Artisan Flow Basic'); setView('checkout'); }}
-                            features={[
-                                "Full Command Center",
-                                "Automated Inventory Deductions",
-                                "Lola AI Marketing Hub",
-                                "Supplier & QC Ledgers",
-                                "Multi-Channel Sales Sync"
-                            ]}
-                        />
-                        <PricingCard 
-                            title="Margin Protection Pro"
-                            price="$149"
+                            title="Pro Artisan"
+                            price={isYearly ? "$297" : "$29"}
+                            isYearly={isYearly}
                             subtitle="Advanced suite for established makers"
-                            isSelected={selectedTier === 'Margin Protection Pro'}
-                            onClick={() => { setSelectedTier('Margin Protection Pro'); setView('checkout'); }}
+                            isFeatured={true}
+                            isSelected={selectedTier === 'Pro Artisan'}
+                            onClick={() => { setSelectedTier('Pro Artisan'); setView('signup'); }}
                             features={[
                                 "Everything in Basic, plus:",
                                 "Profit Guard™ Real-Time Alerts",
-                                "Advanced Demand Forecasting",
-                                "Multi-Location Warehouse Tracking",
-                                "Priority Support"
+                                "Lola AI: FAST + THINK Modes",
+                                "50 AI Questions / Day",
+                                "Advanced Demand Forecasting"
+                            ]}
+                        />
+                        <PricingCard 
+                            title="Master Artisan"
+                            price={isYearly ? "$797" : "$79"}
+                            isYearly={isYearly}
+                            subtitle="Unrestricted access & scaling support"
+                            isSelected={selectedTier === 'Master Artisan'}
+                            onClick={() => { setSelectedTier('Master Artisan'); setView('signup'); }}
+                            features={[
+                                "Everything in Pro, plus:",
+                                "Lola AI: SEARCH Mode (Live Web)",
+                                "150 AI Questions / Day",
+                                "All Current & Future Vault Modules",
+                                "Priority Support & Onboarding"
                             ]}
                         />
                     </div>
@@ -295,27 +323,23 @@ export const LandingPage = () => {
                     <div className="mt-8 sm:mt-12 lg:mt-16 flex justify-center">
                         <Button 
                             onClick={() => {
-                                if (selectedTier === 'Free Audit') {
-                                    setView('signup');
-                                } else {
-                                    setView('checkout');
-                                }
+                                setView('signup');
                             }}
                             className="w-auto mx-auto py-4 px-10 text-sm font-black tracking-widest bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-black hover:opacity-90 shadow-[0_0_30px_rgba(197,160,89,0.2)] border-none rounded-full transition-all uppercase"
                         >
-                            Get Started — It's Free <ArrowRight size={18} className="ml-2 inline" />
+                            Start Free Trial — No Credit Card <ArrowRight size={18} className="ml-2 inline" />
                         </Button>
                     </div>
 
                     {/* Footer micro-copy */}
-                    <p className="text-center text-white/30 text-xs mt-6">No credit card required to start. Cancel anytime. Prices in USD.</p>
+                    <p className="text-center text-white/30 text-xs mt-6">14-day free trial on all tiers. Cancel anytime. Prices in USD.</p>
                 </div>
             </main>
         </div>
     );
 };
 
-const PricingCard = ({ title, price, subtitle, features, isFeatured, isSelected, onClick }: { title: string, price: string, subtitle: string, features: string[], isFeatured?: boolean, isSelected?: boolean, onClick?: () => void }) => {
+const PricingCard = ({ title, price, subtitle, features, isFeatured, isSelected, isYearly, onClick }: { title: string, price: string, subtitle: string, features: string[], isFeatured?: boolean, isSelected?: boolean, isYearly?: boolean, onClick?: () => void }) => {
     const isOmbre = isSelected || isFeatured;
     const containerClasses = isOmbre
         ? "p-[2px] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_35px_rgba(168,85,247,0.15)] scale-105 z-10 cursor-pointer" 
@@ -335,7 +359,7 @@ const PricingCard = ({ title, price, subtitle, features, isFeatured, isSelected,
                     
                     <div className="flex justify-center items-baseline gap-1">
                         <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">{price}</span>
-                        {price !== "Custom" && price !== "$0" && <span className="text-gray-400 font-medium">/mo</span>}
+                        {price !== "Custom" && price !== "$0" && <span className="text-gray-400 font-medium">{isYearly ? '/yr' : '/mo'}</span>}
                     </div>
                 </div>
                 
