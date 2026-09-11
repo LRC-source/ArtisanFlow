@@ -566,7 +566,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setIsAuthenticated(true);
-            const profileData = docSnap.data().profile;
+            const rawData = docSnap.data();
+            const profileData = rawData.profile || {};
             const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
             
             // Securely grant admin rights if the authenticated Firebase user matches an admin email
@@ -574,7 +575,13 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               profileData.role = 'admin';
             }
             
-            setBusinessProfile(prev => ({ ...prev, ...profileData }));
+            setBusinessProfile(prev => ({ 
+              ...prev, 
+              ...profileData, 
+              tier: rawData.tier || 'Basic Artisan',
+              status: rawData.status || 'Active',
+              trialEndsAt: rawData.trialEndsAt 
+            }));
             setUserTier(docSnap.data().tier || 'Basic Artisan');
           } else {
             const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];

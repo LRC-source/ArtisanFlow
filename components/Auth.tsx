@@ -6,7 +6,7 @@ import { Chrome, Mail, Lock, ArrowRight, ShieldCheck, Zap, Crown, CheckCircle, C
 import { motion, AnimatePresence } from 'framer-motion';
 import { z } from 'zod';
 import { toast } from 'sonner';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PaymentForm, CreditCard as SquareCreditCard } from 'react-square-web-payments-sdk';
 
 export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedTier, onBack }: { initialView?: 'login' | 'signup' | 'tiers' | 'payment', selectedTier?: UserTier, onBack?: () => void }) => {
@@ -20,6 +20,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
     activeTier ? (activeTier === 'Free Trial' ? 'signup' : 'payment') : initialView
   );
   const [selectedTier, setSelectedTier] = useState<UserTier | undefined>(activeTier);
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [isNewUser, setIsNewUser] = useState(!!activeTier);
@@ -53,6 +54,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
       if (selectedTier === 'Free Trial') {
         try {
           await signUp({ email: trimmedEmail, password: trimmedPass, tier: 'Free Trial', status: 'Active' });
+          navigate('/dashboard');
         } catch (e: any) {
           toast.error(e.message || "Account creation failed. You may already have an account.");
         }
@@ -114,24 +116,28 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
             try {
               await signUp({ email: user.email, name: user.displayName || 'Admin Hub', password: '', tier: 'Pro Artisan', status: 'Active' });
               return;
-            } catch (e) {
+            } catch (e: any) {
               console.error(e);
+              toast.error(e.message || "Account creation failed. You may already have an account.");
             }
           }
 
           if (selectedTier === 'Free Trial') {
             try {
               await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Trial', status: 'Active' });
-            } catch (e) {
+              navigate('/dashboard');
+            } catch (e: any) {
               console.error(e);
+              toast.error(e.message || "Account creation failed. You may already have an account.");
             }
           } else if (selectedTier) {
             try {
               await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: selectedTier, status: 'Pending Payment' });
               setEmail(user.email); // Pre-fill the email state for the payment gateway
               setView('payment');
-            } catch (e) {
+            } catch (e: any) {
               console.error(e);
+              toast.error(e.message || "Account creation failed. You may already have an account.");
             }
           } else {
             setEmail(user.email);

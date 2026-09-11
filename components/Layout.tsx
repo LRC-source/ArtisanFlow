@@ -28,6 +28,15 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+
+  const renderTierBadge = () => {
+    if (userTier === 'Free Trial' && businessProfile.trialEndsAt) {
+      const daysLeft = Math.ceil((new Date(businessProfile.trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+      return `FREE TRIAL (${Math.max(0, daysLeft)} days left)`;
+    }
+    return userTier === 'Free Trial' ? 'FREE TRIAL' : (userTier || 'Basic Artisan');
+  };
+
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -206,7 +215,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <GlassHaloIcon icon={User} color="purple" size="sm" className="mr-3" />
               <div className="user-details text-left flex-1 min-w-0">
                   <span className="user-name truncate">{businessProfile.ownerName || 'LaToya Carter'}</span>
-                  <span className="user-role truncate">Master Artisan</span>
+                  <span className="user-role truncate font-bold text-[#E2C792] text-[10px] tracking-widest">{renderTierBadge()}</span>
               </div>
               <button onClick={logout} className="ml-2 p-2 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-full transition-colors" title="Revoke Access">
                   <LogOut size={16} />
