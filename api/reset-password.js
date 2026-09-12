@@ -18,19 +18,24 @@ export default async function handler(req, res) {
       }
     }
     
-    const email = 'lrenee@herbalisticwellness.com';
-    let user;
-    try {
-      user = await getAuth().getUserByEmail(email);
-    } catch(e) {}
+    const emails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
+    const results = [];
     
-    if (user) {
-      await getAuth().updateUser(user.uid, { password: 'Bossbabe26##' });
-      res.status(200).json({ success: true, message: 'Password updated' });
-    } else {
-      await getAuth().createUser({ email: email, password: 'Bossbabe26##' });
-      res.status(200).json({ success: true, message: 'User created' });
+    for (const email of emails) {
+      let user;
+      try {
+        user = await getAuth().getUserByEmail(email);
+      } catch(e) {}
+      
+      if (user) {
+        await getAuth().updateUser(user.uid, { password: 'Bossbabe26##' });
+        results.push({ email, status: 'updated' });
+      } else {
+        await getAuth().createUser({ email: email, password: 'Bossbabe26##' });
+        results.push({ email, status: 'created' });
+      }
     }
+    res.status(200).json({ success: true, results });
   } catch (error) {
     res.status(500).json({ error: error.message, stack: error.stack });
   }
