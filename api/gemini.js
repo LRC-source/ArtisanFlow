@@ -46,10 +46,15 @@ export default async function handler(req, res) {
     
     // Extract text for the frontend
     let text = "";
-    if (data.candidates && data.candidates[0].content.parts) {
+            if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
         text = data.candidates[0].content.parts.map(p => p.text).join("");
+    } else if (data.candidates && data.candidates[0].finishReason) {
+        text = "Generation stopped: " + data.candidates[0].finishReason;
     } else if (data.error) {
         text = "Error: " + data.error.message;
+        return res.status(502).json({ error: data.error.message, text });
+    } else {
+        text = "No response from AI.";
     }
     
     return res.status(200).json({ ...data, text });
@@ -57,3 +62,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: error.message, text: error.message });
   }
 }
+
+

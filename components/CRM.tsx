@@ -101,9 +101,9 @@ export const CRM = () => {
                 parentTitle="CRM Hub"
                 onBack={() => setSelectedCustomer(null)}
                 description={`Detailed interaction ledger for ${customer.name}.`}
-                                  actions={
+                                                    actions={
                     customer.id.startsWith('M-') ? (
-                      <Button 
+                      <button 
                         onClick={() => {
                           if (window.confirm('Are you sure you want to delete this customer?')) {
                             deleteManualCustomer(customer.id);
@@ -111,17 +111,17 @@ export const CRM = () => {
                             toast.success('Customer deleted successfully.');
                           }
                         }}
-                        className="bg-red-500/20 hover:bg-red-500/40 text-red-200 w-auto mx-auto py-1 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-red-500/30"
+                        className="bg-red-500/20 hover:bg-red-500/40 text-red-200 w-auto mx-auto py-3 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-red-500/30 cursor-pointer pointer-events-auto"
                       >
-                        Delete Node
-                      </Button>
+                        Delete Customer
+                      </button>
                     ) : (
-                      <Button 
+                      <button 
                         onClick={() => toast.info("Cannot delete a customer with active orders.")}
-                        className="bg-white/5 text-gray-500 w-auto mx-auto py-1 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-white/5 cursor-not-allowed"
+                        className="bg-white/5 text-gray-500 w-auto mx-auto py-3 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-white/5 cursor-not-allowed pointer-events-auto"
                       >
                         Orders Active
-                      </Button>
+                      </button>
                     )
                   }
               />
@@ -338,5 +338,7 @@ export const CRM = () => {
     </motion.div>
   );
 };
+
+
 
 

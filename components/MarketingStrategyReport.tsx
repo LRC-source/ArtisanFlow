@@ -65,19 +65,21 @@ export const MarketingStrategyReport = () => {
     const handleGenerateBundle = async () => {
       setIsBundling(true);
       const toastId = toast.loading("Synthesizing content bundle...");
-      try {
-          const result = await generatePlatformContentBundle(strategyData);
-          if (result && result.posts) {
-              setContentBundle(result.posts);
-              toast.success("Content bundle synthesized.", { id: toastId });
-          } else {
-              toast.error("Synthesis failed.", { id: toastId });
-          }
-      } catch (error: any) {
-          toast.error(error.message || "Synthesis failed.", { id: toastId });
-      }
-      setIsBundling(false);
-  };
+              try {
+            const result = await generatePlatformContentBundle(strategyData);
+            if (result && result.posts) {
+                setContentBundle(result.posts);
+                toast.success("Content bundle synthesized.", { id: toastId });
+            } else {
+                toast.dismiss(toastId);
+                toast.error("Synthesis failed. No data returned.");
+            }
+        } catch (error: any) {
+            toast.dismiss(toastId);
+            toast.error(error.message || "Synthesis failed.");
+        }
+        setIsBundling(false);
+    };
 
   const handleSchedulePost = (post: any, index: number) => {
       addMarketingPost({
@@ -393,4 +395,5 @@ export const MarketingStrategyReport = () => {
     </motion.div>
   );
 };
+
 

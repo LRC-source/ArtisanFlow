@@ -24,16 +24,22 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
       body: JSON.stringify({ action: 'chatWithLola', payload: { message, context, mode } })
     });
     
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      const data = await response.json();
-      return { text: data.error || "Server error", isError: true, followUpQuestions: [] };
+                let data;
+      const rawText = await response.text();
+      try {
+        data = JSON.parse(rawText);
+      } catch (e) {
+        data = { error: `Server returned non-JSON response (Status: ${response.status}): ${rawText.substring(0, 100)}` };
+      }
+
+      if (response.ok && !data.error) {
+        return data;
+      } else {
+        return { text: data.error || data.text || "Server error", isError: true, followUpQuestions: [] };
+      }
+    } catch (error: any) {
+      return { text: error.message || "Failed to reach Lola.", isError: true, followUpQuestions: [] };
     }
-  } catch (error: any) {
-    return { text: error.message || "Failed to reach Lola.", isError: true, followUpQuestions: [] };
-  }
 };
 
 /**
@@ -147,4 +153,6 @@ export const generateBudgetStrategy = async (rev: number, exp: number, goals: st
   const result = await chatWithLola(`Optimize budget. Rev: ${rev} Exp: ${exp} Goals: ${goals}`, null, 'deep');
   try { return parseAIJson(result.text); } catch (e) { return null; }
 };
+
+
 

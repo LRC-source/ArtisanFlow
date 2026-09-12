@@ -69,9 +69,14 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
     if (!searchQuery.trim()) return;
     setIsSearching(true);
     const context = { inventory, orders, margins: getMarginMetrics() };
-    const result = await searchBusinessData(searchQuery, context);
-    setSearchResult(result || null);
-    setIsSearching(false);
+          try {
+        const result = await searchBusinessData(searchQuery, context);
+        setSearchResult(result || null);
+      } catch (e: any) {
+        setSearchResult("Error: " + e.message);
+      } finally {
+        setIsSearching(false);
+      }
     setTimeout(() => setSearchResult(null), 10000);
   };
 
@@ -423,3 +428,4 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
     </div>
   );
 }
+
