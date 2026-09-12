@@ -63,6 +63,13 @@ export default async function handler(req, res) {
         const userRef = db.collection('users').doc(uid);
         const docSnap = await userRef.get();
         if (docSnap.exists) {
+            if (isAdmin) {
+                await userRef.update({
+                    tier: 'Pro Artisan',
+                    status: 'Active',
+                    trialEndsAt: null
+                });
+            }
             return res.status(200).json({ success: true, message: 'Account already initialized' });
         }
 
