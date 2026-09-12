@@ -62,15 +62,19 @@ export const MarketingStrategyReport = () => {
       }, 1500);
   };
 
-  const handleGenerateBundle = async () => {
+    const handleGenerateBundle = async () => {
       setIsBundling(true);
       const toastId = toast.loading("Synthesizing content bundle...");
-      const result = await generatePlatformContentBundle(strategyData);
-      if (result && result.posts) {
-          setContentBundle(result.posts);
-          toast.success("Content bundle synthesized.", { id: toastId });
-      } else {
-          toast.error("Synthesis failed.", { id: toastId });
+      try {
+          const result = await generatePlatformContentBundle(strategyData);
+          if (result && result.posts) {
+              setContentBundle(result.posts);
+              toast.success("Content bundle synthesized.", { id: toastId });
+          } else {
+              toast.error("Synthesis failed.", { id: toastId });
+          }
+      } catch (error: any) {
+          toast.error(error.message || "Synthesis failed.", { id: toastId });
       }
       setIsBundling(false);
   };
@@ -389,3 +393,4 @@ export const MarketingStrategyReport = () => {
     </motion.div>
   );
 };
+

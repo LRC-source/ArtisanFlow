@@ -14,7 +14,7 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
     const token = await user.getIdToken();
 
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), 12000);
+      setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 
@@ -42,7 +42,7 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
 export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
   try {
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), 12000);
+      setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -62,7 +62,7 @@ export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
 export const generateLolaImage = async (prompt: string, config: { size: '1K' | '2K' | '4K', aspectRatio: string }) => {
   try {
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), 12000);
+      setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -83,7 +83,7 @@ export const generateLolaSpeech = async (text: string) => {
   if (!text) return null;
   try {
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), 12000);
+      setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -122,8 +122,20 @@ const parseAIJson = (text: string) => {
   } 
 };
 export const generatePlatformContentBundle = async (strategy: any) => {
-  const result = await chatWithLola("Synthesize posts. Format as a JSON object with a 'posts' array. ONLY output the raw JSON.", strategy, 'fast');
-  return parseAIJson(result.text);
+    let lastError = "";
+    for (let i = 0; i < 3; i++) {
+        const result = await chatWithLola("Synthesize posts. Format as a JSON object with a 'posts' array. ONLY output the raw JSON.", strategy, 'fast');
+        if (result.isError) {
+            lastError = result.text || "Unknown AI Error";
+            continue;
+        }
+        const parsed = parseAIJson(result.text);
+        if (parsed && parsed.posts) {
+            return parsed;
+        }
+        lastError = "AI returned malformed JSON.";
+    }
+    throw new Error("Synthesis failed: " + lastError);
 };
 
 export const generateFinancialAnalysis = async (orders: any[], inventory: any[]) => {
@@ -135,3 +147,4 @@ export const generateBudgetStrategy = async (rev: number, exp: number, goals: st
   const result = await chatWithLola(`Optimize budget. Rev: ${rev} Exp: ${exp} Goals: ${goals}`, null, 'deep');
   try { return parseAIJson(result.text); } catch (e) { return null; }
 };
+
