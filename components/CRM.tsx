@@ -52,7 +52,7 @@ export const CRM = () => {
       totalSpent: 0,
       orderCount: 0,
       orders: [],
-      type: 'Manual Node'
+      type: 'MANUAL ENTRY'
   }));
 
   const allCustomers = [...orderCustomers, ...processedManualCustomers];
@@ -252,7 +252,7 @@ export const CRM = () => {
         {/* KPI Cards */}
          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
             {[
-              { label: 'Active Nodes', val: allCustomers.length, icon: Users, color: 'purple' },
+              { label: 'TOTAL CUSTOMERS', val: allCustomers.length, icon: Users, color: 'purple' },
               { label: 'Network Value', val: `$${getTotalRevenue().toFixed(0)}`, icon: DollarSign, color: 'gold' },
               { label: 'Synaptic Health', val: '98%', icon: TrendingUp, color: 'emerald' },
               { label: 'At Risk', val: '0', icon: ShoppingCart, color: 'magenta' }
@@ -300,7 +300,7 @@ export const CRM = () => {
                         
                         <div className="pt-8 border-t border-white/10 flex justify-between items-end relative z-10 group-hover:border-white/20 transition-colors">
                             <div>
-                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Order Nodes</p>
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">ORDERS</p>
                                 <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed">{c.orderCount}</p>
                             </div>
                             <div className="text-right">

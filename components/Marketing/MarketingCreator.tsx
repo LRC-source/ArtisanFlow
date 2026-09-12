@@ -132,7 +132,7 @@ export const MarketingCreator = () => {
                                     </Select>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1">Resolution Node</label>
+                                    <label className="block text-[10px] font-sans font-medium text-gray-500 uppercase tracking-wider mb-2 ml-1">RESOLUTION</label>
                                     <Select value={imageSize} onChange={(e) => setImageSize(e.target.value as any)} className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10">
                                         <option value="1K" className="bg-black">Standard 1K</option>
                                         <option value="2K" className="bg-black">High Definition 2K</option>
@@ -199,7 +199,7 @@ export const MarketingCreator = () => {
                                         <ImageIcon size={40} strokeWidth={1.5} />
                                     </div>
                                     <div>
-                                        <p className="text-sm sm:text-base font-sans text-gray-500 uppercase tracking-widest">Output Preview Node</p>
+                                        <p className="text-sm sm:text-base font-sans text-gray-500 uppercase tracking-widest">PREVIEW</p>
                                         <p className="text-sm sm:text-base text-white sm:text-gray-400 font-serif italic mt-2">Awaiting Pulse</p>
                                     </div>
                                 </motion.div>

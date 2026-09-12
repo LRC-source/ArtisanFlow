@@ -183,7 +183,7 @@ export const MarketingStudio = () => {
             
             <div className="space-y-6">
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Studio Nodes</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Studio Tools</h2>
                     <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent ml-8"></div>
                 </div>
                 <MarketingGrid />

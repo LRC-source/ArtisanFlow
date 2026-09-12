@@ -47,7 +47,7 @@ export const BusinessPulseCheck = () => {
             <p className="text-sm sm:text-base text-gray-500 font-sans font-light leading-relaxed">Lola AI is establishing operational health benchmarks. Deployment: 60 Seconds.</p>
             
             <div className="mt-6 sm:mt-8 lg:mt-12 flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-medium uppercase tracking-[0.2em]">
-                <span className="text-[#6A2C91]">Node 1 of 2</span>
+                <span className="text-[#6A2C91]">STEP 1 OF 2</span>
                 <div className="h-1 flex-1 bg-stone-100 rounded-full overflow-hidden">
                     <div className="h-full w-1/2 bg-[#6A2C91] transition-all duration-1000"></div>
                 </div>

@@ -25,6 +25,7 @@ export const Inventory = () => {
   const navigate = useNavigate();
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showAdjustStock, setShowAdjustStock] = useState(false);
+    const [showMigrateLots, setShowMigrateLots] = useState(false);
   const [adjustAmount, setAdjustAmount] = useState(0);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [upgradeLimit, setUpgradeLimit] = useState(50);
@@ -202,25 +203,7 @@ export const Inventory = () => {
                         </div>
                     </Modal>
 
-                    <Modal isOpen={showAddItem} onClose={() => setShowAddItem(false)} title="Deploy Asset">
-                        <div className="space-y-4 pt-4">
-                            <Input placeholder="Asset Name (e.g. Lavender Oil)" value={newItem.name || ''} onChange={e => setNewItem({...newItem, name: e.target.value})} className="bg-black/50 text-white" />
-                            <Input placeholder="SKU (Optional)" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
-                            <Select value={newItem.type || 'raw'} onChange={e => setNewItem({...newItem, type: e.target.value as 'raw'|'finished'})} className="bg-black/50 text-white border border-white/10 w-full p-3 rounded-2xl">
-                                <option value="raw">Raw Material</option>
-                                <option value="finished">Finished Good</option>
-                            </Select>
-                            <div className="flex gap-4">
-                                <Input type="number" placeholder="Initial Stock" value={newItem.stock || 0} onChange={e => setNewItem({...newItem, stock: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
-                                <Input placeholder="Unit (e.g. oz, pcs)" value={newItem.unit || ''} onChange={e => setNewItem({...newItem, unit: e.target.value})} className="bg-black/50 text-white w-1/2" />
-                            </div>
-                            <div className="flex gap-4">
-                                <Input type="number" placeholder="Unit Cost ($)" value={newItem.unitCost || 0} onChange={e => setNewItem({...newItem, unitCost: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
-                                <Input type="number" placeholder="Reorder Point" value={newItem.reorderPoint || 0} onChange={e => setNewItem({...newItem, reorderPoint: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
-                            </div>
-                            <Button onClick={handleAdd} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">DEPLOY ASSET</Button>
-                        </div>
-                    </Modal>
+
 
                     <div className="p-3.5 sm:p-6 lg:p-12 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
                         <div className="flex items-center gap-3 sm:gap-4 mb-4 text-[#C5A059]">
@@ -319,7 +302,7 @@ export const Inventory = () => {
                     <div className="space-y-6">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between px-2">
                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Active Formula Dependency</h3>
-                            <Badge color="gray" className="px-3 py-1 text-[9px] font-sans font-bold uppercase tracking-[0.2em]">{usageInRecipes.length} Active Nodes</Badge>
+                            <Badge color="gray" className="px-3 py-1 text-[9px] font-sans font-bold uppercase tracking-[0.2em]">{usageInRecipes.length} ACTIVE ITEMS</Badge>
                         </div>
                         
                         {usageInRecipes.length > 0 ? (
@@ -369,6 +352,34 @@ export const Inventory = () => {
                 "Review automated Lola AI insights on margin impact."
             ]}
         />
+        <Modal isOpen={showAddItem} onClose={() => setShowAddItem(false)} title="Deploy Asset">
+            <div className="space-y-4 pt-4">
+                <Input placeholder="Asset Name (e.g. Lavender Oil)" value={newItem.name || ''} onChange={e => setNewItem({...newItem, name: e.target.value})} className="bg-black/50 text-white" />
+                <Input placeholder="SKU (Optional)" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
+                <Select value={newItem.type || 'raw'} onChange={e => setNewItem({...newItem, type: e.target.value as 'raw'|'finished'})} className="bg-black/50 text-white border border-white/10 w-full p-3 rounded-2xl">
+                    <option value="raw">Raw Material</option>
+                    <option value="finished">Finished Good</option>
+                </Select>
+                <div className="flex gap-4">
+                    <Input type="number" placeholder="Initial Stock" value={newItem.stock || 0} onChange={e => setNewItem({...newItem, stock: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
+                    <Input placeholder="Unit (e.g. oz, pcs)" value={newItem.unit || ''} onChange={e => setNewItem({...newItem, unit: e.target.value})} className="bg-black/50 text-white w-1/2" />
+                </div>
+                <div className="flex gap-4">
+                    <Input type="number" placeholder="Unit Cost ($)" value={newItem.unitCost || 0} onChange={e => setNewItem({...newItem, unitCost: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
+                    <Input type="number" placeholder="Reorder Point" value={newItem.reorderPoint || 0} onChange={e => setNewItem({...newItem, reorderPoint: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
+                </div>
+                <Button onClick={handleAdd} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">DEPLOY ASSET</Button>
+            </div>
+        </Modal>
+        <Modal isOpen={showMigrateLots} onClose={() => setShowMigrateLots(false)} title="Migrate to Lots">
+            <div className="space-y-4 pt-4">
+                <p className="text-sm text-white/70">Are you sure you want to migrate all untracked raw materials to lot tracking? This action cannot be undone.</p>
+                <div className="flex gap-4 mt-6">
+                    <Button onClick={() => setShowMigrateLots(false)} variant="outline" className="w-1/2">CANCEL</Button>
+                    <Button onClick={() => { setShowMigrateLots(false); migrateInventoryToLots(); }} className="w-1/2 bg-[#C5A059] hover:bg-[#b08e4d] text-white">CONFIRM MIGRATION</Button>
+                </div>
+            </div>
+        </Modal>
         <div className="flex flex-col gap-3 sm:gap-6">
           <SubPageHeader 
             title="Inventory Hub"
@@ -414,7 +425,7 @@ export const Inventory = () => {
                 </label>
               )}
               <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
-              <Button variant="outline" onClick={migrateInventoryToLots} className="rounded-full border-white/20 hover:border-white/40 bg-[#6A2C91]/30 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"><RefreshCw size={16} className="mr-3"/> MIGRATE TO LOTS</Button>
+              <Button variant="outline" onClick={() => setShowMigrateLots(true)} className="rounded-full border-white/20 hover:border-white/40 bg-[#6A2C91]/30 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"><RefreshCw size={16} className="mr-3"/> MIGRATE TO LOTS</Button>
             </div>
           </VaultBanner>
         </div>
@@ -426,7 +437,7 @@ export const Inventory = () => {
                     <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Materials Matrix</h3>
-                        <p className="text-sm sm:text-base text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{rawMaterials.length} Active Nodes</p>
+                        <p className="text-sm sm:text-base text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{rawMaterials.length} ACTIVE ITEMS</p>
                     </div>
                 </div>
                 <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
@@ -500,7 +511,7 @@ export const Inventory = () => {
                         )) : (
                             <div className="flex-1 flex flex-col items-center justify-center text-center opacity-40">
                                 <ShieldCheck size={48} className="text-amber-500/20 mb-4" />
-                                <p className="text-[11px] sm:text-base font-sans font-medium uppercase tracking-[0.3em] text-amber-500/40">All Nodes Stable</p>
+                                <p className="text-[11px] sm:text-base font-sans font-medium uppercase tracking-[0.3em] text-amber-500/40">ALL STOCK LEVELS OK</p>
                             </div>
                         )}
                     </div>

@@ -16,16 +16,20 @@ export const BrandVoiceProfile = () => {
     
     // Tone Sliders
     const [toneFormal, setToneFormal] = useState(70); // 0 = Playful, 100 = Formal
-    const [toneSalesy, setToneSalesy] = useState(30); // 0 = Educational, 100 = Salesy
+    const [toneSalesy, setToneSalesy] = useState(30);
+    const [showAddPersona, setShowAddPersona] = useState(false);
+    const [newPersonaName, setNewPersonaName] = useState('');
+    const [newPersonaDesc, setNewPersonaDesc] = useState('');
+    
     const [toneComplex, setToneComplex] = useState(60); // 0 = Simple, 100 = Complex/Technical
     
     // Personas
     const [activePersona, setActivePersona] = useState('0');
-    const personas = [
+    const [personas, setPersonas] = useState([
         { id: '0', name: 'High-End Retailer', description: 'Boutique owners looking for premium shelf products. Values margins and exclusivity.' },
         { id: '1', name: 'Wellness Enthusiast', description: 'Individual consumers focused on organic, sustainable, and luxurious self-care rituals.' },
         { id: '2', name: 'Corporate Gifter', description: 'HR managers seeking high-quality, memorable gifts for VIP clients and employees.' }
-    ];
+    ]);
 
     const [isSaving, setIsSaving] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
@@ -69,8 +73,24 @@ export const BrandVoiceProfile = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-8 sm:pb-12 lg:pb-20"
+            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-[1800px] mx-auto"
         >
+            <Modal isOpen={showAddPersona} onClose={() => setShowAddPersona(false)} title="Add New Persona">
+                <div className="space-y-4 pt-4">
+                    <Input placeholder="Persona Name (e.g. Eco-conscious Shopper)" value={newPersonaName} onChange={e => setNewPersonaName(e.target.value)} className="bg-black/50 text-white w-full" />
+                    <Input placeholder="Description" value={newPersonaDesc} onChange={e => setNewPersonaDesc(e.target.value)} className="bg-black/50 text-white w-full" />
+                    <Button onClick={() => {
+                        if (!newPersonaName) return toast.error("Name required.");
+                        setPersonas([...personas, { id: String(personas.length), name: newPersonaName, description: newPersonaDesc }]);
+                        setShowAddPersona(false);
+                        setNewPersonaName('');
+                        setNewPersonaDesc('');
+                        toast.success("New persona saved.");
+                    }} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">
+                        SAVE PERSONA
+                    </Button>
+                </div>
+            </Modal>
             <div className="flex flex-col gap-3 sm:gap-6">
                 <SubPageHeader 
                   title="Brand Voice Profile"
@@ -158,7 +178,7 @@ export const BrandVoiceProfile = () => {
                                 <p className="text-sm sm:text-base font-light text-white sm:text-gray-400">{persona.description}</p>
                             </div>
                         ))}
-                        <Button variant="outline" onClick={() => toast.success('New persona saved.')} className="w-full w-auto mx-auto py-1 px-3 text-[10px] border-dashed border-white/20 text-white sm:text-gray-400 hover:text-white rounded-2xl mt-4">
+                        <Button variant="outline" onClick={() => setShowAddPersona(true)} className="w-full w-auto mx-auto py-1 px-3 text-[10px] border-dashed border-white/20 text-white sm:text-gray-400 hover:text-white rounded-2xl mt-4">
                             <Plus size={16} className="mr-2" /> Add New Persona
                         </Button>
                     </div>

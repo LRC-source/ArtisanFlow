@@ -256,7 +256,7 @@ export const MarketingStrategyReport = () => {
             </Card>
 
             <div className="lg:col-span-2 space-y-8">
-                <Card title="Target Audience Node" className="rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl">
+                <Card title="TARGET AUDIENCE" className="rounded-[2.5rem] border-white/10 bg-black/40 backdrop-blur-xl">
                     <p className="text-sm sm:text-base text-[#C5A059] leading-relaxed font-serif italic tracking-tight mb-6 mt-4">{strategyData.audience.demographics}</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                         <div>

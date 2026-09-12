@@ -16,7 +16,21 @@ export default async function handler(req, res) {
     }
     
     // Server-side genai proxy logic
-    const { prompt } = req.body;
+    const body = req.body || {};
+    let promptText = body.prompt;
+    if (body.action === 'chatWithLola' && body.payload) {
+        promptText = body.payload.message;
+        if (body.payload.context) {
+            promptText += "\nContext: " + JSON.stringify(body.payload.context);
+        }
+    } else if (body.action === 'analyzeLolaImage' && body.payload) {
+        promptText = body.payload.prompt;
+    } else if (body.action === 'generateLolaImage' && body.payload) {
+        promptText = body.payload.prompt;
+    }
+    
+    if (!promptText) promptText = "Hello";
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Missing Gemini API Key' });
 
@@ -24,13 +38,22 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }]
+        contents: [{ role: 'user', parts: [{ text: promptText }] }]
       })
     });
     
     const data = await fetchRes.json();
-    return res.status(200).json(data);
+    
+    // Extract text for the frontend
+    let text = "";
+    if (data.candidates && data.candidates[0].content.parts) {
+        text = data.candidates[0].content.parts.map(p => p.text).join("");
+    } else if (data.error) {
+        text = "Error: " + data.error.message;
+    }
+    
+    return res.status(200).json({ ...data, text });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message, text: error.message });
   }
 }

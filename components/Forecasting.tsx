@@ -89,13 +89,13 @@ export const Forecasting = () => {
                 title="Forecasting & Strategy"
                 parentTitle="Operations"
                 onBack={() => navigate(-1)}
-                description="Establish predictive demand nodes and optimize manufacturing flow."
+                description="Set up demand forecasting and optimize your production flow."
              />
 
              <VaultBanner 
                 title="Forecasting Matrix"
                 subtitle="Predictive logic engines activated. Reconciling historical data with future demand spikes."
-                badge="Strategy Node Active"
+                badge="STRATEGY ACTIVE"
              >
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                      <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full px-10 shadow-2xl shadow-[#6A2C91]/20 transition-all font-sans font-medium text-[11px] tracking-[0.2em] uppercase" onClick={() => {
@@ -113,11 +113,11 @@ export const Forecasting = () => {
                      transition={{ delay: 0.2, duration: 0.6 }}
                  >
                      <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Order Velocity Nodes</h3>
+                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Order Velocity</h3>
                          <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-10">
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">30D Node</Badge>
-                             <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90D Node</Badge>
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">180D Node</Badge>
+                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">30 DAYS</Badge>
+                             <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90 DAYS</Badge>
+                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">180 DAYS</Badge>
                              <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">Annual Cycle</Badge>
                          </div>
                          <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4 sm:mt-0">
@@ -163,9 +163,9 @@ export const Forecasting = () => {
                              </div>
                          </div>
                          <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-10">
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">30D Node</Badge>
-                             <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90D Node</Badge>
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">180D Node</Badge>
+                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">30 DAYS</Badge>
+                             <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90 DAYS</Badge>
+                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">180 DAYS</Badge>
                              <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">Annual Cycle</Badge>
                          </div>
                          <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4 sm:mt-0">
