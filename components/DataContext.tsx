@@ -8,7 +8,7 @@ import {
   signInWithPopup, 
   onAuthStateChanged 
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
+import { doc, deleteDoc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import { db as dataLayer } from '../services/dataLayer';
 import { toast } from 'sonner';
 
@@ -304,6 +304,7 @@ interface DataContextType {
   addMarketingPost: (post: any) => void;
   addAppointment: (appointment: Omit<Appointment, 'id'>) => void;
   addManualCustomer: (customer: Omit<ManualCustomer, 'id' | 'createdDate'>) => void;
+  deleteManualCustomer: (id: string) => void;
   updateMarketingPost: (id: string, updates: Partial<MarketingPost>) => void;
   generateSchedule: () => void;
   produceBatch: (recipeId: string, multiplier: number) => Promise<{ success: boolean; warnings: string[] }>;
@@ -1364,7 +1365,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, activateAccount, updateBusinessProfile,
       onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
-      importData, addInventoryItem, updateInventory, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, updateMarketingPost, 
+      importData, addInventoryItem, updateInventory, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, deleteManualCustomer, updateMarketingPost, 
       generateSchedule, produceBatch, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,
@@ -1386,3 +1387,5 @@ export const useArtisanData = () => {
   if (!context) throw new Error('useArtisanData error');
   return context;
 };
+
+
