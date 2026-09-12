@@ -600,7 +600,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
             } else {
               // No Firestore doc yet — user may be mid-signup (just created Auth, hasn't selected a tier yet).
               // Do NOT sign them out here; let the signup flow complete the Firestore write.
-              setIsAuthenticated(false);
+              // We removed setIsAuthenticated(false) to prevent a race condition from clobbering signUp()'s success state.
             }
           }
         } catch (error) {
@@ -853,24 +853,20 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       // SYNC TO GOOGLE SHEET
       const dbUrl = (import.meta as any).env?.VITE_GAS_DATABASE_URL;
       if (dbUrl) {
-          try {
-              await fetch(dbUrl, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                  body: JSON.stringify({
-                      action: 'syncNewUser',
-                      payload: {
-                          email: data.email,
-                          name: data.name || 'New Artisan Business',
-                          tier: data.tier,
-                          status: data.status || 'Active',
-                          date: new Date().toISOString()
-                      }
-                  })
-              });
-          } catch (e) {
-              console.error("Failed to sync new user to Google Sheet", e);
-          }
+          fetch(dbUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({
+                  action: 'syncNewUser',
+                  payload: {
+                      email: data.email,
+                      name: data.name || 'New Artisan Business',
+                      tier: data.tier,
+                      status: data.status || 'Active',
+                      date: new Date().toISOString()
+                  }
+              })
+          }).catch(e => console.error("Failed to sync new user to Google Sheet", e));
       }
 
       setBusinessProfile(prev => ({ ...prev, ...data }));
