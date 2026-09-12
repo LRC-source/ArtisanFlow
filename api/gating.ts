@@ -8,7 +8,8 @@ const Tier_Permissions_Matrix = {
     mktg_avatar: false,
     logistics_forecast: false,
     dash_diagnostic: false,
-    profit_guard: false
+    profit_guard: false,
+    ADD_INVENTORY: 50
   },
   'artisan-flow-basic': {
     vault_recipes: Infinity,
@@ -16,7 +17,26 @@ const Tier_Permissions_Matrix = {
     mktg_avatar: false,
     logistics_forecast: false,
     dash_diagnostic: false,
-    profit_guard: false
+    profit_guard: false,
+    ADD_INVENTORY: Infinity
+  },
+  'pro-artisan': {
+    vault_recipes: Infinity,
+    mktg_ai_actions: Infinity,
+    mktg_avatar: true,
+    logistics_forecast: true,
+    dash_diagnostic: true,
+    profit_guard: true,
+    ADD_INVENTORY: Infinity
+  },
+  'master-artisan': {
+    vault_recipes: Infinity,
+    mktg_ai_actions: Infinity,
+    mktg_avatar: true,
+    logistics_forecast: true,
+    dash_diagnostic: true,
+    profit_guard: true,
+    ADD_INVENTORY: Infinity
   },
   'margin-protection-pro': {
     vault_recipes: Infinity,
@@ -24,7 +44,8 @@ const Tier_Permissions_Matrix = {
     mktg_avatar: true,
     logistics_forecast: true,
     dash_diagnostic: true,
-    profit_guard: true
+    profit_guard: true,
+    ADD_INVENTORY: Infinity
   }
 };
 

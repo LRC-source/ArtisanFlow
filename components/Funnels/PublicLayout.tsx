@@ -54,8 +54,8 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
 
           <div className="flex flex-col gap-3 text-sm text-white sm:text-white/60">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">Legal</h4>
-            <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>
-            <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/privacy')}>Privacy Policy</span>
+            <button className="hover:text-white cursor-pointer transition-colors" role="link" onClick={() => navigate('/terms')}>Terms & Conditions</button>
+            <button className="hover:text-white cursor-pointer transition-colors" role="link" onClick={() => navigate('/privacy')}>Privacy Policy</button>
           </div>
 
           <div className="flex flex-col gap-3 sm:gap-4">
@@ -73,3 +73,4 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
     </div>
   );
 };
+

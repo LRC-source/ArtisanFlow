@@ -19,14 +19,14 @@ const MarketingGrid = () => {
                 title="Visual Analysis" 
                 icon={Eye} 
                 color="text-emerald-600" 
-                desc="Audit product photos and artisanal assets with Gemini Pro Vision." 
+                desc="Audit product photos and artisanal assets with AI Visual Analysis." 
                 onClick={() => navigate('/marketing/analysis')}
             />
             <HubCard 
                 title="Marketing Creator" 
                 icon={Image} 
                 color="text-amber-500" 
-                desc="Synthesize 1K/2K/4K marketing assets with Nano Banana Pro." 
+                desc="Synthesize 1K/2K/4K marketing assets with AI Image Synthesis." 
                 onClick={() => navigate('/marketing/creator')}
             />
             <HubCard 
@@ -61,7 +61,7 @@ const MarketingGrid = () => {
                 title="Video Creator" 
                 icon={Video} 
                 color="text-red-500" 
-                desc="Create scripts and professional videos with Veo." 
+                desc="Create scripts and professional videos with AI Video." 
                 onClick={() => navigate('/marketing/video')}
             />
             <HubCard 

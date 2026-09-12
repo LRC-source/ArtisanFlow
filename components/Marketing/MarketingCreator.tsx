@@ -75,7 +75,7 @@ export const MarketingCreator = () => {
                   title="Marketing Creator"
                   parentTitle="Marketing Hub"
                   onBack={() => navigate('/marketing')}
-                  description="Synthesize high-fidelity visual assets with Nano Banana Pro."
+                  description="Synthesize high-fidelity visual assets with AI Image Synthesis."
                 />
             </div>
 

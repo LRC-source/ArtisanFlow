@@ -90,7 +90,7 @@ export const ContentCalendar = () => {
                     <div className="flex items-center gap-3 sm:gap-6 w-auto justify-between sm:justify-end">
                         {/* View Toggle */}
                         <div className="bg-black/40 p-1 rounded-xl flex border border-white/10">
-                            {(['month', 'week', 'day'] as const).map(mode => (
+                            {(['month'] as const).map(mode => (
                                 <button 
                                     key={mode}
                                     onClick={() => setViewMode(mode)}
@@ -210,3 +210,4 @@ export const ContentCalendar = () => {
         </motion.div>
     );
 };
+

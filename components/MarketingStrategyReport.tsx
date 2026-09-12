@@ -124,7 +124,7 @@ export const MarketingStrategyReport = () => {
               </div>
               <div className="text-center space-y-2">
                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Synthesizing Strategy Hub...</h2>
-                  <p className="text-sm sm:text-base text-gray-500 font-medium tracking-wide">Lola AI is reconciling omnichannel manufacturing directives.</p>
+                  <p className="text-sm sm:text-base text-gray-500 font-medium tracking-wide">Lola AI is generating your strategy report.</p>
               </div>
           </div>
       );

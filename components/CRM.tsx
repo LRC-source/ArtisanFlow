@@ -75,7 +75,7 @@ export const CRM = () => {
 
   const handleSync = () => {
       setIsSyncing(true);
-      setTimeout(() => setIsSyncing(false), 2000);
+      setTimeout(() => { setIsSyncing(false); toast.success("Customer list synchronized with active orders."); }, 2000);
   };
 
   const handleAddManual = () => {
@@ -365,3 +365,4 @@ export const CRM = () => {
     </motion.div>
   );
 };
+

@@ -30,8 +30,8 @@ export const Recipes = () => {
       <div className="flex flex-col gap-3 sm:gap-6">
         <SubPageHeader 
           title="Recipe Lab & Formula Builder"
-          parentTitle="Recipe Lab"
-          onBack={() => navigate('/inventory')}
+          parentTitle="Operations Hub"
+          onBack={() => navigate('/operations')}
           description="BOM Architecture: Bridging Material Costs with Finished Value."
         />
         

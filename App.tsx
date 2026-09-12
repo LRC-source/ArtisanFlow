@@ -167,7 +167,7 @@ const DashboardPage = () => {
           description="Your centralized command center. We've synchronized your modules to offer an overarching view of your business operations."
           steps={[
               "View high-level revenue and inventory stats.",
-              "Access main nodes: Operations, Finance, Marketing, and Profit Guard.",
+              "Access main hubs: Operations, Finance, Marketing, and Profit Guard.",
               "Monitor AI Logic insights tailored to your data."
           ]}
       />
@@ -227,7 +227,7 @@ const DashboardPage = () => {
                 <p className="text-sm font-sans font-light text-white/50 uppercase tracking-[0.3em] leading-relaxed">{node.desc}</p>
                 
                 <div className="mt-8 flex items-center text-[#C5A059] text-[10px] font-bold uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                  Access Node <ChevronRight size={14} className="ml-2" />
+                  Access Hub <ChevronRight size={14} className="ml-2" />
                 </div>
               </div>
             </div>

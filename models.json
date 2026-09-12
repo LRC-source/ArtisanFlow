@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Welcome to LRC Artisan Flow</title>
+    <!-- Open Graph / SEO Meta Tags -->
+    <meta name="description" content="The ultimate AI-powered ecosystem for makers. Outperform Craftybase with generative marketing, predictive Profit Guard, and unthrottled scaling." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://artisanflow.lrcholisticmarketing.online/" />
+    <meta property="og:title" content="LRC Artisan Flow" />
+    <meta property="og:description" content="The ultimate AI-powered ecosystem for makers. Outperform Craftybase with generative marketing, predictive Profit Guard, and unthrottled scaling." />
+    <meta property="og:image" content="https://artisanflow.lrcholisticmarketing.online/lola_avatar_1785620890040.jpg" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://artisanflow.lrcholisticmarketing.online/" />
+    <meta property="twitter:title" content="LRC Artisan Flow" />
+    <meta property="twitter:description" content="The ultimate AI-powered ecosystem for makers. Outperform Craftybase with generative marketing, predictive Profit Guard, and unthrottled scaling." />
+    <meta property="twitter:image" content="https://artisanflow.lrcholisticmarketing.online/lola_avatar_1785620890040.jpg" />
+
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error("Global Error:", message, source, lineno, error);
+      };
+      window.process = { env: { NODE_ENV: 'development' } };
+
+      // Legacy Hash Redirect
+      if (window.location.hash && window.location.hash.startsWith('#/')) {
+        var cleanPath = window.location.hash.slice(1);
+        window.history.replaceState(null, '', cleanPath);
+      }
+    </script>
+
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ArtisanFlow",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "0",
+          "highPrice": "149.99",
+          "offerCount": "3"
+        },
+        "description": "The ultimate AI-powered ecosystem for makers. Outperform Craftybase with generative marketing, predictive Profit Guard, and unthrottled scaling."
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GN6722VYZ5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GN6722VYZ5');
+    </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react,react-dom",
+    "recharts": "https://esm.sh/recharts@2.12.7?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1?external=react",
+    "clsx": "https://esm.sh/clsx@2.1.0",
+    "tailwind-merge": "https://esm.sh/tailwind-merge@2.2.1"
+  }
+}
+</script>
+    <script type="module" crossorigin src="/assets/index-B893gO62.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BY8kme_c.css">
+  </head>
+  <body>
+    <div id="root"><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div class="h-screen w-full flex flex-col items-center justify-center bg-stone-50 gap-4"><div class="relative"><div class="w-12 h-12 border-4 border-purple-100 border-t-[#6A2C91] rounded-full animate-spin"></div><div class="absolute inset-0 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#C5A059]"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></div></div><p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Verifying Vault Session...</p></div></div>
+  </body>
+</html>

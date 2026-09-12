@@ -83,7 +83,7 @@ export const MarginGuard = () => {
                                     type="number" 
                                     value={plannedPrice} 
                                     onChange={(e) => setPlannedPrice(Number(e.target.value))}
-                                    className="font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black bg-white/5 border-white/10 rounded-2xl pl-10 pr-6 py-5 shadow-sm focus:border-[#6A2C91] focus:ring-[#6A2C91]/10 transition-all"
+                                    className="font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black bg-white/5 border-white/10 rounded-2xl pl-10 sm:pl-16 lg:pl-20 pr-6 py-5 shadow-sm focus:border-[#6A2C91] focus:ring-[#6A2C91]/10 transition-all"
                                 />
                             </div>
                         </div>

@@ -53,7 +53,7 @@ export const ProfitGuardPage = () => {
                                         type="number" 
                                         value={materialCost} 
                                         onChange={(e) => setMaterialCost(Number(e.target.value))}
-                                        className="pl-10 w-auto mx-auto py-1 px-3 text-[10px] bg-black/40 border-white/10 rounded-2xl font-serif text-white text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black focus:border-[#6A2C91]"
+                                        className="pl-10 sm:pl-16 lg:pl-20 w-auto mx-auto py-1 px-3 text-[10px] bg-black/40 border-white/10 rounded-2xl font-serif text-white text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black focus:border-[#6A2C91]"
                                     />
                                 </div>
                             </div>
@@ -74,7 +74,7 @@ export const ProfitGuardPage = () => {
                                         type="number" 
                                         value={plannedPrice} 
                                         onChange={(e) => setPlannedPrice(Number(e.target.value))}
-                                        className="pl-10 w-auto mx-auto py-1 px-3 text-[10px] bg-black/40 border-white/10 rounded-2xl font-serif text-white text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black focus:border-[#6A2C91]"
+                                        className="pl-10 sm:pl-16 lg:pl-20 w-auto mx-auto py-1 px-3 text-[10px] bg-black/40 border-white/10 rounded-2xl font-serif text-white text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black focus:border-[#6A2C91]"
                                     />
                                 </div>
                             </div>

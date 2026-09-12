@@ -765,7 +765,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   const login = async (email: string, pass: string) => {
-    toast.info("Starting login sequence...");
+    
     try {
       await signInWithEmailAndPassword(auth, email, pass);
       toast.info("Firebase Auth login successful.");

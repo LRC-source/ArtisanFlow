@@ -212,7 +212,7 @@ export const ReceptionistLogic = () => {
                         <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 shrink-0">
                             <Button onClick={handleSave} disabled={isSaving} className="w-full bg-[#6A2C91] hover:bg-[#552374] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none">
                                 {isSaving ? <Loader2 className="animate-spin mr-2" /> : <Sparkles className="mr-2" />}
-                                Deploy Logic to Lola Node
+                                Deploy Receptionist Logic
                             </Button>
                         </div>
                     </Card>

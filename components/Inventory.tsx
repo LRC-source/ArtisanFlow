@@ -355,7 +355,7 @@ export const Inventory = () => {
         <Modal isOpen={showAddItem} onClose={() => setShowAddItem(false)} title="Deploy Asset">
             <div className="space-y-4 pt-4">
                 <Input placeholder="Asset Name (e.g. Lavender Oil)" value={newItem.name || ''} onChange={e => setNewItem({...newItem, name: e.target.value})} className="bg-black/50 text-white" />
-                <Input placeholder="SKU (Optional)" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
+                <Input placeholder="SKU *" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
                 <Select value={newItem.type || 'raw'} onChange={e => setNewItem({...newItem, type: e.target.value as 'raw'|'finished'})} className="bg-black/50 text-white border border-white/10 w-full p-3 rounded-2xl">
                     <option value="raw">Raw Material</option>
                     <option value="finished">Finished Good</option>
@@ -391,7 +391,7 @@ export const Inventory = () => {
           {/* Hidden file input outside VaultBanner so ref is always mounted and accessible */}
           <input
             id="csv-file-input"
-            type="file"
+            type="file" id="csv-upload"
             ref={fileInputRef}
             className="hidden"
             accept=".csv"
@@ -418,7 +418,7 @@ export const Inventory = () => {
                 </Button>
               ) : (
                 <label
-                  htmlFor="csv-file-input"
+                  htmlFor="csv-upload"
                   className="rounded-full border border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"
                 >
                   <Upload size={16} className="mr-3"/> INGEST CSV

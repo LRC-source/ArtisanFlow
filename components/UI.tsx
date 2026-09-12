@@ -361,14 +361,14 @@ export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: bo
         <Modal isOpen={isOpen} onClose={onClose} title={`Connect to ${platform}`}>
             <div className="space-y-6">
                 <p className="text-white/60 font-sans font-light text-sm">
-                    Connect your {platform} account securely via OAuth to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
+                    Connect your {" "}{platform}{" "} account securely via OAuth to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
                 </p>
                 <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
                     <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
                         <ShieldCheck size={24} className="text-[#C5A059]" />
                     </div>
                     <p className="text-sm font-bold text-white">Secure OAuth Connection</p>
-                    <p className="text-xs text-white/50">You will be redirected to {platform} to authorize access.</p>
+                    <p className="text-xs text-white/50">You will be redirected to {" "}{platform}{" "} to authorize access.</p>
                 </div>
                 <Button 
                     onClick={() => {

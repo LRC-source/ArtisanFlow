@@ -197,7 +197,7 @@ export const BrandVoiceProfile = () => {
                             </p>
                             <div className="p-4 sm:p-6 sm:p-8 bg-black/40 border-l-4 border-[#C5A059] rounded-r-3xl shadow-lg italic text-gray-200 font-serif text-sm sm:text-base leading-relaxed leading-relaxed">
                                 {toneFormal > 50 
-                                    ? `"Discover the uncompromising precision of our latest artisanal collection. Crafted for those who demand excellence, each piece reflects our dedication to bold innovation."`
+                                    ? `"Crafted for those who demand excellence, each piece reflects bold innovation."`
                                     : `"Ready to elevate your everyday? Our new collection brings serious artisanal vibes right to your door. You've never seen precision like this before!"`}
                             </div>
                             <div className="flex flex-wrap gap-2 pt-4">

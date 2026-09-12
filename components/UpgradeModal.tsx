@@ -105,3 +105,4 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
     </AnimatePresence>
   );
 };
+

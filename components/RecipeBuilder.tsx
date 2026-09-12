@@ -304,7 +304,7 @@ const recipePayload: any = {
       <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6">
         <div>
             <button onClick={() => navigate('/recipes')} className="text-white sm:text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest flex items-center gap-2 mb-4 transition-colors">
-                <ArrowLeft size={16} /> Back to Vault
+                <ArrowLeft size={16} /> BACK TO RECIPE LAB
             </button>
             <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{isEditing ? 'Formula Revision' : 'Formula Architect'}</h1>
             <p className="text-sm sm:text-base text-gray-500 font-medium">{isEditing ? 'Optimizing existing Bill of Materials for margin integrity.' : 'Constructing Bills of Materials with Synaptic Cost Reconciliation.'}</p>

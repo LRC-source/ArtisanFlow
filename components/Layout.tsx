@@ -34,7 +34,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       const daysLeft = Math.ceil((new Date(businessProfile.trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
       return `FREE TRIAL (${Math.max(0, daysLeft)} days left)`;
     }
-    return userTier === 'Free Trial' ? 'FREE TRIAL' : (userTier || 'Basic Artisan');
+    return userTier === 'Free Trial' ? 'FREE TRIAL' : (userTier === 'Margin Protection Pro' ? 'PRO PLAN' : (userTier || 'Basic Artisan'));
   };
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -222,7 +222,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   <span className="user-name truncate">{businessProfile.ownerName || 'LaToya Carter'}</span>
                   <span className="user-role truncate font-bold text-[#E2C792] text-[10px] tracking-widest">{renderTierBadge()}</span>
               </div>
-              <button onClick={logout} className="ml-2 p-2 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-full transition-colors" title="Revoke Access">
+              <button onClick={logout} className="ml-2 p-2 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-full transition-colors" title="Sign Out" aria-label="Sign Out">
                   <LogOut size={16} />
               </button>
           </div>
@@ -316,7 +316,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                        whileHover={{ scale: 1.05 }}
                        whileTap={{ scale: 0.95 }}
                        className="relative p-3 min-w-[44px] min-h-[44px] rounded-xl bg-white/5 text-white/40 hover:text-[#C5A059] transition-colors flex items-center justify-center cursor-pointer"
-                       aria-label="Notifications"
+                       aria-label="View Notifications"
                      >
                        <Bell size={18} />
                      </motion.button>
@@ -397,9 +397,9 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
         <footer className="w-full py-6 sm:py-12 lg:py-16 px-4 sm:px-8 mt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-sm sm:text-base text-white/60 bg-[#0A0A0A] z-20">
             <span>© 2026 LRC ArtisanFlow. All rights reserved.</span>
             <div className="flex items-center gap-3 sm:gap-4">
-                <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/terms')}>Terms & Conditions</span>
+                <button className="hover:text-white cursor-pointer transition-colors" role="link" onClick={() => navigate('/terms')}>Terms & Conditions</button>
                 <span className="text-white/20">|</span>
-                <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/privacy')}>Privacy Policy</span>
+                <button className="hover:text-white cursor-pointer transition-colors" role="link" onClick={() => navigate('/privacy')}>Privacy Policy</button>
             </div>
         </footer>
       </main>
@@ -428,4 +428,6 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
     </div>
   );
 }
+
+
 

@@ -50,6 +50,7 @@ export const FinanceHub: React.FC = () => {
         setIsBudgeting(true);
         const result = await generateBudgetStrategy(revenue, estimatedCOGS, "Scale marketing and optimize raw material sourcing");
         setBudgetResult(result);
+        toast.success("Budget allocation updated.");
         setIsBudgeting(false);
     };
 
@@ -569,7 +570,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                         <div className="mt-6 sm:mt-8 lg:mt-12 flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-[#C5A059]/10 rounded-[2rem] border border-[#C5A059]/20 shadow-inner">
                             <Info size={24} className="text-[#C5A059] shrink-0" strokeWidth={1.5} />
                             <p className="text-sm sm:text-base text-white sm:text-white/70 font-sans font-light leading-relaxed">
-                                Dropshipping estimates assume a <strong className="text-white font-medium">low-overhead fulfillment model</strong> where stock is managed by the Synaptic Handshake nodes. Profit margins are optimized for high-throughput scaling without proportional inventory risk.
+                                Dropshipping estimates assume a <strong className="text-white font-medium">low-overhead fulfillment model</strong> where stock is managed by the Synaptic Handshake. Profit margins are optimized for scale without proportional inventory risk.
                             </p>
                         </div>
                     )}
