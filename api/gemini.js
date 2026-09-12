@@ -1,10 +1,12 @@
 export default async function handler(req, res) {
   try {
-    if (req.body && req.body.prompt === 'GET_MODELS_DEBUG') {
+    let b = req.body;
+    if (typeof b === 'string') { b = JSON.parse(b); }
+    if (b && b.prompt === 'GET_MODELS_DEBUG') {
       const apiKey = process.env.GEMINI_API_KEY;
       const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + apiKey);
-      const data = await fetchRes.json();
-      return res.status(200).json(data);
+      const data = await fetchRes.text();
+      return res.status(200).send(data);
     }
   } catch(e) {}
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
