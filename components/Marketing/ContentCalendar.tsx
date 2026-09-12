@@ -74,7 +74,7 @@ export const ContentCalendar = () => {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-12 sm:pb-20 lg:pb-32"
         >
-            <div className="flex flex-col gap-3 sm:gap-6">
+            <div className="flex flex-col gap-3 sm:gap-6 pb-[400px]">
                 <SubPageHeader 
                   title="Content Calendar"
                   parentTitle="Marketing Hub"
@@ -210,4 +210,5 @@ export const ContentCalendar = () => {
         </motion.div>
     );
 };
+
 

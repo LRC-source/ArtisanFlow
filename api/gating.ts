@@ -38,6 +38,7 @@ const Tier_Permissions_Matrix = {
     profit_guard: true,
     ADD_INVENTORY: Infinity
   },
+  'pro-plan': { vault_recipes: Infinity, mktg_ai_actions: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true, ADD_INVENTORY: Infinity },
   'margin-protection-pro': {
     vault_recipes: Infinity,
     mktg_ai_actions: Infinity,
@@ -92,3 +93,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   return res.status(200).json({ allowed: true, isFeatureGated: false, limit });
 }
+

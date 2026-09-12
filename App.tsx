@@ -513,12 +513,12 @@ const AppContent = () => {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         
         <Route path="/profit-guard" element={
-            <LockedNode isLocked={userTier !== 'Pro Artisan'} requiredTier="Pro Artisan" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial' || userTier === 'Basic Artisan'} requiredTier="Pro Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ProfitGuardPage />
             </LockedNode>
         } />
         <Route path="/forecasting" element={
-            <LockedNode isLocked={userTier !== 'Pro Artisan'} requiredTier="Pro Artisan" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
+            <LockedNode isLocked={userTier === 'Free Trial' || userTier === 'Basic Artisan'} requiredTier="Pro Artisan" featureKey="inventory_forecasting" onUpgrade={() => navigate('/settings/subscription')}>
                 <Forecasting />
             </LockedNode>
         } />

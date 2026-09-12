@@ -295,6 +295,7 @@ interface DataContextType {
   importData: (files: File[]) => Promise<boolean>;
   addInventoryItem: (item: any) => Promise<void>;
   updateInventory: (id: string | number, updates: Partial<InventoryItem>) => void;
+  deleteInventoryItem: (id: string | number) => void;
   addSupplier: (supplier: any) => void;
   updateSupplier: (id: string, updates: Partial<Supplier>) => void;
   deleteSupplier: (id: string) => void;
@@ -966,6 +967,12 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       throw e;
     }
   };
+  const deleteInventoryItem = async (id: string | number) => {
+    setInventory(prev => prev.filter(i => i.id !== id));
+    if (!isDemoMode && auth.currentUser) {
+      try { await deleteDoc(doc(db, "users", auth.currentUser.uid, "inventory", id.toString())); } catch (e) { console.error("Failed to delete inventory", e); }
+    }
+  };
   const updateInventory = (id: string | number, updates: Partial<InventoryItem>) => {
     setInventory(prev => prev.map(item => String(item.id) === String(id) ? { ...item, ...updates, stockValue: ((updates.stock ?? item.stock) || 0) * ((updates.unitCost ?? item.unitCost) || 0) } : item));
   };
@@ -1389,7 +1396,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, activateAccount, updateBusinessProfile,
       onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
-      importData, addInventoryItem, updateInventory, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, deleteManualCustomer, updateMarketingPost, 
+      importData, addInventoryItem, updateInventory, deleteInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, deleteManualCustomer, updateMarketingPost, 
       generateSchedule, produceBatch, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,

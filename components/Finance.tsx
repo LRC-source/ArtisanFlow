@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   DollarSign, TrendingUp, BarChart3, ArrowLeft, Sparkles, 
   Download, FileText, PieChart, Calendar, ShieldCheck, 
-  ArrowUpRight, ArrowDownRight, RefreshCw, Loader2, Target, Package, Wallet, GanttChartSquare, CheckCircle, Ship, Map, Info, X
+  ArrowUpRight, ArrowDownRight, RefreshCw, Loader2, Target, Package, Wallet, GanttChartSquare, CheckCircle, Ship, Map, Info, X, AlertTriangle
 } from 'lucide-react';
 import { Card, Button, Badge, Select, Modal, Input, VaultBanner } from './UI';
 import { useArtisanData } from './DataContext';
@@ -49,8 +49,7 @@ export const FinanceHub: React.FC = () => {
     const runBudgetOptimizer = async () => {
         setIsBudgeting(true);
         const result = await generateBudgetStrategy(revenue, estimatedCOGS, "Scale marketing and optimize raw material sourcing");
-        setBudgetResult(result);
-        toast.success("Budget allocation updated.");
+        if (!result) { toast.error("Optimization failed. Please try again."); } else { setBudgetResult(result); toast.success("Budget allocation updated."); }
         setIsBudgeting(false);
     };
 
@@ -76,7 +75,7 @@ export const FinanceHub: React.FC = () => {
                     <div className="bg-[#6A2C91]/10 border border-[#6A2C91]/20 p-4 sm:p-6 rounded-3xl flex items-start gap-3 sm:gap-4">
                         <Sparkles className="text-[#6A2C91] shrink-0 mt-1" size={20} />
                         <p className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/70 w-full w-full max-w-3xl italic mb-8">
-                            Our AI is cross-referencing your <span className="text-white font-bold not-italic">Inventory Burn Rates</span> with <span className="text-white font-bold not-italic">Order Velocity</span> to construct a high-fidelity {reportModal.type}.
+                            Our AI is cross-referencing your{" "}<span className="text-white font-bold not-italic">Inventory Burn Rates</span>{" "}with{" "}<span className="text-white font-bold not-italic">Order Velocity</span>{" "}to construct a high-fidelity{" "}{reportModal.type}.
                         </p>
                     </div>
                     <div className="space-y-4">
@@ -583,5 +582,8 @@ CERTIFIED BY LOLA AI SYSTEMS
         </motion.div>
     );
 };
+
+
+
 
 

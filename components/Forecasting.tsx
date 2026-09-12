@@ -114,12 +114,15 @@ export const Forecasting = () => {
                  >
                      <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                          <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Order Velocity</h3>
-                         <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-10">
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">30 DAYS</Badge>
-                             <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90 DAYS</Badge>
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">180 DAYS</Badge>
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">Annual Cycle</Badge>
-                         </div>
+                         <div className="flex flex-wrap gap-4 mb-6 sm:mb-10 text-white/40 font-sans text-[10px] tracking-widest uppercase">
+    <span>30 DAYS</span>
+    <span>&bull;</span>
+    <span>90 DAYS</span>
+    <span>&bull;</span>
+    <span>180 DAYS</span>
+    <span>&bull;</span>
+    <span>ANNUAL CYCLE</span>
+</div>
                          <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4 sm:mt-0">
                              <ResponsiveContainer width="100%" height="100%">
                                  <AreaChart data={forecastData}>
@@ -162,12 +165,15 @@ export const Forecasting = () => {
                                  ))}
                              </div>
                          </div>
-                         <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-10">
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">30 DAYS</Badge>
-                             <Badge color="gold" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase shadow-sm border-[#C5A059]/20 text-[#C5A059]">90 DAYS</Badge>
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">180 DAYS</Badge>
-                             <Badge color="purple" className="rounded-full px-4 py-2 font-sans text-[10px] tracking-widest uppercase bg-white/5 border-white/10 text-white sm:text-white/50">Annual Cycle</Badge>
-                         </div>
+                         <div className="flex flex-wrap gap-4 mb-6 sm:mb-10 text-white/40 font-sans text-[10px] tracking-widest uppercase">
+    <span>30 DAYS</span>
+    <span>&bull;</span>
+    <span>90 DAYS</span>
+    <span>&bull;</span>
+    <span>180 DAYS</span>
+    <span>&bull;</span>
+    <span>ANNUAL CYCLE</span>
+</div>
                          <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4 sm:mt-0">
                              <ResponsiveContainer width="100%" height="100%">
                                  <AreaChart data={forecastData}>
