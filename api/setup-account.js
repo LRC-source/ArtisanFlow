@@ -68,8 +68,22 @@ export default async function handler(req, res) {
             const fpDocs = await db.collection('users').where('deviceFingerprint', '==', deviceFingerprint).get();
             
             let abuseDetected = false;
-            emailDocs.forEach((d) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
-            fpDocs.forEach((d) => { if (d.id !== uid && d.data().tier === 'Free Trial') abuseDetected = true; });
+            
+            emailDocs.forEach((d) => { 
+                if (d.id !== uid && d.data().tier === 'Free Trial') {
+                    abuseDetected = true; 
+                }
+            });
+            
+            fpDocs.forEach((d) => { 
+                if (d.id !== uid && d.data().tier === 'Free Trial') {
+                    const trialEndsAt = d.data().trialEndsAt;
+                    const isCompleted = trialEndsAt && new Date(trialEndsAt) < new Date();
+                    if (isCompleted) {
+                        abuseDetected = true;
+                    }
+                } 
+            });
             
             if (abuseDetected) {
                 return res.status(403).json({ error: 'Our system indicates you have already utilized a Free Trial.' });
