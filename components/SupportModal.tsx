@@ -154,7 +154,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                                             {isSubmitting ? (
                                                 <>Sending...</>
                                             ) : (
-                                                <>Submit Node <Send size={16} /></>
+                                                <>Submit Request <Send size={16} /></>
                                             )}
                                         </Button>
                                     </div>

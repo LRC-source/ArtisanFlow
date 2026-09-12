@@ -352,7 +352,7 @@ const recipePayload: any = {
             </div>
           </Card>
 
-          <Card title="Bill of Materials (BOM Nodes)" className="rounded-[2.5rem] border-stone-100">
+          <Card title="BILL OF MATERIALS" className="rounded-[2.5rem] border-stone-100">
             <div className="space-y-4 mt-4">
               {ingredients.map((ing, idx) => (
                 <div key={idx} className="flex flex-col md:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 items-end bg-stone-50 p-4 sm:p-6 rounded-[2rem] border border-stone-100 group hover:border-purple-200 transition-all">
@@ -449,7 +449,7 @@ const recipePayload: any = {
 
                 <div className="pt-4 flex items-center gap-3 text-stone-400">
                     <ShieldCheck size={16} />
-                    <span className="text-[9px] font-black uppercase tracking-widest">Data persistent in vault node</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest">SAVED AUTOMATICALLY</span>
                 </div>
              </div>
           </Card>
