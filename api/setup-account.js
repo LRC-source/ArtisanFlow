@@ -45,10 +45,13 @@ export default async function handler(req, res) {
         
         const { deviceFingerprint } = req.body || {};
         
-        const isTrial = true;
-        const forcedTier = 'Free Trial';
-        const forcedStatus = 'trialing';
-        const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+        const userEmail = payloadData.email?.toLowerCase() || '';
+        const isAdmin = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'].includes(userEmail);
+        
+        const isTrial = !isAdmin;
+        const forcedTier = isAdmin ? 'Pro Artisan' : 'Free Trial';
+        const forcedStatus = isAdmin ? 'Active' : 'trialing';
+        const trialEndsAt = isAdmin ? null : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
         
         const db = getFirestore();
         try {
