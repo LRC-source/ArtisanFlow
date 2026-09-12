@@ -5,8 +5,9 @@ export default async function handler(req, res) {
     if (b && b.prompt === 'GET_MODELS_DEBUG') {
       const apiKey = process.env.GEMINI_API_KEY;
       const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + apiKey);
-      const data = await fetchRes.text();
-      return res.status(200).send(data);
+      const data = await fetchRes.json();
+      const names = (data.models || []).map(m => m.name);
+      return res.status(200).json({ names });
     }
   } catch(e) {}
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Missing Gemini API Key' });
 
-    const fetchRes = await fetch(https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key= + apiKey, {
+    const fetchRes = await fetch(https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key= + apiKey, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
