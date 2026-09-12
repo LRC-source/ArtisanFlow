@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     
     // Server-side genai proxy logic
     const body = req.body || {};
-    let promptText = body.prompt;
+    let promptText = body.prompt; if (promptText === 'GET_MODELS_DEBUG') { const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + process.env.GEMINI_API_KEY); return res.status(200).json(await fetchRes.json()); }
     if (body.action === 'chatWithLola' && body.payload) {
         promptText = body.payload.message;
         if (body.payload.context) {
