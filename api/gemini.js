@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     const data = await fetchRes.json();
     
     // Extract text for the frontend
-    let text = "";
+    if (promptText === 'GET_MODELS_DEBUG') { const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + apiKey); const data = await fetchRes.json(); return res.status(200).json(data); } let text = "";
     if (data.candidates && data.candidates[0].content.parts) {
         text = data.candidates[0].content.parts.map(p => p.text).join("");
     } else if (data.error) {
