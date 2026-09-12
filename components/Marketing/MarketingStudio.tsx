@@ -89,7 +89,7 @@ const MarketingGrid = () => {
                 title="Content Approvals" 
                 icon={CheckCircle} 
                 color="gold" 
-                desc="Governance node for marketing deployment." 
+                desc="Review and approve marketing content before it goes live." 
                 onClick={() => navigate('/marketing/approvals')}
             />
             <HubCard 

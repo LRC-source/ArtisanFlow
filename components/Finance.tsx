@@ -267,7 +267,7 @@ export const FinanceHub: React.FC = () => {
                         </div>
                         <div className="space-y-4">
                             <ReportButton label="Profit & Loss Statement" icon={FileText} onClick={() => handleGenerateReport('P&L')} />
-                            <ReportButton label="Balance Sheet Node" icon={BarChart3} onClick={() => handleGenerateReport('Balance Sheet')} />
+                            <ReportButton label="BALANCE SHEET" icon={BarChart3} onClick={() => handleGenerateReport('Balance Sheet')} />
                             <ReportButton label="Cash Flow Projections" icon={PieChart} onClick={() => handleGenerateReport('Cash Flow')} />
                             <ReportButton label="Inventory Valuation Tax Log" icon={ShieldCheck} onClick={() => handleGenerateReport('Tax Log')} />
                         </div>

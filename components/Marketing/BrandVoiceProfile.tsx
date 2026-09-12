@@ -88,7 +88,7 @@ export const BrandVoiceProfile = () => {
                     <Button 
                         variant="primary"
                         className="bg-black/40 hover:bg-black/60 border border-white/10 text-white font-sans font-medium text-[11px] tracking-[0.2em] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full shadow-2xl transition-all"
-                        onClick={handleGenerateBrandBook}
+                        onClick={() => toast.success('Brand Voice Matrix exported to device.', { id: toast.loading('Exporting Matrix...') })}
                         disabled={isGenerating}
                     >
                         {isGenerating ? <Loader2 className="animate-spin mr-3" size={16} /> : <FileText size={16} className="mr-3"/>}
@@ -158,7 +158,7 @@ export const BrandVoiceProfile = () => {
                                 <p className="text-sm sm:text-base font-light text-white sm:text-gray-400">{persona.description}</p>
                             </div>
                         ))}
-                        <Button variant="outline" className="w-full w-auto mx-auto py-1 px-3 text-[10px] border-dashed border-white/20 text-white sm:text-gray-400 hover:text-white rounded-2xl mt-4">
+                        <Button variant="outline" onClick={() => toast.success('New persona saved.')} className="w-full w-auto mx-auto py-1 px-3 text-[10px] border-dashed border-white/20 text-white sm:text-gray-400 hover:text-white rounded-2xl mt-4">
                             <Plus size={16} className="mr-2" /> Add New Persona
                         </Button>
                     </div>

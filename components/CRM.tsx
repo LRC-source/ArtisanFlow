@@ -196,7 +196,7 @@ export const CRM = () => {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-[1800px] mx-auto"
     >
-        <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Initialize Vault Node">
+        <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Add New Customer">
             <div className="space-y-8 p-4">
                 <div className="space-y-3">
                     <label className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] ml-1">Full Legal Name</label>
@@ -211,7 +211,7 @@ export const CRM = () => {
                     <Input placeholder="City, State / Global" value={newCust.location} onChange={e => setNewCust({...newCust, location: e.target.value})} className="w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl bg-black/40 border-white/10 focus:border-[#6A2C91] text-white" />
                 </div>
                 <Button className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full font-sans font-bold text-[11px] tracking-[0.3em] shadow-2xl shadow-[#6A2C91]/20 mt-8 transition-all" onClick={handleAddManual}>
-                    AUTHORIZE NODE CREATION
+                    ADD CUSTOMER
                 </Button>
             </div>
         </Modal>
@@ -243,7 +243,7 @@ export const CRM = () => {
                     className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto" 
                     onClick={() => setIsAddModalOpen(true)}
                 >
-                    <UserPlus size={16} className="mr-3" /> ADD MANUAL NODE
+                    <UserPlus size={16} className="mr-3" /> ADD CUSTOMER
                 </Button>
             </div>
           </VaultBanner>
@@ -269,7 +269,7 @@ export const CRM = () => {
         <div className="space-y-10">
             <div className="relative group max-w-2xl">
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white sm:text-white/40 group-focus-within:text-[#C5A059] transition-colors" size={20} />
-                <Input placeholder="Scan for nodes by name, email, or metadata..." className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" />
+                <Input placeholder="Search customers by name, email, or keyword..." className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10">

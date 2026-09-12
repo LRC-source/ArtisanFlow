@@ -110,7 +110,7 @@ export const BusinessPulseCheck = () => {
                         <option value="">How do you feel...</option>
                         <option value="zen">Zen Protocol (Everything is automated)</option>
                         <option value="manageable">Manageable (Some manual effort)</option>
-                        <option value="stressed">Stressed (Dropping nodes)</option>
+                        <option value="stressed">Stressed (losing momentum)</option>
                         <option value="chaos">Total Chaos (Firefighting daily)</option>
                     </Select>
                 </div>
@@ -131,7 +131,7 @@ export const BusinessPulseCheck = () => {
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-sans font-medium text-stone-400 uppercase tracking-[0.2em] ml-2">Personality Node</label>
+                            <label className="text-[10px] font-sans font-medium text-stone-400 uppercase tracking-[0.2em] ml-2">CREATOR ARCHETYPE</label>
                             <Select
                                 value={formData.personality}
                                 onChange={(e) => setFormData({...formData, personality: e.target.value})}

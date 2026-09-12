@@ -221,6 +221,7 @@ export const Select: React.FC<React.SelectHTMLAttributes<HTMLSelectElement>> = (
 );
 
 export const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: string; children: React.ReactNode }> = ({ isOpen, onClose, title, children }) => {
+  React.useEffect(() => { const handleEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); }; if (isOpen) window.addEventListener('keydown', handleEsc); return () => window.removeEventListener('keydown', handleEsc); }, [isOpen, onClose]);
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-xl z-50 flex items-center justify-center p-6 animate-in fade-in duration-500">
@@ -354,43 +355,35 @@ export const FileUploader: React.FC<{
 
 export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: boolean; onClose: () => void; platform: string }) => {
     const { toggleChannelConnection } = useArtisanData();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [isConnecting, setIsConnecting] = useState(false);
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title={`Authenticate ${platform}`}>
+        <Modal isOpen={isOpen} onClose={onClose} title={`Connect to ${platform}`}>
             <div className="space-y-6">
                 <p className="text-white/60 font-sans font-light text-sm">
-                    Enter your {platform} credentials to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
+                    Connect your {platform} account securely via OAuth to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
                 </p>
-                <Input 
-                    placeholder="Email Address" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                    className="w-full"
-                />
-                <Input 
-                    placeholder="Password" 
-                    type="password"
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    className="w-full"
-                />
+                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
+                    <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
+                        <ShieldCheck size={24} className="text-[#C5A059]" />
+                    </div>
+                    <p className="text-sm font-bold text-white">Secure OAuth Connection</p>
+                    <p className="text-xs text-white/50">You will be redirected to {platform} to authorize access.</p>
+                </div>
                 <Button 
                     onClick={() => {
                         setIsConnecting(true);
                         setTimeout(() => {
                             setIsConnecting(false);
-                            toggleChannelConnection(platform);
+                            toggleChannelConnection(platform.toLowerCase());
                             onClose();
-                            toast.success(`${platform} authenticated successfully.`);
+                            toast.success(`Successfully connected to ${platform} via OAuth.`);
                         }, 1500);
-                    }} 
+                    }}
+                    className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white py-4"
                     disabled={isConnecting}
-                    className="w-full h-12 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl font-sans font-bold tracking-widest text-[10px] uppercase"
                 >
-                    {isConnecting ? <Loader2 size={16} className="animate-spin mx-auto" /> : `Connect ${platform} Account`}
+                    {isConnecting ? "AUTHORIZING..." : `AUTHORIZE ${platform.toUpperCase()}`}
                 </Button>
             </div>
         </Modal>

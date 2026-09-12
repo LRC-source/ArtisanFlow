@@ -114,7 +114,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
           
           if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
             try {
-              await signUp({ email: user.email, name: user.displayName || 'Admin Hub', password: '', tier: 'Pro Artisan', status: 'Active' });
+              await signUp({ email: user.email, name: 'Admin', password: '', tier: 'Pro Artisan', status: 'Active' });
               return;
             } catch (e: any) {
               console.error(e);
@@ -124,7 +124,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
 
           if (selectedTier === 'Free Trial') {
             try {
-              await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: 'Free Trial', status: 'Active' });
+              await signUp({ email: user.email, name: 'Business Owner', password: '', tier: 'Free Trial', status: 'Active' });
               navigate('/dashboard');
             } catch (e: any) {
               console.error(e);
@@ -132,7 +132,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
             }
           } else if (selectedTier) {
             try {
-              await signUp({ email: user.email, name: user.displayName || 'New Artisan Business', password: '', tier: selectedTier, status: 'Pending Payment' });
+              await signUp({ email: user.email, name: 'Business Owner', password: '', tier: selectedTier, status: 'Pending Payment' });
               setEmail(user.email); // Pre-fill the email state for the payment gateway
               setView('payment');
             } catch (e: any) {

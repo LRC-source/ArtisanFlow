@@ -196,9 +196,29 @@ export const Inventory = () => {
                         <div className="space-y-6 pt-4">
                             <div>
                                 <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Adjustment Amount (Use negative to subtract)</label>
-                                <Input type="number" value={adjustAmount} onChange={e => setAdjustAmount(Number(e.target.value))} className="rounded-2xl py-4 font-bold" />
+                                <Input type="number" value={adjustAmount} onChange={e => setAdjustAmount(Number(e.target.value))} className="mt-2 text-white bg-black/50" />
                             </div>
                             <Button onClick={handleAdjustStock} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">Confirm Adjustment</Button>
+                        </div>
+                    </Modal>
+
+                    <Modal isOpen={showAddItem} onClose={() => setShowAddItem(false)} title="Deploy Asset">
+                        <div className="space-y-4 pt-4">
+                            <Input placeholder="Asset Name (e.g. Lavender Oil)" value={newItem.name || ''} onChange={e => setNewItem({...newItem, name: e.target.value})} className="bg-black/50 text-white" />
+                            <Input placeholder="SKU (Optional)" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
+                            <Select value={newItem.type || 'raw'} onChange={e => setNewItem({...newItem, type: e.target.value as 'raw'|'finished'})} className="bg-black/50 text-white border border-white/10 w-full p-3 rounded-2xl">
+                                <option value="raw">Raw Material</option>
+                                <option value="finished">Finished Good</option>
+                            </Select>
+                            <div className="flex gap-4">
+                                <Input type="number" placeholder="Initial Stock" value={newItem.stock || 0} onChange={e => setNewItem({...newItem, stock: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
+                                <Input placeholder="Unit (e.g. oz, pcs)" value={newItem.unit || ''} onChange={e => setNewItem({...newItem, unit: e.target.value})} className="bg-black/50 text-white w-1/2" />
+                            </div>
+                            <div className="flex gap-4">
+                                <Input type="number" placeholder="Unit Cost ($)" value={newItem.unitCost || 0} onChange={e => setNewItem({...newItem, unitCost: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
+                                <Input type="number" placeholder="Reorder Point" value={newItem.reorderPoint || 0} onChange={e => setNewItem({...newItem, reorderPoint: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
+                            </div>
+                            <Button onClick={handleAdd} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">DEPLOY ASSET</Button>
                         </div>
                     </Modal>
 

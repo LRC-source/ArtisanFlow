@@ -136,7 +136,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
           <nav className="sidebar-nav-container">
 
               <div className="nav-section-group">
-                  <span className="nav-section-title">Primary Nodes</span>
+                  <span className="nav-section-title">Main Menu</span>
                   <button onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
                       <GlassHaloIcon icon={LayoutDashboard} color="cyan" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Dashboard</span>
@@ -206,7 +206,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   </button>
                   <button onClick={() => { setIsSupportOpen(true); setIsMobileMenuOpen(false); }} className="nav-item">
                       <GlassHaloIcon icon={HelpCircle} color="magenta" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">Support Node</span>
+                      <span className="flex-1 text-left">Support</span>
                   </button>
               </div>
           </nav>

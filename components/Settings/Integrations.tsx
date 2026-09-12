@@ -18,7 +18,7 @@ export const Integrations = () => {
     const platformCards = [
         { id: 'etsy', name: 'Etsy', icon: <ShoppingBag size={24} />, category: 'Marketplace', status: 'Coming Soon', desc: 'Sync orders and update stock back to Etsy instantly.' },
         { id: 'shopify', name: 'Shopify', icon: <Globe size={24} />, category: 'E-commerce', status: 'Coming Soon', desc: 'Two-way sync for materials, products, and fulfillment.' },
-        { id: 'woocommerce', name: 'WooCommerce', icon: <Share2 size={24} />, category: 'E-commerce', status: 'Connect API', desc: 'Connect your self-hosted WooCommerce store using REST API.' },
+        { id: 'woocommerce', name: 'WooCommerce', icon: <Share2 size={24} />, category: 'E-commerce', status: 'Coming Soon', desc: 'Connect your self-hosted WooCommerce store using REST API.' },
         { id: 'square', name: 'Square POS', icon: <Database size={24} />, category: 'POS', status: 'Coming Soon', desc: 'Sync in-person sales and deduct from master inventory.' },
         { id: 'gdrive', name: 'Google Drive', icon: <HardDrive size={24} />, category: 'Storage', status: 'Coming Soon', desc: 'Auto-backup your ledger and store recipe attachments.' },
     ];
@@ -124,7 +124,7 @@ export const Integrations = () => {
                                 className="w-full mt-6 border-white/20 text-white hover:bg-white/10"
                                 onClick={() => setActiveModal(platform.name)}
                             >
-                                {platform.id === "woocommerce" ? <><LinkIcon size={16} className="mr-2" /> Connect</> : <><Bell size={16} className="mr-2" /> Notify Me</>}
+                                <><Bell size={16} className="mr-2" /> COMING SOON</>
                             </Button>
                         </Card>
                     ))}

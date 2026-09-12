@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export const useFeatureGate = (featureKey: string) => {
-  const { hasAccess, incrementLolaUsage } = useTier();
+  const { hasAccess, incrementLolaUsage, isTierLoading } = useTier();
   const navigate = useNavigate();
 
   const isLocked = !hasAccess(featureKey);

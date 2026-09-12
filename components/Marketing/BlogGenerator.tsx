@@ -47,9 +47,9 @@ export const BlogGenerator = () => {
             
             try {
                 let jsonStr = result.text;
-                if (jsonStr.includes('```json')) jsonStr = jsonStr.split('```json')[1].split('```')[0].trim();
-                else if (jsonStr.includes('```')) jsonStr = jsonStr.split('```')[1].split('```')[0].trim();
-                const parsed = JSON.parse(jsonStr);
+                const match = jsonStr.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+                if (match) jsonStr = match[1];
+                const parsed = JSON.parse(jsonStr.trim());
                 setOutline(Array.isArray(parsed) ? parsed : [parsed]);
                 toast.success("Outline generated.", { id: toastId });
             } catch (e) {
@@ -111,7 +111,7 @@ export const BlogGenerator = () => {
                   title="Blog Generator"
                   parentTitle="Marketing Hub"
                   onBack={() => navigate('/marketing')}
-                  description="SEO-optimized content synthesis node with structural preview"
+                  description="SEO blog writer with live outline preview"
                 />
             </div>
 

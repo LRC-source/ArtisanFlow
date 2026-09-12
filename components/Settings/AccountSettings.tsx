@@ -43,7 +43,7 @@ export const AccountSettings = () => {
             
             <div className="w-full md:w-1/2">
                 <div className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 ${isSuccess ? 'ring-1 ring-emerald-500/50 bg-emerald-900/10' : ''} transition-all duration-500 rounded-[2.5rem]`}>
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Identity Nodes</h3>
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Profile</h3>
                     <div className="space-y-8">
                         <div className="flex items-center gap-6">
                             <div className="w-20 h-20 rounded-[1.2rem] bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)]">
@@ -87,8 +87,28 @@ export const AccountSettings = () => {
                 </div>
             </div>
 
+            {/* Billing & Subscription */}
+            <div className="w-full mt-6">
+                <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-[2.5rem]">
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-white">Billing &amp; Subscription</h3>
+                        <Badge variant="outline" className="border-[#C5A059] text-[#C5A059]">Managed via Stripe</Badge>
+                    </div>
+                    <div className="space-y-4">
+                        <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex justify-between items-center">
+                            <div>
+                                <p className="text-[10px] font-black text-white/50 uppercase tracking-widest mb-1">Current Plan</p>
+                                <p className="text-sm font-bold text-white">{businessProfile.tier}</p>
+                            </div>
+                            <Button variant="outline" className="text-[10px]" onClick={() => navigate('/settings/subscription')}>Manage Plan</Button>
+                        </div>
+                        <p className="text-xs text-white/50">Billing details, payment methods, and invoices are securely managed through our payment partner.</p>
+                    </div>
+                </div>
+            </div>
+
             {/* Support & Tutorial */}
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 mt-6">
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-[2.5rem]">
                     <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-white mb-6">Support &amp; Help</h3>
                     <div className="space-y-4">

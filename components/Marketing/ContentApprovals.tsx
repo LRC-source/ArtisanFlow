@@ -48,7 +48,7 @@ export const ContentApprovals = () => {
                       title="Content Approvals"
                       parentTitle="Marketing Hub"
                       onBack={() => navigate('/marketing')}
-                      description="Internal governance node for marketing deployment."
+                      description="Review and approve marketing content before it goes live."
                     />
                 ) : (
                     <div className="space-y-2">

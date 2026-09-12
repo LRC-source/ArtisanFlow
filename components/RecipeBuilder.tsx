@@ -148,7 +148,7 @@ export const RecipeBuilder: React.FC = () => {
       inventoryItemId: z.string().min(1),
       quantity: z.number().min(0.01, { message: "Ingredient quantity must be greater than 0" }),
       unit: z.string().min(1)
-    })).min(1, { message: "At least one BOM node is required" })
+    })).min(1, { message: "Add at least one material to your recipe" })
   });
 
   const handleSave = async () => {
@@ -395,7 +395,7 @@ const recipePayload: any = {
                 onClick={addIngredient} 
                 className="w-full py-6 border-2 border-dashed border-stone-200 rounded-[2rem] text-white sm:text-gray-400 font-black text-[10px] uppercase tracking-widest hover:border-[#6A2C91] hover:text-[#6A2C91] hover:bg-purple-50 transition-all flex items-center justify-center gap-3"
               >
-                <Plus size={18} /> INITIALIZE NEW BOM NODE
+                <Plus size={18} /> ADD MATERIAL
               </button>
             </div>
           </Card>

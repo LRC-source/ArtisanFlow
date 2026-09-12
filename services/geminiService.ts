@@ -13,7 +13,9 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
     if (!user) throw new Error("Not authenticated");
     const token = await user.getIdToken();
 
-    const response = await fetch('/api/gemini', {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), 12000);
+      const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -39,7 +41,9 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
  */
 export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
   try {
-    const response = await fetch('/api/gemini', {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), 12000);
+      const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'analyzeLolaImage', payload: { imageB64, prompt } })
@@ -57,7 +61,9 @@ export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
  */
 export const generateLolaImage = async (prompt: string, config: { size: '1K' | '2K' | '4K', aspectRatio: string }) => {
   try {
-    const response = await fetch('/api/gemini', {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), 12000);
+      const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generateLolaImage', payload: { prompt, config } })
@@ -76,7 +82,9 @@ export const generateLolaImage = async (prompt: string, config: { size: '1K' | '
 export const generateLolaSpeech = async (text: string) => {
   if (!text) return null;
   try {
-    const response = await fetch('/api/gemini', {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), 12000);
+      const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'generateLolaSpeech', payload: { text } })
@@ -95,7 +103,7 @@ export const searchBusinessData = async (query: string, data: any) => {
 
 export const analyzeBudgetGuard = async (context: any) => {
   const result = await chatWithLola("Generate strategic budget proposal.", context, 'deep');
-  try { return JSON.parse(result.text); } catch (e) { return null; }
+  try { return parseAIJson(result.text); } catch (e) { return null; }
 };
 
 export const generateMarketingStrategy = async (pulseData: string, tier: string) => {
@@ -103,17 +111,27 @@ export const generateMarketingStrategy = async (pulseData: string, tier: string)
   return result.text;
 };
 
+const parseAIJson = (text: string) => { 
+  try { 
+      let clean = text;
+      const match = clean.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+      if (match) clean = match[1];
+      return JSON.parse(clean.trim()); 
+  } catch(e) { 
+      return null; 
+  } 
+};
 export const generatePlatformContentBundle = async (strategy: any) => {
-  const result = await chatWithLola("Synthesize posts.", strategy, 'fast');
-  try { return JSON.parse(result.text); } catch (e) { return null; }
+  const result = await chatWithLola("Synthesize posts. Format as a JSON object with a 'posts' array. ONLY output the raw JSON.", strategy, 'fast');
+  return parseAIJson(result.text);
 };
 
 export const generateFinancialAnalysis = async (orders: any[], inventory: any[]) => {
   const result = await chatWithLola("Generate 5-year recovery projection.", { orders, inventory }, 'deep');
-  try { return JSON.parse(result.text); } catch (e) { return null; }
+  try { return parseAIJson(result.text); } catch (e) { return null; }
 };
 
 export const generateBudgetStrategy = async (rev: number, exp: number, goals: string) => {
   const result = await chatWithLola(`Optimize budget. Rev: ${rev} Exp: ${exp} Goals: ${goals}`, null, 'deep');
-  try { return JSON.parse(result.text); } catch (e) { return null; }
+  try { return parseAIJson(result.text); } catch (e) { return null; }
 };

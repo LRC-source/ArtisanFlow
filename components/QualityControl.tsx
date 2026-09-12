@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import React, { useState } from 'react';
 import { Card, Button, Badge, Input, Select, Modal, VaultBanner } from './UI';
 import { useArtisanData, QualityCheck } from './DataContext';
@@ -20,7 +21,7 @@ export const QualityControl = () => {
   });
 
   const handleAdd = () => {
-      if(!newCheck.productName) return;
+        if(!newCheck.productName) return toast.error('Please select an asset.');
       addQualityCheck(newCheck as any);
       setShowAdd(false);
       setNewCheck({ productName: '', batchNumber: '', status: 'Pending', inspector: '' });

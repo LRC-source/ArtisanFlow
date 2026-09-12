@@ -350,7 +350,6 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [isSessionVerifying, setIsSessionVerifying] = useState(true);
   const [demandInsights, setDemandInsights] = useState<any[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [manualCustomers, setManualCustomers] = useState<ManualCustomer[]>([]);
   const [todos, setTodos] = useState<TodoItem[]>([]);
   const [isTutorialActive, setIsTutorialActive] = useState(false);
   const [tutorialStep, setTutorialStepState] = useState(0);
@@ -709,11 +708,17 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   const migrateInventoryToLots = async () => {
-    if (!auth.currentUser) return;
+    if (!auth.currentUser) {
+        toast.error("You must be logged in to migrate inventory.");
+        return;
+    }
     const uid = auth.currentUser.uid;
-    const batch = [];
+    let migratedCount = 0;
     
-    for (const item of inventory) {
+    const updatedInventory = [...inventory];
+    
+    for (let i = 0; i < updatedInventory.length; i++) {
+      const item = updatedInventory[i];
       if (!item.migratedToLots && item.type === 'raw') {
         const legacyLot: Lot = {
           id: `legacy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -733,34 +738,19 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               lots: [legacyLot]
             }, { merge: true });
           }
-          batch.push(item.id);
+          updatedInventory[i] = { ...item, isLotTracked: true, migratedToLots: true, lots: [legacyLot] };
+          migratedCount++;
         } catch (e) {
           console.error("Migration failed for item", item.id, e);
         }
       }
     }
     
-    if (batch.length > 0) {
-      setInventory(prev => prev.map(item => {
-        if (batch.includes(item.id)) {
-          return {
-            ...item,
-            isLotTracked: true,
-            migratedToLots: true,
-            lots: [{
-              id: `legacy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-              lotNumber: 'LEGACY-01',
-              receivedDate: new Date().toISOString(),
-              quantity: item.stock,
-              originalQuantity: item.stock,
-              unitCost: item.unitCost,
-              status: 'Active'
-            }]
-          };
-        }
-        return item;
-      }));
-      toast.success(`Migrated ${batch.length} items to Lot Tracking.`);
+    if (migratedCount > 0) {
+      setInventory(updatedInventory);
+      toast.success(`Successfully migrated ${migratedCount} items to Lot Tracking.`);
+    } else {
+      toast.info("No items required migration.");
     }
   };
 
@@ -981,8 +971,31 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const addQualityCheck = (q: any) => setQualityChecks(prev => [...prev, { ...q, id: Date.now().toString() }]);
   const addMarketingPost = (post: any) => setMarketingPosts(prev => [...prev, { ...post, id: Date.now().toString() }]);
   const addAppointment = (appointment: Omit<Appointment, 'id'>) => setAppointments(prev => [...prev, { ...appointment, id: Date.now().toString() }]);
-  const addManualCustomer = (c: Omit<ManualCustomer, 'id' | 'createdDate'>) => {
-    setManualCustomers(prev => [...prev, { ...c, id: `M-${Date.now()}`, createdDate: new Date().toLocaleDateString() }]);
+  
+  const [manualCustomers, setManualCustomers] = useState<ManualCustomer[]>(() => {
+    if (typeof window !== 'undefined') {
+        try {
+            const saved = localStorage.getItem('artisan_manual_customers');
+            return saved ? JSON.parse(saved) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+    return [];
+  });
+
+  const addManualCustomer = async (c: Omit<ManualCustomer, 'id' | 'createdDate'>) => {
+    const newCust = { ...c, id: `M-${Date.now()}`, createdDate: new Date().toLocaleDateString() };
+    setManualCustomers(prev => {
+        const next = [...prev, newCust];
+        if (typeof window !== 'undefined') localStorage.setItem('artisan_manual_customers', JSON.stringify(next));
+        return next;
+    });
+    if (!isDemoMode && auth.currentUser) {
+        try {
+            await setDoc(doc(db, 'users', auth.currentUser.uid, 'manualCustomers', newCust.id), newCust);
+        } catch (e) { console.error('Failed to sync manual customer', e); }
+    }
   };
   const updateMarketingPost = (id: string, updates: any) => setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
   const generateSchedule = () => setProductionStats(prev => ({ ...prev, active: prev.active + 1 }));

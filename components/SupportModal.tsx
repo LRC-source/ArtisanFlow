@@ -88,7 +88,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                             <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between bg-black/20">
                                 <div className="flex items-center gap-3">
                                     <GlassHaloIcon icon={HelpCircle} color="gold" size="md" />
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white font-serif">ArtisanFlow Support Node</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white font-serif">ArtisanFlow Support</h3>
                                 </div>
                                 <button onClick={onClose} className="text-white sm:text-white/50 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5">
                                     <X size={20} />
