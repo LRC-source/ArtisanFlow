@@ -390,8 +390,7 @@ export const Inventory = () => {
           
           {/* Hidden file input outside VaultBanner so ref is always mounted and accessible */}
           <input
-            id="csv-file-input"
-            type="file" id="csv-upload"
+            id="csv-upload" type="file"
             ref={fileInputRef}
             className="hidden"
             accept=".csv"
@@ -630,4 +629,5 @@ export const Inventory = () => {
 );
 
 export default Inventory;
+
 

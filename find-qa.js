@@ -15,8 +15,8 @@ async function findQA() {
   for (const user of users.docs) {
     const customers = await db.collection('users').doc(user.id).collection('manualCustomers').get();
     for (const c of customers.docs) {
-      if (c.data().email === 'qarecheck@example.com') {
-        console.log('Found QA record:', c.id, 'in user:', user.id);
+      if (c.data().name === 'Verify Fix Customer' || c.data().email === 'verifyfix@example.com') {
+        console.log('Found Verify record:', c.id, 'in user:', user.id); await c.ref.delete(); console.log('Deleted Verify Fix Customer');
         const token = await getAuth().createCustomToken(user.id);
         console.log('Login Token:', token);
         fs.writeFileSync('qa-token.txt', token);
@@ -27,3 +27,4 @@ async function findQA() {
   console.log('QA record not found');
 }
 findQA();
+
