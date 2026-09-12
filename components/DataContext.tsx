@@ -764,9 +764,11 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  const login = async (email: string, pass: string) => { 
+  const login = async (email: string, pass: string) => {
+    toast.info("Starting login sequence...");
     try {
       await signInWithEmailAndPassword(auth, email, pass);
+      toast.info("Firebase Auth login successful.");
       return true;
     } catch (error: any) {
       console.error("Login Error:", error);
@@ -805,14 +807,18 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   const signUp = async (data: any) => {
+    toast.info("Starting signup...");
     try {
       let user = auth.currentUser;
       if (data.password) {
         try {
+          toast.info("Creating auth user...");
           const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
           user = userCredential.user;
+          toast.info("Auth user created.");
         } catch (authError: any) {
           if (authError.code === 'auth/email-already-in-use') {
+            toast.info("Email exists, attempting sign-in...");
             const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
             user = userCredential.user;
           } else {
@@ -828,25 +834,44 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       if (!user) throw new Error("No authenticated user found for signup.");
 
       // Fingerprinting
+      toast.info("Generating fingerprint...");
       const nav = window.navigator;
       const screen = window.screen;
       const deviceFingerprint = btoa(`${nav.userAgent}-${nav.language}-${screen.colorDepth}-${screen.width}x${screen.height}-${new Date().getTimezoneOffset()}`);
 
       if (!isDemoMode) {
+        toast.info("Fetching token...");
         const token = await user.getIdToken();
         const { password, ...safeData } = data;
-        const res = await fetch('/api/setup-account', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ data: safeData, deviceFingerprint })
-        });
         
-        if (!res.ok) {
-            const errData = await res.json().catch(() => ({}));
-            throw new Error(errData.error || "Failed to initialize account. Please try again.");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        
+        try {
+            toast.info("Calling setup-account...");
+            const res = await fetch('/api/setup-account', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ data: safeData, deviceFingerprint }),
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            toast.info("Setup-account returned " + res.status);
+            
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.error || `Failed to initialize account (Status ${res.status}).`);
+            }
+        } catch (e: any) {
+            clearTimeout(timeoutId);
+            if (e.name === 'AbortError') {
+                throw new Error("Server took too long to respond. Please try again.");
+            }
+            throw e;
         }
       }
 

@@ -51,7 +51,11 @@ export default async function handler(req, res) {
         const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
         
         const db = getFirestore();
-        db.settings({ preferRest: true });
+        try {
+            db.settings({ preferRest: true });
+        } catch(e) {
+            // Ignore "Firestore has already been initialized" on warm invocations
+        }
         
         const userRef = db.collection('users').doc(uid);
         const docSnap = await userRef.get();
