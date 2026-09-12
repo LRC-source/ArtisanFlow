@@ -985,18 +985,31 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     return [];
   });
 
-  const addManualCustomer = async (c: Omit<ManualCustomer, 'id' | 'createdDate'>) => {
-    const newCust = { ...c, id: `M-${Date.now()}`, createdDate: new Date().toLocaleDateString() };
-    setManualCustomers(prev => {
-        const next = [...prev, newCust];
-        if (typeof window !== 'undefined') localStorage.setItem('artisan_manual_customers', JSON.stringify(next));
-        return next;
-    });
-    if (!isDemoMode && auth.currentUser) {
-        try {
-            await setDoc(doc(db, 'users', auth.currentUser.uid, 'manualCustomers', newCust.id), newCust);
-        } catch (e) { console.error('Failed to sync manual customer', e); }
-    }
+    const addManualCustomer = async (c: Omit<ManualCustomer, 'id' | 'createdDate'>) => {
+      const newCust = { ...c, id: M- + Date.now(), createdDate: new Date().toLocaleDateString() };
+      setManualCustomers(prev => {
+          const next = [...prev, newCust];
+          if (typeof window !== 'undefined') localStorage.setItem('artisan_manual_customers', JSON.stringify(next));
+          return next;
+      });
+      if (!isDemoMode && auth.currentUser) {
+          try {
+              await setDoc(doc(db, 'users', auth.currentUser.uid, 'manualCustomers', newCust.id), newCust);
+          } catch (e) { console.error('Failed to sync manual customer', e); }
+      }
+  };
+
+  const deleteManualCustomer = async (id: string) => {
+      setManualCustomers(prev => {
+          const next = prev.filter(c => c.id !== id);
+          if (typeof window !== 'undefined') localStorage.setItem('artisan_manual_customers', JSON.stringify(next));
+          return next;
+      });
+      if (!isDemoMode && auth.currentUser) {
+          try {
+              await deleteDoc(doc(db, 'users', auth.currentUser.uid, 'manualCustomers', id));
+          } catch (e) { console.error('Failed to delete manual customer', e); }
+      }
   };
   const updateMarketingPost = (id: string, updates: any) => setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
   const generateSchedule = () => setProductionStats(prev => ({ ...prev, active: prev.active + 1 }));
@@ -1387,5 +1400,6 @@ export const useArtisanData = () => {
   if (!context) throw new Error('useArtisanData error');
   return context;
 };
+
 
 
