@@ -366,11 +366,14 @@ export const FinancialProjections: React.FC = () => {
         fetchAnalysis();
     }, []);
 
+    const [analysisError, setAnalysisError] = React.useState(false);
     const fetchAnalysis = async () => {
+        setAnalysisError(false);
         setLoading(true);
         const result = await generateFinancialAnalysis(orders, inventory);
         setAnalysis(result);
         setLoading(false);
+        if (!result) setAnalysisError(true);
     };
 
     const handleDownloadReport = () => {
@@ -445,7 +448,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                              </div>
                         </div>
 
-                        {loading ? (
+                        {analysisError ? ( <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-3xl border border-red-500/20 text-center"><AlertTriangle size={32} className="text-red-400 mb-4" /><h3 className="text-white font-bold text-lg mb-2">Analysis Unavailable</h3><p className="text-white/60 mb-6 text-sm">We couldn't generate the projection. Please try again.</p><Button onClick={fetchAnalysis} className="bg-red-500/20 text-red-300 border border-red-500/30">RETRY ANALYSIS</Button></div> ) : loading ? (
                             <div className="py-10 space-y-4">
                                 <div className="h-4 bg-white/10 rounded-full w-full animate-pulse"></div>
                                 <div className="h-4 bg-white/10 rounded-full w-3/4 animate-pulse"></div>
@@ -535,7 +538,7 @@ CERTIFIED BY LOLA AI SYSTEMS
 
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-12">
                     <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4">
-                        {loading ? (
+                        {analysisError ? ( <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-3xl border border-red-500/20 text-center"><AlertTriangle size={32} className="text-red-400 mb-4" /><h3 className="text-white font-bold text-lg mb-2">Analysis Unavailable</h3><p className="text-white/60 mb-6 text-sm">We couldn't generate the projection. Please try again.</p><Button onClick={fetchAnalysis} className="bg-red-500/20 text-red-300 border border-red-500/30">RETRY ANALYSIS</Button></div> ) : loading ? (
                             <div className="w-full h-full flex items-center justify-center"><Loader2 size={64} strokeWidth={1} className="animate-spin text-white/20" /></div>
                         ) : (
                             <ResponsiveContainer width="100%" height="100%">
@@ -580,3 +583,5 @@ CERTIFIED BY LOLA AI SYSTEMS
         </motion.div>
     );
 };
+
+
