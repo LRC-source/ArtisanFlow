@@ -7,6 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import React, { useState } from 'react';
+import { ContextualTutorialModal } from './ContextualTutorialModal';
+import { Badge, Button, Input, Modal, VaultBanner } from './UI';
+import { Search, Mail, MapPin, Users, TrendingUp, DollarSign, ShoppingCart, Package, RefreshCw, ArrowLeft, Calendar, UserPlus, Sparkles } from 'lucide-react';
+import { useArtisanData } from './DataContext';
+import { useNavigate } from 'react-router-dom';
+import { SubPageHeader } from './SubPageHeader';
+import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 import { UpgradeModal } from './UpgradeModal';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
@@ -16,6 +25,7 @@ export const CRM = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   
   // Modal States
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -43,11 +53,11 @@ export const CRM = () => {
   });
 
   const processedManualCustomers = manualCustomers.map(c => ({
-      id: c.id,
-      name: c.name,
-      email: c.email,
-      location: c.location,
-      initial: c.name.charAt(0),
+      id: c.id || `M-${Math.random()}`,
+      name: c.name || 'Unknown',
+      email: c.email || 'N/A',
+      location: c.location || 'Unknown',
+      initial: (c.name || 'U').charAt(0),
       color: 'bg-[#C5A059]',
       totalSpent: 0,
       orderCount: 0,
@@ -56,6 +66,12 @@ export const CRM = () => {
   }));
 
   const allCustomers = [...orderCustomers, ...processedManualCustomers];
+  const filteredCustomers = allCustomers.filter(c => {
+      const s = (searchTerm || '').toLowerCase();
+      return (c.name || '').toLowerCase().includes(s) || 
+             (c.email || '').toLowerCase().includes(s) ||
+             (c.location || '').toLowerCase().includes(s);
+  });
 
   const handleSync = () => {
       setIsSyncing(true);
@@ -68,8 +84,12 @@ export const CRM = () => {
           setShowUpgradeModal(true);
           return;
       }
-      if (!newCust.name || !newCust.email) return;
+      if (!newCust.name || !newCust.email) {
+          toast.error("Please provide both name and email.");
+          return;
+      }
       addManualCustomer(newCust);
+      toast.success("Customer added successfully.");
       const tempId = `M-${Date.now()}`; 
       setJustAddedId(tempId);
       setNewCust({ name: '', email: '', location: '' });
@@ -129,20 +149,20 @@ export const CRM = () => {
               <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-6 sm:p-16 relative overflow-hidden group shadow-2xl">
                   <div className="absolute top-0 right-0 w-80 h-[200px] sm:h-80 bg-purple-500 opacity-5 rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
                   <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 relative z-10">
-                      <div className={`w-32 h-32 ${customer.color} bg-opacity-20 rounded-[2rem] flex items-center justify-center text-white text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl font-serif shadow-inner border border-white/10 group-hover:scale-105 group-hover:rotate-3 transition-all duration-700`}>
+                      <div className={`w-32 h-32 ${customer.color} bg-opacity-20 rounded-[2rem] flex items-center justify-center text-white text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl font-serif shadow-inner border border-white/10 group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 shrink-0`}>
                           {customer.initial}
                       </div>
-                      <div className="flex-1">
-                          <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-                             <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{customer.name}</h1>
-                             <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em]">{customer.type}</Badge>
+                      <div className="flex-1 min-w-0">
+                          <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 min-w-0">
+                             <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4 truncate w-full">{customer.name}</h1>
+                             <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em] shrink-0">{customer.type}</Badge>
                           </div>
-                          <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto sm:p-8 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em]">
-                              <span className="flex items-center gap-3"><Mail size={16} className="text-[#6A2C91]"/> {customer.email}</span>
-                              <span className="flex items-center gap-3"><MapPin size={16} className="text-[#C5A059]"/> {customer.location}</span>
+                          <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 w-auto sm:p-8 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] min-w-0">
+                              <span className="flex items-center gap-3 truncate max-w-full"><Mail size={16} className="text-[#6A2C91] shrink-0"/> <span className="truncate">{customer.email}</span></span>
+                              <span className="flex items-center gap-3 truncate max-w-full"><MapPin size={16} className="text-[#C5A059] shrink-0"/> <span className="truncate">{customer.location}</span></span>
                           </div>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right shrink-0 mt-6 sm:mt-0">
                           <p className="text-[11px] text-white sm:text-white/40 uppercase font-sans font-bold tracking-[0.3em] mb-3">Lifetime Value</p>
                           <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${customer.totalSpent.toFixed(2)}</p>
                       </div>
@@ -159,7 +179,7 @@ export const CRM = () => {
                                       <p className="text-sm sm:text-base font-sans font-bold text-white uppercase text-[11px] tracking-[0.2em] mb-2">Order {order.id}</p>
                                       <p className="text-[10px] text-white/30 font-sans uppercase tracking-[0.2em] flex items-center gap-2"><Calendar size={12}/> {order.date}</p>
                                   </div>
-                                  <div className="text-right">
+                                  <div className="text-right mt-4 sm:mt-0">
                                       <p className="text-sm sm:text-base font-serif text-white font-black tracking-tight mb-2">${order.total.toFixed(2)}</p>
                                       <Badge color={order.status === 'Delivered' ? 'green' : 'blue'} className="text-[9px] uppercase tracking-widest">{order.status}</Badge>
                                   </div>
@@ -174,7 +194,7 @@ export const CRM = () => {
                   </div>
                   
                   <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-4 sm:p-12 flex flex-col">
-                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Node Metadata</h3>
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Customer Details</h3>
                       <div className="space-y-8 flex-1">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                               <div className="bg-black/40 p-4 sm:p-6 rounded-[2rem] border border-white/5">
@@ -284,11 +304,18 @@ export const CRM = () => {
         <div className="space-y-10">
             <div className="relative group max-w-2xl">
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white sm:text-white/40 group-focus-within:text-[#C5A059] transition-colors" size={20} />
-                <Input placeholder="Search customers by name, email, or keyword..." className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" />
+                <Input placeholder="Search customers by name, email, or keyword..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-16 py-6 rounded-[2rem] bg-black/40 border border-white/10 focus:border-[#C5A059] focus:ring-[#C5A059]/20 text-white font-sans text-sm shadow-inner transition-all" />
             </div>
 
+            {filteredCustomers.length === 0 && (
+                <div className="text-center py-20 px-4">
+                    <p className="text-white/50 font-sans font-bold uppercase tracking-[0.2em] mb-2">No customers match your search</p>
+                    <p className="text-white/30 text-xs">Try a different keyword.</p>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10">
-                {allCustomers.map((c, i) => (
+                {filteredCustomers.map((c, i) => (
                     <div 
                         key={c.id} 
                         onClick={() => setSelectedCustomer(c.name)}
@@ -297,28 +324,28 @@ export const CRM = () => {
                         <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-bl-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-700"></div>
                         
                         <div className="flex justify-between items-start mb-10 relative z-10">
-                            <div className="flex gap-3 sm:gap-6 items-center">
-                                <div className={`w-8 h-8 sm:w-12 sm:h-12 ${c.color} bg-opacity-20 rounded-2xl flex items-center justify-center text-white font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black shadow-inner border border-white/10 group-hover:scale-105 transition-transform duration-500`}>
+                            <div className="flex gap-3 sm:gap-6 items-center min-w-0 w-full">
+                                <div className={`shrink-0 w-8 h-8 sm:w-12 sm:h-12 ${c.color} bg-opacity-20 rounded-2xl flex items-center justify-center text-white font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black shadow-inner border border-white/10 group-hover:scale-105 transition-transform duration-500`}>
                                     {c.initial}
                                 </div>
-                                <div>
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight group-hover:text-[#C5A059] transition-colors">{c.name}</h3>
-                                    <Badge color={c.type === 'Ordered' ? 'purple' : 'gold'} className="text-[8px] uppercase font-sans font-bold tracking-[0.3em] px-3 py-1 mt-2 shadow-sm">{c.type}</Badge>
+                                <div className="min-w-0 flex-1">
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight group-hover:text-[#C5A059] transition-colors truncate">{c.name}</h3>
+                                    <Badge color={c.type === 'Ordered' ? 'purple' : 'gold'} className="text-[8px] uppercase font-sans font-bold tracking-[0.3em] px-3 py-1 mt-2 shadow-sm shrink-0 inline-block">{c.type}</Badge>
                                 </div>
                             </div>
                         </div>
                         
-                        <div className="space-y-4 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-10 relative z-10">
-                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"><Mail size={16} className="text-[#6A2C91]"/> {c.email}</div>
-                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"><MapPin size={16} className="text-[#C5A059]"/> {c.location}</div>
+                        <div className="space-y-4 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-10 relative z-10 min-w-0">
+                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 truncate w-full"><Mail size={16} className="text-[#6A2C91] shrink-0"/> <span className="truncate">{c.email}</span></div>
+                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 truncate w-full"><MapPin size={16} className="text-[#C5A059] shrink-0"/> <span className="truncate">{c.location}</span></div>
                         </div>
                         
                         <div className="pt-8 border-t border-white/10 flex justify-between items-end relative z-10 group-hover:border-white/20 transition-colors">
-                            <div>
-                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">ORDERS</p>
-                                <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed">{c.orderCount}</p>
+                            <div className="min-w-0 pr-4">
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2 truncate">ORDERS</p>
+                                <p className="text-sm sm:text-base font-serif text-white sm:text-slate-400 leading-relaxed truncate">{c.orderCount}</p>
                             </div>
-                            <div className="text-right">
+                            <div className="text-right shrink-0">
                                 <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Lifetime Value</p>
                                 <p className="text-sm sm:text-base font-serif text-[#C5A059] font-black tracking-tighter">${c.totalSpent.toFixed(2)}</p>
                             </div>
@@ -338,7 +365,3 @@ export const CRM = () => {
     </motion.div>
   );
 };
-
-
-
-

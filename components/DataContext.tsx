@@ -583,6 +583,15 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               trialEndsAt: rawData.trialEndsAt 
             }));
             setUserTier(docSnap.data().tier || 'Basic Artisan');
+            // Hydrate manual customers from Firestore so they survive reloads/new devices
+            try {
+              const custSnap = await getDocs(collection(db, 'users', user.uid, 'manualCustomers'));
+              if (!custSnap.empty) {
+                const firestoreCustomers = custSnap.docs.map(d => d.data() as ManualCustomer);
+                setManualCustomers(firestoreCustomers);
+                if (typeof window !== 'undefined') localStorage.setItem('artisan_manual_customers', JSON.stringify(firestoreCustomers));
+              }
+            } catch (e) { console.error('Failed to load manual customers from Firestore', e); }
           } else {
             const adminEmails = ['lacarmsu38@gmail.com', 'lcarter@lrcholisticmarketing.online', 'lrenee@herbalisticwellness.com'];
             if (user.email && adminEmails.includes(user.email.toLowerCase())) {
@@ -791,6 +800,8 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setSuppliers([]);
       setRecipes([]);
       setMarketingPosts([]);
+      setManualCustomers([]);
+      if (typeof window !== 'undefined') localStorage.removeItem('artisan_manual_customers');
       window.location.href = '/'; // Force reload to clear all state and route to landing
     } catch (err) {
       console.error("Error signing out", err);
@@ -986,7 +997,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   });
 
     const addManualCustomer = async (c: Omit<ManualCustomer, 'id' | 'createdDate'>) => {
-      const newCust = { ...c, id: M- + Date.now(), createdDate: new Date().toLocaleDateString() };
+      const newCust = { ...c, id: 'M-' + Date.now(), createdDate: new Date().toLocaleDateString() };
       setManualCustomers(prev => {
           const next = [...prev, newCust];
           if (typeof window !== 'undefined') localStorage.setItem('artisan_manual_customers', JSON.stringify(next));
