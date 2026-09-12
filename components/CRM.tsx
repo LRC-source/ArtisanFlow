@@ -11,7 +11,7 @@ import { UpgradeModal } from './UpgradeModal';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 
 export const CRM = () => {
-  const { orders, manualCustomers, addManualCustomer, getTotalRevenue, userTier } = useArtisanData();
+  const { orders, manualCustomers, addManualCustomer, deleteManualCustomer, getTotalRevenue, userTier } = useArtisanData();
   const navigate = useNavigate();
   const [isSyncing, setIsSyncing] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
@@ -101,14 +101,29 @@ export const CRM = () => {
                 parentTitle="CRM Hub"
                 onBack={() => setSelectedCustomer(null)}
                 description={`Detailed interaction ledger for ${customer.name}.`}
-                actions={
-                  <Button 
-                    onClick={() => toast.info("Edit Customer functionality coming soon.")}
-                    className="bg-white/10 hover:bg-white/20 text-white w-auto mx-auto py-1 px-3 text-[10px] px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-white/10"
-                  >
-                    Edit Node
-                  </Button>
-                }
+                                  actions={
+                    customer.id.startsWith('M-') ? (
+                      <Button 
+                        onClick={() => {
+                          if (window.confirm('Are you sure you want to delete this customer?')) {
+                            deleteManualCustomer(customer.id);
+                            setSelectedCustomer(null);
+                            toast.success('Customer deleted successfully.');
+                          }
+                        }}
+                        className="bg-red-500/20 hover:bg-red-500/40 text-red-200 w-auto mx-auto py-1 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-red-500/30"
+                      >
+                        Delete Node
+                      </Button>
+                    ) : (
+                      <Button 
+                        onClick={() => toast.info("Cannot delete a customer with active orders.")}
+                        className="bg-white/5 text-gray-500 w-auto mx-auto py-1 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-white/5 cursor-not-allowed"
+                      >
+                        Orders Active
+                      </Button>
+                    )
+                  }
               />
 
               <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-6 sm:p-16 relative overflow-hidden group shadow-2xl">
@@ -323,3 +338,5 @@ export const CRM = () => {
     </motion.div>
   );
 };
+
+
