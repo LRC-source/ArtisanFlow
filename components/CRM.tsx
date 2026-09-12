@@ -7,15 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { SubPageHeader } from './SubPageHeader';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import React, { useState } from 'react';
-import { ContextualTutorialModal } from './ContextualTutorialModal';
-import { Badge, Button, Input, Modal, VaultBanner } from './UI';
-import { Search, Mail, MapPin, Users, TrendingUp, DollarSign, ShoppingCart, Package, RefreshCw, ArrowLeft, Calendar, UserPlus, Sparkles } from 'lucide-react';
-import { useArtisanData } from './DataContext';
-import { useNavigate } from 'react-router-dom';
-import { SubPageHeader } from './SubPageHeader';
-import { motion } from 'framer-motion';
-import { toast } from 'sonner';
 import { UpgradeModal } from './UpgradeModal';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 

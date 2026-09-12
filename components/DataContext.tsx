@@ -16,7 +16,7 @@ import { toast } from 'sonner';
  * ArtisanFlow Architecture 1.1 - Lola Intelligence Node
  */
 
-export type UserTier = 'Free Trial' | 'Basic Artisan' | 'Pro Artisan' | 'Master Artisan';
+export type UserTier = 'Free Trial' | 'Basic Artisan' | 'Pro Artisan' | 'Master Artisan' | 'Margin Protection Pro' | 'Pro Plan' | string;
 
 export interface TodoItem {
   id: string;
@@ -1418,6 +1418,7 @@ export const useArtisanData = () => {
   if (!context) throw new Error('useArtisanData error');
   return context;
 };
+
 
 
 

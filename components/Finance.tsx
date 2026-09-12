@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import React, { useState, useEffect } from 'react';
 import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { useNavigate } from 'react-router-dom';
@@ -582,6 +583,7 @@ CERTIFIED BY LOLA AI SYSTEMS
         </motion.div>
     );
 };
+
 
 
 
