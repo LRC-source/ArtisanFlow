@@ -41,7 +41,7 @@ export const VideoCreator = () => {
             const prompt = `Write a video script for a ${duration} video about: ${topic}. Format the response as a JSON array of scenes. Each scene object must have these keys: 'time' (e.g. "0:00-0:03"), 'visual' (description of the shot), 'audio' (voiceover or sound effect), and 'caption' (on-screen text). Make it luxurious and artisanal. Return ONLY valid JSON.`;
             
             const result = await chatWithLola(prompt, null, 'fast');
-            
+            if (result.isError || result.text?.toLowerCase().includes('quota')) throw new Error(result.text || 'API Error');
             // Try to parse JSON from Lola
             try {
                 let jsonStr = result.text;

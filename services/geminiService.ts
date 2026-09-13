@@ -75,7 +75,9 @@ export const generateLolaImage = async (prompt: string, config: { size: '1K' | '
       body: JSON.stringify({ action: 'generateLolaImage', payload: { prompt, config } })
     });
     const data = await response.json();
-    return data.image || null;
+    if (data.error) throw new Error(data.error);
+    if (!data.image) throw new Error('No image returned');
+    return data.image;
   } catch (e) {
     console.error("Image Generation Error:", e);
     throw e;

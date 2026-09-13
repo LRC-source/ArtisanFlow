@@ -49,6 +49,10 @@ export const SocialMediaCreator = () => {
                 chatWithLola(`${basePrompt} Format for Twitter/X (under 280 chars, sharp, witty, 2 hashtags).`, null, 'fast')
             ]);
 
+            if ([igRes, tiktokRes, liRes, twRes].some(r => r.isError || r.text?.toLowerCase().includes('quota') || r.text?.toLowerCase().includes('error'))) {
+                throw new Error('API Error or Quota Exceeded');
+            }
+
             setGeneratedContent({
                 instagram: igRes.text,
                 tiktok: tiktokRes.text,
@@ -259,3 +263,5 @@ export const SocialMediaCreator = () => {
         </motion.div>
     );
 };
+
+

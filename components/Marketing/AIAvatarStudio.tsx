@@ -3,6 +3,7 @@ import { Card, Button, Badge } from '../UI';
 import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
+import { generateLolaImage } from '../../services/geminiService';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SubPageHeader } from '../SubPageHeader';
 import { toast } from 'sonner';
@@ -49,13 +50,13 @@ export const AIAvatarStudio = () => {
             // Simulated generation using a high quality unsplash avatar placeholder
             // In reality, this would hit the AI Studio API as the original code did.
             // Since we are adding UI features, we keep the simulation fast and reliable for the demo.
-            setTimeout(() => {
-                const newUrl = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop';
-                setGeneratedImage(newUrl);
-                setHistory(prev => [{ id: Date.now().toString(), url: newUrl }, ...prev].slice(0, 4));
-                toast.success("Persona synthesis complete.", { id: toastId });
-                setIsGenerating(false);
-            }, 2000);
+            const fullPrompt = `Create an AI persona avatar: ${prompt}. Pose/Context: ${selectedPose}. Photorealistic, high quality, professional.`;
+              const newUrl = await generateLolaImage(fullPrompt, { size: '1K', aspectRatio: '1:1' });
+              if (!newUrl) throw new Error('API Error');
+              setGeneratedImage(newUrl);
+              setHistory(prev => [{ id: Date.now().toString(), url: newUrl }, ...prev].slice(0, 4));
+              toast.success("Persona synthesis complete.", { id: toastId });
+              setIsGenerating(false);
             
         } catch (error: any) {
             toast.error("Avatar synthesis failed.", { id: toastId });

@@ -41,6 +41,7 @@ export const AdvancedContentGenerator = () => {
             }
 
             const result = await chatWithLola(prompt, null, 'deep');
+            if (result.isError || result.text?.toLowerCase().includes('quota')) throw new Error(result.text || 'API Error');
             
             setOutputs(prev => ({
                 ...prev,

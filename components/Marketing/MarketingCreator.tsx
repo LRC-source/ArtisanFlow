@@ -37,6 +37,7 @@ export const MarketingCreator = () => {
             const productContext = selectedProduct ? ` featuring ${selectedProduct}` : '';
             const prompt = `Generate a high-quality ${style} image for a ${assetType}${productContext}. Subject: ${topic}. Luxurious lighting, artisanal depth.`;
             const imageUrl = await generateLolaImage(prompt, { size: imageSize, aspectRatio });
+            if (!imageUrl) throw new Error('No image returned');
             setGeneratedImage(imageUrl);
             toast.success("Asset synthesis complete.", { id: toastId });
         } catch (error: any) {
