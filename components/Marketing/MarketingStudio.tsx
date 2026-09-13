@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner, SocialMediaAuthModal, HubCard } from '../UI';
-import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData, MarketingPost } from '../DataContext';
 import { generateLolaImage, analyzeLolaImage, chatWithLola } from '../../services/geminiService';
@@ -106,6 +106,12 @@ const MarketingGrid = () => {
 // --- VISUAL ANALYSIS NODE ---
 
 const SocialMediaIntegrationManager = () => {
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+    const scroll = (dir: 'left' | 'right') => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
+        }
+    };
     const { connectedChannels } = useArtisanData();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePlatform, setActivePlatform] = useState('');
@@ -166,12 +172,6 @@ const SocialMediaIntegrationManager = () => {
 };
 
 export const MarketingStudio = () => {
-    const scrollRef = React.useRef<HTMLDivElement>(null);
-    const scroll = (dir: 'left' | 'right') => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
-        }
-    };
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
