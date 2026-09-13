@@ -66,8 +66,8 @@ export const Dashboard = () => {
     {
       title: 'See Margin Report',
       desc: 'Review true profitability in the Profit Guard ledger.',
-      done: hasViewedMargin,
-      route: '/finance',
+        done: hasViewedMargin,
+        route: '/profit-guard',
     }
   ];
   const allComplete = setupSteps.every(s => s.done);
@@ -308,3 +308,4 @@ const MainNodePortal = ({ title, path, icon, color, shadow, delay, iconColor }: 
       </motion.button>
   );
 };
+
