@@ -116,13 +116,7 @@ export const CRM = () => {
                                                     actions={
                     customer.id.startsWith('M-') ? (
                       <button 
-                        onClick={() => {
-                          if (window.confirm('Are you sure you want to delete this customer?')) {
-                            deleteManualCustomer(customer.id);
-                            setSelectedCustomer(null);
-                            toast.success('Customer deleted successfully.');
-                          }
-                        }}
+                        onClick={() => setShowDeleteConfirm(customer.id)}
                         className="bg-red-500/20 hover:bg-red-500/40 text-red-200 w-auto mx-auto py-3 px-6 rounded-2xl font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border border-red-500/30 cursor-pointer pointer-events-auto"
                       >
                         Delete Customer

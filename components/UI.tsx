@@ -164,7 +164,7 @@ export const VaultBanner: React.FC<{
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex flex-wrap justify-center gap-6"
+            className="flex flex-wrap justify-center gap-6 w-full max-w-full"
           >
             {children}
           </motion.div>
@@ -407,5 +407,6 @@ export const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => {
     </div>
   );
 };
+
 
 
