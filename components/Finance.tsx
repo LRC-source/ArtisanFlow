@@ -49,9 +49,15 @@ export const FinanceHub: React.FC = () => {
 
     const runBudgetOptimizer = async () => {
         setIsBudgeting(true);
-        const result = await generateBudgetStrategy(revenue, estimatedCOGS, "Scale marketing and optimize raw material sourcing");
-        if (!result) { toast.error("Optimization failed. Please try again."); } else { setBudgetResult(result); toast.success("Budget allocation updated."); }
-        setIsBudgeting(false);
+        try {
+            const result = await generateBudgetStrategy(revenue, estimatedCOGS, "Scale marketing and optimize raw material sourcing");
+            if (!result) { toast.error("Optimization failed. Please try again."); } else { setBudgetResult(result); toast.success("Budget allocation updated."); }
+        } catch (e: any) {
+            console.error('Optimizer error:', e);
+            toast.error("Optimization failed: " + (e.message || "Unknown error"));
+        } finally {
+            setIsBudgeting(false);
+        }
     };
 
     return (
@@ -583,6 +589,7 @@ CERTIFIED BY LOLA AI SYSTEMS
         </motion.div>
     );
 };
+
 
 
 

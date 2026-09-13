@@ -191,6 +191,7 @@ export const Inventory = () => {
                     <div className="space-y-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none">
                         <Button onClick={() => setShowAdjustStock(true)} className="w-full bg-white text-black hover:bg-white/90 py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
                         <Button onClick={() => { window.print(); toast.success('Archival label sent to connected printer.'); }} variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
+                        <Button onClick={() => { deleteInventoryItem(item.id); onClose(); toast.success('Asset permanently archived.'); }} className="w-full bg-red-500/20 hover:bg-red-500/40 text-red-200 py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all border border-red-500/30">DELETE ASSET</Button>
                     </div>
 
                     <Modal isOpen={showAdjustStock} onClose={() => setShowAdjustStock(false)} title="Adjust Stock Quantity">
@@ -629,6 +630,9 @@ export const Inventory = () => {
 );
 
 export default Inventory;
+
+
+
 
 
 

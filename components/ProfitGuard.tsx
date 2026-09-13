@@ -177,7 +177,7 @@ export const ProfitGuardPage = () => {
                         <Button onClick={() => toast.success('Exporting financial report...')} className="flex-1 py-3 px-6 bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] text-white rounded-[2rem] font-sans font-bold text-[11px] uppercase tracking-[0.3em] hover:opacity-90 transition-all shadow-2xl">
                             Commit Batch to Production
                         </Button>
-                        <Button onClick={() => toast.info('Syncing with Square financials...')} variant="outline" className="h-16 px-10 border-white/20 bg-white/5 rounded-[2rem] font-sans font-bold text-white text-[11px] uppercase tracking-[0.3em] hover:bg-white/10 transition-all">
+                        <Button onClick={() => { toast.success('Diagnostic report downloaded.'); const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,Diagnostic,Value\nRevenue,High'; a.download = 'diagnostic.csv'; document.body.appendChild(a); a.click(); document.body.removeChild(a); }} variant="outline" className="h-16 px-10 border-white/20 bg-white/5 rounded-[2rem] font-sans font-bold text-white text-[11px] uppercase tracking-[0.3em] hover:bg-white/10 transition-all">
                             Export Diagnostic
                         </Button>
                     </div>

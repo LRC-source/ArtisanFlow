@@ -132,7 +132,7 @@ const SocialMediaIntegrationManager = () => {
                 subtitle="Synchronize your brand across the digital ecosystem. Manage APIs and automated publishing pipelines."
                 badge="Integration Protocol Active"
             >
-                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-start gap-3 w-auto overflow-x-auto pb-4 scrollbar-hide">
+                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-start gap-3 w-full max-w-full overflow-x-auto pb-4 scrollbar-hide">
                     {platforms.map((platform) => (
                         <div 
                             key={platform.id}
@@ -193,5 +193,6 @@ export const MarketingStudio = () => {
 };
 
 // --- MARKETING HUB SUBPAGE ---
+
 
 

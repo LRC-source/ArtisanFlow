@@ -961,7 +961,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       
       const newItem = { ...item, id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`, stockValue: (item.stock || 0) * (item.unitCost || 0) };
       setInventory(prev => [...prev, newItem]);
-      if (!isDemoMode) await dataLayer.create('inventory', newItem);
+      if (!isDemoMode && auth.currentUser) await setDoc(doc(db, 'users', auth.currentUser.uid, 'inventory', String(newItem.id)), newItem);
     } catch (e: any) {
       toast.error(e.message || 'Failed to add inventory item');
       throw e;
@@ -1418,6 +1418,7 @@ export const useArtisanData = () => {
   if (!context) throw new Error('useArtisanData error');
   return context;
 };
+
 
 
 
