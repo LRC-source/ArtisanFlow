@@ -22,6 +22,7 @@ export const CRM = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newCust, setNewCust] = useState({ name: '', email: '', location: '' });
   const [justAddedId, setJustAddedId] = useState<string | null>(null);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
 
   // Derived Customers from Orders + Manual
   const orderCustomers = Array.from(new Set(orders.map(o => o.customer))).map((name: string) => {
@@ -209,7 +210,31 @@ export const CRM = () => {
                       </div>
                   </div>
               </div>
-          </motion.div>
+          
+        {showDeleteConfirm && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+                <div className="bg-[#111] border border-red-500/30 p-8 rounded-3xl max-w-md w-full shadow-2xl">
+                    <h2 className="text-xl font-serif text-white mb-4">Confirm Deletion</h2>
+                    <p className="text-white/60 text-sm mb-8">Are you sure you want to permanently delete this customer record? This action cannot be undone.</p>
+                    <div className="flex gap-4">
+                        <button onClick={() => setShowDeleteConfirm(null)} className="flex-1 py-3 px-6 rounded-full border border-white/10 text-white hover:bg-white/5 transition-all text-xs font-bold uppercase tracking-wider">Cancel</button>
+                        <button onClick={async () => {
+                            try {
+                                await deleteManualCustomer(showDeleteConfirm);
+                                setSelectedCustomer(null);
+                                setShowDeleteConfirm(null);
+                                toast.success('Customer deleted successfully.');
+                            } catch (e) {
+                                toast.error('Failed to delete customer.');
+                                setShowDeleteConfirm(null);
+                            }
+                        }} className="flex-1 py-3 px-6 rounded-full bg-red-500/20 text-red-300 hover:bg-red-500/40 border border-red-500/30 transition-all text-xs font-bold uppercase tracking-wider">Delete</button>
+                    </div>
+                </div>
+            </div>
+        )}
+    
+</motion.div>
       );
   }
 

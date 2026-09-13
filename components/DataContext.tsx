@@ -584,7 +584,16 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               trialEndsAt: rawData.trialEndsAt 
             }));
             setUserTier(docSnap.data().tier || 'Basic Artisan');
-            // Hydrate manual customers from Firestore so they survive reloads/new devices
+            // Hydrate manual customers and inventory from Firestore
+              try {
+                const invSnap = await getDocs(collection(db, 'users', user.uid, 'inventory'));
+                if (!invSnap.empty) {
+                  const firestoreInv = invSnap.docs.map(d => d.data() as InventoryItem);
+                  setInventory(firestoreInv);
+                }
+              } catch (e) { console.error('Failed to load inventory', e); }
+
+              // Hydrate manual customers
             try {
               const custSnap = await getDocs(collection(db, 'users', user.uid, 'manualCustomers'));
               if (!custSnap.empty) {
@@ -1418,6 +1427,8 @@ export const useArtisanData = () => {
   if (!context) throw new Error('useArtisanData error');
   return context;
 };
+
+
 
 
 

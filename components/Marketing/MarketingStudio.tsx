@@ -132,7 +132,14 @@ const SocialMediaIntegrationManager = () => {
                 subtitle="Synchronize your brand across the digital ecosystem. Manage APIs and automated publishing pipelines."
                 badge="Integration Protocol Active"
             >
-                <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-start gap-3 w-full max-w-full overflow-x-auto pb-4 scrollbar-hide">
+                <div className="relative w-full group overflow-hidden">
+                    <button onClick={() => scroll('left')} className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white backdrop-blur border border-white/10 hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ChevronLeft size={24} />
+                    </button>
+                    <button onClick={() => scroll('right')} className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white backdrop-blur border border-white/10 hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ChevronRight size={24} />
+                    </button>
+                    <div ref={scrollRef} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-start gap-3 w-full max-w-full overflow-x-auto pb-4 scrollbar-hide px-8">
                     {platforms.map((platform) => (
                         <div 
                             key={platform.id}
@@ -151,13 +158,20 @@ const SocialMediaIntegrationManager = () => {
                         </div>
                     ))}
                 </div>
-            </VaultBanner>
+</div>
+</VaultBanner>
             {activePlatform && <SocialMediaAuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} platform={activePlatform} />}
         </div>
     );
 };
 
 export const MarketingStudio = () => {
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+    const scroll = (dir: 'left' | 'right') => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
+        }
+    };
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}

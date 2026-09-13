@@ -50,7 +50,11 @@ export const FinanceHub: React.FC = () => {
     const runBudgetOptimizer = async () => {
         setIsBudgeting(true);
         try {
-            const result = await generateBudgetStrategy(revenue, estimatedCOGS, "Scale marketing and optimize raw material sourcing");
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 20000));
+            const result = await Promise.race([
+                generateBudgetStrategy(revenue, estimatedCOGS, "Scale marketing and optimize raw material sourcing"),
+                timeoutPromise
+            ]);
             if (!result) { toast.error("Optimization failed. Please try again."); } else { setBudgetResult(result); toast.success("Budget allocation updated."); }
         } catch (e: any) {
             console.error('Optimizer error:', e);
