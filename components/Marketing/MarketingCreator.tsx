@@ -9,6 +9,7 @@ import { SubPageHeader } from '../SubPageHeader';
 import { toast } from 'sonner';
 
 export const MarketingCreator = () => {
+  console.log("Round 23.4 Client Active");
     const navigate = useNavigate();
     const { addMarketingPost, inventory } = useArtisanData();
     const [isGenerating, setIsGenerating] = useState(false);

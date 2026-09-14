@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+  console.log("Round 23.4 Backend Proxy Active");
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
   try {
     const token = req.headers.authorization?.split('Bearer ')[1];
