@@ -439,11 +439,7 @@ const AppContent = () => {
                 <BrandVoiceProfile />
             </LockedNode>
         } />
-        <Route path="/marketing/receptionist" element={
-            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
-                <ReceptionistLogic />
-            </LockedNode>
-        } />
+        
         <Route path="/marketing/calendar" element={
             <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ContentCalendar />
