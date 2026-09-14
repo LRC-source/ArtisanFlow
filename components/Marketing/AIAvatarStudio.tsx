@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../UI';
-import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon } from 'lucide-react';
+import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon , Save } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { generateLolaImage } from '../../services/geminiService';
@@ -98,7 +98,11 @@ export const AIAvatarStudio = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                 {/* Configuration Panel */}
-                <div className="lg:col-span-5 space-y-6">
+<div className="lg:col-span-5 space-y-6">
+    <div className="flex justify-between items-center mb-4">
+        <h3 className="text-white/60 font-semibold uppercase tracking-wider text-xs">Configuration</h3>
+        <Badge color="purple">Model: Gemini 2.5 Flash Image</Badge>
+    </div>
                     <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
                         <div className="space-y-8">
                             
@@ -171,7 +175,7 @@ export const AIAvatarStudio = () => {
                                 <div className="flex-1 p-4 sm:p-5 lg:p-6 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/80 relative">
                                     <div className="absolute top-4 sm:p-6 left-6 flex flex-col gap-2">
                                         <Badge color="magenta">Pose: {selectedPose}</Badge>
-                                        <Badge color="purple">Model: Gemini 2.5 Flash Image</Badge>
+                                        
                                     </div>
                                     <motion.div 
                                         initial={{ opacity: 0, scale: 0.95 }}

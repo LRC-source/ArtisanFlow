@@ -11,3 +11,5 @@ export * from './ContentApprovals';
 export * from './BrandVoiceProfile';
 
 export * from './MarketingCreator';
+
+export * from './ReceptionistLogic';

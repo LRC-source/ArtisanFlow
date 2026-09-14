@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import {
+    BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Package, TrendingUp, Settings, ShoppingBag, Activity, 
@@ -25,7 +26,8 @@ import {
     AdvancedContentGenerator,
     ContentApprovals,
     BrandVoiceProfile,
-    VisualAnalysisNode
+    VisualAnalysisNode,
+    ReceptionistLogic
 } from './components/Marketing';
 import { 
     AccountSettings, 
@@ -440,7 +442,12 @@ const AppContent = () => {
             </LockedNode>
         } />
         
-        <Route path="/marketing/calendar" element={
+        <Route path="/marketing/receptionist" element={
+    <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
+        <ReceptionistLogic />
+    </LockedNode>
+} />
+          <Route path="/marketing/calendar" element={
             <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
                 <ContentCalendar />
             </LockedNode>

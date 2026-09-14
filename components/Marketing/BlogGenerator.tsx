@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Input, Badge } from '../UI';
-import { FileText, Loader2, ListTree, Image as ImageIcon, Sparkles, Plus, X, Search, CheckCircle } from 'lucide-react';
+import { FileText, Loader2, ListTree, Image as ImageIcon, Sparkles, Plus, X, Search, CheckCircle , Save } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { chatWithLola } from '../../services/geminiService';

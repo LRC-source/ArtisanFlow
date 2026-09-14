@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Input, Select, Badge } from '../UI';
-import { Share2, Clock, Image as ImageIcon, Send, Sparkles, CheckCircle, Package, Film, Instagram, Linkedin, Twitter, LayoutGrid } from 'lucide-react';
+import { Share2, Clock, Image as ImageIcon, Send, Sparkles, CheckCircle, Package, Film, Instagram, Linkedin, Twitter, LayoutGrid , Save } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { chatWithLola } from '../../services/geminiService';
@@ -249,12 +249,15 @@ export const SocialMediaCreator = () => {
                                 <CheckCircle size={14} className="text-emerald-500" /> Auto-sync enabled for selected channels
                             </div>
                             <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
-                                <Button variant="outline" onClick={() => handlePublish(true)} disabled={!activeContent}>
-                                    <Clock size={16} /> Schedule
-                                </Button>
-                                <Button variant="primary" onClick={() => handlePublish(false)} disabled={!activeContent}>
-                                    <Send size={16} /> Publish Now
-                                </Button>
+                                <Button variant="outline" onClick={() => handleSave()} disabled={!activeContent}>
+    <Save size={16} className="mr-2" /> Save to Vault
+</Button>
+<Button variant="outline" onClick={() => handlePublish(true)} disabled={!activeContent}>
+    <Clock size={16} className="mr-2" /> Schedule
+</Button>
+<Button variant="primary" onClick={() => handlePublish(false)} disabled={!activeContent}>
+    <Send size={16} className="mr-2" /> Publish Now
+</Button>
                             </div>
                         </div>
                     </Card>
