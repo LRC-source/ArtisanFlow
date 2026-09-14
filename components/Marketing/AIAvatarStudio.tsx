@@ -59,7 +59,7 @@ export const AIAvatarStudio = () => {
               setIsGenerating(false);
             
         } catch (error: any) {
-            toast.error("Avatar synthesis failed.", { id: toastId });
+            toast.error(`Avatar synthesis failed: ${error.message || "Service offline"}`, { id: toastId });
             setIsGenerating(false);
         }
     };

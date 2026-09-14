@@ -30,13 +30,17 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
       case 'Master Artisan': limits = { text: 500, images: 300, videos: 30 }; break;
     }
     
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    const profile = data.profile || {};
-    const aiUsage = profile.aiUsage || {};
-    
-    let usage = aiUsage.month === currentMonth 
-      ? { ...aiUsage } 
-      : { text: 0, images: 0, videos: 0, month: currentMonth };
+    const currentDate = new Date().toISOString().slice(0, 10);
+      const currentMonth = currentDate.slice(0, 7);
+      const profile = data.profile || {};
+      let usage = profile.aiUsage || {};
+      
+      if (usage.month !== currentMonth) {
+        usage = { text: 0, textDate: currentDate, images: 0, videos: 0, month: currentMonth };
+      } else if (usage.textDate !== currentDate) {
+        usage.text = 0;
+        usage.textDate = currentDate;
+      }
       
     const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
     if (usage[typeKey] >= limits[typeKey]) {
@@ -58,13 +62,17 @@ const recordUsage = async (type: 'text' | 'image' | 'video') => {
     const snap = await getDoc(userRef);
     if (!snap.exists()) return;
     const data = snap.data();
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    const profile = data.profile || {};
-    const aiUsage = profile.aiUsage || {};
-    
-    let usage = aiUsage.month === currentMonth 
-      ? { ...aiUsage } 
-      : { text: 0, images: 0, videos: 0, month: currentMonth };
+    const currentDate = new Date().toISOString().slice(0, 10);
+      const currentMonth = currentDate.slice(0, 7);
+      const profile = data.profile || {};
+      let usage = profile.aiUsage || {};
+      
+      if (usage.month !== currentMonth) {
+        usage = { text: 0, textDate: currentDate, images: 0, videos: 0, month: currentMonth };
+      } else if (usage.textDate !== currentDate) {
+        usage.text = 0;
+        usage.textDate = currentDate;
+      }
       
     const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
     usage[typeKey] = (usage[typeKey] || 0) + 1;

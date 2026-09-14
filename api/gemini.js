@@ -21,6 +21,11 @@ export default async function handler(req, res) {
 
     if (body.action === 'generateLolaImage' && body.payload) {
         const promptText = body.payload.prompt || 'A photorealistic artisanal product';
+        const config = body.payload.config || {};
+        const parameters = { sampleCount: 1 };
+        if (config.aspectRatio) parameters.aspectRatio = config.aspectRatio;
+        if (config.size) parameters.imageSize = config.size;
+        
         const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=' + apiKey, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -30,7 +35,7 @@ export default async function handler(req, res) {
             })
         });
         const data = await fetchRes.json();
-        if (data.error) return res.status(502).json({ error: data.error.message });
+        if (data.error) return res.status(502).json({ error: data.error.message || JSON.stringify(data.error) });
         
         let image = null;
         if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {

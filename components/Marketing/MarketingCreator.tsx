@@ -42,7 +42,7 @@ export const MarketingCreator = () => {
             toast.success("Asset synthesis complete.", { id: toastId });
         } catch (error: any) {
             console.error("Generation failed", error);
-            toast.error("Synthesis failed: Node offline.", { id: toastId });
+            toast.error(`Synthesis failed: ${error.message || "Service offline"}`, { id: toastId });
         } finally { 
             setIsGenerating(false); 
         }
