@@ -80,7 +80,7 @@ export const VideoCreator = () => {
             platform: 'Instagram', // Defaulting to IG Reels for now
             topic: topic || 'Video Script',
             content: `[AUDIO: ${audioTrack}]\n\n${generatedScript}`,
-            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
             status: 'Draft',
             type: 'Video'
         });

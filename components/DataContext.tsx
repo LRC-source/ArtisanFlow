@@ -397,25 +397,30 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     switch(effectiveTier) {
       case 'Free Trial': return { text: 5, images: 10, videos: 0 };
       case 'Basic Artisan': return { text: 500, images: 50, videos: 0 };
-      case 'Pro Artisan': return { text: 500, images: 100, videos: 10 };
-      case 'Master Artisan': return { text: 500, images: 300, videos: 30 };
+      case 'Pro Artisan': return { text: 5000, images: 100, videos: 10 };
+      case 'Master Artisan': return { text: 50000, images: 300, videos: 30 };
       default: return { text: 5, images: 10, videos: 0 }; // fallback
     }
   };
 
   const checkAiQuota = (type: 'text' | 'image' | 'video') => {
     const limits = getAiLimits();
-    const currentMonth = new Date().toISOString().slice(0, 7);
+    const currentDate = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    const currentMonth = currentDate.slice(0, 7);
     
-    const usage = businessProfile.aiUsage?.month === currentMonth 
-      ? businessProfile.aiUsage 
-      : { text: 0, images: 0, videos: 0, month: currentMonth };
+    let usage = businessProfile.aiUsage || {};
+    if (usage.month !== currentMonth) {
+      usage = { text: 0, textDate: currentDate, images: 0, videos: 0, month: currentMonth };
+    } else if (usage.textDate !== currentDate) {
+      usage.text = 0;
+      usage.textDate = currentDate;
+    }
 
     const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
-    const hasQuota = usage[typeKey] < limits[typeKey];
+    const hasQuota = (usage[typeKey] || 0) < limits[typeKey];
     
     if (!hasQuota) {
-      toast.error(`AI ${type} quota exhausted for this cycle.`);
+      toast.error(`AI ${type} quota exhausted for ${type === 'text' ? 'today' : 'this billing cycle'}.`);
     }
     return hasQuota;
   };
@@ -643,7 +648,15 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
               trialEndsAt: rawData.trialEndsAt 
             }));
             setUserTier(docSnap.data().tier || 'Basic Artisan');
-            // Hydrate manual customers and inventory from Firestore
+            try {
+    const mktSnap = await getDocs(collection(db, 'users', user.uid, 'marketingPosts'));
+    if (!mktSnap.empty) {
+        const posts = mktSnap.docs.map(d => d.data());
+        setMarketingPosts(posts);
+    }
+} catch(e) { console.error('Failed to load posts', e); }
+
+// Hydrate manual customers and inventory from Firestore
               try {
                 const invSnap = await getDocs(collection(db, 'users', user.uid, 'inventory'));
                 if (!invSnap.empty) {
@@ -652,7 +665,15 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
                 }
               } catch (e) { console.error('Failed to load inventory', e); }
 
-              // Hydrate manual customers
+              try {
+    const mktSnap = await getDocs(collection(db, 'users', user.uid, 'marketingPosts'));
+    if (!mktSnap.empty) {
+        const posts = mktSnap.docs.map(d => d.data());
+        setMarketingPosts(posts);
+    }
+} catch(e) { console.error('Failed to load posts', e); }
+
+// Hydrate manual customers
             try {
               const custSnap = await getDocs(collection(db, 'users', user.uid, 'manualCustomers'));
               if (!custSnap.empty) {
@@ -1056,7 +1077,15 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const addLocation = (l: any) => setLocations(prev => [...prev, { ...l, id: Date.now().toString() }]);
   const addCommunication = (c: any) => setSupplierCommunications(prev => [...prev, { ...c, id: Date.now().toString() }]);
   const addQualityCheck = (q: any) => setQualityChecks(prev => [...prev, { ...q, id: Date.now().toString() }]);
-  const addMarketingPost = (post: any) => setMarketingPosts(prev => [...prev, { ...post, id: Date.now().toString() }]);
+  const addMarketingPost = async (post: any) => {
+    const newPost = { ...post, id: Date.now().toString() };
+    setMarketingPosts(prev => [...prev, newPost]);
+    if (auth.currentUser && !isDemoMode) {
+        try {
+            await setDoc(doc(db, 'users', auth.currentUser.uid, 'marketingPosts', newPost.id), newPost);
+        } catch(e) { console.error('Failed to save post', e); }
+    }
+};
   const addAppointment = (appointment: Omit<Appointment, 'id'>) => setAppointments(prev => [...prev, { ...appointment, id: Date.now().toString() }]);
   
   const [manualCustomers, setManualCustomers] = useState<ManualCustomer[]>(() => {
@@ -1097,7 +1126,14 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
           } catch (e) { console.error('Failed to delete manual customer', e); }
       }
   };
-  const updateMarketingPost = (id: string, updates: any) => setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
+  const updateMarketingPost = async (id: string, updates: any) => {
+    setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
+    if (auth.currentUser && !isDemoMode) {
+        try {
+            await setDoc(doc(db, 'users', auth.currentUser.uid, 'marketingPosts', id), updates, { merge: true });
+        } catch(e) { console.error('Failed to update post', e); }
+    }
+};
   const generateSchedule = () => setProductionStats(prev => ({ ...prev, active: prev.active + 1 }));
   
   const produceBatch = async (recipeId: string, multiplier: number) => {

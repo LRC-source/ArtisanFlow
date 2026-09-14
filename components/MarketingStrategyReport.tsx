@@ -86,7 +86,7 @@ export const MarketingStrategyReport = () => {
           platform: post.platform as any,
           topic: post.topic,
           content: post.content,
-          scheduledDate: new Date().toISOString().split('T')[0],
+          scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
           status: 'Scheduled',
           type: 'Text',
           mediaUrl: ''

@@ -124,7 +124,7 @@ export const Integrations = () => {
                                 className="w-full mt-6 border-white/20 text-white hover:bg-white/10"
                                 onClick={() => setActiveModal(platform.name)}
                             >
-                                {integration.status === 'Connected (Live)' ? <><Database size={16} className="mr-2" /> CONNECTED (LIVE)</> : <><Bell size={16} className="mr-2" /> COMING SOON</>}
+                                {platform.status === 'Connected (Live)' ? <><Database size={16} className="mr-2" /> CONNECTED (LIVE)</> : <><Bell size={16} className="mr-2" /> COMING SOON</>}
                             </Button>
                         </Card>
                     ))}

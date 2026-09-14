@@ -78,7 +78,7 @@ export const SocialMediaCreator = () => {
                     platform: platform as any,
                     topic: topic || selectedProduct || 'Social Post',
                     content: generatedContent[platform],
-                    scheduledDate: schedule ? new Date(Date.now() + 86400000).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+                    scheduledDate: schedule ? new Date(Date.now() + 86400000).toISOString().split('T')[0] : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
                     status: schedule ? 'Draft' : 'Published',
                     type: 'Text'
                 });

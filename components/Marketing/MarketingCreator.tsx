@@ -55,7 +55,7 @@ export const MarketingCreator = () => {
             platform: 'Instagram', 
             topic: topic || selectedProduct || 'Marketing Asset',
             content: `New ${assetType}`,
-            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
             status: 'Draft', 
             type: 'Image', 
             mediaUrl: generatedImage

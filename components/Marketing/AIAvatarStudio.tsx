@@ -70,7 +70,7 @@ export const AIAvatarStudio = () => {
             platform: destination === 'Blog' ? 'Blog' : 'Email',
             topic: `Avatar Asset: ${selectedPose}`,
             content: `[Avatar Image Inserted: ${selectedPose}]`,
-            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
             status: 'Draft',
             type: 'Image',
             mediaUrl: generatedImage
@@ -198,12 +198,12 @@ export const AIAvatarStudio = () => {
             platform: 'Instagram',
             topic: `Avatar Asset: ${selectedPose}`,
             content: `[Avatar Image Inserted: ${selectedPose}]`,
-            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
             status: 'Draft',
             type: 'Image',
             mediaUrl: generatedImage
         });
-        toast.success("Saved to vault.");
+        toast.success("Asset saved to approvals vault."); navigate('/marketing/approvals');
     }} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5 bg-[#6A2C91]"><Save size={16} className="mr-2"/> Save to Vault</Button>
                                 </div>
                             </div>

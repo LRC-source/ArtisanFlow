@@ -89,7 +89,7 @@ export const BlogGenerator = () => {
             platform: 'Blog',
             topic: topic || 'Blog Post',
             content: generatedBlog,
-            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
             status: 'Draft',
             type: 'Text',
             mediaUrl: featuredImage || undefined

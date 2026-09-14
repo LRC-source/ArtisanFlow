@@ -64,7 +64,7 @@ export const AdvancedContentGenerator = () => {
             platform: activeTab === 'newsletter' ? 'Email' : 'Blog',
             topic: `${topic} - ${activeTab.toUpperCase()}`,
             content: outputs[activeTab],
-            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
             status: 'Draft',
             type: 'Text'
         });
