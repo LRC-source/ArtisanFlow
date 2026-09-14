@@ -136,18 +136,18 @@ If they ask something outside the FAQs, be polite and try to help based on gener
                         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 bg-black/40 flex flex-col">
                             {messages.map((m, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} 
-                                    className={\`flex items-start gap-3 \${m.role === 'user' ? 'flex-row-reverse' : ''}\`}
+                                    className={`flex items-start gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}
                                 >
-                                    <div className={\`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg \${m.role === 'user' ? 'bg-[#111] border border-white/10 text-gray-400' : 'bg-[#6A2C91] text-white'}\`}>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg ${m.role === 'user' ? 'bg-[#111] border border-white/10 text-gray-400' : 'bg-[#6A2C91] text-white'}`}>
                                         {m.role === 'user' ? <User size={14} /> : <Bot size={14} />}
                                     </div>
-                                    <div className={\`p-3 rounded-2xl max-w-[80%] text-sm shadow-lg \${
+                                    <div className={`p-3 rounded-2xl max-w-[80%] text-sm shadow-lg ${
                                         m.role === 'user' 
                                             ? 'bg-emerald-600 text-white rounded-tr-none' 
                                             : m.content.includes('[ESCALATION TRIGGERED') 
                                                 ? 'bg-rose-900/80 text-rose-100 rounded-tl-none border border-rose-500/50'
                                                 : 'bg-white/10 backdrop-blur-md text-white rounded-tl-none border border-white/5'
-                                    }\`}>
+                                    }`}>
                                         {m.content}
                                     </div>
                                 </motion.div>
