@@ -21,7 +21,7 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
     const data = snap.data();
     const tier = data.tier || 'Free Trial';
     const isTrial = data.status === 'trialing';
-    const effectiveTier = isTrial ? 'Pro Artisan' : tier;
+    const effectiveTier = isTrial ? 'Free Trial' : tier;
     
     let limits = { text: 500, images: 50, videos: 0 };
     switch(effectiveTier) {
@@ -125,11 +125,14 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
 export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
   try {
     if (!(await enforceQuota('text'))) throw new Error('Quota Exhausted');
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      const token = await user.getIdToken();
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ action: 'analyzeLolaImage', payload: { imageB64, prompt } })
     });
     const data = await response.json();
@@ -148,11 +151,14 @@ export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
 export const generateLolaImage = async (prompt: string, config: { size: '1K' | '2K' | '4K', aspectRatio: string }) => {
   try {
     if (!(await enforceQuota('image'))) throw new Error('Quota Exhausted');
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      const token = await user.getIdToken();
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ action: 'generateLolaImage', payload: { prompt, config } })
     });
     const data = await response.json();
@@ -173,11 +179,14 @@ export const generateLolaSpeech = async (text: string) => {
   if (!text) return null;
   try {
     if (!(await enforceQuota('text'))) throw new Error('Quota Exhausted');
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      const token = await user.getIdToken();
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ action: 'generateLolaSpeech', payload: { text } })
     });
     const data = await response.json();
