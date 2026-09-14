@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../UI';
-import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon } from ''lucide-react';
+import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { generateLolaImage } from '../../services/geminiService';

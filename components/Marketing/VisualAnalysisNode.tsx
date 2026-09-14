@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, FileUploader, Badge } from '../UI';
-import { Eye, TrendingUp, BarChart3, Activity, Download, Instagram, Film, FileText, ArrowRight, DollarSign, Package } from ''lucide-react';
+import { Eye, TrendingUp, BarChart3, Activity, Download, Instagram, Film, FileText, ArrowRight, DollarSign, Package } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { motion } from 'framer-motion';
