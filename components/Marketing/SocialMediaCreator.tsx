@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Input, Select, Badge } from '../UI';
-import { Share2, Clock, Image as ImageIcon, Send, Sparkles, CheckCircle, Package, Film, Instagram, Linkedin, Twitter, LayoutGrid } from 'lucide-react';
+import { Share2, Clock, Image as ImageIcon, Send, Sparkles, CheckCircle, Package, Film, Instagram, Linkedin, Twitter, LayoutGrid } from 'lucide-react;
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { chatWithLola } from '../../services/geminiService';

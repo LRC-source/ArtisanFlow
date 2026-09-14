@@ -244,7 +244,7 @@ export const Forecasting = () => {
                              <div className="hidden sm:block overflow-x-auto w-full"><table className="w-full min-w-[650px] text-left border-collapse">
                                  <thead>
                                      <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em]">
-                                         <th className="pb-6 pl-4">Material Node</th>
+                                         <th className="pb-6 pl-4">Material</th>
                                          <th className="pb-6">Required (90D)</th>
                                          <th className="pb-6">Current Stock</th>
                                          <th className="pb-6 text-amber-500">Projected Shortfall</th>

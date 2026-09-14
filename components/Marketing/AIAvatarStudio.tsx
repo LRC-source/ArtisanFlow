@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../UI';
-import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon } from 'lucide-react';
+import { Sparkles, Loader2, User, Download, Upload, X, Send, Image as ImageIcon } from 'lucide-react;
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { generateLolaImage } from '../../services/geminiService';
@@ -171,7 +171,7 @@ export const AIAvatarStudio = () => {
                                 <div className="flex-1 p-4 sm:p-5 lg:p-6 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/80 relative">
                                     <div className="absolute top-4 sm:p-6 left-6 flex flex-col gap-2">
                                         <Badge color="magenta">Pose: {selectedPose}</Badge>
-                                        <Badge color="purple">Model: Imagen 3.0 Pro</Badge>
+                                        <Badge color="purple">Model: Gemini 2.5 Flash Image</Badge>
                                     </div>
                                     <motion.div 
                                         initial={{ opacity: 0, scale: 0.95 }}
@@ -188,15 +188,8 @@ export const AIAvatarStudio = () => {
                                 </div>
                                 
                                 <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-                                    <span className="text-xs text-white sm:text-gray-400 font-sans uppercase tracking-widest">Quick Insert:</span>
-                                    <div className="flex gap-3 w-auto">
-                                        <Button variant="outline" onClick={() => quickInsert('Blog')} className="flex-1 sm:flex-none border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 h-12">
-                                            <Send size={14} className="mr-2" /> To Blog Template
-                                        </Button>
-                                        <Button variant="outline" onClick={() => quickInsert('Email')} className="flex-1 sm:flex-none border-blue-400/30 text-blue-400 hover:bg-blue-400/10 h-12">
-                                            <Send size={14} className="mr-2" /> To Email Template
-                                        </Button>
-                                    </div>
+                                    <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5">Discard</Button>
+<Button onClick={() => { addMarketingPost({platform: 'Blog', status: 'Draft', type: 'Image', mediaUrl: generatedImage}); toast.success("Saved to vault."); }} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5 bg-[#6A2C91]"><Save size={16} className="mr-2"/> Save</Button>
                                 </div>
                             </div>
                         ) : (

@@ -25,7 +25,7 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
     
     let limits = { text: 500, images: 50, videos: 0 };
     switch(effectiveTier) {
-      case 'Free Trial': limits = { text: 5, images: 10, videos: 0 }; break;
+      case 'Free Trial': limits = { text: 500, images: 30, videos: 2 }; break;
       case 'Pro Artisan': limits = { text: 500, images: 100, videos: 10 }; break;
       case 'Master Artisan': limits = { text: 500, images: 300, videos: 30 }; break;
     }

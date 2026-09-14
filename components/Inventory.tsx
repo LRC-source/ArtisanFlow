@@ -164,7 +164,7 @@ export const Inventory = () => {
               title={selectedItem.name}
               parentTitle="Inventory Hub"
               onBack={() => setView('overview')}
-              description={`Detailed node analysis for ${selectedItem.name}. SKU: ${selectedItem.sku}`}
+              description={`Detailed analysis for ${selectedItem.name}. SKU: ${selectedItem.sku}`}
               actions={
                 <Button 
                   onClick={() => toast.info("Audit protocol initialized.")}
@@ -212,7 +212,7 @@ export const Inventory = () => {
                             <h4 className="font-sans font-bold text-[11px] uppercase tracking-[0.3em]">AI Insight</h4>
                         </div>
                         <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">
-                            This node is currently operating at <span className="font-medium text-white">optimal efficiency</span>. No supply chain disruptions predicted for the next 14 business days.
+                            This is currently operating at <span className="font-medium text-white">optimal efficiency</span>. No supply chain disruptions predicted for the next 14 business days.
                         </p>
                     </div>
                 </div>
@@ -244,7 +244,7 @@ export const Inventory = () => {
                                   {hasExpiredLots && <p className="text-[9px] font-bold text-red-500 mt-1 flex items-center uppercase tracking-widest"><AlertTriangle size={12} className="mr-1"/> Quarantined Lots Detected</p>}
                               </div>
                               <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
-                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Node Value</p>
+                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Value</p>
                                   <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight">${stockValue.toFixed(2)}</p>
                                   <p className="text-[9px] text-white/50 font-bold tracking-widest uppercase mt-2">@ ${unitCost.toFixed(2)}/{selectedItem.unit}</p>
                               </div>
@@ -314,7 +314,7 @@ export const Inventory = () => {
                                             <GlassHaloIcon icon={Layers} color="purple" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
                                             <div>
                                                 <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1">{recipe.name}</p>
-                                                <p className="text-[10px] sm:text-base text-white/30 font-sans font-bold uppercase tracking-[0.2em]">Primary Input Node</p>
+                                                <p className="text-[10px] sm:text-base text-white/30 font-sans font-bold uppercase tracking-[0.2em]">Primary Input</p>
                                             </div>
                                         </div>
                                         <ChevronRight size={20} className="text-white/20 group-hover:text-white group-hover:translate-x-2 transition-all duration-500" />

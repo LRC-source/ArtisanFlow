@@ -82,7 +82,7 @@ export const Dashboard = () => {
     >
       <VaultBanner 
         title="Command Center"
-        subtitle="The pulse of your artisan enterprise is currently optimized. Strategic nodes are stable."
+        subtitle="The pulse of your artisan enterprise is currently optimized. Strategic systems are stable."
         badge="Architect Authorization Confirmed"
       >
         <div className="flex gap-4 flex-wrap">
@@ -146,7 +146,7 @@ export const Dashboard = () => {
 
       {/* Primary Navigation Portals */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10">
-        <MainNodePortal 
+        <MainPortal 
             title="Marketing Studio" 
             path="/marketing"
             icon={Sparkles} 
@@ -155,7 +155,7 @@ export const Dashboard = () => {
             color="from-purple-600/40 to-indigo-600/40"
             shadow="shadow-purple-900/40"
         />
-        <MainNodePortal 
+        <MainPortal 
             title="Manufacturing" 
             path="/recipes"
             icon={Factory} 
@@ -164,7 +164,7 @@ export const Dashboard = () => {
             color="from-emerald-600/40 to-teal-600/40"
             shadow="shadow-emerald-900/40"
         />
-        <MainNodePortal 
+        <MainPortal 
             title="CRM Hub" 
             path="/operations/crm"
             icon={User} 
@@ -173,7 +173,7 @@ export const Dashboard = () => {
             color="from-blue-600/40 to-cyan-600/40"
             shadow="shadow-blue-900/40"
         />
-        <MainNodePortal 
+        <MainPortal 
             title="Orders & Finance" 
             path="/finance"
             icon={TrendingUp} 
@@ -269,7 +269,7 @@ export const Dashboard = () => {
   );
 };
 
-const MainNodePortal = ({ title, path, icon, color, shadow, delay, iconColor }: any) => {
+const MainPortal = ({ title, path, icon, color, shadow, delay, iconColor }: any) => {
   const navigate = useNavigate();
   return (
       <motion.button

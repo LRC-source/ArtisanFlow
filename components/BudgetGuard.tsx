@@ -135,7 +135,7 @@ export const BudgetGuard: React.FC = () => {
                          {isAnalyzing ? (
                              <div className="flex flex-col items-center py-10">
                                  <Loader2 className="animate-spin text-amber-400 mb-4" size={32} />
-                                 <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Querying Vault Nodes...</p>
+                                 <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Querying Vault...</p>
                              </div>
                          ) : aiAnalysis ? (
                              <div className="space-y-6 animate-in slide-up">
@@ -227,7 +227,7 @@ export const BudgetGuard: React.FC = () => {
                         <div>
                             <h4 className="font-black text-amber-900 uppercase italic text-sm mb-1 tracking-tight">AI Financial Guardrail Active</h4>
                             <p className="text-sm sm:text-base text-amber-800 font-medium leading-relaxed">
-                                Budget Guard™ is currently tracking your <strong>Inventory Node Burn Rates</strong>. It will automatically notify you via Lola if your current spending trajectory risks a material stock-out before the next planned restock.
+                                Budget Guard™ is currently tracking your <strong>Inventory Burn Rates</strong>. It will automatically notify you via Lola if your current spending trajectory risks a material stock-out before the next planned restock.
                             </p>
                         </div>
                     </div>

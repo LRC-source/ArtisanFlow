@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Select, Badge } from '../UI';
-import { Sparkles, Image as ImageIcon, Loader2, Package, Wand2 } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Loader2, Package, Wand2 } from 'lucide-react;
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
 import { generateLolaImage } from '../../services/geminiService';
@@ -185,7 +185,8 @@ export const MarketingCreator = () => {
                                         <img src={generatedImage} alt="Generated" className="max-w-full max-min-h-[300px] sm:py-8 sm:py-16 px-4 sm:px-8 sm:min-h-[320px] h-auto aspect-video sm:aspect-auto w-full max-w-full overflow-hidden object-contain rounded-2xl shadow-2xl border border-white/10" />
                                     </div>
                                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md mx-auto">
-                                        <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5">Discard Node</Button>
+                                        <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5">Discard</Button>
+<Button onClick={() => { addMarketingPost({platform: 'Blog', status: 'Draft', type: 'Image', mediaUrl: generatedImage}); toast.success("Saved to vault."); }} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5 bg-[#6A2C91]"><Save size={16} className="mr-2"/> Save</Button>
                                         <Button onClick={handleSave} className="flex-[2] bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-medium text-xs tracking-wide shadow-md">Approve & Send to Vault</Button>
                                     </div>
                                 </motion.div>

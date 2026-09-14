@@ -92,13 +92,7 @@ const MarketingGrid = () => {
                 desc="Review and approve marketing content before it goes live." 
                 onClick={() => navigate('/marketing/approvals')}
             />
-            <HubCard 
-                title="Receptionist Logic" 
-                icon={MessageSquare} 
-                color="text-blue-600" 
-                desc="Automated qualification protocols for leads." 
-                onClick={() => navigate('/marketing/receptionist')}
-            />
+            
         </div>
     );
 };

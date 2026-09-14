@@ -9,5 +9,5 @@ export * from './AIAvatarStudio';
 export * from './AdvancedContentGenerator';
 export * from './ContentApprovals';
 export * from './BrandVoiceProfile';
-export * from './ReceptionistLogic';
+
 export * from './MarketingCreator';

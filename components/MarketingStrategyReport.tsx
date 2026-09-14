@@ -308,7 +308,7 @@ export const MarketingStrategyReport = () => {
         {contentBundle.length > 0 && (
             <div className="space-y-8 animate-in slide-up">
                 <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
-                    <Layers className="text-emerald-500" /> Content Queue Nodes
+                    <Layers className="text-emerald-500" /> Content Queue
                 </h3>
                 <div className="flex overflow-x-auto gap-3 sm:gap-6 pb-10 scrollbar-hide px-2">
                     {contentBundle.map((post, idx) => {
