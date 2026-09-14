@@ -477,7 +477,8 @@ const AppContent = () => {
                 <BlogGenerator />
             </LockedNode>
         } />
-        <Route path="/marketing/avatar" element={
+        <Route path="/marketing/avatars" element={<Navigate to="/marketing/avatar" replace />} />
+          <Route path="/marketing/avatar" element={
             <LockedNode requiredTier="Basic Artisan" featureKey="ai_avatar_studio" onUpgrade={() => navigate('/settings/subscription')}>
                 <AIAvatarStudio />
             </LockedNode>

@@ -58,7 +58,7 @@ export const ContentCalendar = () => {
             updateMarketingPost(post.id, { status: 'Published' });
         } else if (action === 'reschedule') {
             // Simulated reschedule: Push to next day
-            const curDate = new Date(post.scheduledDate);
+            const curDate = new Date(post.scheduledDate + 'T12:00:00');
             curDate.setDate(curDate.getDate() + 1);
             const nextDateStr = curDate.toISOString().split('T')[0];
             updateMarketingPost(post.id, { scheduledDate: nextDateStr });

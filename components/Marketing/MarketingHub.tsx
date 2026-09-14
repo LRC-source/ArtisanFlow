@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner, SocialMediaAuthModal, HubCard } from '../UI';
-import { Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
+import React from 'react';
+import { Button, VaultBanner, HubCard } from '../UI';
+import { Sparkles, Calendar, Video, PenTool, Share2, Layers, Image, User, Eye, Zap, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useArtisanData, MarketingPost } from '../DataContext';
-import { generateLolaImage, analyzeLolaImage, chatWithLola } from '../../services/geminiService';
-import { motion, AnimatePresence } from 'framer-motion';
-import { GoogleGenAI } from "@google/genai";
+import { motion } from 'framer-motion';
 import { SubPageHeader } from '../SubPageHeader';
-import { toast } from 'sonner';
-import { useFeatureGate } from '../../hooks/useFeatureGate';
-import { ContextualTutorialModal } from '../ContextualTutorialModal';
 
 const MarketingGrid = () => {
     const navigate = useNavigate();
@@ -35,13 +29,6 @@ const MarketingGrid = () => {
                 color="text-[#C5A059]" 
                 desc="Generate comprehensive strategies based on business pulse." 
                 onClick={() => navigate('/marketing/strategy-report')}
-            />
-            <HubCard 
-                title="Brand Voice Profile" 
-                icon={Volume2} 
-                color="text-indigo-600" 
-                desc="Define your brand adjectives and restricted vocabulary." 
-                onClick={() => navigate('/marketing/brand-voice')}
             />
             <HubCard 
                 title="Content Calendar" 
@@ -92,13 +79,9 @@ const MarketingGrid = () => {
                 desc="Review and approve marketing content before it goes live." 
                 onClick={() => navigate('/marketing/approvals')}
             />
-            
         </div>
     );
 };
-
-// --- VISUAL ANALYSIS NODE ---
-
 
 export const MarketingHub = () => {
     const navigate = useNavigate();
@@ -138,5 +121,3 @@ export const MarketingHub = () => {
         </motion.div>
     );
 };
-
-

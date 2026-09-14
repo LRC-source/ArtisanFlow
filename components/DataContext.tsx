@@ -1082,7 +1082,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setMarketingPosts(prev => [...prev, newPost]);
     if (auth.currentUser && !isDemoMode) {
         try {
-            await setDoc(doc(db, 'users', auth.currentUser.uid, 'marketingPosts', newPost.id), newPost);
+            await setDoc(doc(db, 'users', auth.currentUser.uid, 'marketingPosts', newPost.id), JSON.parse(JSON.stringify(newPost)));
         } catch(e) { console.error('Failed to save post', e); }
     }
 };
@@ -1130,7 +1130,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setMarketingPosts(prev => prev.map(post => post.id === id ? { ...post, ...updates } : post));
     if (auth.currentUser && !isDemoMode) {
         try {
-            await setDoc(doc(db, 'users', auth.currentUser.uid, 'marketingPosts', id), updates, { merge: true });
+            await setDoc(doc(db, 'users', auth.currentUser.uid, 'marketingPosts', id), JSON.parse(JSON.stringify(updates)), { merge: true });
         } catch(e) { console.error('Failed to update post', e); }
     }
 };

@@ -124,7 +124,7 @@ export const ContentApprovals = () => {
                                                         <Badge color="purple">{post.platform}</Badge>
                                                         <Badge color="gold">{post.status}</Badge>
                                                     </div>
-                                                    <span className="text-[10px] font-sans text-gray-500 uppercase tracking-widest">{new Date(post.scheduledDate).toLocaleDateString()}</span>
+                                                    <span className="text-[10px] font-sans text-gray-500 uppercase tracking-widest">{new Date(post.scheduledDate + 'T12:00:00').toLocaleDateString()}</span>
                                                 </div>
                                             )}
                                             

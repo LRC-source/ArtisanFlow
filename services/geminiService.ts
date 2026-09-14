@@ -21,7 +21,7 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
     const data = snap.data();
     const tier = data.tier || 'Free Trial';
     const isTrial = data.status === 'trialing';
-    const effectiveTier = isTrial ? 'Free Trial' : tier;
+    const effectiveTier = isTrial ? 'Pro Artisan' : tier;
     
     let limits = { text: 500, images: 50, videos: 0 };
     switch(effectiveTier) {
@@ -30,7 +30,7 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
       case 'Master Artisan': limits = { text: 50000, images: 300, videos: 30 }; break;
     }
     
-    const currentDate = new Date().toISOString().slice(0, 10);
+    const currentDate = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
       const currentMonth = currentDate.slice(0, 7);
       const profile = data.profile || {};
       let usage = profile.aiUsage || {};
@@ -62,7 +62,7 @@ const recordUsage = async (type: 'text' | 'image' | 'video') => {
     const snap = await getDoc(userRef);
     if (!snap.exists()) return;
     const data = snap.data();
-    const currentDate = new Date().toISOString().slice(0, 10);
+    const currentDate = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
       const currentMonth = currentDate.slice(0, 7);
       const profile = data.profile || {};
       let usage = profile.aiUsage || {};
@@ -136,7 +136,6 @@ export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
       body: JSON.stringify({ action: 'analyzeLolaImage', payload: { imageB64, prompt } })
     });
     const data = await response.json();
-    if (data.audio) await recordUsage('text');
     if (!data.error) await recordUsage('text');
     return data.text || "Failed to analyze visual asset.";
   } catch (e) {
