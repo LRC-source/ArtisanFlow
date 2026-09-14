@@ -15,8 +15,40 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid token' });
     }
     
-    // Server-side genai proxy logic
     const body = req.body || {};
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) return res.status(500).json({ error: 'Missing Gemini API Key' });
+
+    if (body.action === 'generateLolaImage' && body.payload) {
+        const promptText = body.payload.prompt || 'A photorealistic artisanal product';
+        const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=' + apiKey, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                instances: [{ prompt: promptText }],
+                parameters: { sampleCount: 1 }
+            })
+        });
+        const data = await fetchRes.json();
+        if (data.error) return res.status(502).json({ error: data.error.message });
+        
+        let image = null;
+        if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {
+            image = "data:image/jpeg;base64," + data.predictions[0].bytesBase64Encoded;
+        } else if (data.candidates && data.candidates[0] && data.candidates[0].image) {
+            image = "data:image/jpeg;base64," + data.candidates[0].image.base64;
+        }
+        
+        if (!image) return res.status(502).json({ error: 'Image generation failed or format unrecognized.' });
+        return res.status(200).json({ image });
+    }
+
+    if (body.action === 'generateLolaVideo' && body.payload) {
+        // Wired for veo-3.1-lite-generate-001 as directed, though not fully built out on the client yet
+        return res.status(501).json({ error: 'Video generation requires the upcoming client feature build.' });
+    }
+
+    // Default: Text paths
     let promptText = body.prompt;
     if (body.action === 'chatWithLola' && body.payload) {
         promptText = body.payload.message;
@@ -25,14 +57,8 @@ export default async function handler(req, res) {
         }
     } else if (body.action === 'analyzeLolaImage' && body.payload) {
         promptText = body.payload.prompt;
-    } else if (body.action === 'generateLolaImage' && body.payload) {
-        promptText = body.payload.prompt;
     }
-    
     if (!promptText) promptText = "Hello";
-
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(500).json({ error: 'Missing Gemini API Key' });
 
     const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=' + apiKey, {
       method: 'POST',
@@ -43,10 +69,8 @@ export default async function handler(req, res) {
     });
     
     const data = await fetchRes.json();
-    
-    // Extract text for the frontend
     let text = "";
-            if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
         text = data.candidates[0].content.parts.map(p => p.text).join("");
     } else if (data.candidates && data.candidates[0].finishReason) {
         text = "Generation stopped: " + data.candidates[0].finishReason;
@@ -56,11 +80,8 @@ export default async function handler(req, res) {
     } else {
         text = "No response from AI.";
     }
-    
     return res.status(200).json({ ...data, text });
   } catch (error) {
     return res.status(500).json({ error: error.message, text: error.message });
   }
 }
-
-

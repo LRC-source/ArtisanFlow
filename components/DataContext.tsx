@@ -8,7 +8,7 @@ import {
   signInWithPopup, 
   onAuthStateChanged 
 } from 'firebase/auth';
-import { doc, deleteDoc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc, setDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import { db as dataLayer } from '../services/dataLayer';
 import { toast } from 'sonner';
 
@@ -131,6 +131,7 @@ export interface BusinessProfile {
   role?: 'admin' | 'user';
   status: 'Active' | 'Inactive' | 'Past Due' | 'Pending Payment' | 'trialing';
   trialEndsAt?: string;
+    aiUsage?: { text: number; images: number; videos: number; month: string };
   brandVoice: { adjectives: string[]; restrictedWords: string[] };
   receptionistLogic: { qualificationQuestions: string[] };
 }
@@ -335,6 +336,8 @@ interface DataContextType {
   upgradePrompt: { feature: string; requiredTier: UserTier } | null;
   setUpgradePrompt: (prompt: { feature: string; requiredTier: UserTier } | null) => void;
   checkFeatureGate: (feature: string) => boolean;
+    checkAiQuota: (type: 'text' | 'image' | 'video') => boolean;
+    recordAiUsage: (type: 'text' | 'image' | 'video', success: boolean) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -359,16 +362,21 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   // Read initial onboarding state from localStorage if available
   const [upgradePrompt, setUpgradePrompt] = useState<{ feature: string; requiredTier: UserTier } | null>(null);
 
+  
   const checkFeatureGate = (action: string): boolean => {
+    // Legacy mapping (skip old numeric text limit logic)
+    if (action === 'mktg_ai_actions') {
+      return checkAiQuota('text');
+    }
+    
     const limits: Record<UserTier, any> = {
-      'Free Trial': { vault_recipes: 5, mktg_ai_actions: 5, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
-      'Basic Artisan': { vault_recipes: Infinity, mktg_ai_actions: 100, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
-      'Pro Artisan': { vault_recipes: Infinity, mktg_ai_actions: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true },
-      'Master Artisan': { vault_recipes: Infinity, mktg_ai_actions: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true }
+      'Free Trial': { vault_recipes: 5, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
+      'Basic Artisan': { vault_recipes: Infinity, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
+      'Pro Artisan': { vault_recipes: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true },
+      'Master Artisan': { vault_recipes: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true }
     };
     
     const limit = limits[userTier]?.[action];
-    
     if (typeof limit === 'boolean') {
       if (!limit) {
         setUpgradePrompt({ feature: action, requiredTier: 'Pro Artisan' });
@@ -376,14 +384,65 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }
       return true;
     }
-    
     if (action === 'vault_recipes' && recipes.length >= limit) {
       setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Basic Artisan' });
       return false;
     }
-    
     return true;
   };
+
+  const getAiLimits = () => {
+    const isTrial = businessProfile.status === 'trialing';
+    const effectiveTier = isTrial ? 'Pro Artisan' : userTier;
+    switch(effectiveTier) {
+      case 'Free Trial': return { text: 5, images: 10, videos: 0 };
+      case 'Basic Artisan': return { text: 500, images: 50, videos: 0 };
+      case 'Pro Artisan': return { text: 500, images: 100, videos: 10 };
+      case 'Master Artisan': return { text: 500, images: 300, videos: 30 };
+      default: return { text: 5, images: 10, videos: 0 }; // fallback
+    }
+  };
+
+  const checkAiQuota = (type: 'text' | 'image' | 'video') => {
+    const limits = getAiLimits();
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    
+    const usage = businessProfile.aiUsage?.month === currentMonth 
+      ? businessProfile.aiUsage 
+      : { text: 0, images: 0, videos: 0, month: currentMonth };
+
+    const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
+    const hasQuota = usage[typeKey] < limits[typeKey];
+    
+    if (!hasQuota) {
+      toast.error(`AI ${type} quota exhausted for this cycle.`);
+    }
+    return hasQuota;
+  };
+
+  const recordAiUsage = async (type: 'text' | 'image' | 'video', success: boolean) => {
+    if (!success) return; // Do not decrement on fail
+    if (!auth.currentUser) return;
+    
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    const usage = businessProfile.aiUsage?.month === currentMonth 
+      ? { ...businessProfile.aiUsage } 
+      : { text: 0, images: 0, videos: 0, month: currentMonth };
+      
+    const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
+    usage[typeKey] += 1;
+    
+    setBusinessProfile(prev => ({ ...prev, aiUsage: usage }));
+    
+    try {
+      
+      const userRef = doc(db, 'users', auth.currentUser.uid);
+      await updateDoc(userRef, { 'profile.aiUsage': usage });
+    } catch(e) {
+      console.error("Failed to sync AI usage to Firestore", e);
+    }
+  };
+
 
   const [onboardingState, setOnboardingState] = useState<Record<string, boolean>>(() => {
       if (typeof window !== 'undefined') {
@@ -1414,7 +1473,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       submitVIPWaitlist,
       upgradePrompt,
       setUpgradePrompt,
-      checkFeatureGate, isDemoMode, loadDemoData, clearDemoData,
+      checkFeatureGate, checkAiQuota, recordAiUsage, isDemoMode, loadDemoData, clearDemoData,
       productionBatches, migrateInventoryToLots, getRecipeActualCost,
     }}>
       {children}
@@ -1427,6 +1486,8 @@ export const useArtisanData = () => {
   if (!context) throw new Error('useArtisanData error');
   return context;
 };
+
+
 
 
 

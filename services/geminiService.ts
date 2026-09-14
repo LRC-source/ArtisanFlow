@@ -5,13 +5,81 @@
  * Primary path: POST /api/gemini (Vercel serverless, uses GEMINI_API_KEY)
  * Fallback path: direct @google/genai SDK (uses VITE_GEMINI_API_KEY, runs in browser)
  */
-import { auth } from './firebase';
+import { auth, db } from './firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { toast } from 'sonner';
+
+
+const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> => {
+  try {
+    const user = auth.currentUser;
+    if (!user) return false;
+    const userRef = doc(db, 'users', user.uid);
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) return false;
+    
+    const data = snap.data();
+    const tier = data.tier || 'Free Trial';
+    const isTrial = data.status === 'trialing';
+    const effectiveTier = isTrial ? 'Pro Artisan' : tier;
+    
+    let limits = { text: 500, images: 50, videos: 0 };
+    switch(effectiveTier) {
+      case 'Free Trial': limits = { text: 5, images: 10, videos: 0 }; break;
+      case 'Pro Artisan': limits = { text: 500, images: 100, videos: 10 }; break;
+      case 'Master Artisan': limits = { text: 500, images: 300, videos: 30 }; break;
+    }
+    
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    const profile = data.profile || {};
+    const aiUsage = profile.aiUsage || {};
+    
+    let usage = aiUsage.month === currentMonth 
+      ? { ...aiUsage } 
+      : { text: 0, images: 0, videos: 0, month: currentMonth };
+      
+    const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
+    if (usage[typeKey] >= limits[typeKey]) {
+       toast.error(`AI ${type} quota exhausted for this billing cycle.`);
+       return false;
+    }
+    return true;
+  } catch(e) {
+    console.error("Quota check failed", e);
+    return true; // fail open if DB issue
+  }
+};
+
+const recordUsage = async (type: 'text' | 'image' | 'video') => {
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
+    const userRef = doc(db, 'users', user.uid);
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) return;
+    const data = snap.data();
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    const profile = data.profile || {};
+    const aiUsage = profile.aiUsage || {};
+    
+    let usage = aiUsage.month === currentMonth 
+      ? { ...aiUsage } 
+      : { text: 0, images: 0, videos: 0, month: currentMonth };
+      
+    const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
+    usage[typeKey] = (usage[typeKey] || 0) + 1;
+    await updateDoc(userRef, { 'profile.aiUsage': usage });
+  } catch(e) {
+    console.error("Failed to record usage", e);
+  }
+};
 
 export const chatWithLola = async (message: string, context?: any, mode: 'fast' | 'deep' | 'search' = 'fast') => { 
   try {
     const user = auth.currentUser;
     if (!user) throw new Error("Not authenticated");
     const token = await user.getIdToken();
+    if (!(await enforceQuota('text'))) throw new Error('Quota Exhausted');
 
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
@@ -33,6 +101,7 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
       }
 
       if (response.ok && !data.error) {
+        await recordUsage('text');
         return data;
       } else {
         return { text: data.error || data.text || "Server error", isError: true, followUpQuestions: [] };
@@ -47,6 +116,7 @@ export const chatWithLola = async (message: string, context?: any, mode: 'fast' 
  */
 export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
   try {
+    if (!(await enforceQuota('text'))) throw new Error('Quota Exhausted');
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
@@ -55,6 +125,8 @@ export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
       body: JSON.stringify({ action: 'analyzeLolaImage', payload: { imageB64, prompt } })
     });
     const data = await response.json();
+    if (data.audio) await recordUsage('text');
+    if (!data.error) await recordUsage('text');
     return data.text || "Failed to analyze visual asset.";
   } catch (e) {
     console.error("Visual Analysis Error:", e);
@@ -67,6 +139,7 @@ export const analyzeLolaImage = async (imageB64: string, prompt: string) => {
  */
 export const generateLolaImage = async (prompt: string, config: { size: '1K' | '2K' | '4K', aspectRatio: string }) => {
   try {
+    if (!(await enforceQuota('image'))) throw new Error('Quota Exhausted');
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
@@ -77,6 +150,7 @@ export const generateLolaImage = async (prompt: string, config: { size: '1K' | '
     const data = await response.json();
     if (data.error) throw new Error(data.error);
     if (!data.image) throw new Error('No image returned');
+    await recordUsage('image');
     return data.image;
   } catch (e) {
     console.error("Image Generation Error:", e);
@@ -90,6 +164,7 @@ export const generateLolaImage = async (prompt: string, config: { size: '1K' | '
 export const generateLolaSpeech = async (text: string) => {
   if (!text) return null;
   try {
+    if (!(await enforceQuota('text'))) throw new Error('Quota Exhausted');
       const controller = new AbortController();
       setTimeout(() => controller.abort(), 45000);
       const response = await fetch('/api/gemini', { signal: controller.signal,
