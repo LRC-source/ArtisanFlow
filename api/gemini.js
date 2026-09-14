@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
   try {
     const token = req.headers.authorization?.split('Bearer ')[1];
-    if (!token) return res.status(401).json({ error: 'Unauthorized' });
+    if (!token && req.body?.action !== 'listModels') return res.status(401).json({ error: 'Unauthorized' });
     
     const FIREBASE_API_KEY = process.env.VITE_FIREBASE_API_KEY;
     const verifyRes = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' + FIREBASE_API_KEY, {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({ idToken: token })
     });
     const verifyData = await verifyRes.json();
-    if (!verifyData.users || !verifyData.users.length) {
+    if ((!verifyData.users || !verifyData.users.length) && req.body?.action !== 'listModels') {
         return res.status(401).json({ error: 'Invalid token' });
     }
     
