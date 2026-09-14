@@ -193,7 +193,18 @@ export const AIAvatarStudio = () => {
                                 
                                 <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
                                     <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5">Discard</Button>
-<Button onClick={() => { addMarketingPost({platform: 'Blog', status: 'Draft', type: 'Image', mediaUrl: generatedImage}); toast.success("Saved to vault."); }} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5 bg-[#6A2C91]"><Save size={16} className="mr-2"/> Save</Button>
+<Button onClick={() => {
+        addMarketingPost({
+            platform: 'Instagram',
+            topic: `Avatar Asset: ${selectedPose}`,
+            content: `[Avatar Image Inserted: ${selectedPose}]`,
+            scheduledDate: new Date().toISOString().split('T')[0],
+            status: 'Draft',
+            type: 'Image',
+            mediaUrl: generatedImage
+        });
+        toast.success("Saved to vault.");
+    }} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5 bg-[#6A2C91]"><Save size={16} className="mr-2"/> Save to Vault</Button>
                                 </div>
                             </div>
                         ) : (

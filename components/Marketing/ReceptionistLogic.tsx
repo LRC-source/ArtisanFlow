@@ -56,7 +56,7 @@ ${contextStr}
 If they ask something outside the FAQs, be polite and try to help based on general artisanal business knowledge, but keep it brief.`;
 
             const reply = await chatWithLola(userText, systemPrompt);
-            setMessages(prev => [...prev, { role: 'bot', content: reply }]);
+            setMessages(prev => [...prev, { role: 'bot', content: reply.text || "Response error" }]);
         } catch (error) {
             console.error(error);
             toast.error("Failed to connect to AI logic.");

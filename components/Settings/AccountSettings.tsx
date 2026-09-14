@@ -92,7 +92,7 @@ export const AccountSettings = () => {
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-[2.5rem]">
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-white">Billing &amp; Subscription</h3>
-                        <Badge variant="outline" className="border-[#C5A059] text-[#C5A059]">Managed via Stripe</Badge>
+                        <Badge variant="outline" className="border-[#C5A059] text-[#C5A059]">Managed via Square</Badge>
                     </div>
                     <div className="space-y-4">
                         <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex justify-between items-center">

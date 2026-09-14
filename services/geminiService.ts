@@ -26,8 +26,8 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
     let limits = { text: 500, images: 50, videos: 0 };
     switch(effectiveTier) {
       case 'Free Trial': limits = { text: 500, images: 30, videos: 2 }; break;
-      case 'Pro Artisan': limits = { text: 500, images: 100, videos: 10 }; break;
-      case 'Master Artisan': limits = { text: 500, images: 300, videos: 30 }; break;
+      case 'Pro Artisan': limits = { text: 5000, images: 100, videos: 10 }; break;
+      case 'Master Artisan': limits = { text: 50000, images: 300, videos: 30 }; break;
     }
     
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -44,7 +44,7 @@ const enforceQuota = async (type: 'text' | 'image' | 'video'): Promise<boolean> 
       
     const typeKey = type === 'image' ? 'images' : type === 'video' ? 'videos' : 'text';
     if (usage[typeKey] >= limits[typeKey]) {
-       toast.error(`AI ${type} quota exhausted for this billing cycle.`);
+       toast.error(`AI ${type} quota exhausted for ${type === 'text' ? 'today' : 'this billing cycle'}.`);
        return false;
     }
     return true;
