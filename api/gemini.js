@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
   try {
     const token = req.headers.authorization?.split('Bearer ')[1];
-    if (!token && req.body?.action !== 'listModels') return res.status(401).json({ error: 'Unauthorized' });
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
     
     const FIREBASE_API_KEY = process.env.VITE_FIREBASE_API_KEY;
     const verifyRes = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' + FIREBASE_API_KEY, {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({ idToken: token })
     });
     const verifyData = await verifyRes.json();
-    if ((!verifyData.users || !verifyData.users.length) && req.body?.action !== 'listModels') {
+    if (!verifyData.users || !verifyData.users.length) {
         return res.status(401).json({ error: 'Invalid token' });
     }
     
@@ -19,35 +19,25 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Missing Gemini API Key' });
 
-    if (body.action === 'listModels') {
-        const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + apiKey);
-        const data = await fetchRes.json();
-        return res.status(200).json(data);
-    }
-
     if (body.action === 'generateLolaImage' && body.payload) {
         const promptText = body.payload.prompt || 'A photorealistic artisanal product';
-        const config = body.payload.config || {};
-        const parameters = { sampleCount: 1 };
-        if (config.aspectRatio) parameters.aspectRatio = config.aspectRatio;
-        if (config.size) parameters.imageSize = config.size;
         
-        const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=' + apiKey, {
+        const fetchRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=' + apiKey, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                instances: [{ prompt: promptText }],
-                parameters: { sampleCount: 1 }
+                contents: [{ parts: [{ text: promptText }] }]
             })
         });
         const data = await fetchRes.json();
         if (data.error) return res.status(502).json({ error: data.error.message || JSON.stringify(data.error) });
         
         let image = null;
-        if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {
-            image = "data:image/jpeg;base64," + data.predictions[0].bytesBase64Encoded;
-        } else if (data.candidates && data.candidates[0] && data.candidates[0].image) {
-            image = "data:image/jpeg;base64," + data.candidates[0].image.base64;
+        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
+            const inlineData = data.candidates[0].content.parts.find(p => p.inlineData)?.inlineData;
+            if (inlineData) {
+                image = `data:${inlineData.mimeType};base64,${inlineData.data}`;
+            }
         }
         
         if (!image) return res.status(502).json({ error: 'Image generation failed or format unrecognized.' });
