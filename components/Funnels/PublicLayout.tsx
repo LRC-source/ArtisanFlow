@@ -15,7 +15,7 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#C5A059]/10 flex items-center justify-center border border-[#C5A059]/30">
               <Layers className="text-[#C5A059]" size={24} />
             </div>
-            <span className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">Artisan<span className="text-[#C5A059]">Flow</span></span>
+            <span className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-serif tracking-tighter">Artisan<span className="text-[#C5A059]">Flow</span></span>
           </div>
           
           <div className="flex items-center gap-3 sm:gap-4">
@@ -40,26 +40,26 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="flex items-center gap-3">
               <Layers className="text-white/30" size={24} />
-              <span className="font-serif text-xl font-bold text-white sm:text-white/50">ArtisanFlow</span>
+              <span className="font-serif text-xl font-bold text-white sm:text-white/50 tracking-tighter">ArtisanFlow</span>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-white/40 leading-relaxed">The operating system for master artisans. Standardize recipes, manage inventory, and scale your brand.</p>
           </div>
           
           <div className="flex flex-col gap-3 text-sm text-white sm:text-white/60">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">Platform</h4>
+            <h4 className="text-sm uppercase text-white font-serif tracking-tighter">Platform</h4>
             <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/features')}>Features</span>
             <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/pricing')}>Pricing</span>
             <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/makers')}>Makers</span>
           </div>
 
           <div className="flex flex-col gap-3 text-sm text-white sm:text-white/60">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">Legal</h4>
+            <h4 className="text-sm uppercase text-white font-serif tracking-tighter">Legal</h4>
             <button className="hover:text-white cursor-pointer transition-colors" role="link" onClick={() => navigate('/terms')}>Terms & Conditions</button>
             <button className="hover:text-white cursor-pointer transition-colors" role="link" onClick={() => navigate('/privacy')}>Privacy Policy</button>
           </div>
 
           <div className="flex flex-col gap-3 sm:gap-4">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">Subscribe</h4>
+            <h4 className="text-sm uppercase text-white font-serif tracking-tighter">Subscribe</h4>
             <div className="flex flex-col gap-2">
               <input type="email" placeholder="Email Address" className="h-10 text-sm px-3 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#C5A059]" />
               <button className="h-10 py-2 px-4 text-sm w-full bg-[#C5A059] text-black font-semibold rounded-lg hover:bg-[#b08e4d] transition-all">Subscribe</button>

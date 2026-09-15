@@ -56,7 +56,7 @@ export const Recipes = () => {
       {recipes.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-6 sm:p-12 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
               <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-6" />
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Vault Empty</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Vault Empty</h3>
               <p className="text-sm sm:text-base text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1">Initialize your first Bill of Materials to start tracking margins.</p>
               <Button onClick={() => navigate('/recipes/builder')} className="mt-8 bg-white/5 text-[#C5A059] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">LAUNCH BUILDER</Button>
           </div>
@@ -68,7 +68,7 @@ export const Recipes = () => {
                           <div className="flex items-center gap-3 sm:gap-6">
                               <GlassHaloIcon icon={Layers} color="purple" size="md" />
                               <div>
-                                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{recipe.name}</h3>
+                                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{recipe.name}</h3>
                                   <Badge color="purple" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">V{recipe.version} SKU: {recipe.sku}</Badge>
                               </div>
                           </div>
@@ -119,7 +119,7 @@ export const Recipes = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                               {recipe.ingredients.map((ing, i) => (
                                   <div key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
-                                      <span className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">{ing.name}</span>
+                                      <span className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-serif tracking-tighter">{ing.name}</span>
                                       <span className="text-[10px] font-sans font-black text-[#6A2C91] tracking-[0.2em]">{ing.qty}</span>
                                   </div>
                               ))}

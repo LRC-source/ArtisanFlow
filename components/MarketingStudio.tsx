@@ -34,7 +34,7 @@ export const MarketingStudio = () => {
             </div>
             <div className="flex items-center gap-3 sm:gap-4 mb-6 relative z-10">
                 <GlassHaloIcon icon={Sparkles} color="gold" size="xl" className="group-hover:scale-110 transition-all duration-500" />
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Campaign Generator</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Campaign Generator</h3>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light mb-8 relative z-10">Generate comprehensive strategies based on inventory levels.</p>
             <button onClick={() => toast.info('Initializing Strategy Node...')} className="w-full py-4 bg-[#C5A059]/10 hover:bg-[#C5A059]/20 text-[#C5A059] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#C5A059]/30 relative z-10">Generate Strategy</button>
@@ -46,7 +46,7 @@ export const MarketingStudio = () => {
             </div>
             <div className="flex items-center gap-3 sm:gap-4 mb-6 relative z-10">
                 <GlassHaloIcon icon={Type} color="cyan" size="xl" className="group-hover:scale-110 transition-all duration-500" />
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Copywriter</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Copywriter</h3>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light mb-8 relative z-10">Create blog posts, emails, and social captions.</p>
             <button onClick={() => toast.info('Opening Email Editor...')} className="w-full py-4 bg-[#06B6D4]/10 hover:bg-[#06B6D4]/20 text-[#06B6D4] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#06B6D4]/30 relative z-10">Open Editor</button>
@@ -58,7 +58,7 @@ export const MarketingStudio = () => {
             </div>
             <div className="flex items-center gap-3 sm:gap-4 mb-6 relative z-10">
                 <GlassHaloIcon icon={Camera} color="magenta" size="xl" className="group-hover:scale-110 transition-all duration-500" />
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Visual Studio</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Visual Studio</h3>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light mb-8 relative z-10">AI image generation for product showcases.</p>
             <button onClick={() => toast.info('Spinning up Image Generation Node...')} className="w-full py-4 bg-[#D946EF]/10 hover:bg-[#D946EF]/20 text-[#D946EF] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#D946EF]/30 relative z-10">Create Images</button>
@@ -70,7 +70,7 @@ export const MarketingStudio = () => {
             </div>
             <div className="flex items-center gap-3 sm:gap-4 mb-6 relative z-10">
                 <GlassHaloIcon icon={Video} color="purple" size="xl" className="group-hover:scale-110 transition-all duration-500" />
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Video Scripts</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Video Scripts</h3>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light mb-8 relative z-10">Generate scripts for TikTok and Reels.</p>
             <button onClick={() => toast.info('Script Generation AI Activating...')} className="w-full py-4 bg-[#A855F7]/10 hover:bg-[#A855F7]/20 text-[#A855F7] font-sans font-bold text-[10px] uppercase tracking-[0.3em] rounded-[1.5rem] transition-all border border-[#A855F7]/30 relative z-10">Write Script</button>

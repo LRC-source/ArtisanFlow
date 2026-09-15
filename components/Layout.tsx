@@ -120,7 +120,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
           <div className="sidebar-brand-block flex items-center justify-center relative">
               <div className="flex items-center justify-center w-full py-2">
                 <div className="flex items-center cursor-pointer group" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
-                    <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg md:text-2xl tracking-tight flex items-center font-extrabold">
+                    <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg md:text-2xl flex items-center font-extrabold font-serif tracking-tighter">
                         {/* LRC Prefix */}
                         <span className="text-white mr-2">LRC</span>
                         
@@ -245,7 +245,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               {/* Mobile/Collapsed Logo */}
               <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
                  <div className="flex items-center cursor-pointer group" onClick={() => navigate('/')}>
-                     <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg tracking-tight flex items-center font-extrabold">
+                     <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg flex items-center font-extrabold font-serif tracking-tighter">
                          <span className="text-white mr-2">LRC</span>
                          <span className="text-white">Artisan</span>
                          <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>

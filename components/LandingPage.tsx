@@ -31,7 +31,7 @@ export const LandingPage = () => {
             {/* Nav */}
             <nav className="w-full px-6 sm:px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
                 <div className="flex items-center cursor-pointer group">
-                    <span className="text-xl sm:text-2xl font-black tracking-tight flex items-center">
+                    <span className="text-xl sm:text-2xl font-black flex items-center font-serif tracking-tighter">
                         <span className="text-white mr-1">LRC</span>
                         <span className="text-white">Artisan</span>
                         <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
@@ -100,13 +100,13 @@ export const LandingPage = () => {
                 {/* Anti-Spreadsheet Comparison Section */}
                 <div className="mt-16 w-full max-w-5xl relative z-10 mx-auto mb-12 px-2">
                     <div className="text-center mb-8 md:mb-12">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">The Anti-Spreadsheet <br className="md:hidden" /><span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">OS for Modern Makers</span></h2>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4 font-serif tracking-tighter">The Anti-Spreadsheet <br className="md:hidden" /><span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">OS for Modern Makers</span></h2>
                         <p className="text-base text-slate-400 leading-relaxed max-w-2xl mx-auto px-2">Why makers across every craft are leaving legacy tools behind.</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                         {/* Legacy */}
                         <div className="bg-white/[0.01] border border-white/5 p-4 sm:p-5 lg:p-6 rounded-[2rem] flex flex-col items-center text-center text-gray-400 opacity-70 transition-all">
-                            <h3 className="text-lg sm:text-2xl text-red-400 font-bold uppercase tracking-widest mb-6">Spreadsheets & Old Tools</h3>
+                            <h3 className="text-lg sm:text-2xl text-red-400 font-bold uppercase mb-6 font-serif tracking-tighter">Spreadsheets & Old Tools</h3>
                             <ul className="space-y-4 text-sm w-full text-left">
                                 <li className="flex items-start gap-3"><span className="text-red-400/80 font-bold leading-none">×</span> Manual batch math & costly errors</li>
                                 <li className="flex items-start gap-3"><span className="text-red-400/80 font-bold leading-none">×</span> Silent cost increases eating margins</li>
@@ -117,7 +117,7 @@ export const LandingPage = () => {
                         {/* Artisan Flow */}
                         <div className="p-[2px] rounded-[2rem] relative overflow-x-hidden shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059]">
                             <div className="bg-[#0d0d0d] w-full h-full p-4 sm:p-5 lg:p-6 rounded-[calc(2rem-2px)] flex flex-col items-center text-center">
-                                <h3 className="text-lg sm:text-2xl text-white font-bold uppercase tracking-widest mb-6 relative z-10">ArtisanFlow</h3>
+                                <h3 className="text-lg sm:text-2xl text-white font-bold uppercase mb-6 relative z-10 font-serif tracking-tighter">ArtisanFlow</h3>
                                 <ul className="space-y-4 text-gray-200 text-sm w-full text-left relative z-10">
                                     <li className="flex items-start gap-3">
                                         <span className="relative flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/20 shrink-0 mt-0.5 shadow-[0_0_10px_rgba(6,182,212,0.25)]">
@@ -148,7 +148,7 @@ export const LandingPage = () => {
                 {/* Platform Feature Nodes Section */}
                 <div id="features-section" className="mt-8 sm:mt-12 lg:mt-16 w-full max-w-6xl relative z-10 px-2">
                     <div className="text-center mb-10 md:mb-16">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">Everything a Maker Needs,<br className="md:hidden" /> In One Place</h2>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4 font-serif tracking-tighter">Everything a Maker Needs,<br className="md:hidden" /> In One Place</h2>
                         <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.3)] mt-3 inline-block">
                             <span className="block bg-[#0d0d0d] rounded-full py-1.5 px-4 md:py-2 md:px-6 text-[#E2C792] text-xs md:text-sm font-black uppercase tracking-widest">
                                Built from real-world maker problems
@@ -162,7 +162,7 @@ export const LandingPage = () => {
                                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
                                 <FlaskConical size={24} className="text-[#06B6D4] relative z-10" />
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-2">Recipe Builder & BOM</h3>
+                            <h3 className="text-xl font-bold text-white mb-2 font-serif tracking-tighter">Recipe Builder & BOM</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Dynamic Bill of Materials tracking, automated inventory deductions, and supplier quality control. Works for candles, soap, skincare, herbal blends, jewelry, and more.</p>
                         </div>
                         {/* Lola AI */}
@@ -171,7 +171,7 @@ export const LandingPage = () => {
                                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
                                 <Bot size={24} className="text-[#A855F7] relative z-10" />
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-2">Lola AI Marketing Co-Pilot</h3>
+                            <h3 className="text-xl font-bold text-white mb-2 font-serif tracking-tighter">Lola AI Marketing Co-Pilot</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Automate social posts, blog content, and email campaigns — all tuned to your brand voice. Never stare at a blank page again.</p>
                         </div>
                         {/* Profit Guard */}
@@ -180,7 +180,7 @@ export const LandingPage = () => {
                                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#06B6D4] via-[#A855F7] to-[#C5A059] opacity-30 blur-md group-hover:opacity-70 transition-all" />
                                 <ShieldCheck size={24} className="text-[#C5A059] relative z-10" />
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-2">Finance Hub & Profit Guard™</h3>
+                            <h3 className="text-xl font-bold text-white mb-2 font-serif tracking-tighter">Finance Hub & Profit Guard™</h3>
                             <p className="text-sm text-gray-400 leading-relaxed">Real-time margin alerts before cost increases destroy your profits. Know exactly what you make on every single product.</p>
                         </div>
                     </div>
@@ -193,7 +193,7 @@ export const LandingPage = () => {
                             <Rocket size={32} className="text-white relative z-10" />
                         </div>
                         <div className="flex-1 relative z-10">
-                            <h3 className="text-xl sm:text-2xl lg:text-3xl text-white font-bold mb-3 flex flex-wrap items-center gap-3">
+                            <h3 className="text-xl sm:text-2xl lg:text-3xl text-white font-bold mb-3 flex flex-wrap items-center gap-3 font-serif tracking-tighter">
                                 Built-In Marketing Hub 
                                 <span className="bg-gradient-to-r from-[#06B6D4] to-[#A855F7] text-transparent bg-clip-text text-[10px] sm:text-xs uppercase tracking-widest font-black px-3 py-1 rounded-full border border-white/10 bg-white/5">Only platform of its kind</span>
                             </h3>
@@ -210,7 +210,7 @@ export const LandingPage = () => {
                         <div className="w-12 h-12 rounded-full bg-[#6A2C91]/20 border border-[#6A2C91]/30 flex items-center justify-center mx-auto mb-6">
                             <ShieldCheck size={20} className="text-[#6A2C91]" />
                         </div>
-                        <h3 className="text-2xl font-black font-serif text-white mb-4">Built by a Maker, for Makers</h3>
+                        <h3 className="text-2xl font-black font-serif text-white mb-4 tracking-tighter">Built by a Maker, for Makers</h3>
                         <p className="text-base text-slate-400 leading-relaxed max-w-2xl mx-auto mb-6">
                             ArtisanFlow was created at Herbalistic Wellness to solve real problems: recipe chaos, margin blind spots, and marketing overwhelm. We're a small, independent team building in public. Your feedback shapes the roadmap.
                         </p>
@@ -227,7 +227,7 @@ export const LandingPage = () => {
                 {/* Early Maker Stories — Testimonial Invitation */}
                 <div className="mt-16 w-full max-w-4xl relative z-10 mx-auto px-2">
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">Early Maker Stories</h2>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-serif tracking-tighter">Early Maker Stories</h2>
                         <p className="text-slate-400 text-base">Coming soon. We're growing with our founding makers — their stories will live here.</p>
                     </div>
                     <div className="border border-dashed border-white/10 rounded-3xl p-8 sm:p-12 text-center bg-white/[0.02]">
@@ -245,7 +245,7 @@ export const LandingPage = () => {
                 {/* Transparent Pricing Tier Matrix */}
                 <div className="mt-16 w-full max-w-6xl relative z-10 mb-20 px-2">
                     <div className="text-center mb-10 md:mb-16">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4">Simple, Honest Pricing</h2>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white uppercase mb-4 font-serif tracking-tighter">Simple, Honest Pricing</h2>
                         
                         <div className="inline-block bg-gradient-to-r from-[#06B6D4]/20 via-[#A855F7]/20 to-[#C5A059]/20 border border-[#A855F7]/30 rounded-full px-6 py-3 mb-6 relative overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
@@ -355,11 +355,11 @@ const PricingCard = ({ title, price, subtitle, features, isFeatured, isSelected,
                     </div>
                 )}
                 <div className="mb-6 text-center">
-                    <h3 className="text-lg sm:text-2xl font-semibold text-white tracking-tight mb-2">{title}</h3>
+                    <h3 className="text-lg sm:text-2xl text-white mb-2 font-serif tracking-tighter">{title}</h3>
                     <p className="text-xs sm:text-sm text-gray-400 mb-6">{subtitle}</p>
                     
                     <div className="flex justify-center items-baseline gap-1">
-                        <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">{price}</span>
+                        <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white font-serif tracking-tighter">{price}</span>
                         {price !== "Custom" && price !== "$0" && <span className="text-gray-400 font-medium">{isYearly ? '/yr' : '/mo'}</span>}
                     </div>
                 </div>

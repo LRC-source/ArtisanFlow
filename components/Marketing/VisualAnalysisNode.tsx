@@ -58,7 +58,7 @@ export const VisualAnalysisNode = () => {
                         <Badge color="gold">Campaign Reach</Badge>
                         <TrendingUp size={16} className="text-[#C5A059]" />
                     </div>
-                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">124.5K</div>
+                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">124.5K</div>
                     <div className="text-xs text-white sm:text-white/50 uppercase tracking-widest">+14% vs last week</div>
                 </Card>
                 <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
@@ -66,7 +66,7 @@ export const VisualAnalysisNode = () => {
                         <Badge color="purple">Avg. Engagement</Badge>
                         <Activity size={16} className="text-purple-500" />
                     </div>
-                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">8.2%</div>
+                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">8.2%</div>
                     <div className="text-xs text-white sm:text-white/50 uppercase tracking-widest">+2.1% across channels</div>
                 </Card>
                 <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
@@ -74,7 +74,7 @@ export const VisualAnalysisNode = () => {
                         <Badge color="green">Revenue Attribution</Badge>
                         <DollarSign size={16} className="text-emerald-500" />
                     </div>
-                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">$18,450</div>
+                    <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">$18,450</div>
                     <div className="text-xs text-white sm:text-white/50 uppercase tracking-widest">From trackable social links</div>
                 </Card>
             </div>
@@ -117,7 +117,7 @@ export const VisualAnalysisNode = () => {
                     <div className="mt-6 sm:mt-8 lg:mt-12 p-4 sm:p-6 rounded-2xl bg-white/5 border border-white/10">
                         <div className="flex items-center gap-3 mb-4">
                             <Eye className="text-[#C5A059]" size={20} />
-                            <h4 className="text-white font-serif tracking-tight">AI Insight</h4>
+                            <h4 className="text-white font-serif tracking-tighter">AI Insight</h4>
                         </div>
                         <p className="text-sm sm:text-base font-sans font-light text-white sm:text-white/70 leading-relaxed">
                             Your recent TikTok campaign caused a 40% spike in inventory burn rate for "Rosehip Oil". Consider throttling ad spend to prevent stockout before the weekend.

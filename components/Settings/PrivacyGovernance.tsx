@@ -28,7 +28,7 @@ export const PrivacyGovernance = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6">
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Security Protocols</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Security Protocols</h2>
                     <div className="space-y-4">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-500 group">
                             <div className="flex items-center gap-5">
@@ -59,7 +59,7 @@ export const PrivacyGovernance = () => {
                 </div>
 
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 flex flex-col h-full">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">System Audits</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">System Audits</h2>
                     <div className="space-y-2 flex-1">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-white/5 hover:bg-white/5 transition-colors rounded-lg">
                             <span className="text-white/30 font-mono text-xs tracking-widest">2025-12-14 09:30 AM</span>

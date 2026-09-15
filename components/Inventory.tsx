@@ -209,7 +209,7 @@ export const Inventory = () => {
                     <div className="p-3.5 sm:p-6 lg:p-12 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
                         <div className="flex items-center gap-3 sm:gap-4 mb-4 text-[#C5A059]">
                             <Zap size={20} strokeWidth={1.5} />
-                            <h4 className="font-sans font-bold text-[11px] uppercase tracking-[0.3em]">AI Insight</h4>
+                            <h4 className="font-serif tracking-tighter">AI Insight</h4>
                         </div>
                         <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">
                             This is currently operating at <span className="font-medium text-white">optimal efficiency</span>. No supply chain disruptions predicted for the next 14 business days.
@@ -250,13 +250,13 @@ export const Inventory = () => {
                               </div>
                               <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
                                   <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Safety Threshold</p>
-                                  <p className="text-sm sm:text-base font-black font-serif text-amber-500 tracking-tight">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-sans font-light">{selectedItem.unit}</span></p>
+                                  <p className="text-sm sm:text-base font-black font-serif text-amber-500 tracking-tight">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-light font-serif tracking-tighter">{selectedItem.unit}</span></p>
                               </div>
                           </div>
                           
                           {selectedItem.isLotTracked && selectedItem.lots && (
                               <div className="mt-10 luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden p-6">
-                                  <h3 className="text-lg font-black font-serif tracking-tight text-white mb-6 uppercase">Active Lot Traceability</h3>
+                                  <h3 className="text-lg font-black font-serif text-white mb-6 uppercase tracking-tighter">Active Lot Traceability</h3>
                                   <div className="overflow-x-auto">
                                       <table className="w-full text-left text-sm">
                                           <thead>
@@ -302,7 +302,7 @@ export const Inventory = () => {
 
                     <div className="space-y-6">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between px-2">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Active Formula Dependency</h3>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Active Formula Dependency</h3>
                             <Badge color="gray" className="px-3 py-1 text-[9px] font-sans font-bold uppercase tracking-[0.2em]">{usageInRecipes.length} ACTIVE ITEMS</Badge>
                         </div>
                         
@@ -436,7 +436,7 @@ export const Inventory = () => {
                 <div className="flex items-center gap-3 sm:gap-6 relative z-10 mb-6 sm:mb-12">
                     <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Materials Matrix</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Materials Matrix</h3>
                         <p className="text-sm sm:text-base text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{rawMaterials.length} ACTIVE ITEMS</p>
                     </div>
                 </div>
@@ -450,7 +450,7 @@ export const Inventory = () => {
                 <div className="flex items-center gap-3 sm:gap-6 relative z-10 mb-6 sm:mb-12">
                     <GlassHaloIcon icon={Package} color="gold" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Finished Output</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Finished Output</h3>
                         <p className="text-sm sm:text-base text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{finishedProducts.length} Retail Ready</p>
                     </div>
                 </div>
@@ -494,7 +494,7 @@ export const Inventory = () => {
             <div className="lg:col-span-1 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(6,182,212,0.2)]">
                 <div className="bg-[#0A0A0A] border-none backdrop-blur-3xl rounded-[3rem] p-6 sm:p-12 h-full flex flex-col">
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-amber-500 tracking-tight flex items-center gap-3 sm:gap-4">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-amber-500 flex items-center gap-3 sm:gap-4 tracking-tighter">
                             <AlertTriangle size={24} className="text-amber-500" strokeWidth={1} /> Threshold Alerts
                         </h3>
                         <Badge color="red" className="px-4 py-1.5 text-[9px] font-sans font-bold uppercase tracking-[0.2em]">{lowStockItems.length}</Badge>
@@ -609,7 +609,7 @@ export const Inventory = () => {
                 {item.img ? <img src={item.img} className="w-full h-full object-cover" /> : <Box size={32} className="text-white/10" strokeWidth={1} />}
             </div>
             <div>
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight line-clamp-2 mb-2 group-hover:text-[#C5A059] transition-colors">{item.name}</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black line-clamp-2 mb-2 group-hover:text-[#C5A059] transition-colors tracking-tighter">{item.name}</h3>
                 <div className="flex items-center gap-3">
                     <Badge color={tagColor} className="px-3 py-1 text-[8px] font-sans font-bold uppercase tracking-[0.2em]">{isProduct ? 'Product' : 'Material'}</Badge>
                     <p className="text-[9px] sm:text-base text-white/30 font-mono uppercase tracking-[0.2em]">SKU: {item.sku}</p>

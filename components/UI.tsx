@@ -51,7 +51,7 @@ export const Card: React.FC<{ children: React.ReactNode; className?: string; tit
     onClick={onClick}
   >
     {title && (
-      <h3 className="uppercase tracking-[0.2em] text-[10px] font-black mb-6 text-[#C5A059] flex items-center gap-2 italic">
+      <h3 className="uppercase text-[10px] font-black mb-6 text-[#C5A059] flex items-center gap-2 italic font-serif tracking-tighter">
         <div className="w-1.5 h-1.5 rounded-full bg-[#6A2C91]"></div> {title}
       </h3>
     )}
@@ -154,7 +154,7 @@ export const VaultBanner: React.FC<{
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-white/70 text-lg md:text-xl font-sans font-light mb-12 w-full max-w-3xl leading-relaxed italic"
+          className="text-white/70 text-lg md:text-xl font-light mb-12 w-full max-w-3xl leading-relaxed italic font-serif tracking-tighter"
         >
           {subtitle}
         </motion.p>
@@ -227,7 +227,7 @@ export const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: stri
     <div className="fixed inset-0 bg-black/60 backdrop-blur-xl z-50 flex items-center justify-center p-6 animate-in fade-in duration-500">
       <div className="fixed inset-x-0 bottom-0 sm:inset-auto sm:relative w-full max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 bg-[#140d24]/95 backdrop-blur-xl border-t border-white/10 rounded-t-2xl sm:rounded-[2.5rem] shadow-2xl z-50 animate-in zoom-in-95 slide-up-5 duration-700">
         <div className="flex justify-between items-center p-4 sm:p-10 pb-6">
-          <h3 className="font-serif text-3xl text-white tracking-tight">{title}</h3>
+          <h3 className="font-serif tracking-tighter">{title}</h3>
           <button 
             onClick={onClose} 
             className="p-3 -mr-2 text-white/30 hover:text-red-500 transition-colors rounded-full hover:bg-white/5"
@@ -402,7 +402,7 @@ export const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => {
   return (
     <div onClick={onClick} className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] transition-all duration-500 cursor-pointer group flex flex-col h-full ${hoverStyles}`}>
       <div className="mb-6"><GlassHaloIcon icon={Icon} color={color} size="lg" /></div>
-      <h3 className="text-xl font-serif text-white tracking-tight mb-3 group-hover:text-white/90 transition-colors">{title}</h3>
+      <h3 className="text-xl font-serif text-white mb-3 group-hover:text-white/90 transition-colors tracking-tighter">{title}</h3>
       <p className="text-sm font-sans font-light text-white/50 leading-relaxed flex-1">{desc}</p>
     </div>
   );

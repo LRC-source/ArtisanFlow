@@ -313,7 +313,7 @@ export const SuperAdmin = () => {
                         <div className="p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-3 sm:gap-4">
                             <GlassHaloIcon icon={Database} color="gold" size="sm" className="shrink-0 mt-1" />
                             <div>
-                                <h4 className="text-white font-serif text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg mb-1">Google Sheets Sync</h4>
+                                <h4 className="text-white font-serif text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg mb-1 tracking-tighter">Google Sheets Sync</h4>
                                 <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light mb-4">Export Super-Admin matrix automatically to a master Google Sheet.</p>
                                 <Button onClick={handleSync} className="bg-[#C5A059]/20 hover:bg-[#C5A059]/30 text-[#C5A059] border border-[#C5A059]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
                                     {isSyncing ? 'Authenticating...' : 'Authenticate Sheet'}
@@ -323,7 +323,7 @@ export const SuperAdmin = () => {
                         <div className="p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-3 sm:gap-4">
                             <GlassHaloIcon icon={Server} color="purple" size="sm" className="shrink-0 mt-1" />
                             <div>
-                                <h4 className="text-white font-serif text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg mb-1">Firebase Core Integration</h4>
+                                <h4 className="text-white font-serif text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg mb-1 tracking-tighter">Firebase Core Integration</h4>
                                 <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light mb-4">Manage remote config and user authentication nodes.</p>
                                 <Button onClick={handleVerify} className="bg-[#6A2C91]/20 hover:bg-[#6A2C91]/30 text-[#6A2C91] border border-[#6A2C91]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
                                     {isVerifying ? 'Verifying...' : 'Verify Connection'}
@@ -373,7 +373,7 @@ export const SuperAdmin = () => {
                         ) : globalIntegrations.map((integration, idx) => (
                             <div key={integration.platform} className="p-5 bg-white/5 border border-white/10 rounded-2xl">
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-                                    <h4 className="text-white font-serif text-sm sm:text-base leading-relaxed">{integration.platform}</h4>
+                                    <h4 className="text-white font-serif text-sm sm:text-base leading-relaxed tracking-tighter">{integration.platform}</h4>
                                     <Badge color={integration.status === 'Active' ? 'green' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
                                         {integration.status}
                                     </Badge>

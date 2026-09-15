@@ -212,7 +212,7 @@ export const BlogGenerator = () => {
                         {generatedBlog ? (
                             <div className="flex flex-col h-full">
                                 <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-6 justify-between shrink-0">
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2">
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2 tracking-tighter">
                                         <FileText size={18} className="text-emerald-500" /> Article Editor
                                     </h3>
                                     <Badge color="green"><CheckCircle size={12} className="mr-1 inline"/> SEO Optimized</Badge>

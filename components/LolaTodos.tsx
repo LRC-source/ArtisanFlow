@@ -71,7 +71,7 @@ export const LolaTodos: React.FC = () => {
                             <div className="w-12 h-12 sm:w-20 sm:h-20 bg-stone-50 rounded-[2rem] flex items-center justify-center mx-auto text-stone-200">
                                 <CheckCircle size={40} />
                             </div>
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-black text-white uppercase italic">All Nodes Cleared</h3>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-black uppercase italic font-serif tracking-tighter">All Nodes Cleared</h3>
                             <p className="text-sm sm:text-base text-white sm:text-gray-400 font-medium">Lola has synchronized all current operational tasks.</p>
                         </div>
                     ) : (
@@ -127,7 +127,7 @@ export const LolaTodos: React.FC = () => {
                              <ShieldCheck size={20} className="text-emerald-400" />
                              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">System Integrity Active</span>
                          </div>
-                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black uppercase italic tracking-tighter">Automatic Handshake</h3>
+                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black uppercase italic tracking-tighter font-serif">Automatic Handshake</h3>
                          <p className="text-sm sm:text-base text-purple-200 font-medium">Lola automatically checks off items when you complete tasks across the platform.</p>
                     </div>
                     <div className="p-4 bg-white/10 rounded-[2rem] border border-white/20">

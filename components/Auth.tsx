@@ -224,7 +224,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                 className="relative mb-8"
               >
                  <div className="flex items-center justify-center cursor-pointer group">
-                     <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl sm:text-5xl tracking-tight flex items-center font-extrabold">
+                     <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl flex items-center font-extrabold font-serif tracking-tighter">
                          <span className="text-white mr-3">LRC</span>
                          <span className="text-white">Artisan</span>
                          <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
@@ -247,7 +247,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
             >
               <Card className="luxury-card p-3.5 sm:p-6 lg:p-12 sm:p-4 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl leading-relaxed font-serif text-white mb-8 flex items-center justify-center gap-3 text-center">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl leading-relaxed font-serif text-white mb-8 flex items-center justify-center gap-3 text-center tracking-tighter">
                   {view === 'login' ? <Lock size={18} className="text-[#C5A059]"/> : <Mail size={18} className="text-[#C5A059]"/>}
                   {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
                 </h2>
@@ -420,9 +420,9 @@ const TierCard = ({ title, price, period, features, icon: Icon, color, isPopular
         <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center mb-6 bg-white/5 text-white border border-white/10`}>
           <Icon size={24} strokeWidth={1.5} />
         </div>
-        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{title}</h3>
+        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{title}</h3>
         <div className="flex items-baseline mt-4">
-          <span className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{price}</span>
+          <span className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">{price}</span>
           <span className="text-white/30 text-xs font-sans tracking-widest uppercase ml-2">/month</span>
         </div>
       </div>
@@ -542,7 +542,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         className="w-full max-w-2xl z-10"
       >
         <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Secure Checkout</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Secure Checkout</h2>
           <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans tracking-widest uppercase">Initializing {tier} Architecture</p>
           <div className="mt-6 flex flex-col items-center gap-4">
             <div className="flex items-center justify-center gap-4 text-sm font-bold tracking-widest uppercase">
@@ -559,7 +559,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
             </div>
             
             <div className="inline-block px-8 py-3 rounded-full border border-[#C5A059]/50 bg-[#C5A059]/20 shadow-[0_0_15px_rgba(197,160,89,0.3)]">
-              <span className="text-xl sm:text-2xl font-black tracking-widest text-[#E2C792]">TOTAL: ${(finalAmountInCents / 100).toFixed(2)} {isYearly ? '/ yr' : '/ mo'}</span>
+              <span className="text-xl sm:text-2xl font-black text-[#E2C792] font-serif tracking-tighter">TOTAL: ${(finalAmountInCents / 100).toFixed(2)} {isYearly ? '/ yr' : '/ mo'}</span>
             </div>
           </div>
         </div>
@@ -568,7 +568,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
           <div className="space-y-8">
             {/* Billing Details */}
             <div className="space-y-4">
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2">Billing Details</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2 tracking-tighter">Billing Details</h3>
               <div className="space-y-2">
                 <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Full Name</label>
                 <Input type="text" placeholder="" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="bg-white/5 border-white/10 text-white" />
@@ -595,7 +595,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
 
             {/* Payment Info */}
             <div className="space-y-4 pt-4">
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2 flex items-center gap-2 tracking-tighter">
                 <CreditCard size={18} className="text-[#C5A059]" /> Payment Information
               </h3>
               

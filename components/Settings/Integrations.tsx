@@ -105,7 +105,7 @@ export const Integrations = () => {
 
             {/* Direct Connect Platforms */}
             <div>
-                <h2 className="text-xl font-bold text-white mb-6 font-serif">Native Integrations</h2>
+                <h2 className="text-xl font-bold text-white mb-6 font-serif tracking-tighter">Native Integrations</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {platformCards.map(platform => (
                         <Card key={platform.id} className="bg-white/5 border border-white/10 p-6 flex flex-col justify-between hover:bg-white/10 transition-colors">
@@ -116,7 +116,7 @@ export const Integrations = () => {
                                     </div>
                                     <Badge id={`${platform.id}-status`} color="gray" className="text-[10px] uppercase">{platform.status}</Badge>
                                 </div>
-                                <h3 className="text-lg font-bold text-white mb-2">{platform.name}</h3>
+                                <h3 className="text-lg font-bold text-white mb-2 font-serif tracking-tighter">{platform.name}</h3>
                                 <p className="text-sm text-white/50">{platform.desc}</p>
                             </div>
                             <Button 

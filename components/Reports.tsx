@@ -138,7 +138,7 @@ export const Reports = () => {
               {reports.length === 0 ? (
                   <div className="bg-white/5 border border-dashed border-white/10 rounded-[3rem] p-6 sm:p-12 flex flex-col items-center justify-center min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden">
                       <GlassHaloIcon icon={History} color="purple" size="lg" className="mb-8 w-14 h-14 sm:w-24 sm:h-24 [&>svg]:w-12 [&>svg]:w-auto mx-auto py-1 px-3 text-[10px] opacity-50" />
-                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">No Reports Archieved</h3>
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">No Reports Archieved</h3>
                       <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Generate a report to see it here</p>
                   </div>
               ) : (
@@ -148,7 +148,7 @@ export const Reports = () => {
                               <div className="flex items-start gap-3 sm:gap-6">
                                   <GlassHaloIcon icon={FileText} color="gold" size="md" className="group-hover:scale-110 transition-all" />
                                   <div>
-                                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight mb-2">{report.title}</h3>
+                                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black mb-2 tracking-tighter">{report.title}</h3>
                                       <div className="flex items-center gap-3 sm:gap-4 text-xs text-white sm:text-white/50">
                                           <span className="flex items-center gap-2 font-sans font-light"><Clock size={14}/> Generated: {report.generatedDate}</span>
                                           <Badge color="purple" className="text-[9px] uppercase tracking-widest">{report.category}</Badge>
@@ -203,7 +203,7 @@ export const Reports = () => {
             
             <div className="flex items-center gap-3 sm:gap-4 mb-10 relative z-10">
                 <GlassHaloIcon icon={Sparkles} color="purple" size="md" />
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">AI-Powered Extraction</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">AI-Powered Extraction</h3>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 mb-10 relative z-10">
@@ -265,7 +265,7 @@ export const Reports = () => {
 
                 <div className="luxury-card bg-[#1A1A1A] border-t-[6px] border-t-[#6A2C91] border-x border-b border-white/10 rounded-b-[3rem] p-4 sm:p-12 shadow-2xl">
                     <div className="mb-12">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">{currentReport.title}</h2>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">{currentReport.title}</h2>
                         <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Comprehensive analysis generated based on real-time operational data.</p>
                         <div className="flex items-center gap-3 text-[11px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mt-6 bg-black/40 w-fit px-4 py-2 rounded-xl">
                             <FileText size={14} />
@@ -285,7 +285,7 @@ export const Reports = () => {
 
                     {/* Table */}
                     <div>
-                        <h4 className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+                        <h4 className="text-[11px] font-bold text-white sm:text-white/40 uppercase mb-6 flex items-center gap-2 font-serif tracking-tighter">
                             <Target size={14} /> Raw Data Ledger
                         </h4>
                         <div className="overflow-x-auto rounded-[2rem] border border-white/5 bg-black/40 shadow-inner">

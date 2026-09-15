@@ -80,7 +80,7 @@ export const ContentApprovals = () => {
                 {pendingPosts.length === 0 ? (
                     <Card className="border-white/10 rounded-[2.5rem] bg-black/20 backdrop-blur-xl text-center py-32 shadow-2xl">
                         <CheckCircle size={64} strokeWidth={1} className="mx-auto text-emerald-500/50 mb-6" />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Queue Empty</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Queue Empty</h3>
                         <p className="text-sm sm:text-base text-gray-500 font-sans font-light">No content currently pending approval.</p>
                     </Card>
                 ) : (
@@ -129,7 +129,7 @@ export const ContentApprovals = () => {
                                             )}
                                             
                                             <div>
-                                                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{post.topic}</h3>
+                                                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{post.topic}</h3>
                                                 <div className={`p-4 sm:p-6 rounded-2xl text-sm font-sans font-light leading-relaxed whitespace-pre-wrap ${clientViewMode ? 'bg-transparent text-white sm:text-gray-300 p-0' : 'bg-white/5 border border-white/10 text-white sm:text-gray-300 shadow-sm'}`}>
                                                     {post.content}
                                                 </div>

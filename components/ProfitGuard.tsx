@@ -43,12 +43,12 @@ export const ProfitGuardPage = () => {
                 {/* Input Section */}
                 <div className="lg:col-span-1 space-y-6">
                     <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 shadow-sm rounded-3xl">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-sans font-bold uppercase tracking-widest text-white sm:text-white/50 mb-8">Production Inputs</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold uppercase text-white sm:text-white/50 mb-8 font-serif tracking-tighter">Production Inputs</h3>
                         <div className="space-y-8">
                             <div>
                                 <label className="block text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-widest mb-3">Total Material Cost</label>
                                 <div className="relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white sm:text-white/40 font-serif text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg">$</span>
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white sm:text-white/40 font-serif text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg tracking-tighter">$</span>
                                     <Input 
                                         type="number" 
                                         value={materialCost} 
@@ -69,7 +69,7 @@ export const ProfitGuardPage = () => {
                             <div>
                                 <label className="block text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-widest mb-3">Proposed Price</label>
                                 <div className="relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white sm:text-white/40 font-serif text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg">$</span>
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white sm:text-white/40 font-serif text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg tracking-tighter">$</span>
                                     <Input 
                                         type="number" 
                                         value={plannedPrice} 
@@ -132,7 +132,7 @@ export const ProfitGuardPage = () => {
                         <div className="p-3.5 sm:p-6 lg:p-12 border-none shadow-sm bg-[#0A0A0A] rounded-[3rem] relative overflow-hidden">
                             <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6 relative z-10">
                                 <div>
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-sans font-bold uppercase tracking-widest text-white sm:text-white/50 mb-2">Total Batch Profitability</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold uppercase text-white sm:text-white/50 mb-2 font-serif tracking-tighter">Total Batch Profitability</h3>
                                     <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${totalProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                 </div>
                                 <div className="flex flex-col items-end">
@@ -156,7 +156,7 @@ export const ProfitGuardPage = () => {
                     </div>
 
                     <div className="p-3.5 sm:p-6 lg:p-12 bg-white/5 rounded-[2rem] border border-white/10">
-                        <h6 className="text-[10px] font-sans font-bold text-white sm:text-white/50 uppercase tracking-[0.3em] mb-4">Strategic Recommendations</h6>
+                        <h6 className="text-[10px] font-bold text-white sm:text-white/50 uppercase mb-4 font-serif tracking-tighter">Strategic Recommendations</h6>
                         <ul className="space-y-3 text-sm font-sans font-light text-white sm:text-white/70">
                             <li className="flex items-start gap-3">
                                 <div className={`w-1.5 h-1.5 rounded-full mt-1.5 ${isWarning ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
@@ -196,7 +196,7 @@ const AnalysisCard = ({ title, value, subtitle, icon: Icon, highlight }: any) =>
             </div>
             <span className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40">{subtitle}</span>
         </div>
-        <h4 className="text-sm font-sans font-bold text-white mb-1">{title}</h4>
+        <h4 className="text-sm font-bold text-white mb-1 font-serif tracking-tighter">{title}</h4>
         <p className={`text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight ${highlight ? 'text-[#C5A059]' : 'text-white'}`}>{value}</p>
     </div>
 );

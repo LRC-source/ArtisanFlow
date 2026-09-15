@@ -43,7 +43,7 @@ export const AccountSettings = () => {
             
             <div className="w-full md:w-1/2">
                 <div className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 ${isSuccess ? 'ring-1 ring-emerald-500/50 bg-emerald-900/10' : ''} transition-all duration-500 rounded-[2.5rem]`}>
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Profile</h3>
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Profile</h3>
                     <div className="space-y-8">
                         <div className="flex items-center gap-6">
                             <div className="w-20 h-20 rounded-[1.2rem] bg-gradient-to-tr from-[#6A2C91] to-[#C5A059] p-[2px] flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(197,160,89,0.3)]">
@@ -91,7 +91,7 @@ export const AccountSettings = () => {
             <div className="w-full mt-6">
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-[2.5rem]">
                     <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-white">Billing &amp; Subscription</h3>
+                        <h3 className="text-lg sm:text-2xl font-black font-serif text-white tracking-tighter">Billing &amp; Subscription</h3>
                         <Badge variant="outline" className="border-[#C5A059] text-[#C5A059]">Managed via Square</Badge>
                     </div>
                     <div className="space-y-4">
@@ -110,7 +110,7 @@ export const AccountSettings = () => {
             {/* Support & Tutorial */}
             <div className="w-full md:w-1/2 mt-6">
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 rounded-[2.5rem]">
-                    <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-white mb-6">Support &amp; Help</h3>
+                    <h3 className="text-lg sm:text-2xl font-black font-serif text-white mb-6 tracking-tighter">Support &amp; Help</h3>
                     <div className="space-y-4">
                         <Button
                             variant="outline"
@@ -131,12 +131,12 @@ export const AccountSettings = () => {
             <div className="w-full mt-6">
                 <div className="luxury-card bg-red-950/20 backdrop-blur-xl border border-red-900/30 p-4 sm:p-10 rounded-[2.5rem]">
                     <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-lg sm:text-2xl font-black font-serif tracking-tight text-red-500">Danger Zone</h3>
+                        <h3 className="text-lg sm:text-2xl font-black font-serif text-red-500 tracking-tighter">Danger Zone</h3>
                     </div>
                     <div className="space-y-4">
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-red-900/20 pb-4">
                             <div>
-                                <h4 className="text-white font-bold font-sans">Reset Application to Default</h4>
+                                <h4 className="text-white font-bold font-serif tracking-tighter">Reset Application to Default</h4>
                                 <p className="text-xs text-white/50">Permanently delete all input data (inventory, orders, CRM, etc.) and reset the app to a clean state. This cannot be undone.</p>
                             </div>
                             <Button variant="outline" className="text-[10px] border-red-900/50 text-red-400 hover:bg-red-950/50" onClick={async () => {

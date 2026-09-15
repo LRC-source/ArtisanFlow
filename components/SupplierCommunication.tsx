@@ -92,7 +92,7 @@ export const SupplierCommunication = () => {
               <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                   <MessageSquare size={32} className="text-white sm:text-gray-400" />
               </div>
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-bold font-medium mb-1">No communications found</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-bold font-medium mb-1 font-serif tracking-tighter">No communications found</h3>
               <p className="text-sm sm:text-base text-white sm:text-gray-400">Start a new thread to track supplier conversations</p>
           </div>
       ) : (
@@ -104,7 +104,7 @@ export const SupplierCommunication = () => {
                               {comm.type === 'Email' ? <Mail size={20}/> : comm.type === 'Phone' ? <Phone size={20}/> : <Globe size={20}/>}
                           </div>
                           <div>
-                              <h4 className="font-bold text-white">{comm.subject}</h4>
+                              <h4 className="font-serif tracking-tighter">{comm.subject}</h4>
                               <p className="text-sm sm:text-base text-gray-500">{comm.supplierName} • {comm.date}</p>
                           </div>
                       </div>

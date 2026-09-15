@@ -113,7 +113,7 @@ export const Forecasting = () => {
                      transition={{ delay: 0.2, duration: 0.6 }}
                  >
                      <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Order Velocity</h3>
+                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Order Velocity</h3>
                          <div className="flex flex-wrap gap-4 mb-6 sm:mb-10 text-white/40 font-sans text-[10px] tracking-widest uppercase">
     <span>30 DAYS</span>
     <span>&bull;</span>
@@ -150,7 +150,7 @@ export const Forecasting = () => {
                  >
                      <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                          <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Raw Material Burn Rate</h3>
+                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Raw Material Burn Rate</h3>
                              <div className="flex flex-wrap gap-2 bg-white/5 p-1.5 sm:p-2 rounded-[1rem] sm:rounded-full border border-white/10">
                                  {['Baseline', 'Aggressive', 'Conservative'].map(sc => (
                                      <button 
@@ -203,7 +203,7 @@ export const Forecasting = () => {
                  transition={{ delay: 0.35, duration: 0.6 }}
              >
                  <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Predicted Shortfalls &amp; Procurement</h3>
+                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Predicted Shortfalls &amp; Procurement</h3>
                      {!hasInventory ? (
                          <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
                              <AlertCircle size={32} className="text-white/20" />
@@ -279,7 +279,7 @@ export const Forecasting = () => {
                  transition={{ delay: 0.4, duration: 0.6 }}
              >
                  <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Synaptic Alignment Matrix</h3>
+                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Synaptic Alignment Matrix</h3>
                      <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4">
                           <ResponsiveContainer width="100%" height="100%">
                              <LineChart data={forecastData}>
@@ -308,7 +308,7 @@ export const Forecasting = () => {
                      transition={{ delay: 0.5, duration: 0.6 }}
                      className="space-y-8"
                  >
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                         <GlassHaloIcon icon={HistoryIcon} color="gold" size="md" /> Historical Synthesis
                     </h3>
                     <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-3.5 sm:p-6 lg:p-12 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative overflow-hidden">
@@ -317,7 +317,7 @@ export const Forecasting = () => {
                             <GlassHaloIcon icon={RefreshCw} color="purple" size="xl" className="group-hover:scale-105 transition-all duration-700" />
                             <div>
                                 <div className="flex items-center gap-3 sm:gap-4 mb-3">
-                                    <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Active Projection: Q4 Protocol</h4>
+                                    <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">Active Projection: Q4 Protocol</h4>
                                     <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm font-sans tracking-widest uppercase border-[#C5A059]/20">Needs Review</Badge>
                                 </div>
                                 <p className="text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>

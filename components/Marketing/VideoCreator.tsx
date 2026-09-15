@@ -153,7 +153,7 @@ export const VideoCreator = () => {
                 <div className="lg:col-span-7 flex flex-col h-full">
                     <Card className="flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative min-h-[600px]">
                         <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-6 justify-between">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2">
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2 tracking-tighter">
                                 <Film size={18} className="text-pink-500" /> Storyboard Visualizer
                             </h3>
                             {generatedScript && (

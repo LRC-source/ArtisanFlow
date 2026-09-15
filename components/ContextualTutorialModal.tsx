@@ -58,13 +58,13 @@ export const ContextualTutorialModal: React.FC<ContextualTutorialProps> = ({ hub
                         <div className="p-2 bg-[#C5A059]/10 border border-[#C5A059]/20 rounded-lg text-[#C5A059]">
                             <Info size={24} />
                         </div>
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">{title}</h2>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">{title}</h2>
                     </div>
                     <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">{description}</p>
                 </div>
                 <div className="p-3.5 sm:p-6 lg:p-12 space-y-6">
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-[10px] font-black text-white sm:text-white/40 uppercase tracking-[0.2em]">Quick Start Guide</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-[10px] font-black text-white sm:text-white/40 uppercase font-serif tracking-tighter">Quick Start Guide</h3>
                         <div className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.2em]">
                             Step {currentStep + 1} of {steps.length}
                         </div>

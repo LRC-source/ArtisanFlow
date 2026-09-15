@@ -36,7 +36,7 @@ export const TaxExporter = () => {
                             <FileText size={24} className="text-[#C5A059]" />
                         </div>
                         <div>
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white font-serif">Schedule C Tax Season Helper</h3>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold font-serif tracking-tighter">Schedule C Tax Season Helper</h3>
                             <p className="text-sm sm:text-base text-white sm:text-white/50">Automated COGS calculation and expense extraction.</p>
                         </div>
                     </div>

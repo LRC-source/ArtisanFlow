@@ -57,7 +57,7 @@ export const BusinessPulseCheck = () => {
 
         <div className="w-full md:w-1/2">
             <Card className="luxury-card p-4 sm:p-12">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Establish Identity Baseline</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Establish Identity Baseline</h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                     <div className="space-y-2">
@@ -120,13 +120,13 @@ export const BusinessPulseCheck = () => {
                         <div className="p-3 bg-stone-50 rounded-full text-[#6A2C91]">
                             <FileText size={20} strokeWidth={1.5} />
                         </div>
-                        <h4 className="text-[10px] font-sans font-medium text-white font-bold uppercase tracking-[0.2em]">Optional Synthesis Documents</h4>
+                        <h4 className="text-[10px] font-medium text-white font-bold uppercase font-serif tracking-tighter">Optional Synthesis Documents</h4>
                     </div>
                     <FileUploader label="Upload Historical Ledger (P&L or Inventory CSV)" />
                 </div>
 
                 <div className="mt-6 sm:mt-8 lg:mt-12 pt-10 border-t border-stone-100">
-                    <h4 className="text-[10px] font-sans font-medium text-[#6A2C91] uppercase tracking-[0.3em] mb-8 flex items-center gap-3">
+                    <h4 className="text-[10px] font-medium text-[#6A2C91] uppercase mb-8 flex items-center gap-3 font-serif tracking-tighter">
                         <Sparkles size={16} className="text-[#C5A059]" strokeWidth={1.5} /> Creator Archetype
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
@@ -199,7 +199,7 @@ export const BusinessPulseCheck = () => {
 
         <div className="w-full md:w-1/2">
             <Card className="luxury-card text-center pb-16 p-4 sm:p-12">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Manufacturing Integrity Audit</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Manufacturing Integrity Audit</h3>
                 
                 {/* Gauge Visualization */}
                 <div className="relative w-72 h-36 mx-auto mb-8 overflow-hidden">
@@ -213,7 +213,7 @@ export const BusinessPulseCheck = () => {
                     <div className="absolute bottom-0 left-1/2 w-6 h-6 bg-stone-900 rounded-full -translate-x-1/2 translate-y-1/2 z-20 border-4 border-white shadow-xl"></div>
                 </div>
                 
-                <div className="text-5xl sm:text-6xl lg:text-7xl font-black font-serif text-red-600 tracking-tight mb-4">85</div>
+                <div className="text-5xl sm:text-6xl lg:text-7xl font-black font-serif text-red-600 mb-4 tracking-tighter">85</div>
                 <p className="text-[10px] text-stone-400 font-sans font-medium uppercase tracking-[0.3em]">Synaptic Risk Index</p>
 
                 <div className="mt-6 sm:mt-8 lg:mt-12 bg-red-50/50 border border-red-100/50 rounded-[3rem] p-3.5 sm:p-6 lg:p-12 flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-left relative overflow-hidden group">
@@ -223,7 +223,7 @@ export const BusinessPulseCheck = () => {
                     </div>
                     <div className="relative z-10">
                         <span className="text-[10px] font-sans font-medium uppercase text-red-400 tracking-[0.2em] mb-2 block">Lola's Critical Audit</span>
-                        <h4 className="text-xl sm:text-2xl font-black font-serif text-red-700 tracking-tight mb-3">HIGH RISK: BURNOUT PROTOCOL</h4>
+                        <h4 className="text-xl sm:text-2xl font-black font-serif text-red-700 mb-3 tracking-tighter">HIGH RISK: BURNOUT PROTOCOL</h4>
                         <p className="text-sm sm:text-base text-red-800/70 font-sans font-light leading-relaxed">
                             Revenue is scaling but operational entropy is critical. You are currently working harder for diminishing returns. Systems are approaching failure.
                         </p>
@@ -250,7 +250,7 @@ export const BusinessPulseCheck = () => {
                     
                     <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6 text-[#1A1A1A]">
                         <Sparkles size={28} className="text-[#C5A059] animate-pulse" strokeWidth={1.5} />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight">The Synaptic Cure</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tighter">The Synaptic Cure</h3>
                     </div>
                     <p className="text-sm sm:text-base text-gray-500 font-sans font-light mb-12 leading-relaxed leading-relaxed">Lola AI has synthesized the following corrective directives for <strong className="font-medium text-gray-900">{formData.industry || 'your business'}</strong>:</p>
 

@@ -407,7 +407,7 @@ const recipePayload: any = {
              <div className="space-y-8 mt-4 relative z-10">
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-50 pb-4">
                    <span className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest">Material Overhead</span>
-                   <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-black text-gray-900 tracking-tighter">${(totalCost - laborCost).toFixed(2)}</span>
+                   <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-black text-gray-900 tracking-tighter font-serif">${(totalCost - laborCost).toFixed(2)}</span>
                 </div>
                 
                 <div className="space-y-1">
@@ -435,7 +435,7 @@ const recipePayload: any = {
                 <div className="pt-8 border-t-2 border-stone-50 space-y-6">
                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
                       <span className="text-[11px] font-black text-gray-900 uppercase tracking-widest">Total Formula Cost</span>
-                      <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-black text-[#6A2C91] tracking-tighter">${totalCost.toFixed(2)}</span>
+                      <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black text-[#6A2C91] tracking-tighter font-serif">${totalCost.toFixed(2)}</span>
                    </div>
                    <div className="bg-emerald-50 p-4 sm:p-6 rounded-3xl border border-emerald-100">
                       <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">True Unit Cost (COGS)</p>
@@ -457,7 +457,7 @@ const recipePayload: any = {
           <div className="bg-stone-900 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] text-white">
               <div className="flex items-center gap-3 mb-4">
                   <Zap size={18} className="text-amber-400" />
-                  <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic">AI Stress Test</h4>
+                  <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic font-serif tracking-tighter">AI Stress Test</h4>
               </div>
               <p className="text-sm sm:text-base text-stone-400 leading-relaxed font-medium mb-6">
                   {materials.length === 0 ? (

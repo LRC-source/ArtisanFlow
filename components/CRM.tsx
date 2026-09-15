@@ -157,7 +157,7 @@ export const CRM = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 sm:p-10">
                   <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-4 sm:p-12">
-                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Activity Ledger</h3>
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Activity Ledger</h3>
                       <div className="space-y-4">
                           {customer.orders.length > 0 ? customer.orders.map(order => (
                               <div key={order.id} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-4 sm:p-6 bg-black/40 rounded-[2rem] border border-white/5 hover:border-[#6A2C91]/50 transition-all duration-500 group">
@@ -180,7 +180,7 @@ export const CRM = () => {
                   </div>
                   
                   <div className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-4 sm:p-12 flex flex-col">
-                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Customer Details</h3>
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Customer Details</h3>
                       <div className="space-y-8 flex-1">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                               <div className="bg-black/40 p-4 sm:p-6 rounded-[2rem] border border-white/5">
@@ -208,7 +208,7 @@ export const CRM = () => {
         {showDeleteConfirm && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
                 <div className="bg-[#111] border border-red-500/30 p-8 rounded-3xl max-w-md w-full shadow-2xl">
-                    <h2 className="text-xl font-serif text-white mb-4">Confirm Deletion</h2>
+                    <h2 className="text-xl font-serif text-white mb-4 tracking-tighter">Confirm Deletion</h2>
                     <p className="text-white/60 text-sm mb-8">Are you sure you want to permanently delete this customer record? This action cannot be undone.</p>
                     <div className="flex gap-4">
                         <button onClick={() => setShowDeleteConfirm(null)} className="flex-1 py-3 px-6 rounded-full border border-white/10 text-white hover:bg-white/5 transition-all text-xs font-bold uppercase tracking-wider">Cancel</button>
@@ -305,7 +305,7 @@ export const CRM = () => {
               <div key={i} className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 flex flex-col items-start group hover:border-white/20 transition-all shadow-sm hover:shadow-2xl">
                 <GlassHaloIcon icon={kpi.icon} color={kpi.color as any} size="lg" className="mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10" />
                 <p className="text-[11px] text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-2">{kpi.label}</p>
-                <p className="text-3xl sm:text-4xl font-black font-serif tracking-tight text-white">{kpi.val}</p>
+                <p className="text-3xl sm:text-4xl font-black font-serif text-white tracking-tighter">{kpi.val}</p>
               </div>
             ))}
         </div>
@@ -339,7 +339,7 @@ export const CRM = () => {
                                     {c.initial}
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight group-hover:text-[#C5A059] transition-colors break-words">{c.name}</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black group-hover:text-[#C5A059] transition-colors break-words tracking-tighter">{c.name}</h3>
                                     <Badge color={c.type === 'Ordered' ? 'purple' : 'gold'} className="text-[8px] uppercase font-sans font-bold tracking-[0.3em] px-3 py-1 mt-2 shadow-sm shrink-0 inline-block">{c.type}</Badge>
                                 </div>
                             </div>

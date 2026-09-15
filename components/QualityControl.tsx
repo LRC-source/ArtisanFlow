@@ -84,7 +84,7 @@ export const QualityControl = () => {
       {qualityChecks.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-6 sm:p-12 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
               <GlassHaloIcon icon={ClipboardCheck} color="cyan" size="xl" className="mb-6 shadow-inner" />
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Vault Empty</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Vault Empty</h3>
               <p className="text-sm sm:text-base text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1">No inspection history detected.</p>
               <Button onClick={() => setShowAdd(true)} className="mt-8 bg-white/5 text-[#C5A059] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">INITIALIZE AUDIT</Button>
           </div>
@@ -96,7 +96,7 @@ export const QualityControl = () => {
                           <div className="flex items-center gap-3 sm:gap-6">
                               <GlassHaloIcon icon={check.status === 'Passed' ? ShieldCheck : Clock} color={check.status === 'Passed' ? 'emerald' : 'gold'} size="md" />
                               <div>
-                                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{check.productName}</h3>
+                                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{check.productName}</h3>
                                   <Badge color="gold" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">Batch: {check.batchNumber}</Badge>
                               </div>
                           </div>

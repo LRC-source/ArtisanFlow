@@ -50,7 +50,7 @@ export const ProductionWorkflow = () => {
       </div>
 
       <div className="mt-8 space-y-4">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Active Formulations Ready for Production</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Active Formulations Ready for Production</h2>
           {recipes.length === 0 ? (
               <div className="bg-black/40 border border-white/10 rounded-3xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden">
                   <GlassHaloIcon icon={Clock} color="purple" size="lg" className="mb-4" />
@@ -64,7 +64,7 @@ export const ProductionWorkflow = () => {
                           <div>
                               <div className="flex justify-between items-start mb-4">
                                   <div>
-                                      <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white">{recipe.name}</h3>
+                                      <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold font-serif tracking-tighter">{recipe.name}</h3>
                                       <p className="text-sm sm:text-base text-white sm:text-gray-400 mt-1">SKU: {recipe.sku}</p>
                                   </div>
                                   <Badge color="purple">{recipe.yield} Units</Badge>

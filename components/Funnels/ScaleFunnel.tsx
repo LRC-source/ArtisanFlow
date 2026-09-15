@@ -66,11 +66,11 @@ const ScaleFunnel = () => {
               <span className="text-sm font-medium text-white sm:text-gray-300 uppercase tracking-wider">For Scaling Manufacturers & Wholesale Brands</span>
             </motion.div>
             
-            <motion.h1 variants={fadeIn} className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">
+            <motion.h1 variants={fadeIn} className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">
               Stop <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f3e5ab]">Margin Erosion</span> in its Tracks.
             </motion.h1>
             
-            <motion.p variants={fadeIn} className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg md:text-2xl text-white sm:text-gray-400 mb-10 w-full w-full max-w-3xl mx-auto font-light">
+            <motion.p variants={fadeIn} className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg md:text-2xl sm:text-gray-400 mb-10 w-full max-w-3xl mx-auto font-light font-serif tracking-tighter">
               Unify your multi-channel inventory, crush production bottlenecks, and protect your wholesale margins with industrial-grade precision.
             </motion.p>
             
@@ -99,7 +99,7 @@ const ScaleFunnel = () => {
             className="max-w-5xl mx-auto"
           >
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">The Cost of Scale is <span className="text-red-500">Chaos</span></h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">The Cost of Scale is <span className="text-red-500">Chaos</span></h2>
               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white sm:text-gray-400">As volume increases, legacy systems break down.</p>
             </div>
 
@@ -125,7 +125,7 @@ const ScaleFunnel = () => {
                   <div className="mb-6 bg-black w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border border-[#333]">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold text-white mb-3">{item.title}</h3>
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold mb-3 font-serif tracking-tighter">{item.title}</h3>
                   <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
@@ -138,7 +138,7 @@ const ScaleFunnel = () => {
       <section className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 relative">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Industrial-Strength <span className="text-[#d4af37]">Control</span></h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Industrial-Strength <span className="text-[#d4af37]">Control</span></h2>
             <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white sm:text-gray-400 max-w-2xl mx-auto">Artisan Flow provides the high-tech infrastructure needed to scale manufacturing without sacrificing margins.</p>
           </div>
 
@@ -149,7 +149,7 @@ const ScaleFunnel = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                 <ShieldCheck className="w-6 h-6 text-[#d4af37] mr-3" />
                 Margin Protection Engine (Profit Guard)
               </h3>
@@ -195,7 +195,7 @@ const ScaleFunnel = () => {
               transition={{ duration: 0.6 }}
               className="order-1 lg:order-2"
             >
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                 <PackageCheck className="w-6 h-6 text-[#d4af37] mr-3" />
                 Omnichannel Sync & Production Routing
               </h3>
@@ -225,7 +225,7 @@ const ScaleFunnel = () => {
             className="text-center mb-12"
           >
             <p className="text-sm sm:text-base text-[#d4af37] font-semibold tracking-widest uppercase mb-4">Trusted by Industry Leaders</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-bold text-white mb-10">Managing $500M+ in Wholesale GMV</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-bold text-white mb-10 font-serif tracking-tighter">Managing $500M+ in Wholesale GMV</h2>
           </motion.div>
           
           <div className="grid md:grid-cols-2 gap-3 sm:gap-6 w-full w-full max-w-4xl mx-auto">
@@ -237,7 +237,7 @@ const ScaleFunnel = () => {
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full mr-4 border border-[#d4af37]/50 flex items-center justify-center font-bold text-white">MR</div>
                 <div>
-                  <h4 className="font-bold text-white">Marcus R.</h4>
+                  <h4 className="font-serif tracking-tighter">Marcus R.</h4>
                   <p className="text-sm sm:text-base text-[#d4af37]">VP Operations, Atlas Manufacturing</p>
                 </div>
               </div>
@@ -251,7 +251,7 @@ const ScaleFunnel = () => {
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full mr-4 border border-[#d4af37]/50 flex items-center justify-center font-bold text-white">SL</div>
                 <div>
-                  <h4 className="font-bold text-white">Sarah L.</h4>
+                  <h4 className="font-serif tracking-tighter">Sarah L.</h4>
                   <p className="text-sm sm:text-base text-[#d4af37]">Supply Chain Director, Nexa Goods</p>
                 </div>
               </div>
@@ -268,7 +268,7 @@ const ScaleFunnel = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl md:text-5xl font-bold text-white mb-6"
+            className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl md:text-5xl font-bold text-white mb-6 font-serif tracking-tighter"
           >
             Ready to Build a <span className="text-[#d4af37]">Resilient</span> Supply Chain?
           </motion.h2>
@@ -277,7 +277,7 @@ const ScaleFunnel = () => {
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
              transition={{ delay: 0.1 }}
-             className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-white sm:text-gray-400 mb-10"
+             className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg sm:text-gray-400 mb-10 font-serif tracking-tighter"
           >
             Deploy Artisan Flow and take total control of your manufacturing, wholesale channels, and margins today.
           </motion.p>
@@ -287,7 +287,7 @@ const ScaleFunnel = () => {
              viewport={{ once: true }}
              transition={{ delay: 0.2 }}
              onClick={handleCTA}
-             className="px-10 py-5 bg-gradient-to-r from-[#d4af37] to-[#b38b22] text-black font-bold rounded-lg text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg hover:shadow-[0_0_40px_rgba(212,175,55,0.5)] transition-all flex items-center justify-center mx-auto group"
+             className="px-10 py-5 bg-gradient-to-r from-[#d4af37] to-[#b38b22] text-black font-bold rounded-lg text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg hover:shadow-[0_0_40px_rgba(212,175,55,0.5)] transition-all flex items-center justify-center mx-auto group font-serif tracking-tighter"
           >
             Lock In Your Profit Margins
             <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />

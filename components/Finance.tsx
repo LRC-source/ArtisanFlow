@@ -115,7 +115,7 @@ export const FinanceHub: React.FC = () => {
             {isGenerating && (
                 <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[100] flex flex-col items-center justify-center">
                     <Loader2 className="animate-spin text-[#6A2C91] mb-8" size={64} strokeWidth={1} />
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Synthesizing Ledger...</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Synthesizing Ledger...</h2>
                     <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Lola is reconciling omnichannel transactions.</p>
                 </div>
             )}
@@ -156,7 +156,7 @@ export const FinanceHub: React.FC = () => {
                     <div className="p-[1.5px] rounded-[3.5rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] shadow-[0_0_20px_rgba(168,85,247,0.2)]">
                         <div className="luxury-card bg-[#0A0A0A] p-4 sm:p-12 rounded-[3.5rem] relative overflow-hidden">
                             <div className="mb-10 relative z-10">
-                                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Interconnected Flow Ledger</h3>
+                                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Interconnected Flow Ledger</h3>
                             </div>
                             <div className="h-[250px] sm:h-96 w-full relative z-10">
                                 <ResponsiveContainer width="100%" height="100%">
@@ -204,7 +204,7 @@ export const FinanceHub: React.FC = () => {
                          
                          <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6 mb-12 relative z-10">
                              <div>
-                                 <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-[#C5A059] tracking-tight flex items-center gap-3 sm:gap-4">
+                                 <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-[#C5A059] flex items-center gap-3 sm:gap-4 tracking-tighter">
                                      <Wallet size={28} /> Budget Guard™ Active
                                  </h4>
                                  <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Auto-allocating resources based on high-margin trajectories.</p>
@@ -249,7 +249,7 @@ export const FinanceHub: React.FC = () => {
                                     </div>
                                  </div>
                                  <div className="space-y-6 flex flex-col justify-center">
-                                     <h5 className="text-[11px] font-bold font-sans text-[#C5A059] uppercase tracking-[0.3em] border-b border-[#C5A059]/20 pb-4">Optimization Protocol</h5>
+                                     <h5 className="text-[11px] font-bold text-[#C5A059] uppercase border-b border-[#C5A059]/20 pb-4 font-serif tracking-tighter">Optimization Protocol</h5>
                                      {budgetResult.optimizationTips.map((tip: string, i: number) => (
                                          <div key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto items-start group">
                                              <div className="p-1.5 bg-[#C5A059]/20 rounded-lg text-[#C5A059] mt-0.5"><CheckCircle size={14} /></div>
@@ -271,7 +271,7 @@ export const FinanceHub: React.FC = () => {
                 <div className="lg:col-span-1 space-y-8">
                     <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-10">
                         <div className="mb-8">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Synaptic Reports</h3>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Synaptic Reports</h3>
                             <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">
                                 Generate legally-compliant financial dossiers architected from your real-time database.
                             </p>
@@ -284,7 +284,7 @@ export const FinanceHub: React.FC = () => {
                         </div>
                         <div className="mt-10 pt-8 border-t border-white/10">
                             <div className="bg-black/40 p-4 sm:p-6 rounded-3xl border border-white/5">
-                                <h4 className="text-[11px] font-sans font-bold uppercase text-white sm:text-white/40 tracking-[0.3em] mb-4 flex items-center gap-3">
+                                <h4 className="text-[11px] font-bold uppercase text-white sm:text-white/40 mb-4 flex items-center gap-3 font-serif tracking-tighter">
                                     <ShieldCheck className="text-emerald-500" size={16} /> Audit Trail Status
                                 </h4>
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
@@ -301,7 +301,7 @@ export const FinanceHub: React.FC = () => {
                     </div>
 
                     <div className="luxury-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-10">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">System Parameters</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">System Parameters</h3>
                         <div className="space-y-8">
                             <div>
                                 <label className="text-[11px] font-bold font-sans text-white sm:text-white/40 uppercase tracking-[0.3em] block mb-3">Primary Currency</label>
@@ -342,7 +342,7 @@ const FinanceCard = ({ title, value, trend, positive, icon: Icon, color = 'gold'
             <GlassHaloIcon icon={Icon} color={color} size="lg" className="group-hover:scale-110 transition-all duration-500 z-10 shrink-0" />
         </div>
         <div>
-            <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{value}</div>
+            <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">{value}</div>
             <div className="flex items-center gap-2 relative z-10">
                 {positive ? <ArrowUpRight className="text-emerald-400" size={16} /> : <ArrowDownRight className="text-red-400" size={16} />}
                 <span className={`${positive ? 'text-emerald-400' : 'text-red-400'} text-[11px] font-sans font-bold uppercase tracking-[0.3em]`}>{trend}</span>
@@ -458,7 +458,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                              </div>
                         </div>
 
-                        {analysisError ? ( <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-3xl border border-red-500/20 text-center"><AlertTriangle size={32} className="text-red-400 mb-4" /><h3 className="text-white font-bold text-lg mb-2">Analysis Unavailable</h3><p className="text-white/60 mb-6 text-sm">We couldn't generate the projection. Please try again.</p><Button onClick={fetchAnalysis} className="bg-red-500/20 text-red-300 border border-red-500/30">RETRY ANALYSIS</Button></div> ) : loading ? (
+                        {analysisError ? ( <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-3xl border border-red-500/20 text-center"><AlertTriangle size={32} className="text-red-400 mb-4" /><h3 className="text-white font-bold text-lg mb-2 font-serif tracking-tighter">Analysis Unavailable</h3><p className="text-white/60 mb-6 text-sm">We couldn't generate the projection. Please try again.</p><Button onClick={fetchAnalysis} className="bg-red-500/20 text-red-300 border border-red-500/30">RETRY ANALYSIS</Button></div> ) : loading ? (
                             <div className="py-10 space-y-4">
                                 <div className="h-4 bg-white/10 rounded-full w-full animate-pulse"></div>
                                 <div className="h-4 bg-white/10 rounded-full w-3/4 animate-pulse"></div>
@@ -490,7 +490,7 @@ CERTIFIED BY LOLA AI SYSTEMS
             {!loading && analysis && (
                 <div className="luxury-card bg-[#0A0A0A] border border-[#6A2C91]/20 rounded-[3rem] p-4 sm:p-12 shadow-2xl relative overflow-hidden">
                     <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-6 mb-12">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Recovery Protocols</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Recovery Protocols</h3>
                         
                         <div className="flex bg-black/60 p-1.5 rounded-2xl border border-white/5 shadow-inner">
                             {(['1', '3', '5'] as const).map(tab => (
@@ -509,7 +509,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                         <div className="flex items-start gap-3 sm:gap-6">
                             <div className="w-8 h-8 sm:w-12 sm:h-12 bg-[#6A2C91]/20 rounded-2xl text-[#6A2C91] flex items-center justify-center border border-[#6A2C91]/30 shrink-0"><Map size={24} strokeWidth={1.5}/></div>
                             <div>
-                                <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{planTab}-Year Strategic Plan</h4>
+                                <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">{planTab}-Year Strategic Plan</h4>
                                 <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed leading-relaxed">
                                     {planTab === '1' && analysis.recoveryPlans.oneYear}
                                     {planTab === '3' && analysis.recoveryPlans.threeYear}
@@ -525,7 +525,7 @@ CERTIFIED BY LOLA AI SYSTEMS
             <div className="space-y-6 sm:space-y-10 lg:space-y-12">
                 <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-end gap-3 sm:gap-6">
                     <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                              Projected Revenue Velocity
                         </h3>
                         <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light italic">Comparing standard growth vs. dropshipping optimization strategy.</p>
@@ -548,7 +548,7 @@ CERTIFIED BY LOLA AI SYSTEMS
 
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] p-4 sm:p-12">
                     <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4">
-                        {analysisError ? ( <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-3xl border border-red-500/20 text-center"><AlertTriangle size={32} className="text-red-400 mb-4" /><h3 className="text-white font-bold text-lg mb-2">Analysis Unavailable</h3><p className="text-white/60 mb-6 text-sm">We couldn't generate the projection. Please try again.</p><Button onClick={fetchAnalysis} className="bg-red-500/20 text-red-300 border border-red-500/30">RETRY ANALYSIS</Button></div> ) : loading ? (
+                        {analysisError ? ( <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-3xl border border-red-500/20 text-center"><AlertTriangle size={32} className="text-red-400 mb-4" /><h3 className="text-white font-bold text-lg mb-2 font-serif tracking-tighter">Analysis Unavailable</h3><p className="text-white/60 mb-6 text-sm">We couldn't generate the projection. Please try again.</p><Button onClick={fetchAnalysis} className="bg-red-500/20 text-red-300 border border-red-500/30">RETRY ANALYSIS</Button></div> ) : loading ? (
                             <div className="w-full h-full flex items-center justify-center"><Loader2 size={64} strokeWidth={1} className="animate-spin text-white/20" /></div>
                         ) : (
                             <ResponsiveContainer width="100%" height="100%">

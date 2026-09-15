@@ -28,7 +28,7 @@ export const CustomerPortal = () => {
             
             <div className="w-full md:w-2/3 lg:w-1/2">
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem]">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Portal Matrix</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Portal Matrix</h2>
                     <div className="space-y-8">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-6 p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/10 group hover:bg-white/10 hover:border-[#6A2C91]/30 transition-all duration-500">
                             <div className="flex items-center gap-3 sm:gap-6">
@@ -36,7 +36,7 @@ export const CustomerPortal = () => {
                                     <ShoppingBag size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-serif text-white font-bold text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg tracking-tight">Custom Domain Active</h4>
+                                    <h4 className="font-serif tracking-tighter">Custom Domain Active</h4>
                                     <p className="text-[10px] text-[#C5A059] font-sans font-bold tracking-widest mt-1 uppercase">wholesale.herbalisticwellness.com</p>
                                 </div>
                             </div>

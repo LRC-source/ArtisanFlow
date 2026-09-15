@@ -85,7 +85,7 @@ export const ContentCalendar = () => {
 
             <Card className="luxury-card border-transparent rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl">
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-3 sm:gap-6">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">{monthName} {year}</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">{monthName} {year}</h2>
                     
                     <div className="flex items-center gap-3 sm:gap-6 w-auto justify-between sm:justify-end">
                         {/* View Toggle */}

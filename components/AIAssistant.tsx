@@ -196,7 +196,7 @@ export const AIAssistant: React.FC = () => {
             <div className="w-8 h-8 rounded-full overflow-hidden border border-[#C5A059]/30 shadow-[0_0_10px_rgba(197,160,89,0.2)]">
                 <img src="/lola_avatar.jpg" alt="Lola" className="w-full h-full object-cover" />
             </div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                 Lola <Sparkles size={10} className="text-[#C5A059]" />
             </h3>
             <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)] ${isSpeaking ? 'bg-amber-400 animate-ping' : 'bg-emerald-500 animate-pulse'} ml-1`}></div>

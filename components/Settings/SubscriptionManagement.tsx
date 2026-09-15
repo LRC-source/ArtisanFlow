@@ -58,7 +58,7 @@ export const SubscriptionManagement = () => {
             
             {businessProfile.status === 'Past Due' && (
                 <div className="bg-red-900/30 border-l-4 border-red-500 p-4 sm:p-6 rounded-2xl shadow-lg mb-8">
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-red-400 font-bold leading-relaxed flex items-center gap-2 mb-2"><AlertTriangle size={20} /> ACTION REQUIRED: PAST DUE BALANCE</h3>
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-red-400 font-bold leading-relaxed flex items-center gap-2 mb-2 font-serif tracking-tighter"><AlertTriangle size={20} /> ACTION REQUIRED: PAST DUE BALANCE</h3>
                     <p className="text-sm sm:text-base text-white/80 font-sans font-light leading-relaxed mb-4">
                         Your most recent tier payment was declined or could not be processed. Tier features and architectural logic modules <strong>can and will be restricted at any time</strong>. Express urgency by processing your payment below to retain your uninhibited access to all ArtisanFlow features.
                     </p>
@@ -76,7 +76,7 @@ export const SubscriptionManagement = () => {
                   </div>
                   <div>
                       <span className="text-[10px] font-sans text-white sm:text-white/50 font-bold uppercase tracking-widest mb-2 block">Deployment Level</span>
-                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{userTier}</h3>
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{userTier}</h3>
                       <p className="text-sm sm:text-base text-emerald-400 mt-3 font-sans font-medium tracking-wide flex items-center gap-2">
                         <CheckCircle size={14} /> Systems Active & Verified
                       </p>
@@ -97,7 +97,7 @@ export const SubscriptionManagement = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mt-6 sm:mt-8 lg:mt-12">
                <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10">
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Deployment Protocols</h3>
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Deployment Protocols</h3>
                   <ul className="space-y-6">
                      {[
                         { icon: ShieldCheck, text: 'Advanced Synaptic Protection' },

@@ -52,7 +52,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 <Lock size={32} className="text-[#C5A059]" />
               </div>
               <div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">
                   System Architecture Locked
                 </h2>
                 <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Tier Limit Reached</p>

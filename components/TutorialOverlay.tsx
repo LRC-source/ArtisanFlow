@@ -95,7 +95,7 @@ export const TutorialOverlay: React.FC = () => {
                 </div>
                 <div>
                     <p className="text-[9px] font-black text-[#C5A059] uppercase tracking-widest">Quick Tour</p>
-                    <h2 className="text-xl font-black font-serif text-gray-900">{currentStep.title}</h2>
+                    <h2 className="text-xl font-black font-serif text-gray-900 tracking-tighter">{currentStep.title}</h2>
                 </div>
             </div>
             

@@ -189,7 +189,7 @@ export const Orders = () => {
                 {filteredOrders.length === 0 ? (
                     <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
                         <Package size={64} className="text-white/10 mx-auto mb-6" strokeWidth={0.5} />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-serif text-white tracking-tight mb-2">No Transactional History</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-serif mb-2 tracking-tighter">No Transactional History</h3>
                         <p className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em]">Adjust your scan parameters.</p>
                     </div>
                 ) : (
@@ -211,7 +211,7 @@ export const Orders = () => {
                                         <div className="space-y-4">
                                             <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
                                             <div className="flex items-center gap-3 sm:gap-4">
-                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[1rem] bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059] font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black border border-[#C5A059]/30 shadow-inner">
+                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[1rem] bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059] font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black border border-[#C5A059]/30 shadow-inner tracking-tighter">
                                                     {order.customer.charAt(0)}
                                                 </div>
                                                 <div>

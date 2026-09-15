@@ -123,7 +123,7 @@ export const MarketingStrategyReport = () => {
                   </div>
               </div>
               <div className="text-center space-y-2">
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white mb-4">Synthesizing Strategy Hub...</h2>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Synthesizing Strategy Hub...</h2>
                   <p className="text-sm sm:text-base text-gray-500 font-medium tracking-wide">Lola AI is generating your strategy report.</p>
               </div>
           </div>
@@ -164,7 +164,7 @@ export const MarketingStrategyReport = () => {
                     <Activity size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">Predicted Reach</span>
                 </div>
-                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">450K+</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">450K+</div>
                 <div className="text-xs text-white sm:text-gray-400 mt-2">Monthly Impressions</div>
             </Card>
             <Card className="p-4 sm:p-6 bg-black/40 border-white/10 backdrop-blur-xl">
@@ -172,7 +172,7 @@ export const MarketingStrategyReport = () => {
                     <PieChart size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">Engagement Rate</span>
                 </div>
-                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">8.4%</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">8.4%</div>
                 <div className="text-xs text-white sm:text-gray-400 mt-2">+2.1% vs Industry Avg</div>
             </Card>
             <Card className="p-4 sm:p-6 bg-black/40 border-white/10 backdrop-blur-xl">
@@ -180,7 +180,7 @@ export const MarketingStrategyReport = () => {
                     <Target size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">Lead Conversion</span>
                 </div>
-                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">3.2%</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">3.2%</div>
                 <div className="text-xs text-white sm:text-gray-400 mt-2">Targeting $60k+ Income</div>
             </Card>
             <Card className="p-4 sm:p-6 bg-[#1A1115] border-rose-500/20 backdrop-blur-xl">
@@ -188,7 +188,7 @@ export const MarketingStrategyReport = () => {
                     <DollarSign size={18} />
                     <span className="text-[10px] uppercase tracking-widest font-black">CAC Estimate</span>
                 </div>
-                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">$14.50</div>
+                <div className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">$14.50</div>
                 <div className="text-xs text-rose-400/70 mt-2">Customer Acquisition Cost</div>
             </Card>
         </div>
@@ -198,7 +198,7 @@ export const MarketingStrategyReport = () => {
             <div className="absolute top-0 right-0 w-full sm:w-64 h-[180px] sm:h-64 bg-magenta-500/10 rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 opacity-40 group-hover:opacity-100 transition-opacity"></div>
             <div className="flex items-center gap-3 text-[#6A2C91] mb-6 relative z-10">
                 <div className="p-3 bg-[#6A2C91]/20 rounded-2xl"><Sparkles size={24} className="text-magenta-500" /></div>
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Executive Directive</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Executive Directive</h3>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-gray-300 leading-relaxed leading-relaxed font-sans font-light relative z-10 w-full w-full max-w-4xl italic">
                 "{strategyData.summary}"
@@ -207,7 +207,7 @@ export const MarketingStrategyReport = () => {
 
         {/* Strategic Pillars Node */}
         <div className="space-y-8">
-            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                 <TrendingUp className="text-[#C5A059]" /> Content Pillars & Allocation
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
@@ -215,8 +215,8 @@ export const MarketingStrategyReport = () => {
                     <Card key={i} className="bg-black/40 border-white/10 rounded-[2rem] p-4 sm:p-6 shadow-xl hover:border-magenta-500/50 transition-all group overflow-hidden relative backdrop-blur-xl">
                         <div className="absolute top-0 right-0 p-4 sm:p-6 opacity-[0.05] text-magenta-500"><PieChart size={80} /></div>
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4 relative z-10">
-                             <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{pillar.name}</h4>
-                             <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-magenta-500">{pillar.pct}%</span>
+                             <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">{pillar.name}</h4>
+                             <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-serif text-magenta-500 tracking-tighter">{pillar.pct}%</span>
                         </div>
                         <div className="w-full bg-white/5 h-2 rounded-full mb-6 relative overflow-hidden">
                             <div 
@@ -266,7 +266,7 @@ export const MarketingStrategyReport = () => {
                     <p className="text-sm sm:text-base text-[#C5A059] leading-relaxed font-serif italic tracking-tight mb-6 mt-4">{strategyData.audience.demographics}</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-5 lg:p-6">
                         <div>
-                            <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2"><Target size={14} className="text-emerald-500" /> Synaptic Affinity</h4>
+                            <h4 className="text-[10px] font-black text-white uppercase mb-4 flex items-center gap-2 font-serif tracking-tighter"><Target size={14} className="text-emerald-500" /> Synaptic Affinity</h4>
                             <div className="flex flex-wrap gap-2">
                                 {strategyData.audience.interests.map(tag => (
                                     <Badge key={tag} color="green" className="font-medium">{tag}</Badge>
@@ -274,7 +274,7 @@ export const MarketingStrategyReport = () => {
                             </div>
                         </div>
                         <div>
-                            <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2"><Plus size={14} className="text-rose-500" /> Core Friction Points</h4>
+                            <h4 className="text-[10px] font-black text-white uppercase mb-4 flex items-center gap-2 font-serif tracking-tighter"><Plus size={14} className="text-rose-500" /> Core Friction Points</h4>
                             <div className="flex flex-wrap gap-2">
                                 {strategyData.audience.painPoints.map(tag => (
                                     <Badge key={tag} color="gray" className="font-medium bg-rose-500/10 text-rose-300 border-rose-500/20">{tag}</Badge>
@@ -289,7 +289,7 @@ export const MarketingStrategyReport = () => {
                      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                      <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative z-10">
                         <div className="space-y-2 text-center md:text-left">
-                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">AI Content Workbench</h3>
+                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">AI Content Workbench</h3>
                              <p className="text-sm sm:text-base text-purple-200 font-sans font-light">Auto-generate a week of optimized posts based on your strategy.</p>
                         </div>
                         <Button 
@@ -307,7 +307,7 @@ export const MarketingStrategyReport = () => {
         {/* Content Bundle Results */}
         {contentBundle.length > 0 && (
             <div className="space-y-8 animate-in slide-up">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                     <Layers className="text-emerald-500" /> Content Queue
                 </h3>
                 <div className="flex overflow-x-auto gap-3 sm:gap-6 pb-10 scrollbar-hide px-2">
@@ -323,7 +323,7 @@ export const MarketingStrategyReport = () => {
                                         {isScheduled ? 'SYNCED TO CAL' : 'AI DRAFT'}
                                     </Badge>
                                 </div>
-                                <h4 className="font-serif text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-white mb-4 line-clamp-1">{post.topic}</h4>
+                                <h4 className="font-serif tracking-tighter">{post.topic}</h4>
                                 <div className="flex-1 bg-white/5 p-4 rounded-2xl border border-white/5 mb-6 overflow-y-auto max-h-48 scrollbar-hide">
                                     <p className="text-sm sm:text-base text-white sm:text-gray-300 font-sans font-light whitespace-pre-wrap">{post.content}</p>
                                 </div>
@@ -365,7 +365,7 @@ export const MarketingStrategyReport = () => {
             </Card>
 
             <div className="space-y-8">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">
+                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
                     <Layers className="text-[#C5A059]" /> Channel Protocols
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
@@ -376,7 +376,7 @@ export const MarketingStrategyReport = () => {
                                     {getPlatformIcon(platform.name)}
                                 </div>
                                 <div>
-                                    <h4 className="text-white font-serif">{platform.name}</h4>
+                                    <h4 className="text-white font-serif tracking-tighter">{platform.name}</h4>
                                     <p className="text-[10px] font-black text-[#C5A059] uppercase tracking-widest">{platform.freq}</p>
                                 </div>
                             </div>

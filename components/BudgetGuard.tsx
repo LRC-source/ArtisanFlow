@@ -130,7 +130,7 @@ export const BudgetGuard: React.FC = () => {
                          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                          <div className="flex items-center gap-3 mb-6">
                             <Zap size={20} className="text-amber-400" />
-                            <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic tracking-tighter">Synaptic Analysis</h4>
+                            <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic tracking-tighter font-serif">Synaptic Analysis</h4>
                          </div>
                          {isAnalyzing ? (
                              <div className="flex flex-col items-center py-10">
@@ -225,7 +225,7 @@ export const BudgetGuard: React.FC = () => {
                     <div className="bg-amber-50 border border-amber-100 p-4 sm:p-6 rounded-3xl flex items-start gap-3 sm:gap-4">
                         <div className="p-3 bg-amber-100 text-amber-600 rounded-2xl shadow-sm"><Info size={24}/></div>
                         <div>
-                            <h4 className="font-black text-amber-900 uppercase italic text-sm mb-1 tracking-tight">AI Financial Guardrail Active</h4>
+                            <h4 className="font-serif tracking-tighter">AI Financial Guardrail Active</h4>
                             <p className="text-sm sm:text-base text-amber-800 font-medium leading-relaxed">
                                 Budget Guard™ is currently tracking your <strong>Inventory Burn Rates</strong>. It will automatically notify you via Lola if your current spending trajectory risks a material stock-out before the next planned restock.
                             </p>

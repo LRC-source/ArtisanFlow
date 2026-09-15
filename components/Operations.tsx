@@ -29,7 +29,7 @@ export const MarginGuard = () => {
                             Material Cost
                         </label>
                         <div className="relative">
-                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black">$</span>
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black tracking-tighter">$</span>
                             <Input 
                                 type="number" 
                                 value={materialCost} 
@@ -64,21 +64,21 @@ export const MarginGuard = () => {
                     <div className="absolute top-0 right-0 w-full sm:w-48 h-48 bg-[#6A2C91] opacity-[0.03] rounded-bl-full -mr-12 -mt-6 sm:mt-8 lg:mt-12 group-hover:opacity-10 transition-opacity duration-1000"></div>
                     <div className="flex items-center gap-3 sm:gap-4 text-[#C5A059] mb-10 relative z-10">
                         <Calculator size={24} strokeWidth={1.2} />
-                        <h4 className="font-sans font-bold text-[11px] uppercase tracking-[0.3em]">Wholesale Engine</h4>
+                        <h4 className="font-serif tracking-tighter">Wholesale Engine</h4>
                     </div>
                     <div className="space-y-8 relative z-10">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/5 pb-6">
-                            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed font-sans font-light text-white sm:text-white/60">Unit Cost:</span>
-                            <span className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">${costPerUnit.toFixed(2)}</span>
+                            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed font-light sm:text-white/60 font-serif tracking-tighter">Unit Cost:</span>
+                            <span className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">${costPerUnit.toFixed(2)}</span>
                         </div>
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/5 pb-6">
-                            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed font-sans font-light text-white sm:text-white/60">2.2x Target Price:</span>
-                            <span className="font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black text-emerald-400 tracking-tight">${recommendedPrice.toFixed(2)}</span>
+                            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed font-light sm:text-white/60 font-serif tracking-tighter">2.2x Target Price:</span>
+                            <span className="font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black text-emerald-400 tracking-tighter">${recommendedPrice.toFixed(2)}</span>
                         </div>
                         <div className="pt-6">
                             <label className="block text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-4">Proposed Wholesale Price</label>
                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black">$</span>
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black tracking-tighter">$</span>
                                 <Input 
                                     type="number" 
                                     value={plannedPrice} 
@@ -163,7 +163,7 @@ export const Operations = () => {
               <CheckCircle size={28} strokeWidth={1.2} />
           </div>
           <div>
-              <h4 className="text-emerald-400 font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-2">Omnichannel Sync Secure</h4>
+              <h4 className="text-emerald-400 font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black mb-2 tracking-tighter">Omnichannel Sync Secure</h4>
               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-sans font-light text-emerald-400/60">No bottlenecks detected in current workflow pipelines. Strategic nodes are synchronized.</p>
           </div>
       </motion.div>
@@ -180,7 +180,7 @@ const HubNode = ({ icon: Icon, title, desc, color = "text-[#6A2C91]", bg = "bg-w
   >
       <div className="absolute top-0 right-0 w-full sm:w-48 h-48 bg-white opacity-[0.05] rounded-bl-full -mr-12 -mt-6 sm:mt-8 lg:mt-12 group-hover:opacity-10 transition-opacity duration-700"></div>
       <GlassHaloIcon icon={Icon} color="cyan" size="lg" className="w-12 h-12 sm:w-20 sm:h-20 group-hover:scale-110 transition-transform duration-700 mb-10 z-10 [&>svg]:w-8 [&>svg]:h-8" />
-      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{title}</h3>
+      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{title}</h3>
       <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">{desc}</p>
   </motion.div>
 );

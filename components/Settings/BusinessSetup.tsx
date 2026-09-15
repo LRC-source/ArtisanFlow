@@ -47,7 +47,7 @@ export const BusinessSetup = () => {
 
             <div className="w-full md:w-1/2">
                 <div className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 ${isSuccess ? 'ring-1 ring-emerald-500/50 bg-emerald-900/10' : ''} transition-all duration-500 rounded-[2.5rem]`}>
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">Corporate Node Definition</h3>
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Corporate Node Definition</h3>
                     <div className="space-y-10">
                         <div className="space-y-6">
                            <div>

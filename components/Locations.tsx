@@ -62,7 +62,7 @@ export const Locations = () => {
               <div className="w-12 h-12 sm:w-20 sm:h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                   <MapPin size={40} className="text-white sm:text-gray-300" />
               </div>
-              <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed font-medium text-white font-bold mb-2">No locations yet. Create your first location to get started.</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed font-medium text-white font-bold mb-2 font-serif tracking-tighter">No locations yet. Create your first location to get started.</h3>
           </div>
       ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
@@ -73,7 +73,7 @@ export const Locations = () => {
                               <MapPin size={24} />
                           </div>
                           <div>
-                              <h3 className="text-base sm:text-xl lg:text-3xl font-bold text-white">{loc.name}</h3>
+                              <h3 className="text-base sm:text-xl lg:text-3xl font-bold text-white font-serif tracking-tighter">{loc.name}</h3>
                               <p className="text-sm sm:text-base text-gray-500 uppercase">{loc.type}</p>
                           </div>
                       </div>

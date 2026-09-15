@@ -134,7 +134,7 @@ export const SupplierManager: React.FC = () => {
                <div className="w-12 h-12 sm:w-20 sm:h-20 bg-stone-50 rounded-3xl flex items-center justify-center text-stone-200 mb-6 shadow-inner">
                   <Truck size={40} />
               </div>
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-black text-white uppercase italic">No Supply Nodes Detected</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-black uppercase italic font-serif tracking-tighter">No Supply Nodes Detected</h3>
               <p className="text-sm sm:text-base text-white sm:text-gray-400 font-medium mt-1">Initialize your supplier database to track material lead times.</p>
               <Button onClick={handleOpenCreate} className="mt-8 bg-purple-50 text-[#6A2C91] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-2xl font-black text-[10px] tracking-widest border border-purple-100">INITIALIZE FIRST NODE</Button>
           </div>
@@ -151,7 +151,7 @@ export const SupplierManager: React.FC = () => {
                                     <Truck size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white mb-4">{supplier.name}</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{supplier.name}</h3>
                                     <Badge color={supplier.tier === 'Reliable' ? 'green' : supplier.tier === 'Risk' ? 'red' : 'gold'} className="text-[8px] px-2 py-0.5 font-black uppercase tracking-widest mt-1">
                                         {supplier.tier} tier
                                     </Badge>

@@ -100,7 +100,7 @@ export const AIAvatarStudio = () => {
                 {/* Configuration Panel */}
 <div className="lg:col-span-5 space-y-6">
     <div className="flex justify-between items-center mb-4">
-        <h3 className="text-white/60 font-semibold uppercase tracking-wider text-xs">Configuration</h3>
+        <h3 className="text-white/60 uppercase text-xs font-serif tracking-tighter">Configuration</h3>
         <Badge color="purple">Model: Gemini 2.5 Flash Image</Badge>
     </div>
                     <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
