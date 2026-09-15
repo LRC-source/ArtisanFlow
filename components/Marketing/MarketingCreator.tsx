@@ -60,7 +60,7 @@ export const MarketingCreator = () => {
             type: 'Image', 
             mediaUrl: generatedImage
         });
-        toast.success("Asset saved to approvals vault.");
+        toast.success("Asset saved to approvals dashboard.");
         navigate('/marketing/approvals');
     };
 
@@ -186,7 +186,7 @@ export const MarketingCreator = () => {
                                     </div>
                                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md mx-auto">
                                         <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5">Discard</Button>
-<Button onClick={handleSave} className="flex-[2] bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs shadow-md font-cta font-semibold uppercase tracking-[0.08em]"><Save size={16} className="mr-2" /> Save to Vault</Button>
+<Button onClick={handleSave} className="flex-[2] bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs shadow-md font-cta font-semibold uppercase tracking-[0.08em]"><Save size={16} className="mr-2" /> Save to Dashboard</Button>
                                     </div>
                                 </motion.div>
                             ) : (

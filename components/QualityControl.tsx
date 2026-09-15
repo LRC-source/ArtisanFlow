@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import React, { useState } from 'react';
-import { Card, Button, Badge, Input, Select, Modal, VaultBanner } from './UI';
+import { Card, Button, Badge, Input, Select, Modal, DashboardBanner } from './UI';
 import { useArtisanData, QualityCheck } from './DataContext';
 import { ClipboardList, Plus, Search, CheckCircle, Clock, ArrowLeft, ShieldCheck, Activity, BarChart3, ChevronRight, Zap, Target, ClipboardCheck, History, AlertTriangle, Layers, Box } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -60,18 +60,18 @@ export const QualityControl = () => {
           title="Trapped Cash Audit & QC"
           parentTitle="Operations"
           onBack={() => navigate('/inventory')}
-          description="Batch Integrity Vault: Enforcing Excellence Across the Manufacturing Floor."
+          description="Batch Integrity Dashboard: Enforcing Excellence Across the Manufacturing Floor."
         />
         
-        <VaultBanner 
+        <DashboardBanner 
           title="Trapped Cash Audit & QC"
-          subtitle="Batch Integrity Vault: Enforcing Excellence Across the Manufacturing Floor."
+          subtitle="Batch Integrity Dashboard: Enforcing Excellence Across the Manufacturing Floor."
           badge="Audit Protocol Active"
         >
           <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white text-[11px] py-3 px-6 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all font-cta font-semibold uppercase tracking-[0.08em]" onClick={() => setShowAdd(true)}>
               <Plus size={16} className="mr-3"/> NEW AUDIT LOG
           </Button>
-        </VaultBanner>
+        </DashboardBanner>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
@@ -84,7 +84,7 @@ export const QualityControl = () => {
       {qualityChecks.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-6 sm:p-12 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
               <GlassHaloIcon icon={ClipboardCheck} color="cyan" size="xl" className="mb-6 shadow-inner" />
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Vault Empty</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Dashboard Empty</h3>
               <p className="text-sm sm:text-base text-white/30 text-[11px] uppercase tracking-[0.2em] mt-1 font-serif italic font-light">No inspection history detected.</p>
               <Button onClick={() => setShowAdd(true)} className="mt-8 bg-white/5 text-[#C5A059] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">INITIALIZE AUDIT</Button>
           </div>

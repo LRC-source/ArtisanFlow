@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ContextualTutorialModal } from '../ContextualTutorialModal';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
-import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
+import { Input, Button, Card, Badge, Select, Modal, DashboardBanner } from '../UI';
 import { useArtisanData, Integration, UserTier } from '../DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PaymentGateway } from '../Auth';
@@ -37,7 +37,7 @@ export const SubscriptionManagement = () => {
                 description="Manage your ArtisanFlow plan and billing."
                 steps={["Review your current tier and usage limits.","Upgrade to unlock advanced features.","Manage payment methods and billing history."]}
             />
-            <Modal isOpen={!!selectedUpgrade} onClose={() => setSelectedUpgrade(null)} title="Vault Payment Gateway">
+            <Modal isOpen={!!selectedUpgrade} onClose={() => setSelectedUpgrade(null)} title="Dashboard Payment Gateway">
                 {selectedUpgrade && (
                    <PaymentGateway 
                       tier={selectedUpgrade} 
@@ -120,7 +120,7 @@ export const SubscriptionManagement = () => {
                       <ExternalLink size={32} strokeWidth={1.5} />
                   </div>
                   <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Access the global billing repository and transaction historicals.</p>
-                  <Button variant="outline" className="text-[10px] uppercase w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 transition-colors font-cta font-semibold tracking-[0.08em]">Open Billing Vault</Button>
+                  <Button variant="outline" className="text-[10px] uppercase w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 transition-colors font-cta font-semibold tracking-[0.08em]">Open Billing Dashboard</Button>
                </div>
             </div>
         </motion.div>

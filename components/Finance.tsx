@@ -7,7 +7,7 @@ import {
   Download, FileText, PieChart, Calendar, ShieldCheck, 
   ArrowUpRight, ArrowDownRight, RefreshCw, Loader2, Target, Package, Wallet, GanttChartSquare, CheckCircle, Ship, Map, Info, X, AlertTriangle
 } from 'lucide-react';
-import { Card, Button, Badge, Select, Modal, Input, VaultBanner } from './UI';
+import { Card, Button, Badge, Select, Modal, Input, DashboardBanner } from './UI';
 import { useArtisanData } from './DataContext';
 import { 
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, 
@@ -125,9 +125,9 @@ export const FinanceHub: React.FC = () => {
                     <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Command Center
                 </button>
                 
-                <VaultBanner 
+                <DashboardBanner 
                   title="Finance Hub"
-                  subtitle="Vault Ledger & High-Precision Financial Architecture. Reconciling craftsmanship with capital growth."
+                  subtitle="Dashboard Ledger & High-Precision Financial Architecture. Reconciling craftsmanship with capital growth."
                   badge="Financial Protocol Active"
                 >
                   <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
@@ -138,7 +138,7 @@ export const FinanceHub: React.FC = () => {
                         <TrendingUp size={16} className="mr-3"/> GENERATE 5-YEAR PROJECTION
                     </Button>
                   </div>
-                </VaultBanner>
+                </DashboardBanner>
             </div>
 
             {/* Financial Stat Grid */}

@@ -254,7 +254,7 @@ export const SocialMediaCreator = () => {
                             </div>
                             <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                                 <Button variant="outline" onClick={() => handleSave()} disabled={!activeContent}>
-    <Save size={16} className="mr-2" /> Save to Vault
+    <Save size={16} className="mr-2" /> Save to Dashboard
 </Button>
 <Button variant="outline" onClick={() => handlePublish(true)} disabled={!activeContent}>
     <Clock size={16} className="mr-2" /> Schedule

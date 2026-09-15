@@ -4,7 +4,7 @@ import { DollarSign, Package, Activity, AlertTriangle, Zap, ArrowRight, Trending
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from 'recharts';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
 import { motion } from 'framer-motion';
-import { Badge, Button, VaultBanner } from './UI';
+import { Badge, Button, DashboardBanner } from './UI';
 import { useArtisanData } from './DataContext';
 
 const DATA = [
@@ -80,7 +80,7 @@ export const Dashboard = () => {
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto"
     >
-      <VaultBanner 
+      <DashboardBanner 
         title="Command Center"
         subtitle="The pulse of your artisan enterprise is currently optimized. Strategic systems are stable."
         badge="Architect Authorization Confirmed"
@@ -102,7 +102,7 @@ export const Dashboard = () => {
                 </Button>
             )}
         </div>
-      </VaultBanner>
+      </DashboardBanner>
 
       {showSetup && (
           <motion.div

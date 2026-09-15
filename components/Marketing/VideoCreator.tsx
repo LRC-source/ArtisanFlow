@@ -84,7 +84,7 @@ export const VideoCreator = () => {
             status: 'Draft',
             type: 'Video'
         });
-        toast.success("Video blueprint saved to vault.");
+        toast.success("Video blueprint saved to dashboard.");
         navigate('/marketing/approvals');
     };
 
@@ -217,7 +217,7 @@ export const VideoCreator = () => {
                             <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex justify-end gap-3 sm:gap-4">
                                 <Button variant="outline" className="w-auto mx-auto py-1 px-3 text-[10px] px-6 font-cta font-semibold uppercase tracking-[0.08em]">Discard</Button>
                                 <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-6 bg-pink-600 hover:bg-pink-700 text-white border-none font-cta font-semibold uppercase tracking-[0.08em]">
-                                    <Save size={16} className="mr-2" /> Save to Vault
+                                    <Save size={16} className="mr-2" /> Save to Dashboard
                                 </Button>
                             </div>
                         )}

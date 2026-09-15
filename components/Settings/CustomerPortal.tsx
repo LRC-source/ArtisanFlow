@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ContextualTutorialModal } from '../ContextualTutorialModal';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
-import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
+import { Input, Button, Card, Badge, Select, Modal, DashboardBanner } from '../UI';
 import { useArtisanData, Integration, UserTier } from '../DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PaymentGateway } from '../Auth';

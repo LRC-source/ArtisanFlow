@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Select, FileUploader, Modal, Badge, VaultBanner, SocialMediaAuthModal, HubCard } from '../UI';
+import { Card, Button, Input, Select, FileUploader, Modal, Badge, DashboardBanner, SocialMediaAuthModal, HubCard } from '../UI';
 import { ChevronLeft, ChevronRight, Sparkles, Calendar, Video, PenTool, Mic, Share2, Layers, CheckSquare, ArrowLeft, Upload, Clock, Image, FileAudio, Youtube, Instagram, Facebook, Linkedin, Twitter, CheckCircle, Trash2, Key, ChevronDown, ChevronUp, Download, Globe, FileText, Loader2, User, Play, MessageSquare, X, Plus, ThumbsUp, ThumbsDown, RefreshCw, Volume2, Headphones, Film, Scissors, Monitor, Camera, Eye, Bot, Zap, Save, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData, MarketingPost } from '../DataContext';
@@ -133,7 +133,7 @@ const SocialMediaIntegrationManager = () => {
 
     return (
         <div className="mb-12 animate-in fade-in slide-up duration-700">
-            <VaultBanner 
+            <DashboardBanner 
                 title="Connected Channels & Auto-Publishing Center" 
                 subtitle="Synchronize your brand across the digital ecosystem. Manage APIs and automated publishing pipelines."
                 badge="Integration Protocol Active"
@@ -165,7 +165,7 @@ const SocialMediaIntegrationManager = () => {
                     ))}
                 </div>
 </div>
-</VaultBanner>
+</DashboardBanner>
             {activePlatform && <SocialMediaAuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} platform={activePlatform} />}
         </div>
     );
@@ -186,7 +186,7 @@ export const MarketingStudio = () => {
                 description="Central command for all your marketing and branding efforts."
                 steps={["Access Visual Analysis to audit assets.","Use Marketing Creator for quick designs.","Generate your Brand Voice Profile."]}
             />
-            <VaultBanner title="Marketing Hub" subtitle="AI-powered content creation and marketing protocols." badge="Marketing Protocol Active" />
+            <DashboardBanner title="Marketing Hub" subtitle="AI-powered content creation and marketing protocols." badge="Marketing Protocol Active" />
             
             <SocialMediaIntegrationManager />
             

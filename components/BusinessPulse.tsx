@@ -24,7 +24,7 @@ export const BusinessPulse: React.FC = () => {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="space-y-6 sm:space-y-10 lg:space-y-12"
     >
-      {/* High-Fidelity Banner Architecture - REFINED LUXURY VAULT */}
+      {/* High-Fidelity Banner Architecture - REFINED LUXURY DASHBOARD */}
       <div 
         className="relative w-full overflow-hidden py-4 sm:py-8 lg:py-12 px-4 sm:px-8 rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(106,44,145,0.2)]"
       >
@@ -48,12 +48,12 @@ export const BusinessPulse: React.FC = () => {
             className="flex items-center gap-3 sm:gap-4 mb-8 px-3 py-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full"
           >
              <ShieldCheck size={20} className="text-[#C5A059]" />
-             <span className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#C5A059] font-bold">Secure Vault Access</span>
+             <span className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#C5A059] font-bold">Secure Dashboard Access</span>
           </motion.div>
 
           <div className="mb-6">
             <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">
-              Artisan <span className="text-[#C5A059]">Flow</span> Vault
+              Artisan <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span> Dashboard
             </h1>
           </div>
 
@@ -123,7 +123,7 @@ export const BusinessPulse: React.FC = () => {
           </Button>
       </motion.div>
 
-      {/* VAULT ENTRY POINTS - Minimalist */}
+      {/* DASHBOARD ENTRY POINTS - Minimalist */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -131,7 +131,7 @@ export const BusinessPulse: React.FC = () => {
         className="space-y-6 sm:space-y-10 lg:space-y-12"
       >
         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Vault Entry Points</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Dashboard Entry Points</h2>
           <div className="h-px flex-1 bg-white/5 mx-8"></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-10">
@@ -217,7 +217,7 @@ const QuickAccessCard = ({ icon: Icon, color, title, desc, image, action }: any)
             <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{title}</h3>
             <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">{desc}</p>
             <div className="mt-auto flex items-center gap-3 text-[11px] font-sans font-bold text-white/30 uppercase tracking-[0.25em] group-hover:text-[#C5A059] transition-colors">
-                Enter Vault Module <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+                Enter Dashboard Module <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ContextualTutorialModal } from '../ContextualTutorialModal';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
-import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
+import { Input, Button, Card, Badge, Select, Modal, DashboardBanner } from '../UI';
 import { useArtisanData, Integration, UserTier } from '../DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PaymentGateway } from '../Auth';
@@ -37,7 +37,7 @@ export const PrivacyGovernance = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed tracking-tight font-sans">Two-Factor Authentication</p>
-                                    <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-widest mt-1">Mandatory for all vault access.</p>
+                                    <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-widest mt-1">Mandatory for all dashboard access.</p>
                                 </div>
                             </div>
                             <Badge color="green" className="shadow-sm text-[9px] uppercase px-3 py-1 border-emerald-500/20 font-cta font-semibold tracking-[0.08em]">Active</Badge>

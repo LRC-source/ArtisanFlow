@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Card, Input, Button, Badge, VaultBanner } from './UI';
+import { Card, Input, Button, Badge, DashboardBanner } from './UI';
 import { useArtisanData } from './DataContext';
 import { SubPageHeader } from './SubPageHeader';
 

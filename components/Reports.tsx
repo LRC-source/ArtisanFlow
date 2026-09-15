@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Select, Badge, VaultBanner } from './UI';
+import { Card, Button, Select, Badge, DashboardBanner } from './UI';
 import { Sparkles, Download, FileText, Filter, Save, Trash2, ArrowLeft, Clock, History, Loader2, Target } from 'lucide-react';
 import { useArtisanData, Report } from './DataContext';
 import { useNavigate } from 'react-router-dom';
@@ -129,7 +129,7 @@ export const Reports = () => {
                   <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Generator
               </button>
               
-              <VaultBanner 
+              <DashboardBanner 
                   title="Saved Reports"
                   subtitle="Archive of generated financial and operational dossiers."
                   badge="Archive Accessed"
@@ -183,7 +183,7 @@ export const Reports = () => {
             <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Operations
         </button>
 
-        <VaultBanner 
+        <DashboardBanner 
             title="Reports & Analytics"
             subtitle="Synthesize complex datasets into actionable financial and operational intelligence."
             badge="Reporting Module Active"
@@ -195,7 +195,7 @@ export const Reports = () => {
             >
                 <History size={16} /> VIEW SAVED ARCHIVES ({reports.length})
             </Button>
-        </VaultBanner>
+        </DashboardBanner>
 
         {/* AI Report Generator Section */}
         <div className="luxury-card bg-white/5 backdrop-blur-xl rounded-[3rem] p-4 sm:p-12 border border-white/10 shadow-2xl relative overflow-hidden group">

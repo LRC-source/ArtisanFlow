@@ -369,7 +369,7 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
              period={isYearly ? "/yr" : "/mo"}
              icon={ShieldCheck} 
              color="bg-slate-500"
-             features={['Core Vault Modules (Ops, Fin, Mktg)', 'Lola AI: FAST Mode Only', '15 AI Questions / Day', 'Universal CSV Importer', 'Inventory Tracking']}
+             features={['Core Dashboard Modules (Ops, Fin, Mktg)', 'Lola AI: FAST Mode Only', '15 AI Questions / Day', 'Universal CSV Importer', 'Inventory Tracking']}
              onSelect={() => onSelect('Basic Artisan' as any)}
            />
            <TierCard 
@@ -388,7 +388,7 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
              period={isYearly ? "/yr" : "/mo"}
              icon={Crown}
              color="bg-[#C5A059]"
-             features={['Everything in Pro, plus:', 'Lola AI: SEARCH Mode (Live Web)', '150 AI Questions / Day', 'All Current & Future Vault Modules', 'Priority Support & Onboarding']}
+             features={['Everything in Pro, plus:', 'Lola AI: SEARCH Mode (Live Web)', '150 AI Questions / Day', 'All Current & Future Dashboard Modules', 'Priority Support & Onboarding']}
              onSelect={() => onSelect('Master Artisan' as any)}
            />
         </motion.div>
@@ -559,7 +559,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
             </div>
             
             <div className="inline-block px-8 py-3 rounded-full border border-[#C5A059]/50 bg-[#C5A059]/20 shadow-[0_0_15px_rgba(197,160,89,0.3)]">
-              <span className="text-xl sm:text-2xl font-black text-[#E2C792] font-serif tracking-tighter">TOTAL: ${(finalAmountInCents / 100).toFixed(2)} {isYearly ? '/ yr' : '/ mo'}</span>
+              <span className="text-3xl sm:text-4xl font-black text-[#E2C792] font-serif tracking-tighter">TOTAL: ${(finalAmountInCents / 100).toFixed(2)} {isYearly ? '/ yr' : '/ mo'}</span>
             </div>
           </div>
         </div>

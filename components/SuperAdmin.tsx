@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, Users, Database, Server, Activity, ArrowUpRight, Search, Lock, Edit2, Download, AlertTriangle, Key, X, Loader2 } from 'lucide-react';
-import { Card, Button, Badge, Input, Select, VaultBanner, Modal } from './UI';
+import { Card, Button, Badge, Input, Select, DashboardBanner, Modal } from './UI';
 import { SubPageHeader } from './SubPageHeader';
 import { useArtisanData, SystemUser } from './DataContext';
 import { toast } from 'sonner';
@@ -218,7 +218,7 @@ export const SuperAdmin = () => {
                 description="Master control override. Global view of system state, user tiers, and database integrity."
             />
             
-            <VaultBanner 
+            <DashboardBanner 
                 title="Super-Admin Matrix"
                 subtitle="Master control override. Manage platform access, subscription tiers, and global system metrics."
                 badge="Master Override Active"
@@ -228,7 +228,7 @@ export const SuperAdmin = () => {
                         {isSyncing ? <Loader2 size={16} className="animate-spin" /> : <Database size={16} />} EXPORT MASTER LEDGER
                     </Button>
                 </div>
-            </VaultBanner>
+            </DashboardBanner>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
                 <AdminStatCard title="Total Platform Users" value={liveUsers.length.toString()} icon={Users} haloColor="purple" trend="+1 This Week" />

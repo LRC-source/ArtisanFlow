@@ -31,7 +31,7 @@ export const LandingPage = () => {
             {/* Nav */}
             <nav className="w-full px-6 sm:px-8 py-5 flex justify-between items-center z-50 bg-[#0d0d0d]/80 backdrop-blur-md border-b border-white/5 sticky top-0">
                 <div className="flex items-center cursor-pointer group">
-                    <span className="text-xl sm:text-2xl font-black flex items-center font-serif tracking-tighter">
+                    <span className="text-3xl sm:text-4xl font-black flex items-center font-serif tracking-tighter">
                         <span className="text-white mr-1">LRC</span>
                         <span className="text-white">Artisan</span>
                         <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
@@ -280,7 +280,7 @@ export const LandingPage = () => {
                             isSelected={selectedTier === 'Basic Artisan'}
                             onClick={() => { setSelectedTier('Basic Artisan'); setView('signup'); }}
                             features={[
-                                "Core Vault Modules (Ops, Fin, Mktg)",
+                                "Core Dashboard Modules (Ops, Fin, Mktg)",
                                 "Lola AI: FAST Mode Only",
                                 "15 AI Questions / Day",
                                 "Universal CSV Importer",
@@ -314,7 +314,7 @@ export const LandingPage = () => {
                                 "Everything in Pro, plus:",
                                 "Lola AI: SEARCH Mode (Live Web)",
                                 "150 AI Questions / Day",
-                                "All Current & Future Vault Modules",
+                                "All Current & Future Dashboard Modules",
                                 "Priority Support & Onboarding"
                             ]}
                         />

@@ -370,10 +370,10 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
     
     const limits: Record<UserTier, any> = {
-      'Free Trial': { vault_recipes: 5, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
-      'Basic Artisan': { vault_recipes: Infinity, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
-      'Pro Artisan': { vault_recipes: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true },
-      'Master Artisan': { vault_recipes: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true }
+      'Free Trial': { dashboard_recipes: 5, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
+      'Basic Artisan': { dashboard_recipes: Infinity, mktg_avatar: false, logistics_forecast: false, dash_diagnostic: false, profit_guard: false },
+      'Pro Artisan': { dashboard_recipes: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true },
+      'Master Artisan': { dashboard_recipes: Infinity, mktg_avatar: true, logistics_forecast: true, dash_diagnostic: true, profit_guard: true }
     };
     
     const limit = limits[userTier]?.[action];
@@ -384,7 +384,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }
       return true;
     }
-    if (action === 'vault_recipes' && recipes.length >= limit) {
+    if (action === 'dashboard_recipes' && recipes.length >= limit) {
       setUpgradePrompt({ feature: 'Recipe Builder Limit', requiredTier: 'Basic Artisan' });
       return false;
     }
@@ -1401,14 +1401,14 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const addRecipe = async (recipe: any) => {
     try {
-      if (!checkFeatureGate('vault_recipes')) {
+      if (!checkFeatureGate('dashboard_recipes')) {
         return; // Modal will be shown by checkFeatureGate
       }
       
       const res = await fetch('/api/gating', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: userTier.toLowerCase().replace(/ /g, '-'), action: 'vault_recipes', currentCount: recipes.length })
+        body: JSON.stringify({ tier: userTier.toLowerCase().replace(/ /g, '-'), action: 'dashboard_recipes', currentCount: recipes.length })
       });
       const gate = await res.json();
       if (!gate.allowed) {

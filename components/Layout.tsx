@@ -120,7 +120,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
           <div className="sidebar-brand-block flex items-center justify-center relative">
               <div className="flex items-center justify-center w-full py-2">
                 <div className="flex items-center cursor-pointer group" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
-                    <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg md:text-2xl flex items-center font-extrabold font-serif tracking-tighter">
+                    <span className="text-lg sm:text-xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed sm:text-2xl md:text-4xl flex items-center font-extrabold font-serif tracking-tighter">
                         {/* LRC Prefix */}
                         <span className="text-white mr-2">LRC</span>
                         
@@ -245,7 +245,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               {/* Mobile/Collapsed Logo */}
               <div className={`transition-all duration-300 ${!isSidebarCollapsed ? 'md:hidden' : ''}`}>
                  <div className="flex items-center cursor-pointer group" onClick={() => navigate('/')}>
-                     <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg flex items-center font-extrabold font-serif tracking-tighter">
+                     <span className="text-lg sm:text-xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed sm:text-2xl flex items-center font-extrabold font-serif tracking-tighter">
                          <span className="text-white mr-2">LRC</span>
                          <span className="text-white">Artisan</span>
                          <span className="font-black bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Flow</span>
@@ -256,7 +256,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               {/* Breadcrumbs - Path Navigator */}
               <nav className="hidden md:flex items-center space-x-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/30">
                   <span className="hover:text-[#C5A059] cursor-pointer transition-colors flex items-center gap-1" onClick={() => navigate('/')}>
-                    <Hexagon size={10} className="text-[#C5A059]/40" /> Vault
+                    <Hexagon size={10} className="text-[#C5A059]/40" /> Dashboard
                   </span>
                   {pathnames.map((name, index) => {
                       const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
@@ -344,8 +344,8 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                   </div>
                     <motion.button 
                       onClick={() => {
-                        toast.success('Syncing with Vault...');
-                        setTimeout(() => toast.success('Vault synchronized.'), 1000);
+                        toast.success('Syncing with Dashboard...');
+                        setTimeout(() => toast.success('Dashboard synchronized.'), 1000);
                       }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}

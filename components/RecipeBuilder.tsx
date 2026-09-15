@@ -262,10 +262,10 @@ const recipePayload: any = {
     try {
       if (isEditing && id) {
           updateRecipe(id, recipePayload);
-          toast.success('Vault Deployment: Formula Synchronized Successfully.');
+          toast.success('Dashboard Deployment: Formula Synchronized Successfully.');
       } else {
           await addRecipe(recipePayload);
-          toast.success('Vault Deployment: Formula Synchronized Successfully.');
+          toast.success('Dashboard Deployment: Formula Synchronized Successfully.');
       }
       sessionStorage.removeItem('draft_recipe');
       navigate('/recipes');
@@ -315,7 +315,7 @@ const recipePayload: any = {
                 onClick={handleSave}
             >
                 {isEditing ? <RefreshCw size={18} className="mr-2" /> : <Save size={18} className="mr-2" />}
-                {isEditing ? 'UPDATE VAULT NODE' : 'COMMIT FORMULA TO VAULT'}
+                {isEditing ? 'UPDATE DASHBOARD NODE' : 'COMMIT FORMULA TO DASHBOARD'}
             </Button>
         </div>
       </div>

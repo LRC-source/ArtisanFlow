@@ -47,7 +47,7 @@ export const BudgetGuard: React.FC = () => {
 
     const handleSaveBudget = () => {
         updateBudget({ [timeframe]: parseFloat(tempValue) || 0 });
-        alert(`Vault Update: ${timeframe.toUpperCase()} budget target synchronized.`);
+        alert(`Dashboard Update: ${timeframe.toUpperCase()} budget target synchronized.`);
     };
 
     const applyAISuggestion = () => {
@@ -108,7 +108,7 @@ export const BudgetGuard: React.FC = () => {
                                 onClick={handleSaveBudget}
                                 className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] uppercase text-xs rounded-2xl shadow-xl shadow-purple-100 font-cta font-semibold tracking-[0.08em]"
                             >
-                                COMMIT TARGET TO VAULT
+                                COMMIT TARGET TO DASHBOARD
                             </Button>
                             
                             <div className="pt-6 border-t border-stone-100">
@@ -135,7 +135,7 @@ export const BudgetGuard: React.FC = () => {
                          {isAnalyzing ? (
                              <div className="flex flex-col items-center py-10">
                                  <Loader2 className="animate-spin text-amber-400 mb-4" size={32} />
-                                 <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Querying Vault...</p>
+                                 <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Querying Dashboard...</p>
                              </div>
                          ) : aiAnalysis ? (
                              <div className="space-y-6 animate-in slide-up">

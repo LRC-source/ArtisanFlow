@@ -60,7 +60,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             </div>
             
             <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans leading-relaxed mb-10">
-              You have reached your vault limit of <strong className="text-white">{currentLimit} {featureName}</strong>. 
+              You have reached your dashboard limit of <strong className="text-white">{currentLimit} {featureName}</strong>. 
               Upgrade to <strong className="text-[#C5A059]">{requiredTier}</strong> to unlock infinite scaling capacity and automated profit protection.
             </p>
 
@@ -74,7 +74,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 text-center shadow-sm border-t-2 border-t-[#C5A059]">
                     <ShieldCheck size={24} className="text-[#C5A059] mx-auto mb-3" />
                     <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed mb-1 font-sans">Infinite</p>
-                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-serif italic font-light">Vault Capacity</p>
+                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-serif italic font-light">Dashboard Capacity</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 text-center shadow-sm">
                     <Zap size={24} className="text-cyan-400 mx-auto mb-3" />

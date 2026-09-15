@@ -81,7 +81,7 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
             >
               <Share2 size={18} />
             </button>
-            <button onClick={() => toast.info("More options available in the vault")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white sm:text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-sm">
+            <button onClick={() => toast.info("More options available in the dashboard")} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white sm:text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-sm">
               <MoreHorizontal size={18} />
             </button>
           </div>

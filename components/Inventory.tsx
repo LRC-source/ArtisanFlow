@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Search, Filter, MoreVertical, Plus, Layers, Box, ArrowLeft, AlertTriangle, Upload, Download, RefreshCw, DollarSign, Tag, Edit2, Trash2, X, BarChart, TrendingUp, ShieldCheck, MapPin, Activity, Clock, Zap, ChevronRight, Sparkles, Save } from 'lucide-react';
-import { Card, Badge, Button, Input, FileUploader, Modal, Select, VaultBanner } from './UI';
+import { Card, Badge, Button, Input, FileUploader, Modal, Select, DashboardBanner } from './UI';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData, InventoryItem, Lot, calculateDerivedStockAndCost } from './DataContext';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
@@ -86,7 +86,7 @@ export const Inventory = () => {
           unitCost: result.data.unitCost,
           reorderPoint: result.data.reorderPoint
         } as any);
-        toast.success(`${newItem.name} has been successfully deployed to the vault.`);
+        toast.success(`${newItem.name} has been successfully deployed to the dashboard.`);
         setShowAddItem(false);
         setNewItem({ name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5, img: '' });
         sessionStorage.removeItem('draft_inventory_item');
@@ -229,7 +229,7 @@ export const Inventory = () => {
                         </div>
                         <div className="text-left md:text-right">
                             <p className="text-sm sm:text-base text-[#C5A059] leading-none font-sans">{selectedItem.stock}</p>
-                            <p className="text-[12px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.4em] mt-4">{selectedItem.unit} IN VAULT</p>
+                            <p className="text-[12px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.4em] mt-4">{selectedItem.unit} IN DASHBOARD</p>
                         </div>
                     </div>
 
@@ -389,7 +389,7 @@ export const Inventory = () => {
             description="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
           />
           
-          {/* Hidden file input outside VaultBanner so ref is always mounted and accessible */}
+          {/* Hidden file input outside DashboardBanner so ref is always mounted and accessible */}
           <input
             id="csv-upload" type="file"
             ref={fileInputRef}
@@ -398,7 +398,7 @@ export const Inventory = () => {
             onChange={handleFileChange}
           />
 
-          <VaultBanner 
+          <DashboardBanner 
             title="Inventory Hub"
             subtitle="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
             badge="Asset Management Protocol Active"
@@ -427,7 +427,7 @@ export const Inventory = () => {
               <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
               <Button variant="outline" onClick={() => setShowMigrateLots(true)} className="rounded-full border-white/20 hover:border-white/40 bg-[#6A2C91]/30 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"><RefreshCw size={16} className="mr-3"/> MIGRATE TO LOTS</Button>
             </div>
-          </VaultBanner>
+          </DashboardBanner>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-10">
@@ -441,7 +441,7 @@ export const Inventory = () => {
                     </div>
                 </div>
                 <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
-                    ACCESS RAW VAULT <ChevronRight size={16} />
+                    ACCESS RAW DASHBOARD <ChevronRight size={16} />
                 </div>
             </div>
 
@@ -455,7 +455,7 @@ export const Inventory = () => {
                     </div>
                 </div>
                 <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
-                    ACCESS PRODUCT VAULT <ChevronRight size={16} />
+                    ACCESS PRODUCT DASHBOARD <ChevronRight size={16} />
                 </div>
             </div>
 
@@ -534,7 +534,7 @@ export const Inventory = () => {
             <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 sm:p-10">
                 <div>
                     <SubPageHeader 
-                      title="Raw Material Vault"
+                      title="Raw Material Dashboard"
                       parentTitle="Inventory Hub"
                       onBack={() => setView('overview')}
                       description="Managing the foundational elements of artisanal production."
@@ -570,7 +570,7 @@ export const Inventory = () => {
             <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 sm:p-10">
                 <div>
                     <SubPageHeader 
-                      title="Finished Output Vault"
+                      title="Finished Output Dashboard"
                       parentTitle="Inventory Hub"
                       onBack={() => setView('overview')}
                       description="Retail-ready products prepared for high-end distribution."
@@ -580,7 +580,7 @@ export const Inventory = () => {
                     <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20" size={20} />
                     <input 
                         type="text" 
-                        placeholder="SEARCH PRODUCT VAULT..." 
+                        placeholder="SEARCH PRODUCT DASHBOARD..." 
                         className="w-full pl-16 pr-8 py-5 bg-white/5 border border-white/10 rounded-full text-[11px] font-sans font-medium tracking-[0.2em] focus:ring-2 focus:ring-[#6A2C91]/20 transition-all shadow-sm text-white placeholder-white/20"
                     />
                 </div>

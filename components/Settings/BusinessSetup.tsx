@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ContextualTutorialModal } from '../ContextualTutorialModal';
 import { User, Shield, LogOut, Upload, CheckCircle, CheckCircle2, ExternalLink, Key, AlertTriangle, ArrowLeft, Crown, Zap, ShieldCheck, CreditCard, ShoppingBag, Globe, Share2, Server, Lock, ArrowRight, Layers, BarChart3, RefreshCw, ArrowUpRight, Cpu, Activity, Sparkles, Loader2, X, Mail } from 'lucide-react';
-import { Input, Button, Card, Badge, Select, Modal, VaultBanner } from '../UI';
+import { Input, Button, Card, Badge, Select, Modal, DashboardBanner } from '../UI';
 import { useArtisanData, Integration, UserTier } from '../DataContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PaymentGateway } from '../Auth';
@@ -34,7 +34,7 @@ export const BusinessSetup = () => {
                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Command Center
                 </button>
                 
-                <VaultBanner 
+                <DashboardBanner 
                   title="Enterprise Setup"
                   subtitle="Establishing core manufacturing parameters and industry alignment. Pushing global updates to the decentralized ledger."
                   badge="System Protocol Active"
@@ -42,7 +42,7 @@ export const BusinessSetup = () => {
                   <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 px-12 rounded-full shadow-2xl shadow-[#6A2C91]/20 text-[11px] transition-all uppercase font-cta font-semibold tracking-[0.08em]" onClick={handleSave}>PUSH GLOBAL UPDATES</Button>
                   </div>
-                </VaultBanner>
+                </DashboardBanner>
             </div>
 
             <div className="w-full md:w-1/2">

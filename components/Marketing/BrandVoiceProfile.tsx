@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Input, Select, Badge, VaultBanner, Modal } from '../UI';
+import { Card, Button, Input, Select, Badge, DashboardBanner, Modal } from '../UI';
 import { CheckCircle, FileText, Loader2, Target, Sliders, Users, Sparkles, Wand2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -47,7 +47,7 @@ export const BrandVoiceProfile = () => {
         const toastId = toast.loading("Synthesizing Voice Matrix Documentation...");
         setTimeout(() => {
             setIsGenerating(false);
-            toast.success("Matrix Book generated and added to Vault.", { id: toastId });
+            toast.success("Matrix Book generated and added to Dashboard.", { id: toastId });
         }, 2000);
     };
 
@@ -99,7 +99,7 @@ export const BrandVoiceProfile = () => {
                   description="Lola Voice Matrix calibration and target persona management."
                 />
                 
-                <VaultBanner 
+                <DashboardBanner 
                   title="Lola Voice Matrix"
                   subtitle="Calibrate the linguistic parameters that define how Lola speaks on behalf of your brand."
                   badge="Matrix Active"
@@ -124,7 +124,7 @@ export const BrandVoiceProfile = () => {
                         SAVE & SYNC WITH LOLA AI
                     </Button>
                   </div>
-                </VaultBanner>
+                </DashboardBanner>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 sm:p-8">

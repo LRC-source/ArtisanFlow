@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { UploadCloud, CheckCircle, FileText, Database, ArrowRight, Loader2, FileSpreadsheet, XCircle, Download, PlayCircle, Edit3, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Card, Button, VaultBanner, Select, Input } from './UI';
+import { Card, Button, DashboardBanner, Select, Input } from './UI';
 import { SubPageHeader } from './SubPageHeader';
 import { useArtisanData } from './DataContext';
 import { toast } from 'sonner';

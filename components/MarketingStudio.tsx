@@ -1,6 +1,6 @@
 import React from 'react';
 import { Camera, Type, Share2, Video, Sparkles, ArrowLeft } from 'lucide-react';
-import { VaultBanner, Button } from './UI';
+import { DashboardBanner, Button } from './UI';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
@@ -14,7 +14,7 @@ export const MarketingStudio = () => {
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Command Center
         </button>
         
-        <VaultBanner 
+        <DashboardBanner 
           title="Marketing Studio"
           subtitle="AI-powered content creation tools. Synchronize your brand voice with automated growth nodes."
           badge="Creative Engine Online"
@@ -24,7 +24,7 @@ export const MarketingStudio = () => {
                 <Sparkles size={16} className="mr-3"/> GENERATE STRATEGY
             </Button>
           </div>
-        </VaultBanner>
+        </DashboardBanner>
       </div>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mt-6 sm:mt-8 lg:mt-12">

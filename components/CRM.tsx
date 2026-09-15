@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ContextualTutorialModal } from './ContextualTutorialModal';
-import { Badge, Button, Input, Modal, VaultBanner } from './UI';
+import { Badge, Button, Input, Modal, DashboardBanner } from './UI';
 import { Search, Mail, MapPin, Users, TrendingUp, DollarSign, ShoppingCart, Package, RefreshCw, ArrowLeft, Calendar, UserPlus, Sparkles } from 'lucide-react';
 import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
@@ -195,7 +195,7 @@ export const CRM = () => {
                           
                           <div className="bg-[#6A2C91]/10 p-3.5 sm:p-6 lg:p-12 rounded-[2rem] border border-[#6A2C91]/20 mt-auto">
                               <p className="text-[11px] text-[#C5A059] font-sans font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
-                                  <Sparkles size={16} /> Vault Strategy Insight
+                                  <Sparkles size={16} /> Dashboard Strategy Insight
                               </p>
                               <p className="text-sm sm:text-base font-sans font-light text-white/80 leading-relaxed italic">
                                   "Customer shows high affinity for Skincare categories. Recommend 'Last Chance' email for midnight serum restock."
@@ -269,7 +269,7 @@ export const CRM = () => {
             description="Synaptic client management and lifetime value analytics."
           />
           
-          <VaultBanner 
+          <DashboardBanner 
             title="CRM Hub"
             subtitle="Synaptic client management and lifetime value analytics."
             badge="Client Protocol Active"
@@ -291,7 +291,7 @@ export const CRM = () => {
                     <UserPlus size={16} className="mr-3" /> ADD CUSTOMER
                 </Button>
             </div>
-          </VaultBanner>
+          </DashboardBanner>
         </div>
 
         {/* KPI Cards */}

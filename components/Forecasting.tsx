@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Badge, Input, Select, VaultBanner } from './UI';
+import { Card, Button, Badge, Input, Select, DashboardBanner } from './UI';
 import { TrendingUp, ArrowUpRight, DollarSign, Lock, RefreshCw, BarChart3, Upload, Plus, Trash2, AlertCircle, ArrowLeft, Crown, Sparkles, ChevronRight, History as HistoryIcon } from 'lucide-react';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line, BarChart, Bar } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -92,7 +92,7 @@ export const Forecasting = () => {
                 description="Set up demand forecasting and optimize your production flow."
              />
 
-             <VaultBanner 
+             <DashboardBanner 
                 title="Forecasting Matrix"
                 subtitle="Predictive logic engines activated. Reconciling historical data with future demand spikes."
                 badge="STRATEGY ACTIVE"
@@ -104,7 +104,7 @@ export const Forecasting = () => {
                         <Plus size={16} className="mr-3" /> Initialize New Forecast
                      </Button>
                 </div>
-             </VaultBanner>
+             </DashboardBanner>
 
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6">
                  <motion.div

@@ -269,7 +269,7 @@ export const BusinessPulseCheck = () => {
                     </Button>
                     
                     <p className="text-[10px] text-stone-400 mt-10 font-sans font-medium uppercase tracking-[0.3em] flex items-center justify-center gap-3">
-                        <Lock size={14} strokeWidth={1.5} /> Full Vault Access Required
+                        <Lock size={14} strokeWidth={1.5} /> Full Dashboard Access Required
                     </p>
                 </div>
             </div>

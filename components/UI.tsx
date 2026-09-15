@@ -110,13 +110,13 @@ export const LockedNode: React.FC<{ children: React.ReactNode; isLocked?: boolea
   );
 };
 
-export const VaultBanner: React.FC<{ 
+export const DashboardBanner: React.FC<{ 
   title: string; 
   subtitle: string; 
   badge?: string;
   children?: React.ReactNode;
   className?: string;
-}> = ({ title, subtitle, badge = "Secure Vault Access", children, className = "" }) => {
+}> = ({ title, subtitle, badge = "Secure Dashboard Access", children, className = "" }) => {
   return (
     <div 
       className={`relative w-full overflow-hidden py-8 sm:py-20 px-12 md:px-20 rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(106,44,145,0.2)] ${className}`}

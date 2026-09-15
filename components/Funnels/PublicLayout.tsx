@@ -40,7 +40,7 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="flex items-center gap-3">
               <Layers className="text-white/30" size={24} />
-              <span className="font-serif text-xl font-bold text-white sm:text-white/50 tracking-tighter">ArtisanFlow</span>
+              <span className="font-serif text-3xl font-bold text-white sm:text-white/50 tracking-tighter">ArtisanFlow</span>
             </div>
             <p className="text-sm sm:text-base text-white sm:text-white/40 leading-relaxed">The operating system for master artisans. Standardize recipes, manage inventory, and scale your brand.</p>
           </div>

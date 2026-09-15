@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, VaultBanner, HubCard } from '../UI';
+import { Button, DashboardBanner, HubCard } from '../UI';
 import { Sparkles, Calendar, Video, PenTool, Share2, Layers, Image, User, Eye, Zap, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -101,7 +101,7 @@ export const MarketingHub = () => {
                   description="Central nervous system for brand growth and content synchronization."
                 />
                 
-                <VaultBanner 
+                <DashboardBanner 
                   title="Marketing Hub"
                   subtitle="Central nervous system for brand growth and content synchronization. Synchronizing brand craftsmanship with automated growth nodes."
                   badge="Marketing Protocol Active"
@@ -115,7 +115,7 @@ export const MarketingHub = () => {
                         <Sparkles size={16} className="mr-3"/> GENERATE STRATEGY
                     </Button>
                   </div>
-                </VaultBanner>
+                </DashboardBanner>
             </div>
             <MarketingGrid />
         </motion.div>

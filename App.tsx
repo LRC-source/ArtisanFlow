@@ -71,7 +71,7 @@ import { LolaTodos } from './components/LolaTodos';
 import { TermsAndConditions, PrivacyPolicy } from './components/Legal';
 import { TierProvider } from './context/TierContext';
 import { SuperAdmin } from './components/SuperAdmin';
-import { Card, Button, LockedNode, VaultBanner } from './components/UI';
+import { Card, Button, LockedNode, DashboardBanner } from './components/UI';
 import { ArtisanDataProvider, useArtisanData } from './components/DataContext';
 
 /**
@@ -103,7 +103,7 @@ const OperationsDashboard = () => {
 
   return (
       <div className="space-y-12 animate-in fade-in duration-700">
-        <VaultBanner 
+        <DashboardBanner 
           title="Operations Command Center"
           subtitle="Central nervous system for manufacturing and logistics. Synchronizing industrial precision with artisanal craftsmanship."
           badge="Operations Protocol Active"
@@ -117,7 +117,7 @@ const OperationsDashboard = () => {
               <Factory size={18} className="mr-3" /> VIRTUAL WAREHOUSE
             </Button>
           </div>
-        </VaultBanner>
+        </DashboardBanner>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {MODULES.map((mod) => (
@@ -153,7 +153,7 @@ const DashboardPage = () => {
   const pendingOrders = orders.filter(o => o.status === 'Processing').length;
   const totalStock = inventory.reduce((acc, i) => acc + i.stock, 0);
 
-  const VAULT_NODES = [
+  const DASHBOARD_NODES = [
     { id: 'operations', title: 'Operations Hub', icon: Factory, desc: 'Manufacturing, Orders & CRM', route: '/operations', color: 'text-purple-400', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800' },
     { id: 'finance', title: 'Finance Hub', icon: DollarSign, desc: 'Budget & Projections', route: '/finance', color: 'text-emerald-400', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800' },
     { id: 'marketing', title: 'Marketing Hub', icon: Sparkles, desc: 'Brand Voice & Strategy', route: '/marketing', color: 'text-[#C5A059]', image: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=800' },
@@ -172,10 +172,10 @@ const DashboardPage = () => {
               "Monitor AI Logic insights tailored to your data."
           ]}
       />
-      <VaultBanner 
-        title="Vault Access Authorized"
+      <DashboardBanner 
+        title="Dashboard Access Authorized"
         subtitle={`Precision architecture online. Membership Level: ${userTier}. Synchronizing brand craftsmanship with automated growth nodes.`}
-        badge="Secure Vault Protocol Active"
+        badge="Secure Dashboard Protocol Active"
       >
         <div className="flex gap-4">
           <Button 
@@ -186,7 +186,7 @@ const DashboardPage = () => {
             <Zap size={18} className="mr-3" /> FULL DIAGNOSTIC
           </Button>
         </div>
-      </VaultBanner>
+      </DashboardBanner>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <StatCard title="Revenue" value={`$${revenue.toFixed(2)}`} icon={DollarSign} color="text-emerald-400" trend={revenue > 0 ? "+12%" : "—"} />
@@ -197,11 +197,11 @@ const DashboardPage = () => {
 
       <div className="space-y-12">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-serif text-white tracking-tight">Vault Entry Points</h2>
+          <h2 className="text-3xl font-serif text-white tracking-tight">Dashboard Entry Points</h2>
           <div className="h-px flex-1 bg-white/5 mx-8"></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {VAULT_NODES.map((node) => (
+          {DASHBOARD_NODES.map((node) => (
             <div 
               key={node.id}
               onClick={() => navigate(node.route)}
@@ -310,7 +310,7 @@ const AppContent = () => {
                       <ShieldCheck size={16} className="text-[#C5A059]" />
                   </div>
               </div>
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Verifying Vault Session...</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Verifying Dashboard Session...</p>
           </div>
       );
   }

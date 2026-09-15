@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ContextualTutorialModal } from './ContextualTutorialModal';
-import { Card, Button, Badge, Input, Select, VaultBanner } from './UI';
+import { Card, Button, Badge, Input, Select, DashboardBanner } from './UI';
 import { Search, Filter, ShoppingCart, DollarSign, Package, Truck, User, MapPin, Calendar, CheckCircle, Download, RefreshCw, AlertCircle, X, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useArtisanData } from './DataContext';
 import { useNavigate } from 'react-router-dom';
@@ -105,7 +105,7 @@ export const Orders = () => {
           description="Omnichannel order management and synchronization."
         />
 
-        <VaultBanner 
+        <DashboardBanner 
             title="Order Logistics"
             subtitle="Secure handling and dispatch of transactional nodes."
             badge="Fulfillment Protocol"
@@ -127,7 +127,7 @@ export const Orders = () => {
                     <Download size={16} className="mr-3" /> EXPORT CSV
                 </Button>
             </div>
-        </VaultBanner>
+        </DashboardBanner>
 
         {/* Stats Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6 sm:p-8">

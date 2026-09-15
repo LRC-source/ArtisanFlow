@@ -48,7 +48,7 @@ export const SupplierManager: React.FC = () => {
 
   const handleDelete = () => {
     if (!editingId) return;
-    if (window.confirm("ARE YOU SURE? Revoking this vendor node is permanent. This will remove the supplier identity from your vault ledger.")) {
+    if (window.confirm("ARE YOU SURE? Revoking this vendor node is permanent. This will remove the supplier identity from your dashboard ledger.")) {
         deleteSupplier(editingId);
         setShowModal(false);
     }
@@ -60,7 +60,7 @@ export const SupplierManager: React.FC = () => {
 
   return (
     <div className="p-4 sm:p-6 space-y-10 animate-in fade-in pb-8 sm:pb-12 lg:pb-20">
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} title={isEditing ? "Revise Vault Node" : "Register Vault Supplier"}>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} title={isEditing ? "Revise Dashboard Node" : "Register Dashboard Supplier"}>
           <div className="space-y-8 p-2">
               <div className="space-y-1">
                   <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Entity Identity</label>
