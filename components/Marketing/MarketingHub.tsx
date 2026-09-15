@@ -96,8 +96,8 @@ export const MarketingHub = () => {
             <div className="flex flex-col gap-3 sm:gap-6">
                 <SubPageHeader 
                   title="Marketing Hub"
-                  parentTitle="Marketing Studio"
-                  onBack={() => navigate('/marketing')}
+                  parentTitle="Dashboard"
+                  onBack={() => navigate('/command-center')}
                   description="Central nervous system for brand growth and content synchronization."
                 />
                 

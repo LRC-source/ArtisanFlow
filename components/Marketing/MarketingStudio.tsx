@@ -182,16 +182,11 @@ export const MarketingStudio = () => {
         >
             <ContextualTutorialModal
                 hubId="marketing_studio"
-                title="Marketing Studio"
+                title="Marketing Hub"
                 description="Central command for all your marketing and branding efforts."
                 steps={["Access Visual Analysis to audit assets.","Use Marketing Creator for quick designs.","Generate your Brand Voice Profile."]}
             />
-            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
-                <div>
-                    <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Marketing Studio</h1>
-                    <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed max-w-xl leading-relaxed">AI-powered content creation and marketing protocols.</p>
-                </div>
-            </div>
+            <VaultBanner title="Marketing Hub" subtitle="AI-powered content creation and marketing protocols." badge="Marketing Protocol Active" />
             
             <SocialMediaIntegrationManager />
             

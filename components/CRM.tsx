@@ -140,12 +140,12 @@ export const CRM = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                           <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 min-w-0">
-                             <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4 truncate w-full">{customer.name}</h1>
+                             <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4 break-words w-full">{customer.name}</h1>
                              <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em] shrink-0">{customer.type}</Badge>
                           </div>
                           <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 w-auto sm:p-8 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] min-w-0">
-                              <span className="flex items-center gap-3 truncate max-w-full"><Mail size={16} className="text-[#6A2C91] shrink-0"/> <span className="truncate">{customer.email}</span></span>
-                              <span className="flex items-center gap-3 truncate max-w-full"><MapPin size={16} className="text-[#C5A059] shrink-0"/> <span className="truncate">{customer.location}</span></span>
+                              <span className="flex items-center gap-3 break-words max-w-full"><Mail size={16} className="text-[#6A2C91] shrink-0"/> <span className="break-words">{customer.email}</span></span>
+                              <span className="flex items-center gap-3 break-words max-w-full"><MapPin size={16} className="text-[#C5A059] shrink-0"/> <span className="break-words">{customer.location}</span></span>
                           </div>
                       </div>
                       <div className="text-right shrink-0 mt-6 sm:mt-0">
@@ -329,7 +329,7 @@ export const CRM = () => {
                     <div 
                         key={c.id} 
                         onClick={() => setSelectedCustomer(c.name)}
-                        className={`luxury-card bg-white/5 p-4 sm:p-10 rounded-[3rem] border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer group relative overflow-hidden ${justAddedId && c.id.includes('M-') ? 'animate-soft-success border-emerald-500/50 shadow-emerald-500/10' : 'hover:border-white/20 hover:bg-white/10'}`}
+                        className={`luxury-card bg-white/5 p-4 sm:p-8 rounded-[3rem] border border-white/10 aspect-square flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer group relative overflow-hidden ${justAddedId && c.id.includes('M-') ? 'animate-soft-success border-emerald-500/50 shadow-emerald-500/10' : 'hover:border-white/20 hover:bg-white/10'}`}
                     >
                         <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-bl-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-700"></div>
                         
@@ -339,21 +339,21 @@ export const CRM = () => {
                                     {c.initial}
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight group-hover:text-[#C5A059] transition-colors truncate">{c.name}</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black tracking-tight group-hover:text-[#C5A059] transition-colors break-words">{c.name}</h3>
                                     <Badge color={c.type === 'Ordered' ? 'purple' : 'gold'} className="text-[8px] uppercase font-sans font-bold tracking-[0.3em] px-3 py-1 mt-2 shadow-sm shrink-0 inline-block">{c.type}</Badge>
                                 </div>
                             </div>
                         </div>
                         
                         <div className="space-y-4 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] mb-10 relative z-10 min-w-0">
-                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 truncate w-full"><Mail size={16} className="text-[#6A2C91] shrink-0"/> <span className="truncate">{c.email}</span></div>
-                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 truncate w-full"><MapPin size={16} className="text-[#C5A059] shrink-0"/> <span className="truncate">{c.location}</span></div>
+                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 break-words w-full"><Mail size={16} className="text-[#6A2C91] shrink-0"/> <span className="break-words">{c.email}</span></div>
+                            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 break-words w-full"><MapPin size={16} className="text-[#C5A059] shrink-0"/> <span className="break-words">{c.location}</span></div>
                         </div>
                         
                         <div className="pt-8 border-t border-white/10 flex justify-between items-end relative z-10 group-hover:border-white/20 transition-colors">
                             <div className="min-w-0 pr-4">
-                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2 truncate">ORDERS</p>
-                                <p className="text-sm sm:text-base font-serif text-white sm:text-slate-400 leading-relaxed truncate">{c.orderCount}</p>
+                                <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2 break-words">ORDERS</p>
+                                <p className="text-sm sm:text-base font-serif text-white sm:text-slate-400 leading-relaxed break-words">{c.orderCount}</p>
                             </div>
                             <div className="text-right shrink-0">
                                 <p className="text-[10px] text-white/30 font-sans font-bold uppercase tracking-[0.3em] mb-2">Lifetime Value</p>

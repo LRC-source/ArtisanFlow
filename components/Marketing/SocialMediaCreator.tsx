@@ -3,7 +3,7 @@ import { Card, Button, Input, Select, Badge } from '../UI';
 import { Share2, Clock, Image as ImageIcon, Send, Sparkles, CheckCircle, Package, Film, Instagram, Linkedin, Twitter, LayoutGrid , Save } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
-import { chatWithLola } from '../../services/geminiService';
+import { chatWithLola, generateLolaImage } from '../../services/geminiService';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SubPageHeader } from '../SubPageHeader';
 import { toast } from 'sonner';
@@ -23,6 +23,7 @@ export const SocialMediaCreator = () => {
     const [generatedContent, setGeneratedContent] = useState<Record<string, string>>({
         instagram: '', tiktok: '', linkedin: '', twitter: ''
     });
+    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
     const aiSuggestions = [
         "Announce summer flash sale",
@@ -42,12 +43,14 @@ export const SocialMediaCreator = () => {
             
             // In a real app, we'd make parallel calls or one multi-part call
             // For now, we simulate generating specific content per platform
-            const [igRes, tiktokRes, liRes, twRes] = await Promise.all([
+            const [igRes, tiktokRes, liRes, twRes, imageRes] = await Promise.all([
                 chatWithLola(`${basePrompt} Format for Instagram Feed (visual hook, engaging caption, emojis, 10 hashtags).`, null, 'fast'),
                 chatWithLola(`${basePrompt} Format for TikTok Caption (short, punchy, trendy, 3-5 hashtags).`, null, 'fast'),
                 chatWithLola(`${basePrompt} Format for LinkedIn Post (professional, storytelling, founder perspective, no emojis, 3 hashtags).`, null, 'fast'),
-                chatWithLola(`${basePrompt} Format for Twitter/X (under 280 chars, sharp, witty, 2 hashtags).`, null, 'fast')
+                chatWithLola(`${basePrompt} Format for Twitter/X (under 280 chars, sharp, witty, 2 hashtags).`, null, 'fast'),
+                generateLolaImage(`${topic} ${selectedProduct ? `featuring product: ${selectedProduct}` : ''}. Social media marketing aesthetic, high-end.`, { size: '1K', aspectRatio: '1:1' }).catch(() => null)
             ]);
+            if (imageRes) setGeneratedImage(imageRes);
 
             if ([igRes, tiktokRes, liRes, twRes].some(r => r.isError || r.text?.toLowerCase().includes('quota') || r.text?.toLowerCase().includes('error'))) {
                 throw new Error('API Error or Quota Exceeded');
@@ -80,7 +83,8 @@ export const SocialMediaCreator = () => {
                     content: generatedContent[platform],
                     scheduledDate: schedule ? new Date(Date.now() + 86400000).toISOString().split('T')[0] : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
                     status: schedule ? 'Draft' : 'Published',
-                    type: 'Text'
+                    type: 'Text',
+                    mediaUrl: generatedImage || undefined
                 });
             }
         });
@@ -225,9 +229,9 @@ export const SocialMediaCreator = () => {
                                                 <div className="font-sans font-bold text-gray-900 text-sm">Artisan Flow</div>
                                             </div>
                                             {/* Media Mock */}
-                                            <div className="w-full aspect-square bg-gray-100 rounded-xl mb-4 flex items-center justify-center border border-gray-200">
-                                                <ImageIcon size={32} className="text-white sm:text-gray-300" />
-                                            </div>
+                                            <div className="w-full aspect-square bg-gray-100 rounded-xl mb-4 flex items-center justify-center border border-gray-200 overflow-hidden">
+    {generatedImage ? <img src={generatedImage} alt="Generated" className="w-full h-full object-cover" /> : <ImageIcon size={32} className="text-white sm:text-gray-300" />}
+</div>
                                             {/* Caption */}
                                             <div className="text-sm text-gray-800 font-sans whitespace-pre-wrap leading-relaxed">
                                                 {activeContent}

@@ -3,7 +3,7 @@ import { Card, Button, Input, Badge } from '../UI';
 import { FileText, Loader2, ListTree, Image as ImageIcon, Sparkles, Plus, X, Search, CheckCircle , Save } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useArtisanData } from '../DataContext';
-import { chatWithLola } from '../../services/geminiService';
+import { chatWithLola, generateLolaImage } from '../../services/geminiService';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SubPageHeader } from '../SubPageHeader';
 import { toast } from 'sonner';
@@ -49,7 +49,18 @@ export const BlogGenerator = () => {
                 let jsonStr = result.text;
                 const match = jsonStr.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
                 if (match) jsonStr = match[1];
-                const parsed = JSON.parse(jsonStr.trim());
+                let parsed = [];
+                try {
+                    parsed = JSON.parse(jsonStr.trim());
+                } catch(e) {
+                    // Fallback if AI didn't return valid JSON
+                    parsed = [
+                        { type: 'H1', title: topic, keywords: keywords },
+                        { type: 'H2', title: 'Introduction', keywords: [] },
+                        { type: 'H2', title: 'Main Concepts', keywords: [] },
+                        { type: 'H2', title: 'Conclusion', keywords: [] }
+                    ];
+                }
                 setOutline(Array.isArray(parsed) ? parsed : [parsed]);
                 toast.success("Outline generated.", { id: toastId });
             } catch (e) {
@@ -65,15 +76,21 @@ export const BlogGenerator = () => {
     const generateFullArticle = async () => {
         if (outline.length === 0) return toast.error("Generate an outline first.");
         setIsGenerating(true);
-        const toastId = toast.loading("Drafting full article...");
+        const toastId = toast.loading("Drafting full article & generating featured image...");
         
         try {
             const prompt = `Write a comprehensive, SEO-optimized blog post based on this outline: ${JSON.stringify(outline)}. Use a luxurious, artisanal brand voice. Format with markdown headings.`;
-            const result = await chatWithLola(prompt, null, 'deep');
-            setGeneratedBlog(result.text);
+            const [textRes, imgRes] = await Promise.all([
+                chatWithLola(prompt, null, 'deep'),
+                generateLolaImage(`Blog post featured image for topic: ${topic}. Luxurious, high-end editorial photography.`, { size: '1K', aspectRatio: '16:9' }).catch(() => null)
+            ]);
+            setGeneratedBlog(textRes.text);
             
-            // Simulate auto-fetching a featured image from vault
-            setFeaturedImage('https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?q=80&w=800&auto=format&fit=crop');
+            if (imgRes) {
+                setFeaturedImage(imgRes);
+            } else {
+                setFeaturedImage('https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?q=80&w=800&auto=format&fit=crop');
+            }
             
             toast.success("Article drafted successfully.", { id: toastId });
         } catch (error) {
@@ -82,7 +99,6 @@ export const BlogGenerator = () => {
             setIsGenerating(false);
         }
     };
-
     const handleSave = () => {
         if (!generatedBlog) return;
         addMarketingPost({

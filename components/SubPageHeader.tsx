@@ -58,28 +58,6 @@ export const SubPageHeader: React.FC<SubPageHeaderProps> = ({
             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
             <span>Back to {parentTitle || 'Previous'}</span>
           </motion.button>
-
-          {/* Title & Description */}
-          <div className="hidden sm:block space-y-2">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black sm:text-4xl lg:text-5xl text-white font-bold leading-tight" 
-              style={{ fontFamily: '"Playfair Display", serif', letterSpacing: '-0.02em', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
-            >
-              {title}
-            </motion.h1>
-            {description && (
-              <motion.p 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-white sm:text-gray-400 text-sm max-w-2xl leading-relaxed font-medium"
-              >
-                {description}
-              </motion.p>
-            )}
-          </div>
         </div>
 
         {/* Action Buttons */}
