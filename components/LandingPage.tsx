@@ -59,7 +59,7 @@ export const LandingPage = () => {
                             <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                             Now Live — Free to Start
                         </div>
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white">
+                        <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
                             Stop Losing Money to Spreadsheets. <br/>
                             <span className="bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] text-transparent bg-clip-text">Run Your Maker Business Like a Pro.</span>
                         </h1>

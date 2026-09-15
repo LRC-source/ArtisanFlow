@@ -306,7 +306,7 @@ const recipePayload: any = {
             <button onClick={() => navigate('/recipes')} className="text-white sm:text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest flex items-center gap-2 mb-4 transition-colors">
                 <ArrowLeft size={16} /> BACK TO RECIPE LAB
             </button>
-            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{isEditing ? 'Formula Revision' : 'Formula Architect'}</h1>
+            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">{isEditing ? 'Formula Revision' : 'Formula Architect'}</h1>
             <p className="text-sm sm:text-base text-gray-500 font-medium">{isEditing ? 'Optimizing existing Bill of Materials for margin integrity.' : 'Constructing Bills of Materials with Synaptic Cost Reconciliation.'}</p>
         </div>
         <div className="sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-auto mt-4 md:mt-0">

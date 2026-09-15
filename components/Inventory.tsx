@@ -220,7 +220,7 @@ export const Inventory = () => {
                 <div className="lg:col-span-8 space-y-6 sm:space-y-10 lg:space-y-12">
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6">
                         <div>
-                            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">{selectedItem.name}</h1>
+                            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">{selectedItem.name}</h1>
                             <div className="flex items-center gap-3 sm:gap-4">
                                 <p className="text-sm sm:text-base text-white/30 font-mono uppercase tracking-[0.3em] bg-white/5 px-3 py-1 rounded-md border border-white/5">ID: {selectedItem.sku}</p>
                                 <span className="w-1 h-1 bg-white/10 rounded-full"></span>

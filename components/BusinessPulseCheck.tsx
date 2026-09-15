@@ -42,7 +42,7 @@ export const BusinessPulseCheck = () => {
                 <div className="p-4 bg-gradient-to-br from-[#1A1A1A] to-[#333333] rounded-full text-[#C5A059] shadow-xl">
                     <Sparkles size={24} strokeWidth={1.5} />
                 </div>
-                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Pulse Check</h1>
+                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Pulse Check</h1>
             </div>
             <p className="text-sm sm:text-base text-gray-500 font-sans font-light leading-relaxed">Lola AI is establishing operational health benchmarks. Deployment: 60 Seconds.</p>
             
@@ -185,7 +185,7 @@ export const BusinessPulseCheck = () => {
                 <div className="p-4 bg-gradient-to-br from-[#1A1A1A] to-[#333333] rounded-full text-white shadow-xl">
                     <Sparkles size={24} strokeWidth={1.5} />
                 </div>
-                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Synthesis Complete</h1>
+                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Synthesis Complete</h1>
             </div>
             
             <div className="mt-6 sm:mt-8 lg:mt-12 flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-medium uppercase tracking-[0.2em]">

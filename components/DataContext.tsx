@@ -740,6 +740,46 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setIsDemoMode(true);
   };
 
+  
+  const resetApplicationData = async () => {
+    if (isDemoMode) {
+      clearDemoData();
+      toast.success("Application data has been reset.");
+      return;
+    }
+    const uid = auth.currentUser?.uid;
+    if (!uid) return;
+    
+    // Clear local states
+    setInventory([]);
+    setOrders([]);
+    setMarketingPosts([]);
+    setManualCustomers([]);
+    setRecipes([]);
+    setProductionBatches([]);
+    setSuppliers([]);
+    setLocations([]);
+    setQualityChecks([]);
+    setReports([]);
+    setSupplierCommunications([]);
+    setAppointments([]);
+    setTodos([]);
+    
+    // Clear Firestore
+    try {
+        const collections = ['inventory', 'marketingPosts', 'manualCustomers', 'recipes', 'productionBatches', 'orders', 'suppliers', 'locations', 'qualityChecks', 'reports', 'supplierCommunications', 'appointments', 'todos'];
+        for (const col of collections) {
+            const snap = await getDocs(collection(db, 'users', uid, col));
+            const promises = snap.docs.map(d => deleteDoc(doc(db, 'users', uid, col, d.id)));
+            await Promise.all(promises);
+        }
+        toast.success("Application data has been reset.");
+    } catch (e) {
+        console.error("Failed to clear some firestore data", e);
+        toast.warning("Local data reset, but some cloud data could not be deleted.");
+    }
+  };
+  
   const clearDemoData = () => {
     if (typeof window !== 'undefined') {
         localStorage.removeItem('artisanflow_demo_mode');
@@ -1509,7 +1549,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       submitVIPWaitlist,
       upgradePrompt,
       setUpgradePrompt,
-      checkFeatureGate, checkAiQuota, recordAiUsage, isDemoMode, loadDemoData, clearDemoData,
+      checkFeatureGate, checkAiQuota, recordAiUsage, isDemoMode, loadDemoData, clearDemoData, resetApplicationData,
       productionBatches, migrateInventoryToLots, getRecipeActualCost,
     }}>
       {children}

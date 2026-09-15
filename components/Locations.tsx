@@ -48,7 +48,7 @@ export const Locations = () => {
         </button>
         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
             <div>
-                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-bold text-white">Location Management</h1>
+                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Location Management</h1>
                 <p className="text-sm sm:text-base text-gray-500">Manage warehouses and storage locations</p>
             </div>
             <Button className="bg-[#6A2C91] text-white" onClick={() => setShowAdd(true)}>

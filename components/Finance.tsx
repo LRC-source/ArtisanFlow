@@ -453,7 +453,7 @@ CERTIFIED BY LOLA AI SYSTEMS
                                 <Sparkles size={32} strokeWidth={1.5} />
                              </div>
                              <div>
-                                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Strategic Projections</h1>
+                                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Strategic Projections</h1>
                                 <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Synthesizing recovery paths and dropshipping scalability.</p>
                              </div>
                         </div>

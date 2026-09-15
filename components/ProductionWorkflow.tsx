@@ -24,7 +24,7 @@ export const ProductionWorkflow = () => {
             <ArrowLeft size={18} /> Back to Operations
           </button>
           <div className="flex items-center gap-3">
-              <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Precision Manufacturing Hub & Recipe Engine</h1>
+              <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Precision Manufacturing Hub & Recipe Engine</h1>
               <Badge color="gold">Beta</Badge>
           </div>
           <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed max-w-xl leading-relaxed mt-2">Manage production stages, assignments, and approvals</p>

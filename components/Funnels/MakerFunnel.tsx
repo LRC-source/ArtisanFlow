@@ -37,7 +37,7 @@ const MakerFunnel = () => {
           transition={{ duration: 0.8 }}
         >
           <span className="mf-badge">For Bespoke Handcrafters & Artisans</span>
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl mf-title">Stop Guessing. Start Profiting.</h1>
+          <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Stop Guessing. Start Profiting.</h1>
           <p className="text-sm sm:text-base mf-subtitle">
             Whether you make candles, jewelry, soap, or baked goods, guessing your material costs and labor means you're likely losing money. Take control of your margins today.
           </p>

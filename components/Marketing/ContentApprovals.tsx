@@ -53,7 +53,7 @@ export const ContentApprovals = () => {
                 ) : (
                     <div className="space-y-2">
                         <Badge color="purple" className="mb-2">Client Presentation Mode</Badge>
-                        <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Review Your Content</h1>
+                        <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Review Your Content</h1>
                         <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans">Please review the proposed assets below for approval.</p>
                     </div>
                 )}

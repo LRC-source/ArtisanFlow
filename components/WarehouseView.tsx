@@ -21,7 +21,7 @@ export const WarehouseView = () => {
             </button>
             <div className="flex justify-between items-end">
                 <div>
-                    <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">
+                    <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
                         <MapPin className="text-[#C5A059]" size={36} /> Warehouse Command Center
                         <Badge color="gold" className="text-[10px] uppercase font-sans font-bold tracking-[0.3em]">Beta</Badge>
                     </h1>

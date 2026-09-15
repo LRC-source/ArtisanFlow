@@ -337,7 +337,7 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
         >
-           <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Select Your Architecture</h1>
+           <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Select Your Architecture</h1>
            <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-8">Every great system starts with a solid foundation. Choose the tier that aligns with your operational scale.</p>
            
            <div className="flex justify-center items-center gap-4 mb-4">

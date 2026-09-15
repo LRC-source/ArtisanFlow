@@ -71,7 +71,7 @@ export const BudgetGuard: React.FC = () => {
                     <button onClick={() => navigate('/finance')} className="flex items-center gap-2 text-white sm:text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest mb-4 transition-colors">
                         <ArrowLeft size={16} /> Back to Finance
                     </button>
-                    <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">
+                    <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
                         <ShieldCheck className="text-[#6A2C91]" size={36} /> Budget Guard™
                     </h1>
                     <p className="text-sm sm:text-base text-gray-500 font-medium">Synaptic Financial Steering: Real-time analysis for growth capitalization.</p>

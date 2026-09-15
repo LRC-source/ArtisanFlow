@@ -96,7 +96,7 @@ export const Integrations = () => {
                     <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
                         <ArrowLeft size={16} /> Back to Dashboard
                     </button>
-                    <h1 className="text-3xl lg:text-5xl font-bold font-serif tracking-tight text-white mb-4">Connections Hub</h1>
+                    <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Connections Hub</h1>
                     <p className="text-base text-white/40 font-sans font-light max-w-2xl">
                         Connect Artisan Flow to your storefronts and migrate your legacy data. We are building native integrations to keep your stock perfectly synced.
                     </p>

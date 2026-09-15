@@ -140,7 +140,7 @@ export const CRM = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                           <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 min-w-0">
-                             <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4 break-words w-full">{customer.name}</h1>
+                             <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">{customer.name}</h1>
                              <Badge color={customer.type === 'Ordered' ? 'purple' : 'gold'} className="px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.3em] shrink-0">{customer.type}</Badge>
                           </div>
                           <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 w-auto sm:p-8 text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em] min-w-0">

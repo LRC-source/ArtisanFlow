@@ -114,7 +114,7 @@ export const SupplierManager: React.FC = () => {
             <button onClick={() => navigate('/inventory')} className="flex items-center gap-2 text-white sm:text-gray-400 hover:text-[#6A2C91] mb-4 font-black text-xs uppercase tracking-widest transition-colors">
                 <ArrowLeft size={16} /> Back to Resource Hub
             </button>
-            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Supplier Hub</h1>
+            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Supplier Hub</h1>
             <p className="text-sm sm:text-base text-gray-500 font-medium">Supply Chain Integrity: Managing External Nodes & Sourcing Logic.</p>
         </div>
         <Button className="bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl font-black text-[10px] tracking-widest px-8 shadow-xl" onClick={handleOpenCreate}>

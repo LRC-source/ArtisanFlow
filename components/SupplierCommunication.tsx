@@ -65,7 +65,7 @@ export const SupplierCommunication = () => {
       <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
             <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-bold text-white">Supplier Communication</h1>
+                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Supplier Communication</h1>
                 <Badge color="gold">Beta</Badge>
             </div>
             <p className="text-sm sm:text-base text-gray-500">Manage all supplier interactions and correspondence</p>

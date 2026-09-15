@@ -52,7 +52,7 @@ export const BusinessPulse: React.FC = () => {
           </motion.div>
 
           <div className="mb-6">
-            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">
+            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
               Artisan <span className="text-[#C5A059]">Flow</span> Vault
             </h1>
           </div>

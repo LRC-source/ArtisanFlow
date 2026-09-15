@@ -22,7 +22,7 @@ export const CustomerPortal = () => {
                 <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white sm:text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
                     <ArrowLeft size={16} /> Back to Command Center
                 </button>
-                <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Wholesale Portal</h1>
+                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Wholesale Portal</h1>
                 <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light leading-relaxed">Managing the external client interface architecture.</p>
             </div>
             

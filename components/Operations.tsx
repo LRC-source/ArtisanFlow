@@ -139,7 +139,7 @@ export const Operations = () => {
             >
                 <Badge color="purple" className="px-5 py-2 shadow-sm font-sans font-bold tracking-[0.3em] uppercase text-[10px]">Operations Hub</Badge>
             </motion.div>
-            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif tracking-tight text-white mb-4">Command Center</h1>
+            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Command Center</h1>
             <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light text-white sm:text-slate-400 leading-relaxed max-w-2xl leading-relaxed">Precision management of production queues, proprietary formulas, and strategic supply nodes.</p>
         </div>
       </div>
