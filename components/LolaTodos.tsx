@@ -38,7 +38,7 @@ export const LolaTodos: React.FC = () => {
                         <ArrowLeft size={18} /> Back
                     </button>
                     <div className="flex items-center gap-3">
-                        <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
+                        <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">
                             <ListTodo className="text-[#6A2C91]" size={36} /> Lola's To-Do Hub
                         </h1>
                         <div className="p-2 bg-emerald-50 text-emerald-500 rounded-full border border-emerald-100 shadow-sm animate-pulse" title="Logic Node Verified">
@@ -71,7 +71,7 @@ export const LolaTodos: React.FC = () => {
                             <div className="w-12 h-12 sm:w-20 sm:h-20 bg-stone-50 rounded-[2rem] flex items-center justify-center mx-auto text-stone-200">
                                 <CheckCircle size={40} />
                             </div>
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-black uppercase italic font-serif tracking-tighter">All Nodes Cleared</h3>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed uppercase italic font-display font-medium tracking-widest">All Nodes Cleared</h3>
                             <p className="text-sm sm:text-base text-white sm:text-gray-400 font-medium">Lola has synchronized all current operational tasks.</p>
                         </div>
                     ) : (
@@ -108,7 +108,7 @@ export const LolaTodos: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Badge color={todo.completed ? 'green' : 'gold'} className="text-[8px]">
+                                        <Badge color={todo.completed ? 'green' : 'gold'} className="text-[8px] font-cta font-semibold uppercase tracking-[0.08em]">
                                             {todo.completed ? 'VERIFIED' : 'PENDING'}
                                         </Badge>
                                     </div>
@@ -127,7 +127,7 @@ export const LolaTodos: React.FC = () => {
                              <ShieldCheck size={20} className="text-emerald-400" />
                              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">System Integrity Active</span>
                          </div>
-                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black uppercase italic tracking-tighter font-serif">Automatic Handshake</h3>
+                         <h3 className="text-lg sm:text-2xl lg:text-3xl uppercase italic font-display font-medium tracking-widest">Automatic Handshake</h3>
                          <p className="text-sm sm:text-base text-purple-200 font-medium">Lola automatically checks off items when you complete tasks across the platform.</p>
                     </div>
                     <div className="p-4 bg-white/10 rounded-[2rem] border border-white/20">

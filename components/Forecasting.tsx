@@ -98,7 +98,7 @@ export const Forecasting = () => {
                 badge="STRATEGY ACTIVE"
              >
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
-                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full px-10 shadow-2xl shadow-[#6A2C91]/20 transition-all font-sans font-medium text-[11px] tracking-[0.2em] uppercase" onClick={() => {
+                     <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full px-10 shadow-2xl shadow-[#6A2C91]/20 transition-all text-[11px] uppercase font-cta font-semibold tracking-[0.08em]" onClick={() => {
                         alert("Initial forecast generation complete. Predictive algorithms have ingested historical sales.");
                      }}>
                         <Plus size={16} className="mr-3" /> Initialize New Forecast
@@ -113,7 +113,7 @@ export const Forecasting = () => {
                      transition={{ delay: 0.2, duration: 0.6 }}
                  >
                      <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                         <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Order Velocity</h3>
+                         <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Order Velocity</h3>
                          <div className="flex flex-wrap gap-4 mb-6 sm:mb-10 text-white/40 font-sans text-[10px] tracking-widest uppercase">
     <span>30 DAYS</span>
     <span>&bull;</span>
@@ -150,7 +150,7 @@ export const Forecasting = () => {
                  >
                      <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
                          <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-                             <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Raw Material Burn Rate</h3>
+                             <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Raw Material Burn Rate</h3>
                              <div className="flex flex-wrap gap-2 bg-white/5 p-1.5 sm:p-2 rounded-[1rem] sm:rounded-full border border-white/10">
                                  {['Baseline', 'Aggressive', 'Conservative'].map(sc => (
                                      <button 
@@ -203,12 +203,12 @@ export const Forecasting = () => {
                  transition={{ delay: 0.35, duration: 0.6 }}
              >
                  <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Predicted Shortfalls &amp; Procurement</h3>
+                     <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Predicted Shortfalls &amp; Procurement</h3>
                      {!hasInventory ? (
                          <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
                              <AlertCircle size={32} className="text-white/20" />
-                             <p className="text-white/40 text-sm font-sans font-medium">No inventory data yet.</p>
-                             <p className="text-white/30 text-xs">Add raw materials to Inventory Hub to enable shortfall forecasting.</p>
+                             <p className="text-white/40 text-sm font-serif italic font-light">No inventory data yet.</p>
+                             <p className="text-white/30 text-xs font-serif italic font-light">Add raw materials to Inventory Hub to enable shortfall forecasting.</p>
                              <Button onClick={() => navigate('/inventory')} className="mt-2 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-full px-8 py-2 font-sans font-bold text-[10px] uppercase tracking-widest">Add Inventory</Button>
                          </div>
                      ) : procurementSuggestions.length === 0 ? (
@@ -216,8 +216,8 @@ export const Forecasting = () => {
                              <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
                                  <AlertCircle size={24} className="text-emerald-400" />
                              </div>
-                             <p className="text-white/60 text-sm font-sans font-medium">All raw materials are above reorder thresholds.</p>
-                             <p className="text-white/30 text-xs">No shortfalls predicted at this time. Check back as stock levels change.</p>
+                             <p className="text-white/60 text-sm font-serif italic font-light">All raw materials are above reorder thresholds.</p>
+                             <p className="text-white/30 text-xs font-serif italic font-light">No shortfalls predicted at this time. Check back as stock levels change.</p>
                          </div>
                      ) : (
                          <div className="w-full">
@@ -226,7 +226,7 @@ export const Forecasting = () => {
                                  {procurementSuggestions.map((item, idx) => (
                                      <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
                                          <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                                             <span className="font-serif text-white text-base font-bold">{item.item}</span>
+                                             <span className="text-white text-base font-bold font-sans">{item.item}</span>
                                              <span className="text-emerald-400 font-bold text-sm">{item.cost}</span>
                                          </div>
                                          <div className="grid grid-cols-2 gap-2 text-xs">
@@ -279,7 +279,7 @@ export const Forecasting = () => {
                  transition={{ delay: 0.4, duration: 0.6 }}
              >
                  <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                     <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Synaptic Alignment Matrix</h3>
+                     <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Synaptic Alignment Matrix</h3>
                      <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4">
                           <ResponsiveContainer width="100%" height="100%">
                              <LineChart data={forecastData}>
@@ -308,7 +308,7 @@ export const Forecasting = () => {
                      transition={{ delay: 0.5, duration: 0.6 }}
                      className="space-y-8"
                  >
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">
                         <GlassHaloIcon icon={HistoryIcon} color="gold" size="md" /> Historical Synthesis
                     </h3>
                     <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-3.5 sm:p-6 lg:p-12 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative overflow-hidden">
@@ -317,16 +317,16 @@ export const Forecasting = () => {
                             <GlassHaloIcon icon={RefreshCw} color="purple" size="xl" className="group-hover:scale-105 transition-all duration-700" />
                             <div>
                                 <div className="flex items-center gap-3 sm:gap-4 mb-3">
-                                    <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">Active Projection: Q4 Protocol</h4>
-                                    <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm font-sans tracking-widest uppercase border-[#C5A059]/20">Needs Review</Badge>
+                                    <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black text-white mb-4 font-sans">Active Projection: Q4 Protocol</h4>
+                                    <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm uppercase border-[#C5A059]/20 font-cta font-semibold tracking-[0.08em]">Needs Review</Badge>
                                 </div>
                                 <p className="text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
                             </div>
                         </div>
                         <div className="text-left sm:text-right relative z-10 w-full sm:w-auto flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 border-t border-white/5 sm:border-0 pt-4 sm:pt-0">
                              <div className="flex flex-col items-center md:items-end">
-                                 <p className="text-[10px] font-sans font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Projected Settlement</p>
-                                 <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)]">$1,976.70</p>
+                                 <p className="text-[10px] text-white/30 uppercase tracking-[0.3em] mb-2 font-serif italic font-light">Projected Settlement</p>
+                                 <p className="text-sm sm:text-base font-black text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)] font-sans">$1,976.70</p>
                              </div>
                              <GlassHaloIcon icon={ChevronRight} color="gold" size="md" className="group-hover:bg-white/10 transition-colors" />
                         </div>

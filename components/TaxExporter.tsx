@@ -36,7 +36,7 @@ export const TaxExporter = () => {
                             <FileText size={24} className="text-[#C5A059]" />
                         </div>
                         <div>
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold font-serif tracking-tighter">Schedule C Tax Season Helper</h3>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-display font-medium uppercase tracking-widest">Schedule C Tax Season Helper</h3>
                             <p className="text-sm sm:text-base text-white sm:text-white/50">Automated COGS calculation and expense extraction.</p>
                         </div>
                     </div>
@@ -57,12 +57,12 @@ export const TaxExporter = () => {
                     <Button 
                         onClick={handleExport}
                         disabled={isExporting}
-                        className="bg-[#C5A059] hover:bg-[#b08d4a] text-black w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-xl font-bold tracking-widest uppercase flex items-center justify-center gap-3 w-full md:w-auto"
+                        className="bg-[#C5A059] hover:bg-[#b08d4a] text-black w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-xl uppercase flex items-center justify-center gap-3 w-full md:w-auto font-cta font-semibold tracking-[0.08em]"
                     >
                         {isExporting ? <Calculator className="animate-spin" size={18} /> : <Download size={18} />}
                         {isExporting ? "GENERATING..." : "EXPORT IRS SUMMARY"}
                     </Button>
-                    <p className="text-[10px] text-white/30 text-center max-w-[200px] mx-auto">
+                    <p className="text-[10px] text-white/30 text-center max-w-[200px] mx-auto font-serif italic font-light">
                         Generates a structured CSV mapping to IRS Schedule C Line 35-42 requirements.
                     </p>
                 </div>

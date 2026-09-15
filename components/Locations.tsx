@@ -38,7 +38,7 @@ export const Locations = () => {
                       <Input placeholder="e.g. 5000 sqft" value={newLoc.capacity} onChange={e => setNewLoc({...newLoc, capacity: e.target.value})} />
                   </div>
               </div>
-              <Button onClick={handleAdd} className="w-full">Create Location</Button>
+              <Button onClick={handleAdd} className="w-full font-cta font-semibold uppercase tracking-[0.08em]">Create Location</Button>
           </div>
       </Modal>
 
@@ -48,10 +48,10 @@ export const Locations = () => {
         </button>
         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
             <div>
-                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Location Management</h1>
+                <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Location Management</h1>
                 <p className="text-sm sm:text-base text-gray-500">Manage warehouses and storage locations</p>
             </div>
-            <Button className="bg-[#6A2C91] text-white" onClick={() => setShowAdd(true)}>
+            <Button className="bg-[#6A2C91] text-white font-cta font-semibold uppercase tracking-[0.08em]" onClick={() => setShowAdd(true)}>
                 <Plus size={16} className="mr-2" /> Add Location
             </Button>
         </div>
@@ -62,7 +62,7 @@ export const Locations = () => {
               <div className="w-12 h-12 sm:w-20 sm:h-20 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                   <MapPin size={40} className="text-white sm:text-gray-300" />
               </div>
-              <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed font-medium text-white font-bold mb-2 font-serif tracking-tighter">No locations yet. Create your first location to get started.</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed text-white mb-2 font-display font-medium uppercase tracking-widest">No locations yet. Create your first location to get started.</h3>
           </div>
       ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
@@ -73,7 +73,7 @@ export const Locations = () => {
                               <MapPin size={24} />
                           </div>
                           <div>
-                              <h3 className="text-base sm:text-xl lg:text-3xl font-bold text-white font-serif tracking-tighter">{loc.name}</h3>
+                              <h3 className="text-base sm:text-xl lg:text-3xl text-white font-display font-medium uppercase tracking-widest">{loc.name}</h3>
                               <p className="text-sm sm:text-base text-gray-500 uppercase">{loc.type}</p>
                           </div>
                       </div>

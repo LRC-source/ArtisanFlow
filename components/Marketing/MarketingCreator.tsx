@@ -160,7 +160,7 @@ export const MarketingCreator = () => {
                                 </div>
                             </div>
 
-                            <Button onClick={handleGenerate} className="w-full bg-gradient-to-r from-[#C5A059] to-[#b08e4d] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none" disabled={isGenerating}>
+                            <Button onClick={handleGenerate} className="w-full bg-gradient-to-r from-[#C5A059] to-[#b08e4d] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none font-cta font-semibold uppercase tracking-[0.08em]" disabled={isGenerating}>
                                 {isGenerating ? <Loader2 className="animate-spin mr-3" size={18} /> : <Sparkles size={18} className="mr-3" />}
                                 {isGenerating ? 'Synthesizing Pixels...' : 'Initialize Visual Generation'}
                             </Button>
@@ -186,7 +186,7 @@ export const MarketingCreator = () => {
                                     </div>
                                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md mx-auto">
                                         <Button variant="outline" onClick={() => setGeneratedImage(null)} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs font-sans font-medium text-white sm:text-gray-400 border-white/10 hover:bg-white/5">Discard</Button>
-<Button onClick={handleSave} className="flex-[2] bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-medium text-xs tracking-wide shadow-md"><Save size={16} className="mr-2" /> Save to Vault</Button>
+<Button onClick={handleSave} className="flex-[2] bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-xs shadow-md font-cta font-semibold uppercase tracking-[0.08em]"><Save size={16} className="mr-2" /> Save to Vault</Button>
                                     </div>
                                 </motion.div>
                             ) : (
@@ -202,7 +202,7 @@ export const MarketingCreator = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm sm:text-base font-sans text-gray-500 uppercase tracking-widest">PREVIEW</p>
-                                        <p className="text-sm sm:text-base text-white sm:text-gray-400 font-serif italic mt-2">Awaiting Pulse</p>
+                                        <p className="text-sm sm:text-base text-white sm:text-gray-400 italic mt-2 font-sans">Awaiting Pulse</p>
                                     </div>
                                 </motion.div>
                             )}

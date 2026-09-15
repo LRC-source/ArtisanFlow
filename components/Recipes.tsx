@@ -40,7 +40,7 @@ export const Recipes = () => {
           subtitle="BOM Architecture: Bridging Material Costs with Finished Value."
           badge="Formula Protocol Active"
         >
-          <Button className="bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-medium text-[11px] tracking-[0.2em] py-3 px-6 rounded-full shadow-2xl shadow-black/10 transition-all uppercase" onClick={() => navigate('/recipes/builder')}>
+          <Button className="bg-[#C5A059] hover:bg-[#b08e4d] text-white text-[11px] py-3 px-6 rounded-full shadow-2xl shadow-black/10 transition-all uppercase font-cta font-semibold tracking-[0.08em]" onClick={() => navigate('/recipes/builder')}>
               <Plus size={16} className="mr-3"/> NEW FORMULA
           </Button>
         </VaultBanner>
@@ -56,8 +56,8 @@ export const Recipes = () => {
       {recipes.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-6 sm:p-12 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
               <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-6" />
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Vault Empty</h3>
-              <p className="text-sm sm:text-base text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1">Initialize your first Bill of Materials to start tracking margins.</p>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Vault Empty</h3>
+              <p className="text-sm sm:text-base text-white/30 text-[11px] uppercase tracking-[0.2em] mt-1 font-serif italic font-light">Initialize your first Bill of Materials to start tracking margins.</p>
               <Button onClick={() => navigate('/recipes/builder')} className="mt-8 bg-white/5 text-[#C5A059] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">LAUNCH BUILDER</Button>
           </div>
       ) : (
@@ -68,8 +68,8 @@ export const Recipes = () => {
                           <div className="flex items-center gap-3 sm:gap-6">
                               <GlassHaloIcon icon={Layers} color="purple" size="md" />
                               <div>
-                                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{recipe.name}</h3>
-                                  <Badge color="purple" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">V{recipe.version} SKU: {recipe.sku}</Badge>
+                                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{recipe.name}</h3>
+                                  <Badge color="purple" className="text-[9px] px-3 py-1 mt-2 uppercase border-white/10 font-cta font-semibold tracking-[0.08em]">V{recipe.version} SKU: {recipe.sku}</Badge>
                               </div>
                           </div>
                           <div className="flex items-center gap-3">
@@ -102,15 +102,15 @@ export const Recipes = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-8 relative z-10">
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
                               <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Batch Yield</p>
-                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white">{recipe.yield}</p>
+                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white font-sans">{recipe.yield}</p>
                           </div>
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
                               <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Landed Cost</p>
-                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-emerald-400">${recipe.totalCost.toFixed(2)}</p>
+                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-emerald-400 font-sans">${recipe.totalCost.toFixed(2)}</p>
                           </div>
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
                               <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Labor</p>
-                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-[#C5A059]">{recipe.productionTime}m</p>
+                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-[#C5A059] font-sans">{recipe.productionTime}m</p>
                           </div>
                       </div>
 
@@ -119,7 +119,7 @@ export const Recipes = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                               {recipe.ingredients.map((ing, i) => (
                                   <div key={i} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
-                                      <span className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-serif tracking-tighter">{ing.name}</span>
+                                      <span className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 font-sans">{ing.name}</span>
                                       <span className="text-[10px] font-sans font-black text-[#6A2C91] tracking-[0.2em]">{ing.qty}</span>
                                   </div>
                               ))}

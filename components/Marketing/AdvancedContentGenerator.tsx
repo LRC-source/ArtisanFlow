@@ -139,7 +139,7 @@ export const AdvancedContentGenerator = () => {
                                 {renderSlider()}
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none transition-all">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-[11px] uppercase shadow-xl border-none transition-all font-cta font-semibold tracking-[0.08em]">
                                 {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Zap size={14} className="mr-2" />}
                                 {isGenerating ? "Synthesizing..." : `Generate ${activeTab}`}
                             </Button>
@@ -208,7 +208,7 @@ export const AdvancedContentGenerator = () => {
                             <Button 
                                 onClick={handleSave} 
                                 disabled={!outputs[activeTab]}
-                                className="bg-[#6A2C91] hover:bg-[#552374] text-white w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-xl font-sans font-medium text-[11px] uppercase tracking-[0.2em] shadow-xl border-none"
+                                className="bg-[#6A2C91] hover:bg-[#552374] text-white w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-xl text-[11px] uppercase shadow-xl border-none font-cta font-semibold tracking-[0.08em]"
                             >
                                 <CheckCircle size={14} className="mr-2" /> Save {activeTab} to Drafts
                             </Button>

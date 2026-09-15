@@ -141,7 +141,7 @@ export const VideoCreator = () => {
                                 </div>
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-pink-600 to-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-pink-600 to-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none font-cta font-semibold uppercase tracking-[0.08em]">
                                 {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <MonitorPlay className="mr-2" />}
                                 {isGenerating ? "Rendering Storyboard..." : "Generate Script & Frames"}
                             </Button>
@@ -153,7 +153,7 @@ export const VideoCreator = () => {
                 <div className="lg:col-span-7 flex flex-col h-full">
                     <Card className="flex-1 flex flex-col p-0 overflow-hidden bg-[#0A0A0A] border-white/10 shadow-2xl relative min-h-[600px]">
                         <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-6 justify-between">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2 tracking-tighter">
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 flex items-center gap-2 font-display font-medium uppercase tracking-widest">
                                 <Film size={18} className="text-pink-500" /> Storyboard Visualizer
                             </h3>
                             {generatedScript && (
@@ -175,7 +175,7 @@ export const VideoCreator = () => {
                                             {/* Fake Visual Frame */}
                                             <div className="w-32 h-48 bg-gradient-to-br from-black to-white/5 rounded-xl border border-white/10 flex flex-col items-center justify-center shrink-0 relative overflow-hidden">
                                                 <Video size={24} className="text-white/20 mb-2" />
-                                                <Badge color="gray" className="absolute bottom-2 left-2 right-2 text-center">{frame.time}</Badge>
+                                                <Badge color="gray" className="absolute bottom-2 left-2 right-2 text-center font-cta font-semibold uppercase tracking-[0.08em]">{frame.time}</Badge>
                                             </div>
                                             
                                             <div className="flex-1 space-y-4 py-2">
@@ -208,15 +208,15 @@ export const VideoCreator = () => {
                             ) : (
                                 <div className="h-full flex flex-col items-center justify-center opacity-30">
                                     <Clapperboard size={64} className="mx-auto mb-4 text-white" />
-                                    <p className="text-sm sm:text-base text-white font-serif leading-relaxed">Awaiting Script Parameters</p>
+                                    <p className="text-sm sm:text-base text-white leading-relaxed font-sans">Awaiting Script Parameters</p>
                                 </div>
                             )}
                         </div>
 
                         {generatedScript && (
                             <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex justify-end gap-3 sm:gap-4">
-                                <Button variant="outline" className="w-auto mx-auto py-1 px-3 text-[10px] px-6">Discard</Button>
-                                <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-6 bg-pink-600 hover:bg-pink-700 text-white border-none">
+                                <Button variant="outline" className="w-auto mx-auto py-1 px-3 text-[10px] px-6 font-cta font-semibold uppercase tracking-[0.08em]">Discard</Button>
+                                <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-6 bg-pink-600 hover:bg-pink-700 text-white border-none font-cta font-semibold uppercase tracking-[0.08em]">
                                     <Save size={16} className="mr-2" /> Save to Vault
                                 </Button>
                             </div>

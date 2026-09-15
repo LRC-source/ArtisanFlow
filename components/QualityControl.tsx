@@ -49,7 +49,7 @@ export const QualityControl = () => {
                   <option className="bg-black text-white">Passed</option>
                   <option className="bg-black text-white">Failed</option>
               </Select>
-              <Button onClick={handleAdd} className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full font-sans font-medium text-[11px] tracking-[0.2em] shadow-xl shadow-[#6A2C91]/20 mt-8 uppercase transition-all">
+              <Button onClick={handleAdd} className="w-full bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 rounded-full text-[11px] shadow-xl shadow-[#6A2C91]/20 mt-8 uppercase transition-all font-cta font-semibold tracking-[0.08em]">
                   LOG INSPECTION DATA
               </Button>
           </div>
@@ -68,7 +68,7 @@ export const QualityControl = () => {
           subtitle="Batch Integrity Vault: Enforcing Excellence Across the Manufacturing Floor."
           badge="Audit Protocol Active"
         >
-          <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] py-3 px-6 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all" onClick={() => setShowAdd(true)}>
+          <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white text-[11px] py-3 px-6 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all font-cta font-semibold uppercase tracking-[0.08em]" onClick={() => setShowAdd(true)}>
               <Plus size={16} className="mr-3"/> NEW AUDIT LOG
           </Button>
         </VaultBanner>
@@ -84,8 +84,8 @@ export const QualityControl = () => {
       {qualityChecks.length === 0 ? (
           <div className="luxury-card border-white/10 rounded-[2.5rem] p-6 sm:p-12 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl">
               <GlassHaloIcon icon={ClipboardCheck} color="cyan" size="xl" className="mb-6 shadow-inner" />
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Vault Empty</h3>
-              <p className="text-sm sm:text-base text-white/30 text-[11px] font-sans font-medium uppercase tracking-[0.2em] mt-1">No inspection history detected.</p>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Vault Empty</h3>
+              <p className="text-sm sm:text-base text-white/30 text-[11px] uppercase tracking-[0.2em] mt-1 font-serif italic font-light">No inspection history detected.</p>
               <Button onClick={() => setShowAdd(true)} className="mt-8 bg-white/5 text-[#C5A059] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full font-sans text-[10px] tracking-widest uppercase border border-white/10 hover:bg-white/10">INITIALIZE AUDIT</Button>
           </div>
       ) : (
@@ -96,8 +96,8 @@ export const QualityControl = () => {
                           <div className="flex items-center gap-3 sm:gap-6">
                               <GlassHaloIcon icon={check.status === 'Passed' ? ShieldCheck : Clock} color={check.status === 'Passed' ? 'emerald' : 'gold'} size="md" />
                               <div>
-                                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{check.productName}</h3>
-                                  <Badge color="gold" className="text-[9px] px-3 py-1 font-sans tracking-widest mt-2 uppercase border-white/10">Batch: {check.batchNumber}</Badge>
+                                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{check.productName}</h3>
+                                  <Badge color="gold" className="text-[9px] px-3 py-1 mt-2 uppercase border-white/10 font-cta font-semibold tracking-[0.08em]">Batch: {check.batchNumber}</Badge>
                               </div>
                           </div>
                       </div>
@@ -105,7 +105,7 @@ export const QualityControl = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8 relative z-10">
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
                               <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Inspector Sign-off</p>
-                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white">{check.inspector}</p>
+                              <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white font-sans">{check.inspector}</p>
                           </div>
                           <div className="bg-white/5 p-4 sm:p-6 rounded-[1.5rem] border border-white/10">
                               <p className="text-[10px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.2em] mb-2">Status Node</p>

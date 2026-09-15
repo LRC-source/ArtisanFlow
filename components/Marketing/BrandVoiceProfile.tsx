@@ -107,7 +107,7 @@ export const BrandVoiceProfile = () => {
                   <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                     <Button 
                         variant="primary"
-                        className="bg-black/40 hover:bg-black/60 border border-white/10 text-white font-sans font-medium text-[11px] tracking-[0.2em] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full shadow-2xl transition-all"
+                        className="bg-black/40 hover:bg-black/60 border border-white/10 text-white text-[11px] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-full shadow-2xl transition-all font-cta font-semibold uppercase tracking-[0.08em]"
                         onClick={() => toast.success('Brand Voice Matrix exported to device.', { id: toast.loading('Exporting Matrix...') })}
                         disabled={isGenerating}
                     >
@@ -116,7 +116,7 @@ export const BrandVoiceProfile = () => {
                     </Button>
                     <Button 
                         variant="primary"
-                        className="bg-gradient-to-r from-[#C5A059] to-[#b08e4d] border-none text-white font-sans font-medium text-[11px] tracking-[0.2em] w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full shadow-2xl transition-all"
+                        className="bg-gradient-to-r from-[#C5A059] to-[#b08e4d] border-none text-white text-[11px] w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full shadow-2xl transition-all font-cta font-semibold uppercase tracking-[0.08em]"
                         onClick={handleSave}
                         disabled={isSaving}
                     >
@@ -134,7 +134,7 @@ export const BrandVoiceProfile = () => {
                         <div className="p-4 sm:p-6 bg-white/5 border border-white/10 rounded-2xl space-y-8">
                             <div className="flex items-center gap-3 border-b border-white/10 pb-4">
                                 <Sliders className="text-[#C5A059]" size={20} />
-                                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif tracking-tighter">Tone Adjustments</h3>
+                                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-display font-medium uppercase tracking-widest">Tone Adjustments</h3>
                             </div>
                             {renderSlider(toneFormal, setToneFormal, "Playful & Casual", "Formal & Authoritative")}
                             {renderSlider(toneSalesy, setToneSalesy, "Educational & Value-Driven", "Sales & Conversion-Oriented")}
@@ -162,7 +162,7 @@ export const BrandVoiceProfile = () => {
                 <Card title="Saved Target Personas" className="luxury-card border-white/10 rounded-3xl p-4 sm:p-6 bg-black/40 backdrop-blur-xl flex flex-col h-full">
                     <div className="flex items-center gap-3 mb-6">
                         <Users className="text-[#6A2C91]" size={20} />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-medium font-serif tracking-tighter">Audience Segmentation</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-display font-medium uppercase tracking-widest">Audience Segmentation</h3>
                     </div>
                     <div className="space-y-4 flex-1">
                         {personas.map(persona => (
@@ -172,7 +172,7 @@ export const BrandVoiceProfile = () => {
                                 className={`p-5 rounded-2xl border cursor-pointer transition-all ${activePersona === persona.id ? 'bg-[#6A2C91]/20 border-[#6A2C91]/50' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
                             >
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
-                                    <h4 className="text-white font-serif tracking-tighter">{persona.name}</h4>
+                                    <h4 className="text-white font-sans">{persona.name}</h4>
                                     {activePersona === persona.id && <Badge color="purple">Active</Badge>}
                                 </div>
                                 <p className="text-sm sm:text-base font-light text-white sm:text-gray-400">{persona.description}</p>
@@ -189,20 +189,20 @@ export const BrandVoiceProfile = () => {
                     <Card className="border-white/10 rounded-3xl p-4 sm:p-5 lg:p-6 bg-gradient-to-br from-black/60 to-[#6A2C91]/10 backdrop-blur-xl relative overflow-hidden">
                         <Wand2 size={120} className="absolute -right-10 -bottom-10 text-[#6A2C91]/10 transform -rotate-12" />
                         <div className="relative z-10 space-y-6 w-full w-full max-w-4xl">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-[#C5A059] font-serif text-white sm:text-slate-400 leading-relaxed flex items-center gap-3 tracking-tighter">
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-[#C5A059] text-white sm:text-slate-400 leading-relaxed flex items-center gap-3 font-display font-medium uppercase tracking-widest">
                                 <Sparkles size={20} /> Output Calibration Preview
                             </h3>
                             <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans font-light">
                                 Based on your current Matrix settings and the <strong className="text-white">[{personas.find(p => p.id === activePersona)?.name}]</strong> persona, Lola will generate content with this linguistic signature:
                             </p>
-                            <div className="p-4 sm:p-6 sm:p-8 bg-black/40 border-l-4 border-[#C5A059] rounded-r-3xl shadow-lg italic text-gray-200 font-serif text-sm sm:text-base leading-relaxed leading-relaxed">
+                            <div className="p-4 sm:p-6 sm:p-8 bg-black/40 border-l-4 border-[#C5A059] rounded-r-3xl shadow-lg italic text-gray-200 text-sm sm:text-base leading-relaxed leading-relaxed font-sans">
                                 {toneFormal > 50 
                                     ? `"Crafted for those who demand excellence, each piece reflects bold innovation."`
                                     : `"Ready to elevate your everyday? Our new collection brings serious artisanal vibes right to your door. You've never seen precision like this before!"`}
                             </div>
                             <div className="flex flex-wrap gap-2 pt-4">
                                 {adjectives.split(',').map(adj => adj.trim()).filter(Boolean).map((adj, i) => (
-                                    <Badge key={i} color="gold" className="text-[10px] tracking-widest">{adj}</Badge>
+                                    <Badge key={i} color="gold" className="text-[10px] font-cta font-semibold uppercase tracking-[0.08em]">{adj}</Badge>
                                 ))}
                             </div>
                         </div>

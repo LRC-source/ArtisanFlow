@@ -247,7 +247,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
             >
               <Card className="luxury-card p-3.5 sm:p-6 lg:p-12 sm:p-4 sm:p-10 bg-black/40 backdrop-blur-3xl border-white/5">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl leading-relaxed font-serif text-white mb-8 flex items-center justify-center gap-3 text-center tracking-tighter">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl leading-relaxed text-white mb-8 flex items-center justify-center gap-3 text-center font-display font-medium uppercase tracking-widest">
                   {view === 'login' ? <Lock size={18} className="text-[#C5A059]"/> : <Mail size={18} className="text-[#C5A059]"/>}
                   {view === 'login' ? 'Sign Into Your Account' : 'Create New Account'}
                 </h2>
@@ -277,7 +277,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                       className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white focus-visible:ring-1 focus-visible:ring-[#C5A059]/50 transition-all"
                     />
                   </div>
-                  <Button variant={view === 'login' ? 'success' : 'premium'} type="button" onClick={handleLogin} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-black tracking-widest shadow-2xl">
+                  <Button variant={view === 'login' ? 'success' : 'premium'} type="button" onClick={handleLogin} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] shadow-2xl font-cta font-semibold uppercase tracking-[0.08em]">
                     ENTER DASHBOARD <ArrowRight size={18} className="ml-1" />
                   </Button>
                 </div>
@@ -287,7 +287,7 @@ export const AuthGateway = ({ initialView = 'login', selectedTier: propSelectedT
                   <div className="relative flex justify-center text-[10px] font-black uppercase bg-transparent px-4 text-white/20 tracking-[0.2em]">Secure Entry Point</div>
                 </div>
 
-                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] font-bold border-white/10 hover:bg-white/5 text-white transition-colors">
+                <Button type="button" variant="outline" onClick={handleGoogleAuth} className="w-full md:w-full flex items-center justify-center w-auto mx-auto py-1 px-3 text-[10px] border-white/10 hover:bg-white/5 text-white transition-colors font-cta font-semibold uppercase tracking-[0.08em]">
                   <Chrome size={18} className="mr-2 text-[#4285F4]" /> Continue with Google
                 </Button>
 
@@ -337,7 +337,7 @@ const TierSelection = ({ onSelect }: { onSelect: (tier: UserTier) => void }) => 
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
         >
-           <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Select Your Architecture</h1>
+           <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Select Your Architecture</h1>
            <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-8">Every great system starts with a solid foundation. Choose the tier that aligns with your operational scale.</p>
            
            <div className="flex justify-center items-center gap-4 mb-4">
@@ -420,7 +420,7 @@ const TierCard = ({ title, price, period, features, icon: Icon, color, isPopular
         <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center mb-6 bg-white/5 text-white border border-white/10`}>
           <Icon size={24} strokeWidth={1.5} />
         </div>
-        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{title}</h3>
+        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{title}</h3>
         <div className="flex items-baseline mt-4">
           <span className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black font-serif text-white mb-4 tracking-tighter">{price}</span>
           <span className="text-white/30 text-xs font-sans tracking-widest uppercase ml-2">/month</span>
@@ -542,7 +542,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
         className="w-full max-w-2xl z-10"
       >
         <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Secure Checkout</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Secure Checkout</h2>
           <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans tracking-widest uppercase">Initializing {tier} Architecture</p>
           <div className="mt-6 flex flex-col items-center gap-4">
             <div className="flex items-center justify-center gap-4 text-sm font-bold tracking-widest uppercase">
@@ -568,7 +568,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
           <div className="space-y-8">
             {/* Billing Details */}
             <div className="space-y-4">
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2 tracking-tighter">Billing Details</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white leading-relaxed mb-4 border-b border-white/10 pb-2 font-display font-medium uppercase tracking-widest">Billing Details</h3>
               <div className="space-y-2">
                 <label className="text-[10px] font-sans text-white/30 uppercase tracking-[0.15em] ml-1">Full Name</label>
                 <Input type="text" placeholder="" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="bg-white/5 border-white/10 text-white" />
@@ -595,7 +595,7 @@ export const PaymentGateway = ({ tier, email, onSuccess, onBack }: { tier: UserT
 
             {/* Payment Info */}
             <div className="space-y-4 pt-4">
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-serif leading-relaxed mb-4 border-b border-white/10 pb-2 flex items-center gap-2 tracking-tighter">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white leading-relaxed mb-4 border-b border-white/10 pb-2 flex items-center gap-2 font-display font-medium uppercase tracking-widest">
                 <CreditCard size={18} className="text-[#C5A059]" /> Payment Information
               </h3>
               

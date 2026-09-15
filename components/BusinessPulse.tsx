@@ -52,7 +52,7 @@ export const BusinessPulse: React.FC = () => {
           </motion.div>
 
           <div className="mb-6">
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
+            <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">
               Artisan <span className="text-[#C5A059]">Flow</span> Vault
             </h1>
           </div>
@@ -108,7 +108,7 @@ export const BusinessPulse: React.FC = () => {
                   <BarChart3 size={28} strokeWidth={1.5} />
               </div>
               <div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Everything is <span className="text-emerald-400">Running Smoothly</span></h2>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Everything is <span className="text-emerald-400">Running Smoothly</span></h2>
                   <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">
                     Your stock is healthy, orders are moving, and your profits are protected. No urgent actions needed today.
                   </p>
@@ -131,7 +131,7 @@ export const BusinessPulse: React.FC = () => {
         className="space-y-6 sm:space-y-10 lg:space-y-12"
       >
         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Vault Entry Points</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Vault Entry Points</h2>
           <div className="h-px flex-1 bg-white/5 mx-8"></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-10">
@@ -214,7 +214,7 @@ const QuickAccessCard = ({ icon: Icon, color, title, desc, image, action }: any)
         {/* Content Section */}
         <div className="p-4 sm:p-12 flex flex-col flex-1">
             <div className="absolute top-0 left-0 w-full h-1 bg-white/5 group-hover:bg-[#C5A059] transition-colors duration-500"></div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{title}</h3>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{title}</h3>
             <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">{desc}</p>
             <div className="mt-auto flex items-center gap-3 text-[11px] font-sans font-bold text-white/30 uppercase tracking-[0.25em] group-hover:text-[#C5A059] transition-colors">
                 Enter Vault Module <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />

@@ -52,13 +52,13 @@ export const SubscriptionManagement = () => {
                 <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white sm:text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
                     <ArrowLeft size={16} /> Back to Command Center
                 </button>
-                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Access Level</h1>
+                <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Access Level</h1>
                 <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light leading-relaxed">Defining system throughput and logic capabilities.</p>
             </div>
             
             {businessProfile.status === 'Past Due' && (
                 <div className="bg-red-900/30 border-l-4 border-red-500 p-4 sm:p-6 rounded-2xl shadow-lg mb-8">
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-red-400 font-bold leading-relaxed flex items-center gap-2 mb-2 font-serif tracking-tighter"><AlertTriangle size={20} /> ACTION REQUIRED: PAST DUE BALANCE</h3>
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-red-400 leading-relaxed flex items-center gap-2 mb-2 font-display font-medium uppercase tracking-widest"><AlertTriangle size={20} /> ACTION REQUIRED: PAST DUE BALANCE</h3>
                     <p className="text-sm sm:text-base text-white/80 font-sans font-light leading-relaxed mb-4">
                         Your most recent tier payment was declined or could not be processed. Tier features and architectural logic modules <strong>can and will be restricted at any time</strong>. Express urgency by processing your payment below to retain your uninhibited access to all ArtisanFlow features.
                     </p>
@@ -76,7 +76,7 @@ export const SubscriptionManagement = () => {
                   </div>
                   <div>
                       <span className="text-[10px] font-sans text-white sm:text-white/50 font-bold uppercase tracking-widest mb-2 block">Deployment Level</span>
-                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{userTier}</h3>
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{userTier}</h3>
                       <p className="text-sm sm:text-base text-emerald-400 mt-3 font-sans font-medium tracking-wide flex items-center gap-2">
                         <CheckCircle size={14} /> Systems Active & Verified
                       </p>
@@ -85,7 +85,7 @@ export const SubscriptionManagement = () => {
                <div className="flex flex-col items-center md:items-end gap-3 sm:gap-4 relative z-10">
                    <div className="text-center md:text-right mb-4">
                       <p className="text-[10px] font-sans text-white sm:text-white/50 font-bold uppercase tracking-widest mb-1">Access Initialized</p>
-                      <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-serif text-white/80 tracking-tight">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                      <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white/80 tracking-tight font-sans">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                    </div>
                    {userTier !== 'Pro Artisan' && (
                      <Button variant="premium" onClick={() => setSelectedUpgrade('Pro Artisan')} className="w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full font-sans font-medium text-[10px] uppercase tracking-widest shadow-md">
@@ -97,7 +97,7 @@ export const SubscriptionManagement = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mt-6 sm:mt-8 lg:mt-12">
                <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-4 sm:p-10">
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Deployment Protocols</h3>
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Deployment Protocols</h3>
                   <ul className="space-y-6">
                      {[
                         { icon: ShieldCheck, text: 'Advanced Synaptic Protection' },
@@ -120,7 +120,7 @@ export const SubscriptionManagement = () => {
                       <ExternalLink size={32} strokeWidth={1.5} />
                   </div>
                   <p className="text-sm sm:text-base text-white sm:text-white/50 leading-relaxed mb-4">Access the global billing repository and transaction historicals.</p>
-                  <Button variant="outline" className="text-[10px] uppercase font-sans font-bold tracking-widest w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 transition-colors">Open Billing Vault</Button>
+                  <Button variant="outline" className="text-[10px] uppercase w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 transition-colors font-cta font-semibold tracking-[0.08em]">Open Billing Vault</Button>
                </div>
             </div>
         </motion.div>

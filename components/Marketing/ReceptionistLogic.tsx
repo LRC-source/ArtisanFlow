@@ -173,7 +173,7 @@ If they ask something outside the FAQs, be polite and try to help based on gener
                                     onKeyDown={e => e.key === 'Enter' && handleSend()}
                                     className="flex-1 bg-black/50"
                                 />
-                                <Button onClick={handleSend} disabled={isGenerating || !input.trim()} className="bg-[#6A2C91] hover:bg-[#552374] text-white shadow-lg">
+                                <Button onClick={handleSend} disabled={isGenerating || !input.trim()} className="bg-[#6A2C91] hover:bg-[#552374] text-white shadow-lg font-cta font-semibold uppercase tracking-[0.08em]">
                                     <Send size={18} />
                                 </Button>
                             </div>

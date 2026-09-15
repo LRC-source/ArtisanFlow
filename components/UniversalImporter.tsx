@@ -266,15 +266,15 @@ export const UniversalImporter = () => {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-4 sm:p-8 lg:p-12 space-y-6 max-w-5xl mx-auto bg-black/40 border border-white/10 rounded-3xl">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                 <div>
-                    <h2 className="text-2xl font-bold font-serif text-white tracking-tighter">Import Your Data</h2>
-                    <p className="text-sm text-white/50">Bring your inventory, recipes, orders, and customers from any CSV.</p>
+                    <h2 className="text-2xl text-white font-display font-medium uppercase tracking-widest">Import Your Data</h2>
+                    <p className="text-sm text-white/50 font-serif italic font-light">Bring your inventory, recipes, orders, and customers from any CSV.</p>
                 </div>
                 {phase === 'upload' && (
                     <div className="flex gap-3 mt-4 sm:mt-0">
-                        <Button variant="outline" className="text-xs border-white/10 hover:bg-white/5 text-white" onClick={downloadTemplate}>
+                        <Button variant="outline" className="text-xs border-white/10 hover:bg-white/5 text-white font-cta font-semibold uppercase tracking-[0.08em]" onClick={downloadTemplate}>
                             <Download size={14} className="mr-2" /> Template
                         </Button>
-                        <Button variant="outline" className="text-xs border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10" onClick={loadSampleData}>
+                        <Button variant="outline" className="text-xs border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 font-cta font-semibold uppercase tracking-[0.08em]" onClick={loadSampleData}>
                             <PlayCircle size={14} className="mr-2" /> Try Sample
                         </Button>
                     </div>
@@ -288,8 +288,8 @@ export const UniversalImporter = () => {
                         <div className="w-20 h-20 bg-white/5 text-white/20 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors" onClick={() => fileInputRef.current?.click()}>
                             <UploadCloud size={40} />
                         </div>
-                        <h3 className="text-xl font-bold text-white mt-6 mb-2 font-serif tracking-tighter">Upload your CSV</h3>
-                        <p className="text-sm text-white/40">Drag and drop, or click to browse files.</p>
+                        <h3 className="text-xl text-white mt-6 mb-2 font-display font-medium uppercase tracking-widest">Upload your CSV</h3>
+                        <p className="text-sm text-white/40 font-serif italic font-light">Drag and drop, or click to browse files.</p>
                     </motion.div>
                 )}
 
@@ -310,7 +310,7 @@ export const UniversalImporter = () => {
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div className="lg:col-span-1 space-y-4">
-                                <h4 className="text-sm font-bold text-white uppercase font-serif tracking-tighter">Column Mapping</h4>
+                                <h4 className="text-sm font-bold text-white uppercase font-sans">Column Mapping</h4>
                                 {(requiredFields[importType as keyof typeof requiredFields] || []).map(field => (
                                     <div key={field.key} className="bg-white/5 p-3 rounded-lg border border-white/10">
                                         <div className="text-xs text-white/50 mb-2">{field.label} <span className="text-red-400">*</span></div>
@@ -323,7 +323,7 @@ export const UniversalImporter = () => {
                             </div>
 
                             <div className="lg:col-span-2 space-y-4">
-                                <h4 className="text-sm font-bold text-white uppercase font-serif tracking-tighter">Data Preview</h4>
+                                <h4 className="text-sm font-bold text-white uppercase font-sans">Data Preview</h4>
                                 <div className="bg-black border border-white/10 rounded-xl overflow-x-auto">
                                     <table className="w-full text-left text-xs">
                                         <thead className="bg-white/5 border-b border-white/10">
@@ -361,8 +361,8 @@ export const UniversalImporter = () => {
                         )}
 
                         <div className="flex gap-4 pt-4 border-t border-white/10">
-                            <Button variant="outline" className="flex-1 border-white/20 text-white" onClick={() => setPhase('upload')}>Cancel</Button>
-                            <Button className="flex-1 bg-[#C5A059] text-black hover:bg-[#b08d4a] font-bold tracking-widest" onClick={handleUpload}>
+                            <Button variant="outline" className="flex-1 border-white/20 text-white font-cta font-semibold uppercase tracking-[0.08em]" onClick={() => setPhase('upload')}>Cancel</Button>
+                            <Button className="flex-1 bg-[#C5A059] text-black hover:bg-[#b08d4a] font-cta font-semibold uppercase tracking-[0.08em]" onClick={handleUpload}>
                                 Confirm & Import
                             </Button>
                         </div>
@@ -372,7 +372,7 @@ export const UniversalImporter = () => {
                 {phase === 'importing' && (
                     <motion.div key="importing" className="py-20 flex flex-col items-center">
                         <Loader2 size={48} className="animate-spin text-[#C5A059] mb-6" />
-                        <h3 className="text-xl font-bold text-white mb-4 font-serif tracking-tighter">Importing {importType}...</h3>
+                        <h3 className="text-xl text-white mb-4 font-display font-medium uppercase tracking-widest">Importing {importType}...</h3>
                         <div className="w-full max-w-md bg-white/10 rounded-full h-2">
                             <div className="bg-[#C5A059] h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                         </div>
@@ -384,8 +384,8 @@ export const UniversalImporter = () => {
                         <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6">
                             <Check size={48} />
                         </div>
-                        <h3 className="text-2xl font-bold text-emerald-400 mb-2 font-serif tracking-tighter">Import Successful!</h3>
-                        <p className="text-white/50">Your data has been cleanly mapped into Artisan Flow.</p>
+                        <h3 className="text-2xl text-emerald-400 mb-2 font-display font-medium uppercase tracking-widest">Import Successful!</h3>
+                        <p className="text-white/50 font-serif italic font-light">Your data has been cleanly mapped into Artisan Flow.</p>
                     </motion.div>
                 )}
             </AnimatePresence>

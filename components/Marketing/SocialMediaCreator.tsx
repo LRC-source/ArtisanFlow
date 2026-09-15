@@ -152,7 +152,7 @@ export const SocialMediaCreator = () => {
                                 </Select>
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-[#6A2C91] to-[#C5A059] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-[#6A2C91] to-[#C5A059] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none font-cta font-semibold uppercase tracking-[0.08em]">
                                 {isGenerating ? "Synthesizing Omnichannel Assets..." : "Generate Campaign"}
                             </Button>
                         </div>
@@ -225,7 +225,7 @@ export const SocialMediaCreator = () => {
                                         <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl overflow-hidden min-h-[250px] sm:min-h-[300px] aspect-video sm:aspect-auto w-full max-w-full overflow-hidden flex flex-col relative border-8 border-[#1A1A1A]">
                                             {/* App Header Mock */}
                                             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                                                <div className="w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white font-serif text-xs">AF</div>
+                                                <div className="w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white text-xs font-sans">AF</div>
                                                 <div className="font-sans font-bold text-gray-900 text-sm">Artisan Flow</div>
                                             </div>
                                             {/* Media Mock */}
@@ -242,7 +242,7 @@ export const SocialMediaCreator = () => {
                             ) : (
                                 <div className="text-center opacity-30">
                                     <LayoutGrid size={64} className="mx-auto mb-4 text-white" />
-                                    <p className="text-sm sm:text-base text-white font-serif leading-relaxed">Awaiting Campaign Synthesis</p>
+                                    <p className="text-sm sm:text-base text-white leading-relaxed font-sans">Awaiting Campaign Synthesis</p>
                                 </div>
                             )}
                         </div>

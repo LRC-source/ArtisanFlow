@@ -330,12 +330,12 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                            className="absolute top-full right-0 mt-3 w-72 bg-[#0f0f0f] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden"
                          >
                            <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
-                             <p className="text-[10px] font-sans font-black uppercase tracking-widest text-white/60">Notifications</p>
+                             <p className="text-[10px] uppercase tracking-widest text-white/60 font-serif italic font-light">Notifications</p>
                              <button onClick={() => setShowNotifications(false)} className="text-white/30 hover:text-white transition-colors p-1"><X size={14} /></button>
                            </div>
                            <div className="flex flex-col items-center justify-center py-10 gap-3">
                              <Bell size={24} className="text-white/10" />
-                             <p className="text-white/30 text-xs font-sans">No notifications yet.</p>
+                             <p className="text-white/30 text-xs font-serif italic font-light">No notifications yet.</p>
                              <p className="text-white/20 text-[10px] text-center max-w-[180px]">Activity updates will appear here when your account has live data.</p>
                            </div>
                          </motion.div>

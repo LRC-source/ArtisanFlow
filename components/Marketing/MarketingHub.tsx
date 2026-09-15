@@ -109,7 +109,7 @@ export const MarketingHub = () => {
                   <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                     <Button 
                         variant="primary"
-                        className="bg-[#6A2C91] hover:bg-[#5a257a] text-white font-sans font-medium text-[11px] tracking-[0.2em] py-3 px-6 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all"
+                        className="bg-[#6A2C91] hover:bg-[#5a257a] text-white text-[11px] py-3 px-6 rounded-full shadow-2xl shadow-[#6A2C91]/20 transition-all font-cta font-semibold uppercase tracking-[0.08em]"
                         onClick={() => navigate('/marketing/strategy-report')}
                     >
                         <Sparkles size={16} className="mr-3"/> GENERATE STRATEGY

@@ -40,14 +40,14 @@ export const BusinessSetup = () => {
                   badge="System Protocol Active"
                 >
                   <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
-                    <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 px-12 rounded-full shadow-2xl shadow-[#6A2C91]/20 font-sans font-medium text-[11px] tracking-widest transition-all uppercase" onClick={handleSave}>PUSH GLOBAL UPDATES</Button>
+                    <Button className="bg-[#6A2C91] hover:bg-[#5a257a] text-white py-3 px-6 px-12 rounded-full shadow-2xl shadow-[#6A2C91]/20 text-[11px] transition-all uppercase font-cta font-semibold tracking-[0.08em]" onClick={handleSave}>PUSH GLOBAL UPDATES</Button>
                   </div>
                 </VaultBanner>
             </div>
 
             <div className="w-full md:w-1/2">
                 <div className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-4 sm:p-10 ${isSuccess ? 'ring-1 ring-emerald-500/50 bg-emerald-900/10' : ''} transition-all duration-500 rounded-[2.5rem]`}>
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Corporate Node Definition</h3>
+                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Corporate Node Definition</h3>
                     <div className="space-y-10">
                         <div className="space-y-6">
                            <div>

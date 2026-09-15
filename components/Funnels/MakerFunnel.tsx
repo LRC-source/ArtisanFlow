@@ -37,7 +37,7 @@ const MakerFunnel = () => {
           transition={{ duration: 0.8 }}
         >
           <span className="mf-badge">For Bespoke Handcrafters & Artisans</span>
-          <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Stop Guessing. Start Profiting.</h1>
+          <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Stop Guessing. Start Profiting.</h1>
           <p className="text-sm sm:text-base mf-subtitle">
             Whether you make candles, jewelry, soap, or baked goods, guessing your material costs and labor means you're likely losing money. Take control of your margins today.
           </p>
@@ -54,7 +54,7 @@ const MakerFunnel = () => {
           whileInView="whileInView"
           variants={fadeInUp}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl mf-section-title font-serif tracking-tighter">The Artisan's Dilemma</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mf-section-title font-display font-medium uppercase tracking-widest">The Artisan's Dilemma</h2>
           <p className="text-sm sm:text-base mf-section-subtitle">You put your heart into your craft, but pricing it feels like a shot in the dark.</p>
         </motion.div>
 
@@ -68,7 +68,7 @@ const MakerFunnel = () => {
             <div className="mf-icon-wrapper">
               <Calculator size={28} />
             </div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-serif tracking-tighter">Underpricing Products</h3>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-display font-medium uppercase tracking-widest">Underpricing Products</h3>
             <p className="text-sm sm:text-base mf-card-desc">
               Relying on competitor pricing or gut feelings leaves money on the table. You are undervaluing your unique skills and time.
             </p>
@@ -78,7 +78,7 @@ const MakerFunnel = () => {
             <div className="mf-icon-wrapper">
               <PackageOpen size={28} />
             </div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-serif tracking-tighter">Material Cost Chaos</h3>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-display font-medium uppercase tracking-widest">Material Cost Chaos</h3>
             <p className="text-sm sm:text-base mf-card-desc">
               Fluctuating costs for wax, essential oils, metals, and packaging make it impossible to know your true COGS (Cost of Goods Sold).
             </p>
@@ -88,7 +88,7 @@ const MakerFunnel = () => {
             <div className="mf-icon-wrapper">
               <Activity size={28} />
             </div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-serif tracking-tighter">Lost Labor Hours</h3>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-display font-medium uppercase tracking-widest">Lost Labor Hours</h3>
             <p className="text-sm sm:text-base mf-card-desc">
               You're working for free. When you don't accurately factor in your active making time and prep time, your hourly wage drops to zero.
             </p>
@@ -103,7 +103,7 @@ const MakerFunnel = () => {
           whileInView="whileInView"
           variants={fadeInUp}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl mf-section-title font-serif tracking-tighter">Meet Artisan Flow</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mf-section-title font-display font-medium uppercase tracking-widest">Meet Artisan Flow</h2>
           <p className="text-sm sm:text-base mf-section-subtitle">The intelligent toolkit designed specifically for makers to protect their profits.</p>
         </motion.div>
 
@@ -117,7 +117,7 @@ const MakerFunnel = () => {
             <div className="mf-icon-wrapper">
               <ShieldCheck size={28} />
             </div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-serif tracking-tighter">BOM Manager</h3>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-display font-medium uppercase tracking-widest">BOM Manager</h3>
             <p className="text-sm sm:text-base mf-card-desc">
               Build exact Bill of Materials for every product. Track every drop of oil, gram of wax, and inch of wire down to the penny.
             </p>
@@ -127,7 +127,7 @@ const MakerFunnel = () => {
             <div className="mf-icon-wrapper">
               <Zap size={28} />
             </div>
-            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-serif tracking-tighter">Profit Guard</h3>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl mf-card-title font-display font-medium uppercase tracking-widest">Profit Guard</h3>
             <p className="text-sm sm:text-base mf-card-desc">
               Set your target profit margins and hourly labor rates. Artisan Flow instantly calculates the exact retail and wholesale prices you need.
             </p>
@@ -168,7 +168,7 @@ const MakerFunnel = () => {
           whileInView="whileInView"
           variants={fadeInUp}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl mf-title font-serif tracking-tighter" style={{ fontSize: '3rem', marginBottom: '32px' }}>Ready to value your craft?</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mf-title font-display font-medium uppercase tracking-widest" style={{ fontSize: '3rem', marginBottom: '32px' }}>Ready to value your craft?</h2>
           <a href="/auth?tier=Free%20Audit" onClick={navigateToAuth} className="mf-cta-primary">
             Calculate Your True Margins <ArrowRight size={20} />
           </a>

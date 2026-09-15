@@ -52,15 +52,15 @@ export const ContentApprovals = () => {
                     />
                 ) : (
                     <div className="space-y-2">
-                        <Badge color="purple" className="mb-2">Client Presentation Mode</Badge>
-                        <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Review Your Content</h1>
+                        <Badge color="purple" className="mb-2 font-cta font-semibold uppercase tracking-[0.08em]">Client Presentation Mode</Badge>
+                        <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Review Your Content</h1>
                         <p className="text-sm sm:text-base text-white sm:text-gray-400 font-sans">Please review the proposed assets below for approval.</p>
                     </div>
                 )}
 
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
                     {!clientViewMode && (
-                        <Button onClick={handleGenerateShareLink} disabled={generatingLink} variant="outline" className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white">
+                        <Button onClick={handleGenerateShareLink} disabled={generatingLink} variant="outline" className="w-auto mx-auto py-1 px-3 text-[10px] bg-white/5 border-white/10 text-white font-cta font-semibold uppercase tracking-[0.08em]">
                             <LinkIcon size={16} className="mr-2" /> 
                             {generatingLink ? "Generating..." : "Share Link"}
                         </Button>
@@ -80,7 +80,7 @@ export const ContentApprovals = () => {
                 {pendingPosts.length === 0 ? (
                     <Card className="border-white/10 rounded-[2.5rem] bg-black/20 backdrop-blur-xl text-center py-32 shadow-2xl">
                         <CheckCircle size={64} strokeWidth={1} className="mx-auto text-emerald-500/50 mb-6" />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Queue Empty</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Queue Empty</h3>
                         <p className="text-sm sm:text-base text-gray-500 font-sans font-light">No content currently pending approval.</p>
                     </Card>
                 ) : (
@@ -109,7 +109,7 @@ export const ContentApprovals = () => {
                                             <img src={post.mediaUrl} alt={post.topic} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                             {!clientViewMode && (
                                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                                    <Button variant="outline" className="bg-white/10 backdrop-blur-md text-white border-white/20">
+                                                    <Button variant="outline" className="bg-white/10 backdrop-blur-md text-white border-white/20 font-cta font-semibold uppercase tracking-[0.08em]">
                                                         <Download size={16} className="mr-2" /> Asset
                                                     </Button>
                                                 </div>
@@ -129,7 +129,7 @@ export const ContentApprovals = () => {
                                             )}
                                             
                                             <div>
-                                                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{post.topic}</h3>
+                                                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{post.topic}</h3>
                                                 <div className={`p-4 sm:p-6 rounded-2xl text-sm font-sans font-light leading-relaxed whitespace-pre-wrap ${clientViewMode ? 'bg-transparent text-white sm:text-gray-300 p-0' : 'bg-white/5 border border-white/10 text-white sm:text-gray-300 shadow-sm'}`}>
                                                     {post.content}
                                                 </div>

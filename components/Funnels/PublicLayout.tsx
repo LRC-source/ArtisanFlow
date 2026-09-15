@@ -19,10 +19,10 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
           </div>
           
           <div className="flex items-center gap-3 sm:gap-4">
-            <Button variant="ghost" className="text-white sm:text-white/70 hover:text-white uppercase tracking-widest text-xs hidden sm:block" onClick={() => navigate('/auth')}>
+            <Button variant="ghost" className="text-white sm:text-white/70 hover:text-white uppercase text-xs hidden sm:block font-cta font-semibold tracking-[0.08em]" onClick={() => navigate('/auth')}>
               Login
             </Button>
-            <Button variant="premium" className="px-6 rounded-full uppercase tracking-widest text-xs font-bold" onClick={() => navigate('/auth')}>
+            <Button variant="premium" className="px-6 rounded-full uppercase text-xs font-cta font-semibold tracking-[0.08em]" onClick={() => navigate('/auth')}>
               Start Free Trial
             </Button>
           </div>

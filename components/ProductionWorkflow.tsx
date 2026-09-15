@@ -24,7 +24,7 @@ export const ProductionWorkflow = () => {
             <ArrowLeft size={18} /> Back to Operations
           </button>
           <div className="flex items-center gap-3">
-              <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Precision Manufacturing Hub & Recipe Engine</h1>
+              <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Precision Manufacturing Hub & Recipe Engine</h1>
               <Badge color="gold">Beta</Badge>
           </div>
           <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed max-w-xl leading-relaxed mt-2">Manage production stages, assignments, and approvals</p>
@@ -33,24 +33,24 @@ export const ProductionWorkflow = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-6">
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">Active Production Jobs</p>
-              <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{productionStats.active}</p>
+              <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{productionStats.active}</p>
           </div>
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6">
               <p className="text-[10px] text-purple-400 font-bold uppercase tracking-widest mb-2">Pending Curing Batches</p>
-              <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{productionStats.inProgress}</p>
+              <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{productionStats.inProgress}</p>
           </div>
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6">
               <p className="text-[10px] text-amber-400 font-bold uppercase tracking-widest mb-2">Recipe BOM Library</p>
-              <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{recipes.length}</p>
+              <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{recipes.length}</p>
           </div>
           <div className="luxury-card bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-4 sm:p-6 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
               <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-2">Batch Deductions Ledger</p>
-              <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{productionStats.completed}</p>
+              <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{productionStats.completed}</p>
           </div>
       </div>
 
       <div className="mt-8 space-y-4">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Active Formulations Ready for Production</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Active Formulations Ready for Production</h2>
           {recipes.length === 0 ? (
               <div className="bg-black/40 border border-white/10 rounded-3xl p-4 sm:p-12 flex flex-col items-center justify-center min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden">
                   <GlassHaloIcon icon={Clock} color="purple" size="lg" className="mb-4" />
@@ -64,7 +64,7 @@ export const ProductionWorkflow = () => {
                           <div>
                               <div className="flex justify-between items-start mb-4">
                                   <div>
-                                      <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold font-serif tracking-tighter">{recipe.name}</h3>
+                                      <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-display font-medium uppercase tracking-widest">{recipe.name}</h3>
                                       <p className="text-sm sm:text-base text-white sm:text-gray-400 mt-1">SKU: {recipe.sku}</p>
                                   </div>
                                   <Badge color="purple">{recipe.yield} Units</Badge>
@@ -80,7 +80,7 @@ export const ProductionWorkflow = () => {
                           </div>
                           <div className="sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-full mt-4">
                               <Button 
-                                  className="w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl font-bold uppercase tracking-widest text-xs h-12"
+                                  className="w-full bg-[#C5A059] text-white hover:bg-[#b08e4d] rounded-xl uppercase text-xs h-12 font-cta font-semibold tracking-[0.08em]"
                                   onClick={async () => {
                                       try {
                                           const result = await produceBatch(recipe.id, 1);

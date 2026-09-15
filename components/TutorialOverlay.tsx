@@ -95,7 +95,7 @@ export const TutorialOverlay: React.FC = () => {
                 </div>
                 <div>
                     <p className="text-[9px] font-black text-[#C5A059] uppercase tracking-widest">Quick Tour</p>
-                    <h2 className="text-xl font-black font-serif text-gray-900 tracking-tighter">{currentStep.title}</h2>
+                    <h2 className="text-xl text-gray-900 font-display font-medium uppercase tracking-widest">{currentStep.title}</h2>
                 </div>
             </div>
             
@@ -118,7 +118,7 @@ export const TutorialOverlay: React.FC = () => {
                 </div>
                 <Button 
                     onClick={handleNext} 
-                    className="w-auto py-2 px-6 rounded-2xl bg-[#6A2C91] text-white font-black text-[10px] uppercase tracking-widest shadow-xl shadow-purple-100 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
+                    className="w-auto py-2 px-6 rounded-2xl bg-[#6A2C91] text-white text-[10px] uppercase shadow-xl shadow-purple-100 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all font-cta font-semibold tracking-[0.08em]"
                 >
                     {isLast ? "GET STARTED" : "NEXT"} <ChevronRight size={16} />
                 </Button>

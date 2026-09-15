@@ -58,19 +58,19 @@ export const SupplierCommunication = () => {
                       </Select>
                   </div>
               </div>
-              <Button onClick={handleAdd} className="w-full">Log Interaction</Button>
+              <Button onClick={handleAdd} className="w-full font-cta font-semibold uppercase tracking-[0.08em]">Log Interaction</Button>
           </div>
       </Modal>
 
       <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
             <div className="flex items-center gap-3">
-                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Supplier Communication</h1>
+                <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Supplier Communication</h1>
                 <Badge color="gold">Beta</Badge>
             </div>
             <p className="text-sm sm:text-base text-gray-500">Manage all supplier interactions and correspondence</p>
         </div>
-        <Button className="bg-[#6A2C91] text-white" onClick={() => setShowAdd(true)}>
+        <Button className="bg-[#6A2C91] text-white font-cta font-semibold uppercase tracking-[0.08em]" onClick={() => setShowAdd(true)}>
             <MessageSquare size={16} className="mr-2" /> New Communication
         </Button>
       </div>
@@ -92,7 +92,7 @@ export const SupplierCommunication = () => {
               <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                   <MessageSquare size={32} className="text-white sm:text-gray-400" />
               </div>
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-bold font-medium mb-1 font-serif tracking-tighter">No communications found</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-1 font-display font-medium uppercase tracking-widest">No communications found</h3>
               <p className="text-sm sm:text-base text-white sm:text-gray-400">Start a new thread to track supplier conversations</p>
           </div>
       ) : (
@@ -104,7 +104,7 @@ export const SupplierCommunication = () => {
                               {comm.type === 'Email' ? <Mail size={20}/> : comm.type === 'Phone' ? <Phone size={20}/> : <Globe size={20}/>}
                           </div>
                           <div>
-                              <h4 className="font-serif tracking-tighter">{comm.subject}</h4>
+                              <h4 className="font-sans">{comm.subject}</h4>
                               <p className="text-sm sm:text-base text-gray-500">{comm.supplierName} • {comm.date}</p>
                           </div>
                       </div>

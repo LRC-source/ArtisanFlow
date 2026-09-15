@@ -42,7 +42,7 @@ export const BusinessPulseCheck = () => {
                 <div className="p-4 bg-gradient-to-br from-[#1A1A1A] to-[#333333] rounded-full text-[#C5A059] shadow-xl">
                     <Sparkles size={24} strokeWidth={1.5} />
                 </div>
-                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Pulse Check</h1>
+                <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Pulse Check</h1>
             </div>
             <p className="text-sm sm:text-base text-gray-500 font-sans font-light leading-relaxed">Lola AI is establishing operational health benchmarks. Deployment: 60 Seconds.</p>
             
@@ -57,7 +57,7 @@ export const BusinessPulseCheck = () => {
 
         <div className="w-full md:w-1/2">
             <Card className="luxury-card p-4 sm:p-12">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Establish Identity Baseline</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Establish Identity Baseline</h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                     <div className="space-y-2">
@@ -120,13 +120,13 @@ export const BusinessPulseCheck = () => {
                         <div className="p-3 bg-stone-50 rounded-full text-[#6A2C91]">
                             <FileText size={20} strokeWidth={1.5} />
                         </div>
-                        <h4 className="text-[10px] font-medium text-white font-bold uppercase font-serif tracking-tighter">Optional Synthesis Documents</h4>
+                        <h4 className="text-[10px] font-medium text-white font-bold uppercase font-sans">Optional Synthesis Documents</h4>
                     </div>
                     <FileUploader label="Upload Historical Ledger (P&L or Inventory CSV)" />
                 </div>
 
                 <div className="mt-6 sm:mt-8 lg:mt-12 pt-10 border-t border-stone-100">
-                    <h4 className="text-[10px] font-medium text-[#6A2C91] uppercase mb-8 flex items-center gap-3 font-serif tracking-tighter">
+                    <h4 className="text-[10px] font-medium text-[#6A2C91] uppercase mb-8 flex items-center gap-3 font-sans">
                         <Sparkles size={16} className="text-[#C5A059]" strokeWidth={1.5} /> Creator Archetype
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
@@ -166,7 +166,7 @@ export const BusinessPulseCheck = () => {
                 <div className="flex justify-end pt-12 mt-6 sm:mt-8 lg:mt-12 border-t border-stone-100">
                     <Button 
                         onClick={handleAnalyze} 
-                        className="w-full py-3 px-6 bg-[#1A1A1A] text-white border-0 shadow-[0_8px_30px_rgba(0,0,0,0.12)] font-sans font-medium uppercase text-[11px] tracking-[0.2em] rounded-full hover:bg-[#333333] transition-all"
+                        className="w-full py-3 px-6 bg-[#1A1A1A] text-white border-0 shadow-[0_8px_30px_rgba(0,0,0,0.12)] uppercase text-[11px] rounded-full hover:bg-[#333333] transition-all font-cta font-semibold tracking-[0.08em]"
                     >
                         ANALYZE SYSTEM HEALTH <ArrowRight size={18} className="ml-3" strokeWidth={1.5} />
                     </Button>
@@ -185,7 +185,7 @@ export const BusinessPulseCheck = () => {
                 <div className="p-4 bg-gradient-to-br from-[#1A1A1A] to-[#333333] rounded-full text-white shadow-xl">
                     <Sparkles size={24} strokeWidth={1.5} />
                 </div>
-                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Synthesis Complete</h1>
+                <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Synthesis Complete</h1>
             </div>
             
             <div className="mt-6 sm:mt-8 lg:mt-12 flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-medium uppercase tracking-[0.2em]">
@@ -199,7 +199,7 @@ export const BusinessPulseCheck = () => {
 
         <div className="w-full md:w-1/2">
             <Card className="luxury-card text-center pb-16 p-4 sm:p-12">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Manufacturing Integrity Audit</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Manufacturing Integrity Audit</h3>
                 
                 {/* Gauge Visualization */}
                 <div className="relative w-72 h-36 mx-auto mb-8 overflow-hidden">
@@ -213,7 +213,7 @@ export const BusinessPulseCheck = () => {
                     <div className="absolute bottom-0 left-1/2 w-6 h-6 bg-stone-900 rounded-full -translate-x-1/2 translate-y-1/2 z-20 border-4 border-white shadow-xl"></div>
                 </div>
                 
-                <div className="text-5xl sm:text-6xl lg:text-7xl font-black font-serif text-red-600 mb-4 tracking-tighter">85</div>
+                <div className="text-5xl sm:text-6xl lg:text-7xl font-black text-red-600 mb-4 font-sans">85</div>
                 <p className="text-[10px] text-stone-400 font-sans font-medium uppercase tracking-[0.3em]">Synaptic Risk Index</p>
 
                 <div className="mt-6 sm:mt-8 lg:mt-12 bg-red-50/50 border border-red-100/50 rounded-[3rem] p-3.5 sm:p-6 lg:p-12 flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-left relative overflow-hidden group">
@@ -223,7 +223,7 @@ export const BusinessPulseCheck = () => {
                     </div>
                     <div className="relative z-10">
                         <span className="text-[10px] font-sans font-medium uppercase text-red-400 tracking-[0.2em] mb-2 block">Lola's Critical Audit</span>
-                        <h4 className="text-xl sm:text-2xl font-black font-serif text-red-700 mb-3 tracking-tighter">HIGH RISK: BURNOUT PROTOCOL</h4>
+                        <h4 className="text-xl sm:text-2xl font-black text-red-700 mb-3 font-sans">HIGH RISK: BURNOUT PROTOCOL</h4>
                         <p className="text-sm sm:text-base text-red-800/70 font-sans font-light leading-relaxed">
                             Revenue is scaling but operational entropy is critical. You are currently working harder for diminishing returns. Systems are approaching failure.
                         </p>
@@ -233,12 +233,12 @@ export const BusinessPulseCheck = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 mt-6 sm:mt-8 lg:mt-12">
                     <div className="bg-[#6A2C91]/5 p-3.5 sm:p-6 lg:p-12 rounded-[3rem] border border-[#6A2C91]/10 group hover:bg-white transition-all duration-500">
                         <p className="text-[9px] text-[#6A2C91]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Omnichannel Flow</p>
-                        <p className="text-sm sm:text-base font-black font-serif text-[#6A2C91] tracking-tight mb-2">30.0%</p>
+                        <p className="text-sm sm:text-base font-black text-[#6A2C91] tracking-tight mb-2 font-sans">30.0%</p>
                         <p className="text-[10px] text-[#6A2C91]/80 font-sans font-medium uppercase tracking-[0.2em]">Conversion Rate</p>
                     </div>
                     <div className="bg-[#C5A059]/5 p-3.5 sm:p-6 lg:p-12 rounded-[3rem] border border-[#C5A059]/10 group hover:bg-white transition-all duration-500">
                         <p className="text-[9px] text-[#C5A059]/60 font-sans font-medium uppercase tracking-[0.3em] mb-4">Network Liquidity</p>
-                        <p className="text-sm sm:text-base font-black font-serif text-[#C5A059] tracking-tight mb-2">$15.00</p>
+                        <p className="text-sm sm:text-base font-black text-[#C5A059] tracking-tight mb-2 font-sans">$15.00</p>
                         <p className="text-[10px] text-[#C5A059]/80 font-sans font-medium uppercase tracking-[0.2em]">Avg Order Value</p>
                     </div>
                 </div>
@@ -250,7 +250,7 @@ export const BusinessPulseCheck = () => {
                     
                     <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6 text-[#1A1A1A]">
                         <Sparkles size={28} className="text-[#C5A059] animate-pulse" strokeWidth={1.5} />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif tracking-tighter">The Synaptic Cure</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-display font-medium uppercase tracking-widest">The Synaptic Cure</h3>
                     </div>
                     <p className="text-sm sm:text-base text-gray-500 font-sans font-light mb-12 leading-relaxed leading-relaxed">Lola AI has synthesized the following corrective directives for <strong className="font-medium text-gray-900">{formData.industry || 'your business'}</strong>:</p>
 
@@ -263,7 +263,7 @@ export const BusinessPulseCheck = () => {
                         ))}
                     </div>
 
-                    <Button onClick={handleGenerateStrategy} className="w-full py-3 px-6 bg-[#1A1A1A] text-white font-sans font-medium uppercase text-[11px] tracking-[0.2em] shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-full relative overflow-hidden group/btn hover:bg-[#333333] transition-all duration-500">
+                    <Button onClick={handleGenerateStrategy} className="w-full py-3 px-6 bg-[#1A1A1A] text-white uppercase text-[11px] shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-full relative overflow-hidden group/btn hover:bg-[#333333] transition-all duration-500 font-cta font-semibold tracking-[0.08em]">
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
                         <Sparkles size={18} className="mr-3" strokeWidth={1.5} /> SYNTHESIZE MARKETING ARCHITECTURE
                     </Button>

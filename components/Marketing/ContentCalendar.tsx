@@ -85,7 +85,7 @@ export const ContentCalendar = () => {
 
             <Card className="luxury-card border-transparent rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl">
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-3 sm:gap-6">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">{monthName} {year}</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">{monthName} {year}</h2>
                     
                     <div className="flex items-center gap-3 sm:gap-6 w-auto justify-between sm:justify-end">
                         {/* View Toggle */}
@@ -103,8 +103,8 @@ export const ContentCalendar = () => {
                         
                         {/* Nav Controls */}
                         <div className="flex gap-2">
-                            <Button variant="outline" onClick={prevTime} className="h-10 w-10 p-0 rounded-xl border-white/10 text-white hover:bg-white/5 flex justify-center items-center"><ArrowLeft size={16} /></Button>
-                            <Button variant="outline" onClick={nextTime} className="h-10 w-10 p-0 rounded-xl border-white/10 text-white hover:bg-white/5 flex justify-center items-center"><ArrowRight size={16} /></Button>
+                            <Button variant="outline" onClick={prevTime} className="h-10 w-10 p-0 rounded-xl border-white/10 text-white hover:bg-white/5 flex justify-center items-center font-cta font-semibold uppercase tracking-[0.08em]"><ArrowLeft size={16} /></Button>
+                            <Button variant="outline" onClick={nextTime} className="h-10 w-10 p-0 rounded-xl border-white/10 text-white hover:bg-white/5 flex justify-center items-center font-cta font-semibold uppercase tracking-[0.08em]"><ArrowRight size={16} /></Button>
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@ export const ContentCalendar = () => {
                 {viewMode !== 'month' && (
                     <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center opacity-50">
                         <Calendar size={48} className="mx-auto mb-4 text-white" />
-                        <p className="text-sm sm:text-base font-serif text-white leading-relaxed">Detailed {viewMode} view is currently in development.</p>
+                        <p className="text-sm sm:text-base text-white leading-relaxed font-sans">Detailed {viewMode} view is currently in development.</p>
                     </div>
                 )}
             </Card>

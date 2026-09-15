@@ -183,7 +183,7 @@ export const Inventory = () => {
                                 <Package size={120} className="text-white/5" strokeWidth={0.5} />
                             )}
                             <div className="absolute top-4 sm:p-6 lg:p-8 left-8">
-                                <Badge color={selectedItem.type === 'raw' ? 'purple' : 'green'} className="px-5 py-2 uppercase font-sans font-bold tracking-[0.3em] text-[10px] shadow-lg">{selectedItem.type}</Badge>
+                                <Badge color={selectedItem.type === 'raw' ? 'purple' : 'green'} className="px-5 py-2 uppercase text-[10px] shadow-lg font-cta font-semibold tracking-[0.08em]">{selectedItem.type}</Badge>
                             </div>
                         </div>
                     </div>
@@ -200,7 +200,7 @@ export const Inventory = () => {
                                 <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Adjustment Amount (Use negative to subtract)</label>
                                 <Input type="number" value={adjustAmount} onChange={e => setAdjustAmount(Number(e.target.value))} className="mt-2 text-white bg-black/50" />
                             </div>
-                            <Button onClick={handleAdjustStock} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">Confirm Adjustment</Button>
+                            <Button onClick={handleAdjustStock} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-[11px] uppercase transition-all shadow-xl font-cta font-semibold tracking-[0.08em]">Confirm Adjustment</Button>
                         </div>
                     </Modal>
 
@@ -209,7 +209,7 @@ export const Inventory = () => {
                     <div className="p-3.5 sm:p-6 lg:p-12 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
                         <div className="flex items-center gap-3 sm:gap-4 mb-4 text-[#C5A059]">
                             <Zap size={20} strokeWidth={1.5} />
-                            <h4 className="font-serif tracking-tighter">AI Insight</h4>
+                            <h4 className="font-sans">AI Insight</h4>
                         </div>
                         <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">
                             This is currently operating at <span className="font-medium text-white">optimal efficiency</span>. No supply chain disruptions predicted for the next 14 business days.
@@ -220,15 +220,15 @@ export const Inventory = () => {
                 <div className="lg:col-span-8 space-y-6 sm:space-y-10 lg:space-y-12">
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6">
                         <div>
-                            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">{selectedItem.name}</h1>
+                            <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">{selectedItem.name}</h1>
                             <div className="flex items-center gap-3 sm:gap-4">
-                                <p className="text-sm sm:text-base text-white/30 font-mono uppercase tracking-[0.3em] bg-white/5 px-3 py-1 rounded-md border border-white/5">ID: {selectedItem.sku}</p>
+                                <p className="text-sm sm:text-base text-white/30 uppercase tracking-[0.3em] bg-white/5 px-3 py-1 rounded-md border border-white/5 font-serif italic font-light">ID: {selectedItem.sku}</p>
                                 <span className="w-1 h-1 bg-white/10 rounded-full"></span>
-                                <p className="text-sm sm:text-base text-white/30 font-sans uppercase tracking-[0.2em]">Last Audit: Today</p>
+                                <p className="text-sm sm:text-base text-white/30 uppercase tracking-[0.2em] font-serif italic font-light">Last Audit: Today</p>
                             </div>
                         </div>
                         <div className="text-left md:text-right">
-                            <p className="text-sm sm:text-base font-serif text-[#C5A059] tracking-tighter leading-none">{selectedItem.stock}</p>
+                            <p className="text-sm sm:text-base text-[#C5A059] leading-none font-sans">{selectedItem.stock}</p>
                             <p className="text-[12px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.4em] mt-4">{selectedItem.unit} IN VAULT</p>
                         </div>
                     </div>
@@ -240,23 +240,23 @@ export const Inventory = () => {
                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
                               <div className={`luxury-card bg-white/5 border p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 ${hasExpiredLots ? 'border-red-500/50' : 'border-white/10'}`}>
                                   <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Current Stock</p>
-                                  <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{stock} <span className="text-white/50">{selectedItem.unit}</span></p>
+                                  <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{stock} <span className="text-white/50">{selectedItem.unit}</span></p>
                                   {hasExpiredLots && <p className="text-[9px] font-bold text-red-500 mt-1 flex items-center uppercase tracking-widest"><AlertTriangle size={12} className="mr-1"/> Quarantined Lots Detected</p>}
                               </div>
                               <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
                                   <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Value</p>
-                                  <p className="text-sm sm:text-base font-black font-serif text-emerald-400 tracking-tight">${stockValue.toFixed(2)}</p>
-                                  <p className="text-[9px] text-white/50 font-bold tracking-widest uppercase mt-2">@ ${unitCost.toFixed(2)}/{selectedItem.unit}</p>
+                                  <p className="text-sm sm:text-base font-black text-emerald-400 tracking-tight font-sans">${stockValue.toFixed(2)}</p>
+                                  <p className="text-[9px] text-white/50 tracking-widest uppercase mt-2 font-serif italic font-light">@ ${unitCost.toFixed(2)}/{selectedItem.unit}</p>
                               </div>
                               <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
                                   <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Safety Threshold</p>
-                                  <p className="text-sm sm:text-base font-black font-serif text-amber-500 tracking-tight">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-light font-serif tracking-tighter">{selectedItem.unit}</span></p>
+                                  <p className="text-sm sm:text-base font-black text-amber-500 tracking-tight font-sans">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-light font-sans">{selectedItem.unit}</span></p>
                               </div>
                           </div>
                           
                           {selectedItem.isLotTracked && selectedItem.lots && (
                               <div className="mt-10 luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden p-6">
-                                  <h3 className="text-lg font-black font-serif text-white mb-6 uppercase tracking-tighter">Active Lot Traceability</h3>
+                                  <h3 className="text-lg text-white mb-6 uppercase font-display font-medium tracking-widest">Active Lot Traceability</h3>
                                   <div className="overflow-x-auto">
                                       <table className="w-full text-left text-sm">
                                           <thead>
@@ -302,8 +302,8 @@ export const Inventory = () => {
 
                     <div className="space-y-6">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between px-2">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Active Formula Dependency</h3>
-                            <Badge color="gray" className="px-3 py-1 text-[9px] font-sans font-bold uppercase tracking-[0.2em]">{usageInRecipes.length} ACTIVE ITEMS</Badge>
+                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Active Formula Dependency</h3>
+                            <Badge color="gray" className="px-3 py-1 text-[9px] uppercase font-cta font-semibold tracking-[0.08em]">{usageInRecipes.length} ACTIVE ITEMS</Badge>
                         </div>
                         
                         {usageInRecipes.length > 0 ? (
@@ -313,8 +313,8 @@ export const Inventory = () => {
                                         <div className="flex items-center gap-3 sm:gap-6">
                                             <GlassHaloIcon icon={Layers} color="purple" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
                                             <div>
-                                                <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1">{recipe.name}</p>
-                                                <p className="text-[10px] sm:text-base text-white/30 font-sans font-bold uppercase tracking-[0.2em]">Primary Input</p>
+                                                <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1 font-sans">{recipe.name}</p>
+                                                <p className="text-[10px] sm:text-base text-white/30 uppercase tracking-[0.2em] font-serif italic font-light">Primary Input</p>
                                             </div>
                                         </div>
                                         <ChevronRight size={20} className="text-white/20 group-hover:text-white group-hover:translate-x-2 transition-all duration-500" />
@@ -324,7 +324,7 @@ export const Inventory = () => {
                         ) : (
                             <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
                                 <Zap size={48} strokeWidth={0.5} className="text-white/10 mx-auto mb-6" />
-                                <p className="text-sm sm:text-base text-white/30 text-[11px] font-sans font-bold uppercase tracking-[0.3em]">No manufacturing dependencies detected.</p>
+                                <p className="text-sm sm:text-base text-white/30 text-[11px] uppercase tracking-[0.3em] font-serif italic font-light">No manufacturing dependencies detected.</p>
                             </div>
                         )}
                     </div>
@@ -369,7 +369,7 @@ export const Inventory = () => {
                     <Input type="number" placeholder="Unit Cost ($)" value={newItem.unitCost || 0} onChange={e => setNewItem({...newItem, unitCost: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
                     <Input type="number" placeholder="Reorder Point" value={newItem.reorderPoint || 0} onChange={e => setNewItem({...newItem, reorderPoint: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
                 </div>
-                <Button onClick={handleAdd} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-xl">DEPLOY ASSET</Button>
+                <Button onClick={handleAdd} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full text-[11px] uppercase transition-all shadow-xl font-cta font-semibold tracking-[0.08em]">DEPLOY ASSET</Button>
             </div>
         </Modal>
         <Modal isOpen={showMigrateLots} onClose={() => setShowMigrateLots(false)} title="Migrate to Lots">
@@ -436,8 +436,8 @@ export const Inventory = () => {
                 <div className="flex items-center gap-3 sm:gap-6 relative z-10 mb-6 sm:mb-12">
                     <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Materials Matrix</h3>
-                        <p className="text-sm sm:text-base text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{rawMaterials.length} ACTIVE ITEMS</p>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Materials Matrix</h3>
+                        <p className="text-sm sm:text-base text-white/30 uppercase text-[10px] tracking-[0.3em] font-serif italic font-light">{rawMaterials.length} ACTIVE ITEMS</p>
                     </div>
                 </div>
                 <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
@@ -450,8 +450,8 @@ export const Inventory = () => {
                 <div className="flex items-center gap-3 sm:gap-6 relative z-10 mb-6 sm:mb-12">
                     <GlassHaloIcon icon={Package} color="gold" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
                     <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Finished Output</h3>
-                        <p className="text-sm sm:text-base text-white/30 font-sans font-bold uppercase text-[10px] tracking-[0.3em]">{finishedProducts.length} Retail Ready</p>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Finished Output</h3>
+                        <p className="text-sm sm:text-base text-white/30 uppercase text-[10px] tracking-[0.3em] font-serif italic font-light">{finishedProducts.length} Retail Ready</p>
                     </div>
                 </div>
                 <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
@@ -477,15 +477,15 @@ export const Inventory = () => {
                     <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.4em] mb-6 flex items-center gap-3 sm:gap-4">
                         <DollarSign size={16} className="text-[#C5A059]" /> Total Liquid Asset Valuation
                     </p>
-                    <p className="text-sm sm:text-base font-serif text-white tracking-tighter">${getInventoryValue().toLocaleString()}</p>
+                    <p className="text-sm sm:text-base text-white font-sans">${getInventoryValue().toLocaleString()}</p>
                     <div className="mt-6 sm:mt-8 lg:mt-12 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto sm:p-12">
                         <div>
-                            <p className="text-[10px] sm:text-base text-white/30 font-sans font-bold uppercase tracking-[0.2em] mb-2">Raw Value</p>
-                            <p className="text-sm sm:text-base font-black font-serif text-[#6A2C91]">${(getInventoryValue() * 0.4).toLocaleString()}</p>
+                            <p className="text-[10px] sm:text-base text-white/30 uppercase tracking-[0.2em] mb-2 font-serif italic font-light">Raw Value</p>
+                            <p className="text-sm sm:text-base font-black text-[#6A2C91] font-sans">${(getInventoryValue() * 0.4).toLocaleString()}</p>
                         </div>
                         <div>
-                            <p className="text-[10px] sm:text-base text-white/30 font-sans font-bold uppercase tracking-[0.2em] mb-2">Finished Value</p>
-                            <p className="text-sm sm:text-base font-black font-serif text-[#C5A059]">${(getInventoryValue() * 0.6).toLocaleString()}</p>
+                            <p className="text-[10px] sm:text-base text-white/30 uppercase tracking-[0.2em] mb-2 font-serif italic font-light">Finished Value</p>
+                            <p className="text-sm sm:text-base font-black text-[#C5A059] font-sans">${(getInventoryValue() * 0.6).toLocaleString()}</p>
                         </div>
                     </div>
                 </div>
@@ -494,16 +494,16 @@ export const Inventory = () => {
             <div className="lg:col-span-1 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(6,182,212,0.2)]">
                 <div className="bg-[#0A0A0A] border-none backdrop-blur-3xl rounded-[3rem] p-6 sm:p-12 h-full flex flex-col">
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-amber-500 flex items-center gap-3 sm:gap-4 tracking-tighter">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-amber-500 flex items-center gap-3 sm:gap-4 font-display font-medium uppercase tracking-widest">
                             <AlertTriangle size={24} className="text-amber-500" strokeWidth={1} /> Threshold Alerts
                         </h3>
-                        <Badge color="red" className="px-4 py-1.5 text-[9px] font-sans font-bold uppercase tracking-[0.2em]">{lowStockItems.length}</Badge>
+                        <Badge color="red" className="px-4 py-1.5 text-[9px] uppercase font-cta font-semibold tracking-[0.08em]">{lowStockItems.length}</Badge>
                     </div>
                     <div className="space-y-6 flex-1 overflow-y-auto pr-2 scrollbar-hide">
                         {lowStockItems.length > 0 ? lowStockItems.map(item => (
                             <div key={item.id} className="bg-white/5 backdrop-blur-xl p-4 sm:p-6 rounded-[2rem] border border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center shadow-sm hover:shadow-md transition-all duration-500 group cursor-pointer">
                                 <div>
-                                    <p className="text-sm sm:text-base font-serif text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1 group-hover:text-amber-500 transition-colors">{item.name}</p>
+                                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1 group-hover:text-amber-500 transition-colors font-sans">{item.name}</p>
                                     <p className="text-[10px] sm:text-base text-amber-500/60 font-sans font-medium uppercase tracking-[0.3em]">{item.stock} / {item.reorderPoint} Units Remaining</p>
                                 </div>
                                 <ChevronRight size={16} className="text-white/10 group-hover:translate-x-1 transition-transform" />
@@ -609,21 +609,21 @@ export const Inventory = () => {
                 {item.img ? <img src={item.img} className="w-full h-full object-cover" /> : <Box size={32} className="text-white/10" strokeWidth={1} />}
             </div>
             <div>
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white font-black line-clamp-2 mb-2 group-hover:text-[#C5A059] transition-colors tracking-tighter">{item.name}</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white line-clamp-2 mb-2 group-hover:text-[#C5A059] transition-colors font-display font-medium uppercase tracking-widest">{item.name}</h3>
                 <div className="flex items-center gap-3">
-                    <Badge color={tagColor} className="px-3 py-1 text-[8px] font-sans font-bold uppercase tracking-[0.2em]">{isProduct ? 'Product' : 'Material'}</Badge>
-                    <p className="text-[9px] sm:text-base text-white/30 font-mono uppercase tracking-[0.2em]">SKU: {item.sku}</p>
+                    <Badge color={tagColor} className="px-3 py-1 text-[8px] uppercase font-cta font-semibold tracking-[0.08em]">{isProduct ? 'Product' : 'Material'}</Badge>
+                    <p className="text-[9px] sm:text-base text-white/30 uppercase tracking-[0.2em] font-serif italic font-light">SKU: {item.sku}</p>
                 </div>
             </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 pt-8 border-t border-white/5 mt-auto relative z-10">
             <div>
-                <p className="text-[9px] sm:text-base text-white/30 font-sans font-medium uppercase tracking-[0.3em] mb-2">Available</p>
-                <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{item.stock} <span className="text-xs text-white/30 font-sans font-light uppercase">{item.unit}</span></p>
+                <p className="text-[9px] sm:text-base text-white/30 uppercase tracking-[0.3em] mb-2 font-serif italic font-light">Available</p>
+                <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{item.stock} <span className="text-xs text-white/30 font-sans font-light uppercase">{item.unit}</span></p>
             </div>
             <div className="text-right">
-                <p className="text-[9px] sm:text-base text-white/30 font-sans font-medium uppercase tracking-[0.3em] mb-2">Unit Cost</p>
-                <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${item.unitCost.toFixed(2)}</p>
+                <p className="text-[9px] sm:text-base text-white/30 uppercase tracking-[0.3em] mb-2 font-serif italic font-light">Unit Cost</p>
+                <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">${item.unitCost.toFixed(2)}</p>
             </div>
         </div>
     </motion.div>

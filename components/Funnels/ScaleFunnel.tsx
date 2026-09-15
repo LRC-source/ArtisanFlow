@@ -99,7 +99,7 @@ const ScaleFunnel = () => {
             className="max-w-5xl mx-auto"
           >
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">The Cost of Scale is <span className="text-red-500">Chaos</span></h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">The Cost of Scale is <span className="text-red-500">Chaos</span></h2>
               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white sm:text-gray-400">As volume increases, legacy systems break down.</p>
             </div>
 
@@ -125,7 +125,7 @@ const ScaleFunnel = () => {
                   <div className="mb-6 bg-black w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border border-[#333]">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold mb-3 font-serif tracking-tighter">{item.title}</h3>
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed mb-3 font-display font-medium uppercase tracking-widest">{item.title}</h3>
                   <p className="text-sm sm:text-base text-white sm:text-gray-400 leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
@@ -138,7 +138,7 @@ const ScaleFunnel = () => {
       <section className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 relative">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Industrial-Strength <span className="text-[#d4af37]">Control</span></h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Industrial-Strength <span className="text-[#d4af37]">Control</span></h2>
             <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white sm:text-gray-400 max-w-2xl mx-auto">Artisan Flow provides the high-tech infrastructure needed to scale manufacturing without sacrificing margins.</p>
           </div>
 
@@ -149,7 +149,7 @@ const ScaleFunnel = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">
                 <ShieldCheck className="w-6 h-6 text-[#d4af37] mr-3" />
                 Margin Protection Engine (Profit Guard)
               </h3>
@@ -195,7 +195,7 @@ const ScaleFunnel = () => {
               transition={{ duration: 0.6 }}
               className="order-1 lg:order-2"
             >
-              <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">
                 <PackageCheck className="w-6 h-6 text-[#d4af37] mr-3" />
                 Omnichannel Sync & Production Routing
               </h3>
@@ -225,7 +225,7 @@ const ScaleFunnel = () => {
             className="text-center mb-12"
           >
             <p className="text-sm sm:text-base text-[#d4af37] font-semibold tracking-widest uppercase mb-4">Trusted by Industry Leaders</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-bold text-white mb-10 font-serif tracking-tighter">Managing $500M+ in Wholesale GMV</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-10 font-display font-medium uppercase tracking-widest">Managing $500M+ in Wholesale GMV</h2>
           </motion.div>
           
           <div className="grid md:grid-cols-2 gap-3 sm:gap-6 w-full w-full max-w-4xl mx-auto">
@@ -237,7 +237,7 @@ const ScaleFunnel = () => {
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full mr-4 border border-[#d4af37]/50 flex items-center justify-center font-bold text-white">MR</div>
                 <div>
-                  <h4 className="font-serif tracking-tighter">Marcus R.</h4>
+                  <h4 className="font-sans">Marcus R.</h4>
                   <p className="text-sm sm:text-base text-[#d4af37]">VP Operations, Atlas Manufacturing</p>
                 </div>
               </div>
@@ -251,7 +251,7 @@ const ScaleFunnel = () => {
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full mr-4 border border-[#d4af37]/50 flex items-center justify-center font-bold text-white">SL</div>
                 <div>
-                  <h4 className="font-serif tracking-tighter">Sarah L.</h4>
+                  <h4 className="font-sans">Sarah L.</h4>
                   <p className="text-sm sm:text-base text-[#d4af37]">Supply Chain Director, Nexa Goods</p>
                 </div>
               </div>

@@ -113,7 +113,7 @@ export const Orders = () => {
             <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-auto">
                 <Button 
                     variant="outline" 
-                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto" 
+                    className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white text-[11px] py-3 px-6 transition-all shadow-sm w-auto font-cta font-semibold uppercase tracking-[0.08em]" 
                     onClick={handleSync} 
                     disabled={isSyncing}
                 >
@@ -121,7 +121,7 @@ export const Orders = () => {
                 </Button>
                 <Button 
                     variant="primary" 
-                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto" 
+                    className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white text-[11px] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto font-cta font-semibold uppercase tracking-[0.08em]" 
                     onClick={handleExport}
                 >
                     <Download size={16} className="mr-3" /> EXPORT CSV
@@ -154,7 +154,7 @@ export const Orders = () => {
                       <span className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] max-w-[60%] leading-relaxed">{stat.label}</span>
                       <GlassHaloIcon icon={stat.icon} color={stat.color as any} size="lg" className="group-hover:scale-110 transition-transform duration-500 z-10 shrink-0" />
                   </div>
-                  <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{stat.val}</p>
+                  <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{stat.val}</p>
               </div>
             )})}
         </div>
@@ -189,7 +189,7 @@ export const Orders = () => {
                 {filteredOrders.length === 0 ? (
                     <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
                         <Package size={64} className="text-white/10 mx-auto mb-6" strokeWidth={0.5} />
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-serif mb-2 tracking-tighter">No Transactional History</h3>
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed mb-2 font-display font-medium uppercase tracking-widest">No Transactional History</h3>
                         <p className="text-[11px] font-sans font-bold text-white sm:text-white/40 uppercase tracking-[0.3em]">Adjust your scan parameters.</p>
                     </div>
                 ) : (
@@ -200,7 +200,7 @@ export const Orders = () => {
                             <div className="flex flex-col lg:flex-col sm:flex-col sm:flex-row justify-between gap-3 sm:gap-6 relative z-10">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 sm:gap-4 mb-8">
-                                        <Badge color={order.status === 'Processing' ? 'blue' : order.status === 'Shipped' ? 'purple' : 'green'} className="uppercase font-sans font-bold text-[10px] tracking-[0.3em] px-4 py-1.5 shadow-sm">
+                                        <Badge color={order.status === 'Processing' ? 'blue' : order.status === 'Shipped' ? 'purple' : 'green'} className="uppercase text-[10px] px-4 py-1.5 shadow-sm font-cta font-semibold tracking-[0.08em]">
                                             {order.status}
                                         </Badge>
                                         <span className="text-[11px] font-bold font-sans text-white sm:text-white/40 uppercase tracking-[0.3em]">{order.platform}</span>
@@ -211,11 +211,11 @@ export const Orders = () => {
                                         <div className="space-y-4">
                                             <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Customer Node</p>
                                             <div className="flex items-center gap-3 sm:gap-4">
-                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[1rem] bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059] font-serif text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black border border-[#C5A059]/30 shadow-inner tracking-tighter">
+                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[1rem] bg-[#C5A059]/20 flex items-center justify-center text-[#C5A059] text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black border border-[#C5A059]/30 shadow-inner font-sans">
                                                     {order.customer.charAt(0)}
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{order.customer}</p>
+                                                    <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{order.customer}</p>
                                                     <p className="text-[10px] text-white sm:text-white/40 font-sans uppercase tracking-[0.2em] mt-1">{order.location}</p>
                                                 </div>
                                             </div>
@@ -235,7 +235,7 @@ export const Orders = () => {
 
                                         <div className="space-y-4 lg:text-right">
                                             <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Settlement</p>
-                                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">${order.total.toFixed(2)}</p>
+                                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">${order.total.toFixed(2)}</p>
                                             <p className="text-[9px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 inline-block">Fully Captured</p>
                                         </div>
                                     </div>
@@ -244,7 +244,7 @@ export const Orders = () => {
                                 <div className="flex lg:flex-col justify-end items-end gap-3 sm:gap-4 min-w-[200px]">
                                     {order.status === 'Processing' ? (
                                         <Button 
-                                            className="w-full bg-[#6A2C91] text-white hover:bg-[#5a257a] w-auto mx-auto py-1 px-3 text-[10px] text-[11px] font-sans font-bold tracking-[0.3em] rounded-2xl shadow-xl shadow-[#6A2C91]/20 transition-all flex items-center justify-center gap-2 group/btn"
+                                            className="w-full bg-[#6A2C91] text-white hover:bg-[#5a257a] w-auto mx-auto py-1 px-3 text-[10px] text-[11px] rounded-2xl shadow-xl shadow-[#6A2C91]/20 transition-all flex items-center justify-center gap-2 group/btn font-cta font-semibold uppercase tracking-[0.08em]"
                                             onClick={() => handleProcess(order.id)}
                                         >
                                             AUTHORIZE FLOW <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />

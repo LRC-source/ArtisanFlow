@@ -224,7 +224,7 @@ export const SuperAdmin = () => {
                 badge="Master Override Active"
             >
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
-                    <Button onClick={handleSync} className="bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-[11px] py-3 px-6 rounded-full px-10 tracking-[0.3em] uppercase shadow-2xl shadow-red-500/20 transition-all flex items-center gap-3">
+                    <Button onClick={handleSync} className="bg-red-500 hover:bg-red-600 text-white text-[11px] py-3 px-6 rounded-full px-10 uppercase shadow-2xl shadow-red-500/20 transition-all flex items-center gap-3 font-cta font-semibold tracking-[0.08em]">
                         {isSyncing ? <Loader2 size={16} className="animate-spin" /> : <Database size={16} />} EXPORT MASTER LEDGER
                     </Button>
                 </div>
@@ -284,7 +284,7 @@ export const SuperAdmin = () => {
                                         <td className="p-4 sm:p-6 font-mono text-xs text-white sm:text-white/50">{u.id}</td>
                                         <td className="p-4 sm:p-6 text-white/90">{u.email}</td>
                                         <td className="p-4 sm:p-6">
-                                            <Badge color={u.tier === 'Pro Artisan' ? 'gold' : u.tier === 'Basic Artisan' ? 'purple' : 'gray'} className="text-[9px] uppercase tracking-widest px-3 py-1">
+                                            <Badge color={u.tier === 'Pro Artisan' ? 'gold' : u.tier === 'Basic Artisan' ? 'purple' : 'gray'} className="text-[9px] uppercase px-3 py-1 font-cta font-semibold tracking-[0.08em]">
                                                 {u.tier}
                                             </Badge>
                                         </td>
@@ -313,9 +313,9 @@ export const SuperAdmin = () => {
                         <div className="p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-3 sm:gap-4">
                             <GlassHaloIcon icon={Database} color="gold" size="sm" className="shrink-0 mt-1" />
                             <div>
-                                <h4 className="text-white font-serif text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg mb-1 tracking-tighter">Google Sheets Sync</h4>
+                                <h4 className="text-white text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg mb-1 font-sans">Google Sheets Sync</h4>
                                 <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light mb-4">Export Super-Admin matrix automatically to a master Google Sheet.</p>
-                                <Button onClick={handleSync} className="bg-[#C5A059]/20 hover:bg-[#C5A059]/30 text-[#C5A059] border border-[#C5A059]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
+                                <Button onClick={handleSync} className="bg-[#C5A059]/20 hover:bg-[#C5A059]/30 text-[#C5A059] border border-[#C5A059]/30 text-[10px] uppercase rounded-xl px-6 h-10 transition-all font-cta font-semibold tracking-[0.08em]">
                                     {isSyncing ? 'Authenticating...' : 'Authenticate Sheet'}
                                 </Button>
                             </div>
@@ -323,9 +323,9 @@ export const SuperAdmin = () => {
                         <div className="p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-3 sm:gap-4">
                             <GlassHaloIcon icon={Server} color="purple" size="sm" className="shrink-0 mt-1" />
                             <div>
-                                <h4 className="text-white font-serif text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg mb-1 tracking-tighter">Firebase Core Integration</h4>
+                                <h4 className="text-white text-sm sm:text-base lg:text-xl sm:text-slate-400 leading-relaxed sm:text-lg mb-1 font-sans">Firebase Core Integration</h4>
                                 <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light mb-4">Manage remote config and user authentication nodes.</p>
-                                <Button onClick={handleVerify} className="bg-[#6A2C91]/20 hover:bg-[#6A2C91]/30 text-[#6A2C91] border border-[#6A2C91]/30 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xl px-6 h-10 transition-all">
+                                <Button onClick={handleVerify} className="bg-[#6A2C91]/20 hover:bg-[#6A2C91]/30 text-[#6A2C91] border border-[#6A2C91]/30 text-[10px] uppercase rounded-xl px-6 h-10 transition-all font-cta font-semibold tracking-[0.08em]">
                                     {isVerifying ? 'Verifying...' : 'Verify Connection'}
                                 </Button>
                             </div>
@@ -373,8 +373,8 @@ export const SuperAdmin = () => {
                         ) : globalIntegrations.map((integration, idx) => (
                             <div key={integration.platform} className="p-5 bg-white/5 border border-white/10 rounded-2xl">
                                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-                                    <h4 className="text-white font-serif text-sm sm:text-base leading-relaxed tracking-tighter">{integration.platform}</h4>
-                                    <Badge color={integration.status === 'Active' ? 'green' : 'gray'} className="text-[9px] uppercase tracking-widest px-2 py-1">
+                                    <h4 className="text-white text-sm sm:text-base leading-relaxed font-sans">{integration.platform}</h4>
+                                    <Badge color={integration.status === 'Active' ? 'green' : 'gray'} className="text-[9px] uppercase px-2 py-1 font-cta font-semibold tracking-[0.08em]">
                                         {integration.status}
                                     </Badge>
                                 </div>
@@ -483,7 +483,7 @@ export const SuperAdmin = () => {
                             {['Free Trial', 'Basic Artisan', 'Pro Artisan'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
                         </Select>
                     </div>
-                    <Button onClick={handleInvite} className="w-full bg-[#6A2C91] hover:bg-[#6A2C91]/80 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-xl border border-[#6A2C91]/50" disabled={isInviting}>
+                    <Button onClick={handleInvite} className="w-full bg-[#6A2C91] hover:bg-[#6A2C91]/80 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-xl border border-[#6A2C91]/50 font-cta font-semibold uppercase tracking-[0.08em]" disabled={isInviting}>
                         {isInviting ? <Loader2 size={16} className="animate-spin mx-auto" /> : 'Send Protocol Invitation'}
                     </Button>
                 </div>
@@ -521,7 +521,7 @@ export const SuperAdmin = () => {
                                 {['Active', 'Pending', 'Suspended'].map(opt => <option key={opt} className="bg-black text-white">{opt}</option>)}
                             </Select>
                         </div>
-                        <Button onClick={handleSaveEdit} className="w-full bg-[#C5A059] hover:bg-[#C5A059]/80 text-black w-auto mx-auto py-1 px-3 text-[10px] rounded-xl border border-[#C5A059]/50">
+                        <Button onClick={handleSaveEdit} className="w-full bg-[#C5A059] hover:bg-[#C5A059]/80 text-black w-auto mx-auto py-1 px-3 text-[10px] rounded-xl border border-[#C5A059]/50 font-cta font-semibold uppercase tracking-[0.08em]">
                             Save Configuration
                         </Button>
                     </div>

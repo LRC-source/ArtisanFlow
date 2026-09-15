@@ -96,7 +96,7 @@ export const Dashboard = () => {
                 <Button 
                     onClick={loadDemoData}
                     variant="outline"
-                    className="border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 rounded-full px-6 py-3 font-sans font-bold text-[11px] uppercase tracking-[0.1em] transition-all flex items-center gap-2"
+                    className="border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 rounded-full px-6 py-3 text-[11px] uppercase transition-all flex items-center gap-2 font-cta font-semibold tracking-[0.08em]"
                 >
                     <Sparkles size={14} /> Explore with Demo Data
                 </Button>
@@ -113,8 +113,8 @@ export const Dashboard = () => {
           >
               <div className="flex items-center justify-between mb-4">
                   <div>
-                      <h3 className="text-xl font-serif font-black text-white tracking-tighter">Get Started</h3>
-                      <p className="text-xs text-white/40 mt-1">{setupSteps.filter(s => s.done).length} of {setupSteps.length} steps complete</p>
+                      <h3 className="text-xl text-white font-display font-medium uppercase tracking-widest">Get Started</h3>
+                      <p className="text-xs text-white/40 mt-1 font-serif italic font-light">{setupSteps.filter(s => s.done).length} of {setupSteps.length} steps complete</p>
                   </div>
                   <button
                     onClick={dismissSetup}
@@ -135,7 +135,7 @@ export const Dashboard = () => {
                           </div>
                           <div className="flex-1 min-w-0">
                               <h4 className={`text-sm font-bold ${step.done ? 'text-white/50 line-through' : 'text-white'}`}>{step.title}</h4>
-                              <p className="text-xs text-white/30 truncate">{step.desc}</p>
+                              <p className="text-xs text-white/30 truncate font-serif italic font-light">{step.desc}</p>
                           </div>
                           {!step.done && <ArrowRight size={16} className="text-white/20 group-hover:text-[#C5A059] transition-colors flex-shrink-0" />}
                       </div>
@@ -195,7 +195,7 @@ export const Dashboard = () => {
           <div className="luxury-card bg-[#0A0A0A] border-none p-4 sm:p-12 rounded-[3rem] relative overflow-hidden group w-full h-full">
               <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-12">
               <div>
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Revenue Trajectory</h3>
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Revenue Trajectory</h3>
                   <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.2em] mt-2">7-Day rolling performance audit</p>
               </div>
               <GlassHaloIcon icon={TrendingUp} color="gold" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
@@ -206,8 +206,8 @@ export const Dashboard = () => {
                     <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-white/20">
                         <TrendingUp size={32} />
                     </div>
-                    <p className="text-white/60 font-medium">Awaiting first sale data...</p>
-                    <p className="text-white/40 text-sm">Your revenue chart will appear here once you process an order.</p>
+                    <p className="text-white/60 font-serif italic font-light">Awaiting first sale data...</p>
+                    <p className="text-white/40 text-sm font-serif italic font-light">Your revenue chart will appear here once you process an order.</p>
                 </div>
             ) : (
             <ResponsiveContainer width="100%" height="100%">
@@ -245,7 +245,7 @@ export const Dashboard = () => {
           <div>
               <div className="flex items-center gap-5 mb-10 relative z-10">
                 <GlassHaloIcon icon={Zap} color="gold" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
-                <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">Synaptic Insights</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Synaptic Insights</h3>
               </div>
               <div className="space-y-10 relative z-10">
                 <div className="group/item">
@@ -297,7 +297,7 @@ const MainPortal = ({ title, path, icon, color, shadow, delay, iconColor }: any)
                   <GlassHaloIcon icon={icon} color={iconColor} size="lg" className="w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-10 [&>svg]:h-10" />
               </div>
               
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-serif font-bold text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:text-white transition-colors tracking-tighter">
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:text-white transition-colors font-display font-medium uppercase tracking-widest">
                   {title}
               </h3>
               

@@ -88,7 +88,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                             <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between bg-black/20">
                                 <div className="flex items-center gap-3">
                                     <GlassHaloIcon icon={HelpCircle} color="gold" size="md" />
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-bold font-serif tracking-tighter">ArtisanFlow Support</h3>
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-display font-medium uppercase tracking-widest">ArtisanFlow Support</h3>
                                 </div>
                                 <button onClick={onClose} className="text-white sm:text-white/50 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5">
                                     <X size={20} />
@@ -100,7 +100,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                                     <div className="w-12 h-12 sm:w-20 sm:h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-4">
                                         <CheckCircle size={40} />
                                     </div>
-                                    <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-bold text-white font-serif tracking-tighter">Ticket Submitted</h4>
+                                    <h4 className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black font-bold text-white font-sans">Ticket Submitted</h4>
                                     <p className="text-sm sm:text-base text-white sm:text-white/50 max-w-xs mx-auto">Your request has been routed to our support architects. We will be in touch shortly.</p>
                                 </div>
                             ) : (
@@ -149,7 +149,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ isOpen, onClose }) =
                                         <Button 
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="bg-[#C5A059] hover:bg-[#b08d4a] text-black px-6 w-auto mx-auto py-1 px-3 text-[10px] rounded-xl font-bold tracking-wider uppercase flex items-center justify-center gap-2"
+                                            className="bg-[#C5A059] hover:bg-[#b08d4a] text-black px-6 w-auto mx-auto py-1 px-3 text-[10px] rounded-xl uppercase flex items-center justify-center gap-2 font-cta font-semibold tracking-[0.08em]"
                                         >
                                             {isSubmitting ? (
                                                 <>Sending...</>

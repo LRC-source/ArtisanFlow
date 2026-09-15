@@ -71,7 +71,7 @@ export const BudgetGuard: React.FC = () => {
                     <button onClick={() => navigate('/finance')} className="flex items-center gap-2 text-white sm:text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest mb-4 transition-colors">
                         <ArrowLeft size={16} /> Back to Finance
                     </button>
-                    <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
+                    <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">
                         <ShieldCheck className="text-[#6A2C91]" size={36} /> Budget Guard™
                     </h1>
                     <p className="text-sm sm:text-base text-gray-500 font-medium">Synaptic Financial Steering: Real-time analysis for growth capitalization.</p>
@@ -106,7 +106,7 @@ export const BudgetGuard: React.FC = () => {
                             </div>
                             <Button 
                                 onClick={handleSaveBudget}
-                                className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] font-black uppercase text-xs tracking-[0.2em] rounded-2xl shadow-xl shadow-purple-100"
+                                className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] uppercase text-xs rounded-2xl shadow-xl shadow-purple-100 font-cta font-semibold tracking-[0.08em]"
                             >
                                 COMMIT TARGET TO VAULT
                             </Button>
@@ -130,7 +130,7 @@ export const BudgetGuard: React.FC = () => {
                          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                          <div className="flex items-center gap-3 mb-6">
                             <Zap size={20} className="text-amber-400" />
-                            <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic tracking-tighter font-serif">Synaptic Analysis</h4>
+                            <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic font-sans">Synaptic Analysis</h4>
                          </div>
                          {isAnalyzing ? (
                              <div className="flex flex-col items-center py-10">
@@ -146,7 +146,7 @@ export const BudgetGuard: React.FC = () => {
                                  </div>
                                  <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center text-[10px] font-black uppercase tracking-widest text-stone-400">
                                      <span>Priority: <span className="text-amber-400">{aiAnalysis.strategicPriority}</span></span>
-                                     <span className="flex items-center gap-1">Risk: <Badge color={aiAnalysis.riskLevel === 'Low' ? 'green' : 'gold'} className="text-[8px]">{aiAnalysis.riskLevel}</Badge></span>
+                                     <span className="flex items-center gap-1">Risk: <Badge color={aiAnalysis.riskLevel === 'Low' ? 'green' : 'gold'} className="text-[8px] font-cta font-semibold uppercase tracking-[0.08em]">{aiAnalysis.riskLevel}</Badge></span>
                                  </div>
                              </div>
                          ) : (
@@ -169,7 +169,7 @@ export const BudgetGuard: React.FC = () => {
                                         </p>
                                         <Button 
                                             onClick={applyAISuggestion}
-                                            className="mt-6 bg-white border border-purple-200 text-[#6A2C91] w-auto mx-auto py-1 px-3 text-[10px] rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm hover:shadow-md"
+                                            className="mt-6 bg-white border border-purple-200 text-[#6A2C91] w-auto mx-auto py-1 px-3 text-[10px] rounded-xl text-[10px] uppercase shadow-sm hover:shadow-md font-cta font-semibold tracking-[0.08em]"
                                         >
                                             APPLY SUGGESTION
                                         </Button>
@@ -210,7 +210,7 @@ export const BudgetGuard: React.FC = () => {
                                         </div>
                                         <div>
                                             <p className="text-sm sm:text-base font-black text-gray-900 uppercase tracking-tight">{item.label}</p>
-                                            <Badge color={item.priority === 'High' ? 'purple' : 'gray'} className="text-[8px] font-black px-2 mt-1">{item.priority} Priority</Badge>
+                                            <Badge color={item.priority === 'High' ? 'purple' : 'gray'} className="text-[8px] px-2 mt-1 font-cta font-semibold uppercase tracking-[0.08em]">{item.priority} Priority</Badge>
                                         </div>
                                     </div>
                                     <div className="text-right">
@@ -225,7 +225,7 @@ export const BudgetGuard: React.FC = () => {
                     <div className="bg-amber-50 border border-amber-100 p-4 sm:p-6 rounded-3xl flex items-start gap-3 sm:gap-4">
                         <div className="p-3 bg-amber-100 text-amber-600 rounded-2xl shadow-sm"><Info size={24}/></div>
                         <div>
-                            <h4 className="font-serif tracking-tighter">AI Financial Guardrail Active</h4>
+                            <h4 className="font-sans">AI Financial Guardrail Active</h4>
                             <p className="text-sm sm:text-base text-amber-800 font-medium leading-relaxed">
                                 Budget Guard™ is currently tracking your <strong>Inventory Burn Rates</strong>. It will automatically notify you via Lola if your current spending trajectory risks a material stock-out before the next planned restock.
                             </p>

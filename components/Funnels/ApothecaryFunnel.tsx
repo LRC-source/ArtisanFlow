@@ -24,7 +24,7 @@ const ApothecaryFunnel = () => {
         <div className="max-w-7xl mx-auto px-6 h-20 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
           <div className="flex items-center gap-2">
             <Leaf className="w-6 h-6 text-emerald-500" />
-            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-serif tracking-tighter">Artisan Flow</span>
+            <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-sans">Artisan Flow</span>
           </div>
           <a 
             href="/auth?tier=Artisan%20Flow%20Basic"
@@ -90,7 +90,7 @@ const ApothecaryFunnel = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-light mb-6 font-serif tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-display font-medium uppercase tracking-widest">
                 The formulation chaos <br />
                 <span className="font-semibold text-emerald-400">stifling your growth.</span>
               </h2>
@@ -109,7 +109,7 @@ const ApothecaryFunnel = () => {
                       <item.icon className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium mb-1 font-serif tracking-tighter">{item.title}</h4>
+                      <h4 className="text-white font-medium mb-1 font-sans">{item.title}</h4>
                       <p className="text-sm sm:text-base text-gray-500 font-light">{item.desc}</p>
                     </div>
                   </li>
@@ -139,7 +139,7 @@ const ApothecaryFunnel = () => {
       <section className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center w-full w-full max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-light mb-6 font-serif tracking-tighter">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-display font-medium uppercase tracking-widest">
               Clinical precision for <br />
               <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-200">botanical artisans.</span>
             </h2>
@@ -177,7 +177,7 @@ const ApothecaryFunnel = () => {
                 <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-2xl bg-emerald-900/30 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
                   <feature.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-medium mb-3 font-serif tracking-tighter">{feature.title}</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed mb-3 font-display font-medium uppercase tracking-widest">{feature.title}</h3>
                 <p className="text-sm sm:text-base text-white sm:text-gray-400 font-light leading-relaxed">
                   {feature.desc}
                 </p>
@@ -192,7 +192,7 @@ const ApothecaryFunnel = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-[250px] sm:h-96 bg-emerald-900/20 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="w-full w-full max-w-4xl mx-auto px-6 relative z-10 text-center">
           <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500/50 mx-auto mb-8" />
-          <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-light text-white mb-10 leading-relaxed font-serif tracking-tighter">
+          <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-10 leading-relaxed font-display font-medium uppercase tracking-widest">
             "Artisan Flow completely transformed how we manage our apothecary lines. The ability to scale our complex herbal serums precisely has saved us thousands in wasted ingredients. It's the clinical backbone our botanical brand needed."
           </h3>
           <div className="flex items-center justify-center gap-3 sm:gap-4">
@@ -221,7 +221,7 @@ const ApothecaryFunnel = () => {
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1615397323283-7c337b5879ea?auto=format&fit=crop&q=80&w=1200')] opacity-5 bg-cover bg-center"></div>
             
             <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-light text-white mb-6 font-serif tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-6 font-display font-medium uppercase tracking-widest">
                 Ready to elevate your formulations?
               </h2>
               <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed text-white sm:text-gray-400 font-light mb-10 max-w-2xl mx-auto">

@@ -306,12 +306,12 @@ const recipePayload: any = {
             <button onClick={() => navigate('/recipes')} className="text-white sm:text-gray-400 hover:text-[#6A2C91] font-black text-xs uppercase tracking-widest flex items-center gap-2 mb-4 transition-colors">
                 <ArrowLeft size={16} /> BACK TO RECIPE LAB
             </button>
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">{isEditing ? 'Formula Revision' : 'Formula Architect'}</h1>
+            <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">{isEditing ? 'Formula Revision' : 'Formula Architect'}</h1>
             <p className="text-sm sm:text-base text-gray-500 font-medium">{isEditing ? 'Optimizing existing Bill of Materials for margin integrity.' : 'Constructing Bills of Materials with Synaptic Cost Reconciliation.'}</p>
         </div>
         <div className="sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-auto mt-4 md:mt-0">
             <Button 
-                className="w-auto bg-[#6A2C91] text-white font-black text-[10px] tracking-widest w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-2xl shadow-xl shadow-purple-100" 
+                className="w-auto bg-[#6A2C91] text-white text-[10px] w-auto mx-auto py-1 px-3 text-[10px] px-10 rounded-2xl shadow-xl shadow-purple-100 font-cta font-semibold uppercase tracking-[0.08em]" 
                 onClick={handleSave}
             >
                 {isEditing ? <RefreshCw size={18} className="mr-2" /> : <Save size={18} className="mr-2" />}
@@ -407,7 +407,7 @@ const recipePayload: any = {
              <div className="space-y-8 mt-4 relative z-10">
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-50 pb-4">
                    <span className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest">Material Overhead</span>
-                   <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-black text-gray-900 tracking-tighter font-serif">${(totalCost - laborCost).toFixed(2)}</span>
+                   <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg font-black text-gray-900 font-sans">${(totalCost - laborCost).toFixed(2)}</span>
                 </div>
                 
                 <div className="space-y-1">
@@ -435,15 +435,15 @@ const recipePayload: any = {
                 <div className="pt-8 border-t-2 border-stone-50 space-y-6">
                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
                       <span className="text-[11px] font-black text-gray-900 uppercase tracking-widest">Total Formula Cost</span>
-                      <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black text-[#6A2C91] tracking-tighter font-serif">${totalCost.toFixed(2)}</span>
+                      <span className="text-sm sm:text-base md:text-3xl sm:text-5xl lg:text-7xl font-black text-[#6A2C91] font-sans">${totalCost.toFixed(2)}</span>
                    </div>
                    <div className="bg-emerald-50 p-4 sm:p-6 rounded-3xl border border-emerald-100">
                       <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">True Unit Cost (COGS)</p>
-                      <p className="text-sm sm:text-base font-black font-black text-emerald-700 tracking-tighter">${costPerUnit.toFixed(2)}</p>
+                      <p className="text-sm sm:text-base font-black font-black text-emerald-700">${costPerUnit.toFixed(2)}</p>
                    </div>
                    <div className="bg-amber-50 p-4 sm:p-6 rounded-3xl border border-amber-100">
                       <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Margin Guard™ Rec (2.2x)</p>
-                      <p className="text-sm sm:text-base font-black font-black text-amber-700 tracking-tighter">${targetRetail.toFixed(2)}</p>
+                      <p className="text-sm sm:text-base font-black font-black text-amber-700">${targetRetail.toFixed(2)}</p>
                    </div>
                 </div>
 
@@ -457,7 +457,7 @@ const recipePayload: any = {
           <div className="bg-stone-900 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] text-white">
               <div className="flex items-center gap-3 mb-4">
                   <Zap size={18} className="text-amber-400" />
-                  <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic font-serif tracking-tighter">AI Stress Test</h4>
+                  <h4 className="text-sm sm:text-base leading-relaxed font-black uppercase italic font-sans">AI Stress Test</h4>
               </div>
               <p className="text-sm sm:text-base text-stone-400 leading-relaxed font-medium mb-6">
                   {materials.length === 0 ? (

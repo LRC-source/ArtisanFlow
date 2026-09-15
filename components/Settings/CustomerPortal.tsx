@@ -22,13 +22,13 @@ export const CustomerPortal = () => {
                 <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white sm:text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
                     <ArrowLeft size={16} /> Back to Command Center
                 </button>
-                <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Wholesale Portal</h1>
+                <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Wholesale Portal</h1>
                 <p className="text-sm sm:text-base text-white sm:text-white/40 font-sans font-light leading-relaxed">Managing the external client interface architecture.</p>
             </div>
             
             <div className="w-full md:w-2/3 lg:w-1/2">
                 <div className="luxury-card bg-black/40 backdrop-blur-xl border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem]">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Portal Matrix</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Portal Matrix</h2>
                     <div className="space-y-8">
                         <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-6 p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/10 group hover:bg-white/10 hover:border-[#6A2C91]/30 transition-all duration-500">
                             <div className="flex items-center gap-3 sm:gap-6">
@@ -36,11 +36,11 @@ export const CustomerPortal = () => {
                                     <ShoppingBag size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-serif tracking-tighter">Custom Domain Active</h4>
+                                    <h4 className="font-sans">Custom Domain Active</h4>
                                     <p className="text-[10px] text-[#C5A059] font-sans font-bold tracking-widest mt-1 uppercase">wholesale.herbalisticwellness.com</p>
                                 </div>
                             </div>
-                            <Button variant="outline" className="text-[10px] h-10 px-6 font-sans font-bold tracking-widest uppercase rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 hover:text-white transition-colors">RE-ROUTE</Button>
+                            <Button variant="outline" className="text-[10px] h-10 px-6 uppercase rounded-full border-white/20 text-white sm:text-white/70 hover:bg-white/10 hover:text-white transition-colors font-cta font-semibold tracking-[0.08em]">RE-ROUTE</Button>
                         </div>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
@@ -63,7 +63,7 @@ export const CustomerPortal = () => {
                             <textarea className="w-full bg-white/5 border border-white/10 text-white rounded-2xl p-4 sm:p-6 text-sm focus:bg-white/10 focus:border-[#6A2C91]/50 outline-none h-32 resize-none shadow-sm font-sans font-light transition-all" defaultValue="Welcome to our wholesale catalog. Established manufacturing nodes only." />
                         </div>
                         
-                        <Button className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full font-sans font-bold text-[10px] uppercase tracking-widest hover:bg-[#5a257a] transition-colors mt-4">UPDATE PORTAL PARAMETERS</Button>
+                        <Button className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-[10px] uppercase hover:bg-[#5a257a] transition-colors mt-4 font-cta font-semibold tracking-[0.08em]">UPDATE PORTAL PARAMETERS</Button>
                     </div>
                 </div>
             </div>

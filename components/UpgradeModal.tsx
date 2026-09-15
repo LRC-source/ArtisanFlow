@@ -52,7 +52,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 <Lock size={32} className="text-[#C5A059]" />
               </div>
               <div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">
                   System Architecture Locked
                 </h2>
                 <p className="text-[11px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Tier Limit Reached</p>
@@ -68,18 +68,18 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-10">
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 text-center shadow-sm">
                     <TrendingUp size={24} className="text-emerald-400 mx-auto mb-3" />
-                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed font-serif mb-1">+24%</p>
-                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-bold">Avg. Margin Increase</p>
+                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed mb-1 font-sans">+24%</p>
+                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-serif italic font-light">Avg. Margin Increase</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 text-center shadow-sm border-t-2 border-t-[#C5A059]">
                     <ShieldCheck size={24} className="text-[#C5A059] mx-auto mb-3" />
-                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed font-serif mb-1">Infinite</p>
-                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-bold">Vault Capacity</p>
+                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed mb-1 font-sans">Infinite</p>
+                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-serif italic font-light">Vault Capacity</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 text-center shadow-sm">
                     <Zap size={24} className="text-cyan-400 mx-auto mb-3" />
-                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed font-serif mb-1">24/7</p>
-                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-bold">Lola AI Assistance</p>
+                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed mb-1 font-sans">24/7</p>
+                    <p className="text-sm sm:text-base text-white/30 text-[9px] uppercase tracking-widest font-serif italic font-light">Lola AI Assistance</p>
                 </div>
             </div>
             
@@ -87,7 +87,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               <Button 
                 variant="ghost" 
                 onClick={onClose}
-                className="flex-1 py-3 px-6 text-white sm:text-white/50 hover:text-white hover:bg-white/5 rounded-full uppercase tracking-[0.2em] text-[11px] font-bold"
+                className="flex-1 py-3 px-6 text-white sm:text-white/50 hover:text-white hover:bg-white/5 rounded-full uppercase text-[11px] font-cta font-semibold tracking-[0.08em]"
               >
                 MAINTAIN CURRENT TIER
               </Button>

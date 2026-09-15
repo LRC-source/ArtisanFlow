@@ -96,12 +96,12 @@ export const SupplierManager: React.FC = () => {
               </div>
               
               <div className="space-y-4 pt-4 border-t border-stone-50">
-                  <Button onClick={handleCommit} className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl font-black text-xs tracking-widest shadow-xl uppercase transition-all hover:scale-[1.02]">
+                  <Button onClick={handleCommit} className="w-full bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl text-xs shadow-xl uppercase transition-all hover:scale-[1.02] font-cta font-semibold tracking-[0.08em]">
                       {isEditing ? <><RefreshCw size={18} className="mr-2"/> UPDATE VENDOR NODE</> : <><ShieldCheck size={18} className="mr-2"/> AUTHORIZE VENDOR</>}
                   </Button>
                   
                   {isEditing && (
-                      <Button variant="danger" onClick={handleDelete} className="w-full w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl font-black text-[10px] tracking-widest uppercase opacity-70 hover:opacity-100 transition-all">
+                      <Button variant="danger" onClick={handleDelete} className="w-full w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl text-[10px] uppercase opacity-70 hover:opacity-100 transition-all font-cta font-semibold tracking-[0.08em]">
                           <Trash2 size={14} className="mr-2"/> DELETE VENDOR NODE
                       </Button>
                   )}
@@ -114,10 +114,10 @@ export const SupplierManager: React.FC = () => {
             <button onClick={() => navigate('/inventory')} className="flex items-center gap-2 text-white sm:text-gray-400 hover:text-[#6A2C91] mb-4 font-black text-xs uppercase tracking-widest transition-colors">
                 <ArrowLeft size={16} /> Back to Resource Hub
             </button>
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Supplier Hub</h1>
+            <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Supplier Hub</h1>
             <p className="text-sm sm:text-base text-gray-500 font-medium">Supply Chain Integrity: Managing External Nodes & Sourcing Logic.</p>
         </div>
-        <Button className="bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl font-black text-[10px] tracking-widest px-8 shadow-xl" onClick={handleOpenCreate}>
+        <Button className="bg-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl text-[10px] px-8 shadow-xl font-cta font-semibold uppercase tracking-[0.08em]" onClick={handleOpenCreate}>
             <Plus size={16} className="mr-2" /> REGISTER VENDOR
         </Button>
       </div>
@@ -134,9 +134,9 @@ export const SupplierManager: React.FC = () => {
                <div className="w-12 h-12 sm:w-20 sm:h-20 bg-stone-50 rounded-3xl flex items-center justify-center text-stone-200 mb-6 shadow-inner">
                   <Truck size={40} />
               </div>
-              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed font-black uppercase italic font-serif tracking-tighter">No Supply Nodes Detected</h3>
+              <h3 className="text-lg sm:text-2xl lg:text-3xl text-white sm:text-slate-400 leading-relaxed uppercase italic font-display font-medium tracking-widest">No Supply Nodes Detected</h3>
               <p className="text-sm sm:text-base text-white sm:text-gray-400 font-medium mt-1">Initialize your supplier database to track material lead times.</p>
-              <Button onClick={handleOpenCreate} className="mt-8 bg-purple-50 text-[#6A2C91] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-2xl font-black text-[10px] tracking-widest border border-purple-100">INITIALIZE FIRST NODE</Button>
+              <Button onClick={handleOpenCreate} className="mt-8 bg-purple-50 text-[#6A2C91] w-auto mx-auto py-1 px-3 text-[10px] px-8 rounded-2xl text-[10px] border border-purple-100 font-cta font-semibold uppercase tracking-[0.08em]">INITIALIZE FIRST NODE</Button>
           </div>
       ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
@@ -151,8 +151,8 @@ export const SupplierManager: React.FC = () => {
                                     <Truck size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-black font-serif text-white mb-4 tracking-tighter">{supplier.name}</h3>
-                                    <Badge color={supplier.tier === 'Reliable' ? 'green' : supplier.tier === 'Risk' ? 'red' : 'gold'} className="text-[8px] px-2 py-0.5 font-black uppercase tracking-widest mt-1">
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">{supplier.name}</h3>
+                                    <Badge color={supplier.tier === 'Reliable' ? 'green' : supplier.tier === 'Risk' ? 'red' : 'gold'} className="text-[8px] px-2 py-0.5 uppercase mt-1 font-cta font-semibold tracking-[0.08em]">
                                         {supplier.tier} tier
                                     </Badge>
                                 </div>

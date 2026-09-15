@@ -96,8 +96,8 @@ export const Integrations = () => {
                     <button onClick={() => navigate('/command-center')} className="flex items-center gap-2 text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit">
                         <ArrowLeft size={16} /> Back to Dashboard
                     </button>
-                    <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Connections Hub</h1>
-                    <p className="text-base text-white/40 font-sans font-light max-w-2xl">
+                    <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Connections Hub</h1>
+                    <p className="text-base text-white/40 max-w-2xl font-serif italic font-light">
                         Connect Artisan Flow to your storefronts and migrate your legacy data. We are building native integrations to keep your stock perfectly synced.
                     </p>
                 </div>
@@ -105,7 +105,7 @@ export const Integrations = () => {
 
             {/* Direct Connect Platforms */}
             <div>
-                <h2 className="text-xl font-bold text-white mb-6 font-serif tracking-tighter">Native Integrations</h2>
+                <h2 className="text-xl text-white mb-6 font-display font-medium uppercase tracking-widest">Native Integrations</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {platformCards.map(platform => (
                         <Card key={platform.id} className="bg-white/5 border border-white/10 p-6 flex flex-col justify-between hover:bg-white/10 transition-colors">
@@ -114,14 +114,14 @@ export const Integrations = () => {
                                     <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white">
                                         {platform.icon}
                                     </div>
-                                    <Badge id={`${platform.id}-status`} color="gray" className="text-[10px] uppercase">{platform.status}</Badge>
+                                    <Badge id={`${platform.id}-status`} color="gray" className="text-[10px] uppercase font-cta font-semibold tracking-[0.08em]">{platform.status}</Badge>
                                 </div>
-                                <h3 className="text-lg font-bold text-white mb-2 font-serif tracking-tighter">{platform.name}</h3>
-                                <p className="text-sm text-white/50">{platform.desc}</p>
+                                <h3 className="text-lg text-white mb-2 font-display font-medium uppercase tracking-widest">{platform.name}</h3>
+                                <p className="text-sm text-white/50 font-serif italic font-light">{platform.desc}</p>
                             </div>
                             <Button 
                                 variant="outline" 
-                                className="w-full mt-6 border-white/20 text-white hover:bg-white/10"
+                                className="w-full mt-6 border-white/20 text-white hover:bg-white/10 font-cta font-semibold uppercase tracking-[0.08em]"
                                 onClick={() => setActiveModal(platform.name)}
                             >
                                 {platform.status === 'Connected (Live)' ? <><Database size={16} className="mr-2" /> CONNECTED (LIVE)</> : <><Bell size={16} className="mr-2" /> COMING SOON</>}
@@ -150,7 +150,7 @@ export const Integrations = () => {
                         value={notifyEmail} 
                         onChange={(e: any) => setNotifyEmail(e.target.value)} 
                     />
-                    <Button className="w-full bg-[#C5A059] text-black hover:bg-[#b08d4a]" onClick={handleNotifyMe}>
+                    <Button className="w-full bg-[#C5A059] text-black hover:bg-[#b08d4a] font-cta font-semibold uppercase tracking-[0.08em]" onClick={handleNotifyMe}>
                         Notify Me
                     </Button>
                 </div>

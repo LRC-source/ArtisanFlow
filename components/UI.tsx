@@ -51,7 +51,7 @@ export const Card: React.FC<{ children: React.ReactNode; className?: string; tit
     onClick={onClick}
   >
     {title && (
-      <h3 className="uppercase text-[10px] font-black mb-6 text-[#C5A059] flex items-center gap-2 italic font-serif tracking-tighter">
+      <h3 className="uppercase text-[10px] mb-6 text-[#C5A059] flex items-center gap-2 italic font-display font-medium tracking-widest">
         <div className="w-1.5 h-1.5 rounded-full bg-[#6A2C91]"></div> {title}
       </h3>
     )}
@@ -145,7 +145,7 @@ export const VaultBanner: React.FC<{
         </motion.div>
 
         <div className="mb-6">
-          <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+          <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] font-serif font-bold">
             {title}
           </h1>
         </div>
@@ -227,7 +227,7 @@ export const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: stri
     <div className="fixed inset-0 bg-black/60 backdrop-blur-xl z-50 flex items-center justify-center p-6 animate-in fade-in duration-500">
       <div className="fixed inset-x-0 bottom-0 sm:inset-auto sm:relative w-full max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 bg-[#140d24]/95 backdrop-blur-xl border-t border-white/10 rounded-t-2xl sm:rounded-[2.5rem] shadow-2xl z-50 animate-in zoom-in-95 slide-up-5 duration-700">
         <div className="flex justify-between items-center p-4 sm:p-10 pb-6">
-          <h3 className="font-serif tracking-tighter">{title}</h3>
+          <h3 className="font-display font-medium uppercase tracking-widest">{title}</h3>
           <button 
             onClick={onClose} 
             className="p-3 -mr-2 text-white/30 hover:text-red-500 transition-colors rounded-full hover:bg-white/5"
@@ -314,10 +314,10 @@ export const FileUploader: React.FC<{
                     <Upload size={28} strokeWidth={1.5} />
                 </div>
                 <div>
-                  <p className="text-sm font-serif text-white tracking-tight">
+                  <p className="text-sm text-white tracking-tight font-sans">
                       Initialize Handshake
                   </p>
-                  <p className="text-[10px] text-white/30 font-sans font-medium uppercase tracking-[0.2em] mt-2">
+                  <p className="text-[10px] text-white/30 uppercase tracking-[0.2em] mt-2 font-serif italic font-light">
                       Drag files or click to browse
                   </p>
                 </div>
@@ -334,7 +334,7 @@ export const FileUploader: React.FC<{
                             </div>
                             <div>
                                 <p className="text-sm font-sans font-medium text-white truncate max-w-[200px]">{file.name}</p>
-                                <p className="text-[10px] font-sans font-medium text-white/30 uppercase tracking-[0.2em] mt-1">{(file.size / 1024).toFixed(1)} KB</p>
+                                <p className="text-[10px] text-white/30 uppercase tracking-[0.2em] mt-1 font-serif italic font-light">{(file.size / 1024).toFixed(1)} KB</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -360,7 +360,7 @@ export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: bo
     return (
         <Modal isOpen={isOpen} onClose={onClose} title={`Connect to ${platform}`}>
             <div className="space-y-6">
-                <p className="text-white/60 font-sans font-light text-sm">
+                <p className="text-white/60 text-sm font-serif italic font-light">
                     Connect your {platform} account securely via OAuth to authorize automated scheduling and posting from the Artisan Flow Marketing Studio.
                 </p>
                 <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
@@ -368,7 +368,7 @@ export const SocialMediaAuthModal = ({ isOpen, onClose, platform }: { isOpen: bo
                         <ShieldCheck size={24} className="text-[#C5A059]" />
                     </div>
                     <p className="text-sm font-bold text-white">Secure OAuth Connection</p>
-                    <p className="text-xs text-white/50">You will be redirected to {platform} to authorize access.</p>
+                    <p className="text-xs text-white/50 font-serif italic font-light">You will be redirected to {platform} to authorize access.</p>
                 </div>
                 <Button 
                     onClick={() => {
@@ -402,8 +402,8 @@ export const HubCard = ({ title, icon: Icon, color, desc, onClick }: any) => {
   return (
     <div onClick={onClick} className={`luxury-card bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] transition-all duration-500 cursor-pointer group flex flex-col h-full ${hoverStyles}`}>
       <div className="mb-6"><GlassHaloIcon icon={Icon} color={color} size="lg" /></div>
-      <h3 className="text-xl font-serif text-white mb-3 group-hover:text-white/90 transition-colors tracking-tighter">{title}</h3>
-      <p className="text-sm font-sans font-light text-white/50 leading-relaxed flex-1">{desc}</p>
+      <h3 className="text-xl text-white mb-3 group-hover:text-white/90 transition-colors font-display font-medium uppercase tracking-widest">{title}</h3>
+      <p className="text-sm text-white/50 leading-relaxed flex-1 font-serif italic font-light">{desc}</p>
     </div>
   );
 };

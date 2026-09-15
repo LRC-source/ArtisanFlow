@@ -21,15 +21,15 @@ export const WarehouseView = () => {
             </button>
             <div className="flex justify-between items-end">
                 <div>
-                    <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">
+                    <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">
                         <MapPin className="text-[#C5A059]" size={36} /> Warehouse Command Center
-                        <Badge color="gold" className="text-[10px] uppercase font-sans font-bold tracking-[0.3em]">Beta</Badge>
+                        <Badge color="gold" className="text-[10px] uppercase font-cta font-semibold tracking-[0.08em]">Beta</Badge>
                     </h1>
                     <p className="text-sm sm:text-base text-white sm:text-white/50 font-sans font-light italic mt-2">Real-time visualization of inventory flow and zones.</p>
                 </div>
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto">
-                    <Badge color="green" className="text-[10px] uppercase font-sans font-bold tracking-[0.3em] border-emerald-500/30 bg-emerald-500/10 text-emerald-400">Systems Online</Badge>
-                    <Badge color="purple" className="text-[10px] uppercase font-sans font-bold tracking-[0.3em] border-[#6A2C91]/30 bg-[#6A2C91]/10 text-[#6A2C91]">Warehouse A</Badge>
+                    <Badge color="green" className="text-[10px] uppercase border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-cta font-semibold tracking-[0.08em]">Systems Online</Badge>
+                    <Badge color="purple" className="text-[10px] uppercase border-[#6A2C91]/30 bg-[#6A2C91]/10 text-[#6A2C91] font-cta font-semibold tracking-[0.08em]">Warehouse A</Badge>
                 </div>
             </div>
         </div>
@@ -48,13 +48,13 @@ export const WarehouseView = () => {
                     <div className="mt-8 space-y-4">
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
                             <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Incoming</p>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">2 Shipments</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">2 Shipments</p>
                             <p className="text-[10px] text-[#C5A059] font-sans font-bold uppercase tracking-widest mt-2">Expected 2:00 PM</p>
                         </div>
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
                             <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Raw Stock</p>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{rawMaterials} Items</p>
-                            <Badge color="red" className="mt-3 w-fit flex gap-2 items-center text-[9px] uppercase tracking-widest"><AlertCircle size={10} /> 1 Low Stock</Badge>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{rawMaterials} Items</p>
+                            <Badge color="red" className="mt-3 w-fit flex gap-2 items-center text-[9px] uppercase font-cta font-semibold tracking-[0.08em]"><AlertCircle size={10} /> 1 Low Stock</Badge>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ export const WarehouseView = () => {
                                 <span className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-r from-[#6A2C91] to-transparent opacity-40 blur-md"></span>
                                 <Layers className="text-[#6A2C91] relative z-10" size={32} strokeWidth={1.5} />
                             </div>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{activeBatches} Batches Active</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{activeBatches} Batches Active</p>
                             <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-[#6A2C91] mt-2">Mixing Station</p>
                         </div>
                         <div className="h-px w-24 bg-white/20 border-t border-dashed"></div>
@@ -78,8 +78,8 @@ export const WarehouseView = () => {
                             <div className="relative inline-flex items-center justify-center w-12 h-12 sm:w-20 sm:h-20 rounded-[1.5rem] bg-black/40 border border-white/10 backdrop-blur-xl mx-auto mb-4 z-10">
                                 <Package className="text-white sm:text-white/40 relative z-10" size={32} strokeWidth={1.5} />
                             </div>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">Packaging</p>
-                            <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white/30 mt-2">Idle</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">Packaging</p>
+                            <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 mt-2 font-serif italic font-light">Idle</p>
                         </div>
                     </div>
                 </div>
@@ -92,14 +92,14 @@ export const WarehouseView = () => {
                     <div className="mt-8 space-y-4">
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
                             <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Pending Orders</p>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{pendingOrders}</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{pendingOrders}</p>
                             <div className="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
                                 <div className="bg-[#06B6D4] h-full w-2/3 shadow-[0_0_10px_#06B6D4]"></div>
                             </div>
                         </div>
                         <div className="bg-white/5 p-4 rounded-3xl shadow-sm border border-white/5 group-hover:bg-white/10 transition-colors">
                             <p className="text-[10px] text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em]">Ready to Ship</p>
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">12 Parcels</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">12 Parcels</p>
                             <Button onClick={() => toast.success('Labels sent to printer queue.')} className="w-full h-10 rounded-xl bg-white/10 hover:bg-[#06B6D4] text-white border-none font-sans font-bold text-[9px] uppercase tracking-widest transition-colors">Print Labels</Button>
                         </div>
                     </div>
@@ -111,16 +111,16 @@ export const WarehouseView = () => {
                         <Package size={14} /> Finished Goods Storage
                     </div>
                     <div>
-                        <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">{inventoryCount}</p>
+                        <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{inventoryCount}</p>
                         <p className="text-[10px] text-emerald-400 font-sans font-bold uppercase tracking-[0.3em] mt-2">Total Units</p>
                     </div>
                     <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto sm:p-5 lg:p-6">
                         <div className="text-center">
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">98%</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">98%</p>
                             <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mt-1">Capacity</p>
                         </div>
                         <div className="text-center">
-                            <p className="text-sm sm:text-base font-black font-serif tracking-tight text-white mb-4">$7.1k</p>
+                            <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">$7.1k</p>
                             <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-white sm:text-white/40 mt-1">Value</p>
                         </div>
                     </div>

@@ -21,12 +21,12 @@ export const ProductionScheduler: React.FC = () => {
             <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center">
                 <div>
                     <div className="flex items-center gap-3">
-                        <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6">Production Scheduler</h1>
+                        <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">Production Scheduler</h1>
                         <Badge color="gold">Beta</Badge>
                     </div>
                     <p className="text-sm sm:text-base text-gray-500">AI-powered production scheduling and optimization</p>
                 </div>
-                <Button className="bg-[#A78BFA] hover:bg-[#8B5CF6] text-white border-0" onClick={generateSchedule}>
+                <Button className="bg-[#A78BFA] hover:bg-[#8B5CF6] text-white border-0 font-cta font-semibold uppercase tracking-[0.08em]" onClick={generateSchedule}>
                     <Sparkles size={16} className="mr-2" /> {hasSchedule ? 'Update Schedule' : 'Generate Schedule'}
                 </Button>
             </div>
@@ -44,12 +44,12 @@ export const ProductionScheduler: React.FC = () => {
                 <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
                     <CalendarIcon size={32} className="text-white sm:text-gray-400" />
                 </div>
-                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white font-bold font-medium mb-1 font-serif tracking-tighter">No pending production orders</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-1 font-display font-medium uppercase tracking-widest">No pending production orders</h3>
                 <p className="text-sm sm:text-base text-white sm:text-gray-400">Create production orders to generate a schedule</p>
             </div>
         ) : (
             <div className="space-y-4">
-                <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed font-bold text-white font-serif tracking-tighter">Today's Schedule</h3>
+                <h3 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed text-white font-display font-medium uppercase tracking-widest">Today's Schedule</h3>
                 <div className="space-y-3">
                     {/* Dummy Schedule Data reflecting the state change */}
                     <div className="bg-white p-4 rounded-xl border border-l-4 border-purple-500 shadow-sm flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
@@ -58,7 +58,7 @@ export const ProductionScheduler: React.FC = () => {
                                 <Badge color="purple">In Progress</Badge>
                                 <span className="text-xs text-gray-500">09:00 AM - 12:00 PM</span>
                             </div>
-                            <h4 className="font-serif tracking-tighter">Batch #1024: Midnight Serum</h4>
+                            <h4 className="font-sans">Batch #1024: Midnight Serum</h4>
                             <p className="text-sm sm:text-base text-gray-500">Recipe: Midnight Serum v2 • 100 Units</p>
                         </div>
                         <Button onClick={() => toast.info('Opening production schedule details...')} variant="outline" className="text-xs">View Details</Button>
@@ -70,7 +70,7 @@ export const ProductionScheduler: React.FC = () => {
                                 <Badge color="blue">Scheduled</Badge>
                                 <span className="text-xs text-gray-500">01:00 PM - 03:00 PM</span>
                             </div>
-                            <h4 className="font-serif tracking-tighter">Batch #1025: Lavender Soap</h4>
+                            <h4 className="font-sans">Batch #1025: Lavender Soap</h4>
                              <p className="text-sm sm:text-base text-gray-500">Recipe: Lavender Rose • 50 Units</p>
                         </div>
                          <Button onClick={() => toast.info('Opening production schedule details...')} variant="outline" className="text-xs">View Details</Button>
@@ -82,7 +82,7 @@ export const ProductionScheduler: React.FC = () => {
                                 <Badge color="green">Completed</Badge>
                                 <span className="text-xs text-gray-500">07:00 AM - 08:30 AM</span>
                             </div>
-                            <h4 className="font-serif tracking-tighter">Batch #1023: QA Check</h4>
+                            <h4 className="font-sans">Batch #1023: QA Check</h4>
                              <p className="text-sm sm:text-base text-gray-500">Routine equipment maintenance</p>
                         </div>
                         <CheckCircle className="text-green-500" />

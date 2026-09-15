@@ -100,7 +100,7 @@ export const AIAvatarStudio = () => {
                 {/* Configuration Panel */}
 <div className="lg:col-span-5 space-y-6">
     <div className="flex justify-between items-center mb-4">
-        <h3 className="text-white/60 uppercase text-xs font-serif tracking-tighter">Configuration</h3>
+        <h3 className="text-white/60 uppercase text-xs font-display font-medium tracking-widest">Configuration</h3>
         <Badge color="purple">Model: Gemini 2.5 Flash Image</Badge>
     </div>
                     <Card className="p-4 sm:p-5 lg:p-6 bg-black/40 border-white/5 backdrop-blur-xl">
@@ -152,14 +152,14 @@ export const AIAvatarStudio = () => {
                                             onClick={() => setSelectedPose(pose.id)}
                                             className={`p-3 rounded-xl border text-left transition-all ${selectedPose === pose.id ? 'bg-[#6A2C91]/20 border-[#6A2C91]/50' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
                                         >
-                                            <div className="text-white font-serif text-sm mb-1">{pose.id}</div>
+                                            <div className="text-white text-sm mb-1 font-sans">{pose.id}</div>
                                             <div className="text-[10px] text-white sm:text-gray-400 leading-tight">{pose.desc}</div>
                                         </button>
                                     ))}
                                 </div>
                             </div>
 
-                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
+                            <Button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-magenta-600 to-[#6A2C91] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none font-cta font-semibold uppercase tracking-[0.08em]">
                                 {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Sparkles className="mr-2" />}
                                 {isGenerating ? "Synthesizing Persona..." : "Generate Avatar Frame"}
                             </Button>
@@ -184,7 +184,7 @@ export const AIAvatarStudio = () => {
                                     >
                                         <img src={generatedImage} alt="Generated Avatar" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                            <Button variant="outline" className="bg-white/10 backdrop-blur-md text-white border-white/20">
+                                            <Button variant="outline" className="bg-white/10 backdrop-blur-md text-white border-white/20 font-cta font-semibold uppercase tracking-[0.08em]">
                                                 <Download size={16} className="mr-2" /> Download Source
                                             </Button>
                                         </div>

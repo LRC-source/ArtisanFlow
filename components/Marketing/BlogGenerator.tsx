@@ -154,7 +154,7 @@ export const BlogGenerator = () => {
                                 </label>
                                 <div className="bg-white/5 border border-white/10 rounded-2xl p-2 min-h-[56px] flex flex-wrap gap-2 items-center focus-within:border-[#C5A059]">
                                     {keywords.map(kw => (
-                                        <Badge key={kw} color="gold" className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-xl">
+                                        <Badge key={kw} color="gold" className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-xl font-cta font-semibold uppercase tracking-[0.08em]">
                                             {kw} <X size={12} className="cursor-pointer hover:text-white" onClick={() => removeKeyword(kw)} />
                                         </Badge>
                                     ))}
@@ -169,7 +169,7 @@ export const BlogGenerator = () => {
                                 </div>
                             </div>
 
-                            <Button onClick={generateOutline} disabled={isGenerating || !!generatedBlog} className="w-full bg-gradient-to-r from-[#111] to-[#222] border border-white/10 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg">
+                            <Button onClick={generateOutline} disabled={isGenerating || !!generatedBlog} className="w-full bg-gradient-to-r from-[#111] to-[#222] border border-white/10 text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg font-cta font-semibold uppercase tracking-[0.08em]">
                                 {isGenerating && !generatedBlog ? <Loader2 className="animate-spin mr-2" /> : <ListTree className="mr-2" />}
                                 {isGenerating && !generatedBlog ? "Analyzing SERP..." : "1. Generate Structure Outline"}
                             </Button>
@@ -195,7 +195,7 @@ export const BlogGenerator = () => {
                                                 </div>
                                             </div>
                                         ))}
-                                        <Button onClick={generateFullArticle} disabled={isGenerating} className="w-full mt-6 bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none">
+                                        <Button onClick={generateFullArticle} disabled={isGenerating} className="w-full mt-6 bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-2xl shadow-lg border-none font-cta font-semibold uppercase tracking-[0.08em]">
                                             {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Sparkles className="mr-2" />}
                                             2. Synthesize Full Article
                                         </Button>
@@ -212,7 +212,7 @@ export const BlogGenerator = () => {
                         {generatedBlog ? (
                             <div className="flex flex-col h-full">
                                 <div className="w-auto mx-auto py-1 px-3 text-[10px] bg-[#111] border-b border-white/10 flex items-center px-6 justify-between shrink-0">
-                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 font-serif flex items-center gap-2 tracking-tighter">
+                                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white/80 flex items-center gap-2 font-display font-medium uppercase tracking-widest">
                                         <FileText size={18} className="text-emerald-500" /> Article Editor
                                     </h3>
                                     <Badge color="green"><CheckCircle size={12} className="mr-1 inline"/> SEO Optimized</Badge>
@@ -223,7 +223,7 @@ export const BlogGenerator = () => {
                                         <div className="relative w-full h-[180px] sm:h-64 rounded-2xl overflow-hidden group">
                                             <img src={featuredImage} alt="Featured" className="w-full h-full object-cover" />
                                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                                                <Button variant="outline" className="border-white text-white bg-black/50 hover:bg-black/80">
+                                                <Button variant="outline" className="border-white text-white bg-black/50 hover:bg-black/80 font-cta font-semibold uppercase tracking-[0.08em]">
                                                     <ImageIcon size={16} className="mr-2" /> Change Featured Image
                                                 </Button>
                                             </div>
@@ -237,7 +237,7 @@ export const BlogGenerator = () => {
                                 </div>
 
                                 <div className="p-4 sm:p-6 bg-[#111] border-t border-white/10 flex justify-end gap-3 sm:gap-4 shrink-0">
-                                    <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-8 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-xl font-sans font-medium uppercase tracking-widest text-xs">
+                                    <Button onClick={handleSave} className="w-auto mx-auto py-1 px-3 text-[10px] px-8 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-xl uppercase text-xs font-cta font-semibold tracking-[0.08em]">
                                         Approve & Schedule
                                     </Button>
                                 </div>
@@ -245,7 +245,7 @@ export const BlogGenerator = () => {
                         ) : (
                             <div className="h-full flex flex-col items-center justify-center opacity-30">
                                 <FileText size={64} className="mx-auto mb-4 text-white" />
-                                <p className="text-sm sm:text-base text-white font-serif leading-relaxed">Awaiting SEO Parameters</p>
+                                <p className="text-sm sm:text-base text-white leading-relaxed font-sans">Awaiting SEO Parameters</p>
                             </div>
                         )}
                     </Card>

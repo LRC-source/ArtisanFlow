@@ -157,7 +157,7 @@ const SocialMediaIntegrationManager = () => {
                                     <platform.icon size={20} strokeWidth={1.5} />
                                 </div>
                                 <div>
-                                    <p className="text-sm sm:text-base text-white font-serif tracking-tight">{platform.name}</p>
+                                    <p className="text-sm sm:text-base text-white tracking-tight font-sans">{platform.name}</p>
                                     <p className={`text-[9px] font-bold uppercase tracking-widest mt-1 ${platform.connected ? 'text-emerald-400' : 'text-white/30'}`}>{platform.status}</p>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@ export const MarketingStudio = () => {
             
             <div className="space-y-6">
                 <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif text-white mb-4 tracking-tighter">Studio Tools</h2>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">Studio Tools</h2>
                     <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent ml-8"></div>
                 </div>
                 <MarketingGrid />
