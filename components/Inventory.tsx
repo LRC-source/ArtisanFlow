@@ -17,7 +17,7 @@ import { UpgradeModal } from './UpgradeModal';
 import { InventoryCSVImporter, ImportEntity } from './InventoryCSVImporter';
 
 /**
- * Inventory Hub - Craftybase Maker Inventory Engine Architecture ✅
+ * Inventory Hub - Maker Inventory & Formulation Engine Architecture ✅
  */
 
 type ViewMode = 'overview' | 'raw_materials' | 'recipes' | 'batches' | 'finished_products' | 'detail';
@@ -213,7 +213,7 @@ export const Inventory = () => {
     >
       <ContextualTutorialModal
         hubId="inventory_hub"
-        title="Craftybase Maker Inventory Engine"
+        title="Maker Inventory & Formulation Engine"
         description="Full relational maker inventory system connecting Raw Materials, BOM Recipes, Manufacturing Batches, and Finished Goods."
         steps={[
           "Track Raw Materials with reorder safety thresholds.",
@@ -225,9 +225,9 @@ export const Inventory = () => {
 
       {/* Main Banner */}
       <DashboardBanner 
-        title="Craftybase Inventory & Formulation System" 
+        title="Inventory & Formulation System" 
         subtitle="Unified relational tracking across raw materials, BOM formulations, production runs & sellable finished goods."
-        badge="Craftybase Engine Operational"
+        badge="Inventory Engine Operational"
       >
         <div className="flex gap-3 flex-wrap">
           <Button 
@@ -254,7 +254,7 @@ export const Inventory = () => {
         </div>
       </DashboardBanner>
 
-      {/* Craftybase 4-Module Tab Navigation */}
+      {/* 4-Module Tab Navigation */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4 overflow-x-auto gap-2">
         <div className="flex items-center gap-2">
           {[

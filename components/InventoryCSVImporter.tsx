@@ -326,7 +326,7 @@ export const InventoryCSVImporter: React.FC<InventoryCSVImporterProps> = ({
                 </div>
                 <div>
                   <h4 className="text-lg font-serif font-bold text-white">Click or drag & drop your CSV file here</h4>
-                  <p className="text-xs font-sans text-white/40 mt-1">Supports standard CSV exports from Excel, Craftybase, Google Sheets, or Shopify</p>
+                  <p className="text-xs font-sans text-white/40 mt-1">Supports standard CSV exports from Excel, Google Sheets, CSV files, or Shopify</p>
                 </div>
               </div>
             </div>

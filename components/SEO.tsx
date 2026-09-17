@@ -8,7 +8,7 @@ interface SEOProps {
 
 export const SEO: React.FC<SEOProps> = ({ 
     title = 'ArtisanFlow - AI Business Operating System', 
-    description = 'The ultimate AI-powered ecosystem for makers. Outperform Craftybase with generative marketing, predictive Profit Guard, and unthrottled scaling.',
+    description = 'The ultimate AI-powered ecosystem for makers with generative marketing, predictive Profit Guard, and unthrottled scaling.',
     jsonLd 
 }) => {
     useEffect(() => {
