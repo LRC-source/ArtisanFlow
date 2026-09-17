@@ -15,7 +15,7 @@ const STEPS = [
     title: "Dashboard",
     desc: "See a real-time overview of your business metrics and quickly access your most important tools.",
     icon: LayoutDashboard,
-    route: "/command-center"
+    route: "/"
   },
   {
     title: "Inventory",
@@ -45,7 +45,16 @@ const STEPS = [
 
 export const TutorialOverlay: React.FC = () => {
   const { isTutorialActive, tutorialStep, setTutorialStep, completeTutorial } = useArtisanData();
-  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!isTutorialActive) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        completeTutorial();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isTutorialActive]);
 
   if (!isTutorialActive) return null;
 

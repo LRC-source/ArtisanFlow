@@ -29,8 +29,8 @@ export const AccountSettings = () => {
             className="p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-10 lg:space-y-12 max-w-7xl mx-auto pb-8 sm:pb-12 lg:pb-20"
         >
             <div className="flex flex-col gap-3 sm:gap-6">
-                <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-white sm:text-white/50 hover:text-[#C5A059] font-sans text-[11px] uppercase tracking-widest transition-colors w-fit group">
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Command Center
+                <button onClick={() => navigate('/')} className="flex items-center gap-3 text-white sm:text-white/50 hover:text-[#C5A059] font-sans text-[11px] uppercase tracking-widest transition-colors w-fit group">
+                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Dashboard
                 </button>
                 
                 <DashboardBanner 

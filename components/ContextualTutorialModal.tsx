@@ -31,6 +31,18 @@ export const ContextualTutorialModal: React.FC<ContextualTutorialProps> = ({ hub
         markHubVisited(hubId);
     };
 
+    // Keyboard listener for Escape key dismissal
+    useEffect(() => {
+        if (!isVisible) return;
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                handleDismiss();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isVisible, hubId]);
+
     const handleNext = () => {
         if (currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
@@ -48,46 +60,55 @@ export const ContextualTutorialModal: React.FC<ContextualTutorialProps> = ({ hub
     if (!isVisible) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-300">
-            <div className="bg-black/60 border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-500 backdrop-blur-3xl">
-                <div className="bg-gradient-to-r from-black/80 to-[#101010] border-b border-white/5 p-4 sm:p-6 text-white relative">
-                    <button onClick={handleDismiss} className="absolute top-4 right-4 text-white sm:text-white/40 hover:text-white transition-colors">
-                        <X size={20} />
+        <div className="fixed inset-0 z-[100] pointer-events-none flex items-end justify-end p-4 sm:p-6 animate-in fade-in duration-300">
+            <div className="bg-[#0A0A0C]/95 border border-white/20 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 duration-300 backdrop-blur-2xl pointer-events-auto">
+                <div className="bg-gradient-to-r from-black/90 to-[#121215] border-b border-white/10 p-4 text-white relative">
+                    <button 
+                        type="button"
+                        onClick={handleDismiss} 
+                        className="absolute top-3 right-3 text-white/50 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10"
+                        title="Close Guide (Esc)"
+                    >
+                        <X size={18} />
                     </button>
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 bg-[#C5A059]/10 border border-[#C5A059]/20 rounded-lg text-[#C5A059]">
-                            <Info size={24} />
+                    <div className="flex items-center gap-2.5 mb-1">
+                        <div className="p-1.5 bg-[#C5A059]/10 border border-[#C5A059]/30 rounded-lg text-[#C5A059]">
+                            <Info size={18} />
                         </div>
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white mb-4 font-display font-medium uppercase tracking-widest">{title}</h2>
+                        <h2 className="text-lg text-white font-display font-medium uppercase tracking-widest">{title}</h2>
                     </div>
-                    <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">{description}</p>
+                    <p className="text-xs text-white/70 font-sans font-light leading-relaxed pr-6">{description}</p>
                 </div>
-                <div className="p-3.5 sm:p-6 lg:p-12 space-y-6">
-                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-[10px] text-white sm:text-white/40 uppercase font-display font-medium tracking-widest">Quick Start Guide</h3>
+                <div className="p-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-[10px] text-white/40 uppercase font-display font-medium tracking-widest">Quick Start Guide</h3>
                         <div className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.2em]">
                             Step {currentStep + 1} of {steps.length}
                         </div>
                     </div>
                     
-                    <div className="min-h-[120px] flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-white/5 border border-white/10 rounded-xl">
-                        <div className="mt-1 text-[#C5A059] shrink-0">
-                            <CheckCircle size={20} />
+                    <div className="min-h-[70px] flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
+                        <div className="mt-0.5 text-[#C5A059] shrink-0">
+                            <CheckCircle size={16} />
                         </div>
-                        <p className="text-sm sm:text-base text-white sm:text-slate-400 leading-relaxed font-medium text-white/90 leading-relaxed">{steps[currentStep]}</p>
+                        <p className="text-xs text-white/90 font-medium leading-relaxed">{steps[currentStep]}</p>
                     </div>
 
-                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto mt-8 pt-4 border-t border-white/5">
+                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/5">
                         <Button 
                             variant="outline" 
                             onClick={handlePrev} 
                             disabled={currentStep === 0}
-                            className={`flex-1 w-auto mx-auto py-1 px-3 text-[10px] font-bold tracking-widest ${currentStep === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            className={`py-1 px-3 text-[10px] font-bold tracking-widest text-white border-white/20 ${currentStep === 0 ? 'opacity-40 cursor-not-allowed' : ''}`}
                         >
-                            <ChevronLeft size={18} className="mr-1" /> PREV
+                            <ChevronLeft size={14} className="mr-1" /> PREV
                         </Button>
-                        <Button variant="premium" onClick={handleNext} className="flex-1 w-auto mx-auto py-1 px-3 text-[10px] shadow-lg shadow-[#C5A059]/20 font-cta font-semibold uppercase tracking-[0.08em]">
-                            {currentStep === steps.length - 1 ? 'GOT IT, LETS GO' : 'NEXT'} {currentStep < steps.length - 1 && <ChevronRight size={18} className="ml-1" />}
+                        <Button 
+                            variant="premium" 
+                            onClick={handleNext} 
+                            className="py-1 px-4 text-[10px] bg-[#C5A059] text-black hover:bg-[#b08e4d] font-bold uppercase tracking-wider"
+                        >
+                            {currentStep === steps.length - 1 ? 'GOT IT, LETS GO' : 'NEXT'} {currentStep < steps.length - 1 && <ChevronRight size={14} className="ml-1" />}
                         </Button>
                     </div>
                 </div>

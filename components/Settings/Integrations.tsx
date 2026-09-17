@@ -148,7 +148,7 @@ export const Integrations = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <button 
-            onClick={() => navigate('/command-center')} 
+            onClick={() => navigate('/')} 
             className="flex items-center gap-2 text-white/50 hover:text-[#C5A059] font-sans text-xs uppercase tracking-widest transition-colors mb-6 w-fit"
           >
             <ArrowLeft size={16} /> Back to Dashboard

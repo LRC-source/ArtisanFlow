@@ -35,7 +35,7 @@ export const ProfitGuardPage = () => {
             <SubPageHeader 
                 title="Profit Guard™"
                 parentTitle="Dashboard"
-                onBack={() => navigate('/command-center')}
+                onBack={() => navigate('/')}
                 description="High-precision margin protection and profitability diagnostics."
             />
 

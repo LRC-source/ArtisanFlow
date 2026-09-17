@@ -121,8 +121,8 @@ export const FinanceHub: React.FC = () => {
             )}
 
             <div className="flex flex-col gap-3 sm:gap-6">
-                <button onClick={() => navigate('/command-center')} className="flex items-center gap-3 text-white sm:text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
-                    <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Command Center
+                <button onClick={() => navigate('/')} className="flex items-center gap-3 text-white sm:text-white/40 hover:text-white font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all group w-fit">
+                    <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Back to Dashboard
                 </button>
                 
                 <DashboardBanner 
