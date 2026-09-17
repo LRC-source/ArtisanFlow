@@ -1,33 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Search, Filter, MoreVertical, Plus, Layers, Box, ArrowLeft, AlertTriangle, Upload, Download, RefreshCw, DollarSign, Tag, Edit2, Trash2, X, BarChart, TrendingUp, ShieldCheck, MapPin, Activity, Clock, Zap, ChevronRight, Sparkles, Save } from 'lucide-react';
+import { 
+  Package, Search, Filter, MoreVertical, Plus, Layers, Box, ArrowLeft, AlertTriangle, Upload, 
+  Download, RefreshCw, DollarSign, Tag, Edit2, Trash2, X, BarChart, TrendingUp, ShieldCheck, 
+  MapPin, Activity, Clock, Zap, ChevronRight, Sparkles, Save, Table, Play, CheckCircle2, Factory
+} from 'lucide-react';
 import { Card, Badge, Button, Input, FileUploader, Modal, Select, DashboardBanner } from './UI';
 import { useNavigate } from 'react-router-dom';
-import { useArtisanData, InventoryItem, Lot, calculateDerivedStockAndCost } from './DataContext';
+import { useArtisanData, InventoryItem, Lot, calculateDerivedStockAndCost, Recipe, ProductionBatch } from './DataContext';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SubPageHeader } from './SubPageHeader';
 import { toast } from 'sonner';
 import { ContextualTutorialModal } from './ContextualTutorialModal';
 import { z } from 'zod';
 import { UpgradeModal } from './UpgradeModal';
+import { InventoryCSVImporter, ImportEntity } from './InventoryCSVImporter';
 
 /**
- * Inventory Hub - High-Fidelity Synaptic Architecture ✅
+ * Inventory Hub - Craftybase Maker Inventory Engine Architecture ✅
  */
 
-type ViewMode = 'overview' | 'raw_materials' | 'finished_products' | 'detail';
+type ViewMode = 'overview' | 'raw_materials' | 'recipes' | 'batches' | 'finished_products' | 'detail';
 
 export const Inventory = () => {
-  const { inventory, getInventoryValue, addInventoryItem, updateInventory, deleteInventoryItem, recipes, userTier, migrateInventoryToLots } = useArtisanData();
+  const { 
+    inventory, getInventoryValue, addInventoryItem, updateInventory, deleteInventoryItem, 
+    recipes, productionBatches, produceBatch, userTier, migrateInventoryToLots 
+  } = useArtisanData();
+
   const [view, setView] = useState<ViewMode>('overview');
   const [showAddItem, setShowAddItem] = useState(false);
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
   const navigate = useNavigate();
+
+  // Importer state
+  const [showImporter, setShowImporter] = useState(false);
+  const [importerDefaultEntity, setImporterDefaultEntity] = useState<ImportEntity>('raw_materials');
+
+  // Manufacturing Batch Run State
+  const [showBatchModal, setShowBatchModal] = useState(false);
+  const [selectedBatchRecipe, setSelectedBatchRecipe] = useState<string>('');
+  const [batchMultiplier, setBatchMultiplier] = useState<number>(1);
+  const [batchWarnings, setBatchWarnings] = useState<string[]>([]);
+  const [showWarningModal, setShowWarningModal] = useState(false);
+
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showAdjustStock, setShowAdjustStock] = useState(false);
-    const [showMigrateLots, setShowMigrateLots] = useState(false);
+  const [showMigrateLots, setShowMigrateLots] = useState(false);
   const [adjustAmount, setAdjustAmount] = useState(0);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [upgradeLimit, setUpgradeLimit] = useState(50);
   const [requiredTier, setRequiredTier] = useState("Basic Artisan");
 
@@ -48,8 +68,13 @@ export const Inventory = () => {
   const lowStockItems = inventory.filter(i => i.stock <= i.reorderPoint);
 
   const handleItemClick = (item: InventoryItem) => {
-      setSelectedItem(item);
-      setView('detail');
+    setSelectedItem(item);
+    setView('detail');
+  };
+
+  const handleOpenImporter = (entity: ImportEntity = 'raw_materials') => {
+    setImporterDefaultEntity(entity);
+    setShowImporter(true);
   };
 
   const deployAssetSchema = z.object({
@@ -58,583 +83,545 @@ export const Inventory = () => {
     type: z.enum(['raw', 'finished']),
     stock: z.number().min(0, { message: "Stock must be 0 or greater" }),
     unitCost: z.number().min(0, { message: "Unit cost must be 0 or greater" }),
-    reorderPoint: z.number().min(0, { message: "Reorder point must be 0 or greater" })
+    reorderPoint: z.number().min(0, { message: "Reorder point must be 0 or greater" }),
   });
 
-  const handleAdd = async () => {
-      const result = deployAssetSchema.safeParse({
-        name: newItem.name || '',
-        sku: newItem.sku || '',
-        type: newItem.type || 'raw',
-        stock: Number(newItem.stock || 0),
-        unitCost: Number(newItem.unitCost || 0),
-        reorderPoint: Number(newItem.reorderPoint || 0)
+  const handleDeployAsset = async () => {
+    const payload = {
+      name: newItem.name || '',
+      sku: newItem.sku || '',
+      type: newItem.type || 'raw',
+      stock: Number(newItem.stock || 0),
+      unitCost: Number(newItem.unitCost || 0),
+      reorderPoint: Number(newItem.reorderPoint || 5),
+      unit: newItem.unit || 'units',
+      supplier: newItem.supplier || '',
+      category: newItem.category || 'General',
+      retailPrice: Number(newItem.retailPrice || 0)
+    };
+
+    const result = deployAssetSchema.safeParse(payload);
+    if (!result.success) {
+      const firstErr = result.error.errors[0]?.message || "Invalid asset fields";
+      toast.error(firstErr);
+      return;
+    }
+
+    try {
+      await addInventoryItem(payload);
+      toast.success("Asset deployed to inventory successfully.");
+      setShowAddItem(false);
+      setNewItem({ name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5 });
+      sessionStorage.removeItem('draft_inventory_item');
+    } catch (e: any) {
+      if (e.message && e.message.includes("Tier limit reached")) {
+        setUpgradeLimit(e.message.split(": ")[1] || 50);
+        setRequiredTier("Basic Artisan");
+        setShowUpgradeModal(true);
+      }
+    }
+  };
+
+  // Manufacturing / Batch Execution Logic
+  const handleTriggerBatchRun = async (overrideWarnings = false) => {
+    if (!selectedBatchRecipe) {
+      toast.error('Please select a recipe for production batch execution.');
+      return;
+    }
+
+    const recipe = recipes.find(r => r.id === selectedBatchRecipe);
+    if (!recipe) return;
+
+    // Check availability first if not overriding
+    if (!overrideWarnings && recipe.rawIngredients) {
+      const missingStock: string[] = [];
+      recipe.rawIngredients.forEach(ing => {
+        const item = inventory.find(i => i.id === ing.inventoryItemId);
+        const requiredQty = ing.quantity * batchMultiplier;
+        if (!item || item.stock < requiredQty) {
+          missingStock.push(
+            `${item ? item.name : 'Ingredient'}: Need ${requiredQty} ${ing.unit}, but only ${item ? item.stock : 0} in stock`
+          );
+        }
       });
 
-      if (!result.success) {
-        toast.error(result.error.issues[0].message);
+      if (missingStock.length > 0) {
+        setBatchWarnings(missingStock);
+        setShowWarningModal(true);
         return;
       }
+    }
 
-      try {
-        await addInventoryItem({
-          ...newItem,
-          name: result.data.name,
-          sku: result.data.sku,
-          type: result.data.type,
-          stock: result.data.stock,
-          unitCost: result.data.unitCost,
-          reorderPoint: result.data.reorderPoint
-        } as any);
-        toast.success(`${newItem.name} has been successfully deployed to the dashboard.`);
-        setShowAddItem(false);
-        setNewItem({ name: '', sku: '', type: 'raw', stock: 0, unit: 'pcs', unitCost: 0, reorderPoint: 5, img: '' });
-        sessionStorage.removeItem('draft_inventory_item');
-      } catch (e: any) {
-        if (e.message.includes("Tier limit reached")) {
-           const limitMatch = e.message.match(/\d+/);
-           setUpgradeLimit(limitMatch ? parseInt(limitMatch[0]) : 50);
-           setRequiredTier(userTier === 'Free Trial' ? 'Basic Artisan' : 'Pro Artisan');
-           setShowUpgradeModal(true);
-        }
-      }
+    // Execute batch via DataContext
+    const res = await produceBatch(selectedBatchRecipe, batchMultiplier);
+    if (res.success) {
+      toast.success(`Production Batch logged! Deducted raw materials and credited finished output.`);
+      setShowBatchModal(false);
+      setShowWarningModal(false);
+      setSelectedBatchRecipe('');
+      setBatchMultiplier(1);
+    } else {
+      toast.error(res.warnings[0] || 'Failed to complete production run.');
+    }
   };
 
-  const handleAdjustStock = () => {
-      if (selectedItem) {
-          updateInventory(selectedItem.id, { stock: selectedItem.stock + adjustAmount });
-          setShowAdjustStock(false);
-          setAdjustAmount(0);
-          toast.success('Stock Quantity Adjusted');
-      }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      try {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        
-        if (!file.name.toLowerCase().endsWith('.csv')) {
-          throw new Error('Invalid CSV format. Please upload a structured .csv file.');
-        }
-
-        const toastId = toast.loading('Ingesting CSV data...');
-        setTimeout(() => {
-            toast.success('File parsed. 14 items added to ledger.', { id: toastId });
-            addInventoryItem({
-                name: 'Imported Essential Oil',
-                sku: 'IMP-EO-01',
-                type: 'raw',
-                stock: 100,
-                unit: 'oz',
-                unitCost: 1.25,
-                supplier: 'Bulk Apothecary',
-                reorderPoint: 20
-            });
-        }, 1500);
-      } catch (error: any) {
-        toast.error(error.message || 'Error processing file');
-      }
-      
-      // Reset input
-      if (e.target) e.target.value = '';
-  };
-
-  const getRecipeUsage = (itemName: string) => {
-    return recipes.filter(r => r.ingredients.some(ing => ing.name.toLowerCase() === itemName.toLowerCase()));
-  };
-
+  // Render detail view
   if (view === 'detail' && selectedItem) {
-      const usageInRecipes = getRecipeUsage(selectedItem.name);
-      return (
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-[1800px] mx-auto"
-        >
-            <ContextualTutorialModal
-                hubId="materials_matrix"
-                title="Materials Matrix"
-                description="Track raw materials and finished goods inventory."
-                steps={["Monitor stock levels and reorder points.","Log raw material usage for production.","Adjust inventory counts via cycle counts."]}
-            />
-            <SubPageHeader 
-              title={selectedItem.name}
-              parentTitle="Inventory Hub"
-              onBack={() => setView('overview')}
-              description={`Detailed analysis for ${selectedItem.name}. SKU: ${selectedItem.sku}`}
-              actions={
-                <Button 
-                  onClick={() => toast.info("Audit protocol initialized.")}
-                  className="bg-[#6A2C91] hover:bg-[#5a257a] text-white w-auto mx-auto py-1 px-3 text-[10px] px-6 rounded-2xl font-sans font-bold text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg shadow-purple-500/10"
-                >
-                  <RefreshCw size={14} className="mr-2" /> Run Audit
-                </Button>
-              }
-            />            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-16">
-                <div className="lg:col-span-4 space-y-10">
-                    <div className="luxury-card bg-white/5 backdrop-blur-xl p-3.5 sm:p-6 lg:p-12 rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20 border border-white/10">
-                        <div className="aspect-square bg-black/20 rounded-[2.5rem] overflow-hidden flex items-center justify-center relative shadow-inner">
-                            {selectedItem.img ? (
-                                <img src={selectedItem.img} alt={selectedItem.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" />
-                            ) : (
-                                <Package size={120} className="text-white/5" strokeWidth={0.5} />
-                            )}
-                            <div className="absolute top-4 sm:p-6 lg:p-8 left-8">
-                                <Badge color={selectedItem.type === 'raw' ? 'purple' : 'green'} className="px-5 py-2 uppercase text-[10px] shadow-lg font-cta font-semibold tracking-[0.08em]">{selectedItem.type}</Badge>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="space-y-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none">
-                        <Button onClick={() => setShowAdjustStock(true)} className="w-full bg-white text-black hover:bg-white/90 py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-black/10">ADJUST STOCK QUANTITY</Button>
-                        <Button onClick={() => { window.print(); toast.success('Archival label sent to connected printer.'); }} variant="outline" className="w-full border-white/10 hover:border-white/20 hover:bg-white/5 text-white py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all">PRINT ARCHIVAL LABEL</Button>
-                        <Button onClick={() => { deleteInventoryItem(selectedItem.id); setSelectedItem(null); toast.success('Asset permanently archived.'); }} className="w-full bg-red-500/20 hover:bg-red-500/40 text-red-200 py-3 px-6 rounded-full font-sans font-bold text-[11px] uppercase tracking-[0.3em] transition-all border border-red-500/30">DELETE ASSET</Button>
-                    </div>
-
-                    <Modal isOpen={showAdjustStock} onClose={() => setShowAdjustStock(false)} title="Adjust Stock Quantity">
-                        <div className="space-y-6 pt-4">
-                            <div>
-                                <label className="text-[10px] font-black text-white sm:text-gray-400 uppercase tracking-widest ml-1">Adjustment Amount (Use negative to subtract)</label>
-                                <Input type="number" value={adjustAmount} onChange={e => setAdjustAmount(Number(e.target.value))} className="mt-2 text-white bg-black/50" />
-                            </div>
-                            <Button onClick={handleAdjustStock} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white w-auto mx-auto py-1 px-3 text-[10px] rounded-full text-[11px] uppercase transition-all shadow-xl font-cta font-semibold tracking-[0.08em]">Confirm Adjustment</Button>
-                        </div>
-                    </Modal>
-
-
-
-                    <div className="p-3.5 sm:p-6 lg:p-12 bg-[#6A2C91]/10 rounded-[2.5rem] border border-[#6A2C91]/20">
-                        <div className="flex items-center gap-3 sm:gap-4 mb-4 text-[#C5A059]">
-                            <Zap size={20} strokeWidth={1.5} />
-                            <h4 className="font-sans">AI Insight</h4>
-                        </div>
-                        <p className="text-sm sm:text-base text-white sm:text-white/60 font-sans font-light leading-relaxed">
-                            This is currently operating at <span className="font-medium text-white">optimal efficiency</span>. No supply chain disruptions predicted for the next 14 business days.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="lg:col-span-8 space-y-6 sm:space-y-10 lg:space-y-12">
-                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6">
-                        <div>
-                            <h1 className="text-5xl md:text-7xl text-white leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] mb-6 font-serif font-bold">{selectedItem.name}</h1>
-                            <div className="flex items-center gap-3 sm:gap-4">
-                                <p className="text-sm sm:text-base text-white/30 uppercase tracking-[0.3em] bg-white/5 px-3 py-1 rounded-md border border-white/5 font-serif italic font-light">ID: {selectedItem.sku}</p>
-                                <span className="w-1 h-1 bg-white/10 rounded-full"></span>
-                                <p className="text-sm sm:text-base text-white/30 uppercase tracking-[0.2em] font-serif italic font-light">Last Audit: Today</p>
-                            </div>
-                        </div>
-                        <div className="text-left md:text-right">
-                            <p className="text-sm sm:text-base text-[#C5A059] leading-none font-sans">{selectedItem.stock}</p>
-                            <p className="text-[12px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.4em] mt-4">{selectedItem.unit} IN DASHBOARD</p>
-                        </div>
-                    </div>
-
-                    {(() => {
-                        const { stock, unitCost, stockValue, hasExpiredLots } = calculateDerivedStockAndCost(selectedItem);
-                        return (
-                          <>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-                              <div className={`luxury-card bg-white/5 border p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 ${hasExpiredLots ? 'border-red-500/50' : 'border-white/10'}`}>
-                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Current Stock</p>
-                                  <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{stock} <span className="text-white/50">{selectedItem.unit}</span></p>
-                                  {hasExpiredLots && <p className="text-[9px] font-bold text-red-500 mt-1 flex items-center uppercase tracking-widest"><AlertTriangle size={12} className="mr-1"/> Quarantined Lots Detected</p>}
-                              </div>
-                              <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500 border-l-4 border-emerald-500">
-                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Total Value</p>
-                                  <p className="text-sm sm:text-base font-black text-emerald-400 tracking-tight font-sans">${stockValue.toFixed(2)}</p>
-                                  <p className="text-[9px] text-white/50 tracking-widest uppercase mt-2 font-serif italic font-light">@ ${unitCost.toFixed(2)}/{selectedItem.unit}</p>
-                              </div>
-                              <div className="luxury-card bg-white/5 border border-white/10 p-3.5 sm:p-6 lg:p-12 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all duration-500">
-                                  <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.3em] mb-4">Safety Threshold</p>
-                                  <p className="text-sm sm:text-base font-black text-amber-500 tracking-tight font-sans">{selectedItem.reorderPoint} <span className="text-sm sm:text-base lg:text-xl text-white sm:text-slate-400 leading-relaxed sm:text-lg text-amber-500/50 font-light font-sans">{selectedItem.unit}</span></p>
-                              </div>
-                          </div>
-                          
-                          {selectedItem.isLotTracked && selectedItem.lots && (
-                              <div className="mt-10 luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden p-6">
-                                  <h3 className="text-lg text-white mb-6 uppercase font-display font-medium tracking-widest">Active Lot Traceability</h3>
-                                  <div className="overflow-x-auto">
-                                      <table className="w-full text-left text-sm">
-                                          <thead>
-                                              <tr className="border-b border-white/10">
-                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Lot Number</th>
-                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Received</th>
-                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Expires</th>
-                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Unit Cost</th>
-                                                  <th className="pb-4 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Remaining</th>
-                                              </tr>
-                                          </thead>
-                                          <tbody>
-                                              {selectedItem.lots.filter((l: any) => l.quantity > 0).map((lot: any) => {
-                                                  const isExpired = lot.expirationDate && new Date(lot.expirationDate) < new Date();
-                                                  return (
-                                                    <tr key={lot.id} className={`border-b border-white/5 ${isExpired ? 'bg-red-500/10' : ''}`}>
-                                                        <td className="py-4 font-medium text-white">{lot.lotNumber}</td>
-                                                        <td className="py-4 text-white/60">{new Date(lot.receivedDate).toLocaleDateString()}</td>
-                                                        <td className="py-4">
-                                                            {lot.expirationDate ? (
-                                                                <span className={isExpired ? 'text-red-400 font-bold flex items-center' : 'text-white/60'}>
-                                                                    {isExpired && <AlertTriangle size={12} className="mr-1"/>}
-                                                                    {new Date(lot.expirationDate).toLocaleDateString()}
-                                                                </span>
-                                                            ) : <span className="text-white/30">-</span>}
-                                                        </td>
-                                                        <td className="py-4 text-white/80">${lot.unitCost.toFixed(2)}</td>
-                                                        <td className="py-4 font-bold text-emerald-400">{lot.quantity} <span className="text-white/40 font-normal">{selectedItem.unit}</span></td>
-                                                    </tr>
-                                                  )
-                                              })}
-                                              {selectedItem.lots.filter((l: any) => l.quantity > 0).length === 0 && (
-                                                  <tr><td colSpan={5} className="py-8 text-center text-white/30 text-xs font-bold uppercase tracking-widest">No active lots in inventory.</td></tr>
-                                              )}
-                                          </tbody>
-                                      </table>
-                                  </div>
-                              </div>
-                          )}
-                          </>
-                        );
-                    })()}
-
-                    <div className="space-y-6">
-                        <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row items-start sm:items-center justify-between px-2">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Active Formula Dependency</h3>
-                            <Badge color="gray" className="px-3 py-1 text-[9px] uppercase font-cta font-semibold tracking-[0.08em]">{usageInRecipes.length} ACTIVE ITEMS</Badge>
-                        </div>
-                        
-                        {usageInRecipes.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
-                                {usageInRecipes.map(recipe => (
-                                    <div key={recipe.id} className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center p-3.5 sm:p-6 lg:p-12 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-[#6A2C91]/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/20 transition-all duration-500 cursor-pointer group" onClick={() => navigate('/recipes')}>
-                                        <div className="flex items-center gap-3 sm:gap-6">
-                                            <GlassHaloIcon icon={Layers} color="purple" size="lg" className="group-hover:scale-110 transition-transform duration-500" />
-                                            <div>
-                                                <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1 font-sans">{recipe.name}</p>
-                                                <p className="text-[10px] sm:text-base text-white/30 uppercase tracking-[0.2em] font-serif italic font-light">Primary Input</p>
-                                            </div>
-                                        </div>
-                                        <ChevronRight size={20} className="text-white/20 group-hover:text-white group-hover:translate-x-2 transition-all duration-500" />
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="py-6 sm:py-12 lg:py-16 px-4 sm:px-8 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
-                                <Zap size={48} strokeWidth={0.5} className="text-white/10 mx-auto mb-6" />
-                                <p className="text-sm sm:text-base text-white/30 text-[11px] uppercase tracking-[0.3em] font-serif italic font-light">No manufacturing dependencies detected.</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </motion.div>
-      );
-  }
-
-  if (view === 'overview') {
+    const { stock, unitCost, stockValue } = calculateDerivedStockAndCost(selectedItem);
     return (
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-[1800px] mx-auto"
+        className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 max-w-[1800px] mx-auto"
       >
-        <ContextualTutorialModal
-            hubId="inventory_hub"
-            title="Inventory Hub Overview"
-            description="Welcome to the Inventory Hub. Here you can track your raw materials and finished products."
-            steps={[
-                "Deploy new assets (raw materials or finished goods).",
-                "Monitor stock levels and reorder points.",
-                "Review automated Lola AI insights on margin impact."
-            ]}
+        <SubPageHeader 
+          title={selectedItem.name} 
+          parentTitle="Inventory Hub" 
+          onBack={() => setView('overview')}
+          description={`SKU: ${selectedItem.sku} | Module: ${selectedItem.type.toUpperCase()}`}
         />
-        <Modal isOpen={showAddItem} onClose={() => setShowAddItem(false)} title="Deploy Asset">
-            <div className="space-y-4 pt-4">
-                <Input placeholder="Asset Name (e.g. Lavender Oil)" value={newItem.name || ''} onChange={e => setNewItem({...newItem, name: e.target.value})} className="bg-black/50 text-white" />
-                <Input placeholder="SKU *" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
-                <Select value={newItem.type || 'raw'} onChange={e => setNewItem({...newItem, type: e.target.value as 'raw'|'finished'})} className="bg-black/50 text-white border border-white/10 w-full p-3 rounded-2xl">
-                    <option value="raw">Raw Material</option>
-                    <option value="finished">Finished Good</option>
-                </Select>
-                <div className="flex gap-4">
-                    <Input type="number" placeholder="Initial Stock" value={newItem.stock || 0} onChange={e => setNewItem({...newItem, stock: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
-                    <Input placeholder="Unit (e.g. oz, pcs)" value={newItem.unit || ''} onChange={e => setNewItem({...newItem, unit: e.target.value})} className="bg-black/50 text-white w-1/2" />
-                </div>
-                <div className="flex gap-4">
-                    <Input type="number" placeholder="Unit Cost ($)" value={newItem.unitCost || 0} onChange={e => setNewItem({...newItem, unitCost: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
-                    <Input type="number" placeholder="Reorder Point" value={newItem.reorderPoint || 0} onChange={e => setNewItem({...newItem, reorderPoint: Number(e.target.value)})} className="bg-black/50 text-white w-1/2" />
-                </div>
-                <Button onClick={handleAdd} className="w-full bg-[#C5A059] hover:bg-[#b08e4d] text-white py-3 mt-4 rounded-full text-[11px] uppercase transition-all shadow-xl font-cta font-semibold tracking-[0.08em]">DEPLOY ASSET</Button>
-            </div>
-        </Modal>
-        <Modal isOpen={showMigrateLots} onClose={() => setShowMigrateLots(false)} title="Migrate to Lots">
-            <div className="space-y-4 pt-4">
-                <p className="text-sm text-white/70">Are you sure you want to migrate all untracked raw materials to lot tracking? This action cannot be undone.</p>
-                <div className="flex gap-4 mt-6">
-                    <Button onClick={() => setShowMigrateLots(false)} variant="outline" className="w-1/2">CANCEL</Button>
-                    <Button onClick={() => { setShowMigrateLots(false); migrateInventoryToLots(); }} className="w-1/2 bg-[#C5A059] hover:bg-[#b08e4d] text-white">CONFIRM MIGRATION</Button>
-                </div>
-            </div>
-        </Modal>
-        <div className="flex flex-col gap-3 sm:gap-6">
-          <SubPageHeader 
-            title="Inventory Hub"
-            parentTitle="Command Center"
-            onBack={() => navigate('/command-center')}
-            description="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
-          />
-          
-          {/* Hidden file input outside DashboardBanner so ref is always mounted and accessible */}
-          <input
-            id="csv-upload" type="file"
-            ref={fileInputRef}
-            className="hidden"
-            accept=".csv"
-            onChange={handleFileChange}
-          />
 
-          <DashboardBanner 
-            title="Inventory Hub"
-            subtitle="Synchronized Asset Management: Tracking the flow of craftsmanship from raw material to retail-ready output."
-            badge="Asset Management Protocol Active"
-          >
-            <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row gap-3 sm:gap-4 sticky bottom-4 z-50 md:static p-4 md:p-0 bg-[#0A0A0A]/90 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-white/10 md:border-none rounded-3xl md:rounded-none shadow-2xl md:shadow-none w-auto">
-              {userTier === 'Free Trial' ? (
-                <Button
-                  onClick={() => {
-                    setRequiredTier('Basic Artisan');
-                    setUpgradeLimit(50);
-                    setShowUpgradeModal(true);
-                  }}
-                  variant="outline"
-                  className="rounded-full border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer"
-                >
-                  <Upload size={16} className="mr-3"/> INGEST CSV
-                </Button>
-              ) : (
-                <label
-                  htmlFor="csv-upload"
-                  className="rounded-full border border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"
-                >
-                  <Upload size={16} className="mr-3"/> INGEST CSV
-                </label>
-              )}
-              <Button variant="primary" onClick={() => setShowAddItem(true)} className="rounded-full bg-[#C5A059] hover:bg-[#b08e4d] text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 shadow-2xl shadow-black/10 transition-all w-auto"><Plus size={16} className="mr-3"/> DEPLOY ASSET</Button>
-              <Button variant="outline" onClick={() => setShowMigrateLots(true)} className="rounded-full border-white/20 hover:border-white/40 bg-[#6A2C91]/30 backdrop-blur-md text-white font-sans font-bold text-[11px] tracking-[0.2em] py-3 px-6 transition-all shadow-sm w-auto cursor-pointer flex items-center uppercase"><RefreshCw size={16} className="mr-3"/> MIGRATE TO LOTS</Button>
-            </div>
-          </DashboardBanner>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+            <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Current Stock Level</p>
+            <p className="text-3xl font-black text-white mt-2 font-sans">{stock} <span className="text-base text-white/50">{selectedItem.unit}</span></p>
+          </div>
+          <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+            <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Unit Valuation</p>
+            <p className="text-3xl font-black text-emerald-400 mt-2 font-sans">${unitCost.toFixed(2)}</p>
+          </div>
+          <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+            <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Total Stock Value</p>
+            <p className="text-3xl font-black text-[#C5A059] mt-2 font-sans">${stockValue.toFixed(2)}</p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 sm:p-10">
-            <div onClick={() => setView('raw_materials')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-6 sm:p-16 min-h-[220px] sm:min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
-                <div className="absolute top-0 right-0 w-full sm:w-64 h-[180px] sm:h-64 bg-[#6A2C91] opacity-[0.05] rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                <div className="flex items-center gap-3 sm:gap-6 relative z-10 mb-6 sm:mb-12">
-                    <GlassHaloIcon icon={Box} color="cyan" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
-                    <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Materials Matrix</h3>
-                        <p className="text-sm sm:text-base text-white/30 uppercase text-[10px] tracking-[0.3em] font-serif italic font-light">{rawMaterials.length} ACTIVE ITEMS</p>
-                    </div>
-                </div>
-                <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
-                    ACCESS RAW DASHBOARD <ChevronRight size={16} />
-                </div>
-            </div>
-
-            <div onClick={() => setView('finished_products')} className="luxury-card bg-white/5 border border-white/10 rounded-[3rem] p-6 sm:p-16 min-h-[220px] sm:min-h-[360px] flex flex-col items-start group relative overflow-hidden cursor-pointer h-full transition-all duration-700 hover:shadow-2xl hover:bg-white/10">
-                <div className="absolute top-0 right-0 w-full sm:w-64 h-[180px] sm:h-64 bg-[#C5A059] opacity-[0.05] rounded-bl-full -mr-20 -mt-8 sm:mt-12 lg:mt-20 group-hover:opacity-10 transition-opacity duration-1000"></div>
-                <div className="flex items-center gap-3 sm:gap-6 relative z-10 mb-6 sm:mb-12">
-                    <GlassHaloIcon icon={Package} color="gold" size="lg" className="mb-10 z-10 w-12 h-12 sm:w-20 sm:h-20 [&>svg]:w-8 [&>svg]:h-8 group-hover:scale-105 group-hover:rotate-3" />
-                    <div>
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Finished Output</h3>
-                        <p className="text-sm sm:text-base text-white/30 uppercase text-[10px] tracking-[0.3em] font-serif italic font-light">{finishedProducts.length} Retail Ready</p>
-                    </div>
-                </div>
-                <div className="mt-auto flex items-center gap-3 sm:gap-4 text-[10px] font-sans font-bold text-[#C5A059] uppercase tracking-[0.3em] group-hover:translate-x-3 transition-transform duration-500">
-                    ACCESS PRODUCT DASHBOARD <ChevronRight size={16} />
-                </div>
-            </div>
-
-            <UpgradeModal 
-                isOpen={showUpgradeModal} 
-                onClose={() => setShowUpgradeModal(false)}
-                featureName="Inventory Items"
-                currentLimit={upgradeLimit}
-                requiredTier={requiredTier}
-            />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 sm:p-10">
-            <div className="luxury-card lg:col-span-2 bg-white/5 border border-white/10 rounded-[3rem] p-6 sm:p-16 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 sm:p-16 opacity-[0.05]">
-                    <BarChart size={240} className="text-[#C5A059]" strokeWidth={0.5} />
-                </div>
-                <div className="relative z-10">
-                    <p className="text-[11px] sm:text-base text-white sm:text-white/40 font-sans font-bold uppercase tracking-[0.4em] mb-6 flex items-center gap-3 sm:gap-4">
-                        <DollarSign size={16} className="text-[#C5A059]" /> Total Liquid Asset Valuation
-                    </p>
-                    <p className="text-sm sm:text-base text-white font-sans">${getInventoryValue().toLocaleString()}</p>
-                    <div className="mt-6 sm:mt-8 lg:mt-12 flex flex-col sm:flex-col sm:flex-col sm:flex-row items-center justify-center gap-3 w-auto sm:p-12">
-                        <div>
-                            <p className="text-[10px] sm:text-base text-white/30 uppercase tracking-[0.2em] mb-2 font-serif italic font-light">Raw Value</p>
-                            <p className="text-sm sm:text-base font-black text-[#6A2C91] font-sans">${(getInventoryValue() * 0.4).toLocaleString()}</p>
-                        </div>
-                        <div>
-                            <p className="text-[10px] sm:text-base text-white/30 uppercase tracking-[0.2em] mb-2 font-serif italic font-light">Finished Value</p>
-                            <p className="text-sm sm:text-base font-black text-[#C5A059] font-sans">${(getInventoryValue() * 0.6).toLocaleString()}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="lg:col-span-1 p-[1.5px] rounded-[3rem] bg-gradient-to-r from-[#06B6D4] via-[#A855F7] via-[#D946EF] to-[#C5A059] relative shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-                <div className="bg-[#0A0A0A] border-none backdrop-blur-3xl rounded-[3rem] p-6 sm:p-12 h-full flex flex-col">
-                    <div className="flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl text-amber-500 flex items-center gap-3 sm:gap-4 font-display font-medium uppercase tracking-widest">
-                            <AlertTriangle size={24} className="text-amber-500" strokeWidth={1} /> Threshold Alerts
-                        </h3>
-                        <Badge color="red" className="px-4 py-1.5 text-[9px] uppercase font-cta font-semibold tracking-[0.08em]">{lowStockItems.length}</Badge>
-                    </div>
-                    <div className="space-y-6 flex-1 overflow-y-auto pr-2 scrollbar-hide">
-                        {lowStockItems.length > 0 ? lowStockItems.map(item => (
-                            <div key={item.id} className="bg-white/5 backdrop-blur-xl p-4 sm:p-6 rounded-[2rem] border border-white/10 flex flex-col sm:flex-col sm:flex-col sm:flex-row justify-between items-start sm:items-center shadow-sm hover:shadow-md transition-all duration-500 group cursor-pointer">
-                                <div>
-                                    <p className="text-sm sm:text-base text-white text-white sm:text-slate-400 leading-relaxed tracking-tight mb-1 group-hover:text-amber-500 transition-colors font-sans">{item.name}</p>
-                                    <p className="text-[10px] sm:text-base text-amber-500/60 font-sans font-medium uppercase tracking-[0.3em]">{item.stock} / {item.reorderPoint} Units Remaining</p>
-                                </div>
-                                <ChevronRight size={16} className="text-white/10 group-hover:translate-x-1 transition-transform" />
-                            </div>
-                        )) : (
-                            <div className="flex-1 flex flex-col items-center justify-center text-center opacity-40">
-                                <ShieldCheck size={48} className="text-amber-500/20 mb-4" />
-                                <p className="text-[11px] sm:text-base font-sans font-medium uppercase tracking-[0.3em] text-amber-500/40">ALL STOCK LEVELS OK</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+        <div className="flex gap-4">
+          <Button variant="outline" onClick={() => setShowAdjustStock(true)}>Manual Stock Adjustment</Button>
+          <Button variant="outline" className="text-red-400 border-red-500/30" onClick={() => { deleteInventoryItem(selectedItem.id); setView('overview'); }}>Delete Item</Button>
         </div>
       </motion.div>
     );
   }
 
-  if (view === 'raw_materials') {
-    return (
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-[1800px] mx-auto"
-        >
-            <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 sm:p-10">
-                <div>
-                    <SubPageHeader 
-                      title="Raw Material Dashboard"
-                      parentTitle="Inventory Hub"
-                      onBack={() => setView('overview')}
-                      description="Managing the foundational elements of artisanal production."
-                    />
-                </div>
-                <div className="relative w-full md:w-96">
-                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20" size={20} />
-                    <input 
-                        type="text" 
-                        placeholder="SEARCH RAW ASSETS..." 
-                        className="w-full pl-16 pr-8 py-5 bg-white/5 border border-white/10 rounded-full text-[11px] font-sans font-medium tracking-[0.2em] focus:ring-2 focus:ring-[#6A2C91]/20 transition-all shadow-sm text-white placeholder-white/20"
-                    />
-                </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10 mt-4 sm:mt-0">
-                {rawMaterials.map(item => (
-                    <InventoryCard key={item.id} item={item} onClick={() => handleItemClick(item)} tagColor="purple" />
-                ))}
-            </div>
-        </motion.div>
-    );
-  }
-
-  if (view === 'finished_products') {
-      return (
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 pb-8 sm:pb-12 lg:pb-20 max-w-[1800px] mx-auto"
-        >
-            <div className="flex flex-col md:flex-col sm:flex-col sm:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 sm:p-10">
-                <div>
-                    <SubPageHeader 
-                      title="Finished Output Dashboard"
-                      parentTitle="Inventory Hub"
-                      onBack={() => setView('overview')}
-                      description="Retail-ready products prepared for high-end distribution."
-                    />
-                </div>
-                <div className="relative w-full md:w-96">
-                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20" size={20} />
-                    <input 
-                        type="text" 
-                        placeholder="SEARCH PRODUCT DASHBOARD..." 
-                        className="w-full pl-16 pr-8 py-5 bg-white/5 border border-white/10 rounded-full text-[11px] font-sans font-medium tracking-[0.2em] focus:ring-2 focus:ring-[#6A2C91]/20 transition-all shadow-sm text-white placeholder-white/20"
-                    />
-                </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-10 mt-4 sm:mt-0">
-                {finishedProducts.map(item => (
-                    <InventoryCard key={item.id} item={item} onClick={() => handleItemClick(item)} tagColor="green" isProduct />
-                ))}
-            </div>
-        </motion.div>
-      );
-  }
-
-  return null;
-};const InventoryCard = ({ item, onClick, tagColor, isProduct }: any) => (
+  return (
     <motion.div 
-        whileHover={{ y: -10, scale: 1.02 }}
-        onClick={onClick} 
-        className="luxury-card bg-white/5 border border-white/10 rounded-[2.5rem] p-3.5 sm:p-6 lg:p-12 transition-all duration-700 cursor-pointer relative overflow-hidden group flex flex-col h-full hover:bg-white/10"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="p-3.5 sm:p-6 lg:p-12 space-y-6 sm:space-y-10 lg:space-y-12 max-w-[1800px] mx-auto pb-20"
     >
-        <div className="absolute top-0 right-0 p-3.5 sm:p-6 lg:p-12 opacity-[0.02] group-hover:opacity-10 transition-opacity duration-1000">
-            <Package size={120} className="text-white" strokeWidth={0.5} />
+      <ContextualTutorialModal
+        hubId="inventory_hub"
+        title="Craftybase Maker Inventory Engine"
+        description="Full relational maker inventory system connecting Raw Materials, BOM Recipes, Manufacturing Batches, and Finished Goods."
+        steps={[
+          "Track Raw Materials with reorder safety thresholds.",
+          "Link materials to Recipes and trigger Batch Runs.",
+          "Deduct materials automatically and generate Finished Goods stock.",
+          "Use the CSV Import & Column Mapping Hub to import data in bulk."
+        ]}
+      />
+
+      {/* Main Banner */}
+      <DashboardBanner 
+        title="Craftybase Inventory & Formulation System" 
+        subtitle="Unified relational tracking across raw materials, BOM formulations, production runs & sellable finished goods."
+        badge="Craftybase Engine Operational"
+      >
+        <div className="flex gap-3 flex-wrap">
+          <Button 
+            className="bg-[#C5A059] text-black font-bold uppercase tracking-wider text-xs rounded-full px-6 hover:bg-[#b08e4d]"
+            onClick={() => handleOpenImporter('raw_materials')}
+          >
+            <Table size={16} className="mr-2" /> CSV Import & Mapping Hub
+          </Button>
+
+          <Button 
+            className="bg-[#6A2C91] text-white font-bold uppercase tracking-wider text-xs rounded-full px-6 hover:bg-[#5a257a]"
+            onClick={() => setShowBatchModal(true)}
+          >
+            <Play size={16} className="mr-2" /> Trigger Production Batch
+          </Button>
+
+          <Button 
+            variant="outline" 
+            className="text-xs uppercase tracking-wider rounded-full px-5 text-white border-white/20 hover:bg-white/10"
+            onClick={() => setShowAddItem(true)}
+          >
+            <Plus size={16} className="mr-2" /> Deploy Asset
+          </Button>
         </div>
-        <div className="flex flex-col gap-3 sm:gap-6 mb-10 relative z-10">
-            <div className="w-14 h-14 sm:w-24 sm:h-24 bg-black/20 rounded-[2rem] overflow-hidden flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-700 border border-white/5">
-                {item.img ? <img src={item.img} className="w-full h-full object-cover" /> : <Box size={32} className="text-white/10" strokeWidth={1} />}
+      </DashboardBanner>
+
+      {/* Craftybase 4-Module Tab Navigation */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-4 overflow-x-auto gap-2">
+        <div className="flex items-center gap-2">
+          {[
+            { id: 'overview', label: 'Overview', icon: BarChart },
+            { id: 'raw_materials', label: `Raw Materials (${rawMaterials.length})`, icon: Package },
+            { id: 'recipes', label: `Recipes & BOM (${recipes.length})`, icon: Layers },
+            { id: 'batches', label: `Manufacturing Runs (${productionBatches.length})`, icon: Factory },
+            { id: 'finished_products', label: `Finished Goods (${finishedProducts.length})`, icon: Box }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = view === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setView(tab.id as ViewMode)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-sans font-bold uppercase tracking-wider transition-all ${
+                  isActive 
+                    ? 'bg-white text-black shadow-lg' 
+                    : 'bg-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <Icon size={16} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* VIEW 1: OVERVIEW */}
+      {view === 'overview' && (
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+              <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Total Inventory Valuation</p>
+              <p className="text-3xl font-black text-[#C5A059] mt-2 font-sans">${getInventoryValue().toFixed(2)}</p>
             </div>
-            <div>
-                <h3 className="text-lg sm:text-2xl lg:text-3xl text-white line-clamp-2 mb-2 group-hover:text-[#C5A059] transition-colors font-display font-medium uppercase tracking-widest">{item.name}</h3>
-                <div className="flex items-center gap-3">
-                    <Badge color={tagColor} className="px-3 py-1 text-[8px] uppercase font-cta font-semibold tracking-[0.08em]">{isProduct ? 'Product' : 'Material'}</Badge>
-                    <p className="text-[9px] sm:text-base text-white/30 uppercase tracking-[0.2em] font-serif italic font-light">SKU: {item.sku}</p>
+            <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+              <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Raw Material SKUs</p>
+              <p className="text-3xl font-black text-white mt-2 font-sans">{rawMaterials.length}</p>
+            </div>
+            <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+              <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Active Batches Logged</p>
+              <p className="text-3xl font-black text-purple-400 mt-2 font-sans">{productionBatches.length}</p>
+            </div>
+            <div className="luxury-card bg-white/5 border border-white/10 p-6 rounded-[2.5rem]">
+              <p className="text-xs text-white/40 uppercase tracking-widest font-sans font-bold">Low Stock Reorder Alerts</p>
+              <p className="text-3xl font-black text-amber-400 mt-2 font-sans">{lowStockItems.length}</p>
+            </div>
+          </div>
+
+          {/* Quick Module Access Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div 
+              onClick={() => setView('raw_materials')}
+              className="p-6 bg-white/5 border border-white/10 hover:border-[#C5A059] rounded-[2.5rem] cursor-pointer transition-all space-y-3"
+            >
+              <Package size={32} className="text-[#C5A059]" />
+              <h3 className="text-lg font-serif font-bold text-white">Raw Materials & Ingredients</h3>
+              <p className="text-xs text-white/50 font-sans">Manage raw oil, wax, container & packaging stock with vendor cost tracking.</p>
+              <div className="text-xs font-bold text-[#C5A059] flex items-center gap-1 uppercase tracking-wider">
+                Explore Raw Materials <ChevronRight size={16} />
+              </div>
+            </div>
+
+            <div 
+              onClick={() => setView('recipes')}
+              className="p-6 bg-white/5 border border-white/10 hover:border-[#C5A059] rounded-[2.5rem] cursor-pointer transition-all space-y-3"
+            >
+              <Layers size={32} className="text-purple-400" />
+              <h3 className="text-lg font-serif font-bold text-white">Recipes & Formulations (BOM)</h3>
+              <p className="text-xs text-white/50 font-sans">Formulas linking exact raw ingredient quantities to batch yields & unit cost.</p>
+              <div className="text-xs font-bold text-purple-400 flex items-center gap-1 uppercase tracking-wider">
+                View Formulations <ChevronRight size={16} />
+              </div>
+            </div>
+
+            <div 
+              onClick={() => setView('finished_products')}
+              className="p-6 bg-white/5 border border-white/10 hover:border-[#C5A059] rounded-[2.5rem] cursor-pointer transition-all space-y-3"
+            >
+              <Box size={32} className="text-emerald-400" />
+              <h3 className="text-lg font-serif font-bold text-white">Finished Goods & Ready to Sell</h3>
+              <p className="text-xs text-white/50 font-sans">Track retail inventory output created from batch manufacturing runs.</p>
+              <div className="text-xs font-bold text-emerald-400 flex items-center gap-1 uppercase tracking-wider">
+                View Finished Goods <ChevronRight size={16} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* VIEW 2: RAW MATERIALS */}
+      {view === 'raw_materials' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-serif font-bold text-white uppercase tracking-wide">Raw Materials & Ingredients Directory</h2>
+            <Button className="text-xs bg-[#C5A059] text-black font-bold" onClick={() => handleOpenImporter('raw_materials')}>
+              Import Raw Materials CSV
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {rawMaterials.map((item) => (
+              <div 
+                key={item.id} 
+                onClick={() => handleItemClick(item)}
+                className="p-5 bg-white/5 border border-white/10 hover:border-white/20 rounded-3xl cursor-pointer transition-all space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono text-white/40">{item.sku}</span>
+                  <Badge color={item.stock <= item.reorderPoint ? 'amber' : 'emerald'}>
+                    {item.stock <= item.reorderPoint ? 'Low Stock Alert' : 'Stock Healthy'}
+                  </Badge>
                 </div>
-            </div>
+                <h4 className="text-base font-bold font-serif text-white">{item.name}</h4>
+                <div className="flex justify-between text-xs text-white/60 font-sans">
+                  <span>Stock: <strong className="text-white">{item.stock} {item.unit}</strong></span>
+                  <span>Unit Cost: <strong className="text-emerald-400">${item.unitCost.toFixed(2)}</strong></span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 pt-8 border-t border-white/5 mt-auto relative z-10">
+      )}
+
+      {/* VIEW 3: RECIPES & FORMULATIONS */}
+      {view === 'recipes' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-serif font-bold text-white uppercase tracking-wide">Recipes & Bill of Materials (BOM)</h2>
+            <Button className="text-xs bg-[#6A2C91] text-white font-bold" onClick={() => navigate('/recipes')}>
+              Manage in Recipe Lab
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {recipes.map((recipe) => (
+              <div key={recipe.id} className="p-6 bg-white/5 border border-white/10 rounded-3xl space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-serif font-bold text-white">{recipe.name}</h3>
+                    <p className="text-xs font-sans text-white/40">Yield: {recipe.yield} (Qty: {recipe.yieldValue || 1})</p>
+                  </div>
+                  <Badge color="purple">${recipe.totalCost.toFixed(2)} / batch</Badge>
+                </div>
+
+                <div className="space-y-2 border-t border-white/5 pt-3">
+                  <p className="text-xs font-bold text-white/60 uppercase tracking-wider">Required Ingredients:</p>
+                  <ul className="text-xs text-white/80 space-y-1">
+                    {recipe.ingredients.map((ing, idx) => (
+                      <li key={idx} className="flex justify-between">
+                        <span>{ing.name}</span>
+                        <span className="font-mono text-white/50">{ing.qty}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Button 
+                  className="w-full text-xs bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-wider"
+                  onClick={() => {
+                    setSelectedBatchRecipe(recipe.id);
+                    setShowBatchModal(true);
+                  }}
+                >
+                  <Play size={14} className="mr-2" /> Start Production Batch Run
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* VIEW 4: MANUFACTURING BATCH RUNS */}
+      {view === 'batches' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-serif font-bold text-white uppercase tracking-wide">Manufacturing Batch Logs</h2>
+            <Button className="text-xs bg-[#6A2C91] text-white font-bold" onClick={() => setShowBatchModal(true)}>
+              <Play size={14} className="mr-1" /> New Batch Production
+            </Button>
+          </div>
+
+          <div className="overflow-x-auto border border-white/10 rounded-3xl bg-black/40">
+            <table className="w-full text-left text-xs font-sans">
+              <thead className="bg-white/10 text-white/70 border-b border-white/10 uppercase tracking-widest font-bold">
+                <tr>
+                  <th className="p-4">Batch ID</th>
+                  <th className="p-4">Recipe / Formula</th>
+                  <th className="p-4">Date Produced</th>
+                  <th className="p-4">Yield Quantity</th>
+                  <th className="p-4">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5 text-white/80">
+                {productionBatches.map((batch) => {
+                  const rec = recipes.find(r => r.id === batch.recipeId);
+                  return (
+                    <tr key={batch.id} className="hover:bg-white/5">
+                      <td className="p-4 font-mono font-bold text-[#C5A059]">{batch.batchNumber}</td>
+                      <td className="p-4 font-bold text-white">{rec ? rec.name : 'Formula'}</td>
+                      <td className="p-4 text-white/60">{new Date(batch.producedDate).toLocaleDateString()}</td>
+                      <td className="p-4 font-bold">{batch.yieldQuantity} units</td>
+                      <td className="p-4">
+                        <Badge color="emerald">Completed</Badge>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {productionBatches.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="p-8 text-center text-white/30 italic">No production runs logged yet. Click "New Batch Production" to start.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* VIEW 5: FINISHED GOODS */}
+      {view === 'finished_products' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-serif font-bold text-white uppercase tracking-wide">Finished Goods (Ready to Sell)</h2>
+            <Button className="text-xs bg-[#C5A059] text-black font-bold" onClick={() => handleOpenImporter('finished_goods')}>
+              Import Finished Goods CSV
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {finishedProducts.map((item) => (
+              <div 
+                key={item.id} 
+                onClick={() => handleItemClick(item)}
+                className="p-5 bg-white/5 border border-white/10 hover:border-white/20 rounded-3xl cursor-pointer transition-all space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono text-white/40">{item.sku}</span>
+                  <Badge color="emerald">Ready to Sell</Badge>
+                </div>
+                <h4 className="text-base font-bold font-serif text-white">{item.name}</h4>
+                <div className="flex justify-between text-xs text-white/60 font-sans">
+                  <span>Stock: <strong className="text-white">{item.stock} {item.unit}</strong></span>
+                  <span>Retail Price: <strong className="text-emerald-400">${(item.retailPrice || 0).toFixed(2)}</strong></span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* CSV IMPORTER MODAL */}
+      {showImporter && (
+        <InventoryCSVImporter 
+          onClose={() => setShowImporter(false)}
+          defaultEntity={importerDefaultEntity}
+        />
+      )}
+
+      {/* BATCH PRODUCTION MODAL */}
+      <Modal isOpen={showBatchModal} onClose={() => setShowBatchModal(false)} title="Trigger Production Batch Run">
+        <div className="space-y-4 pt-2">
+          <p className="text-xs text-white/60">
+            Executing a batch run will automatically deduct proportional Raw Materials from inventory and credit Finished Goods stock.
+          </p>
+
+          <div>
+            <label className="text-xs font-bold uppercase text-white/70 block mb-2">Select Recipe / Formulation</label>
+            <Select 
+              value={selectedBatchRecipe} 
+              onChange={e => setSelectedBatchRecipe(e.target.value)}
+              className="w-full bg-black text-xs text-white"
+            >
+              <option value="">-- Choose Recipe --</option>
+              {recipes.map(r => (
+                <option key={r.id} value={r.id}>{r.name} (Yield: {r.yield})</option>
+              ))}
+            </Select>
+          </div>
+
+          <div>
+            <label className="text-xs font-bold uppercase text-white/70 block mb-2">Batch Multiplier (Number of Batches)</label>
+            <Input 
+              type="number" 
+              min={1} 
+              value={batchMultiplier} 
+              onChange={e => setBatchMultiplier(Math.max(1, Number(e.target.value)))}
+              className="bg-black text-white"
+            />
+          </div>
+
+          <Button 
+            className="w-full bg-[#C5A059] text-black font-bold uppercase tracking-wider text-xs py-3 rounded-full mt-4"
+            onClick={() => handleTriggerBatchRun(false)}
+          >
+            Execute Production Run
+          </Button>
+        </div>
+      </Modal>
+
+      {/* WARNING MODAL FOR INSUFFICIENT STOCK */}
+      <Modal isOpen={showWarningModal} onClose={() => setShowWarningModal(false)} title="Insufficient Raw Material Warning">
+        <div className="space-y-4 pt-2">
+          <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-start gap-3">
+            <AlertTriangle className="text-amber-400 shrink-0" size={24} />
             <div>
-                <p className="text-[9px] sm:text-base text-white/30 uppercase tracking-[0.3em] mb-2 font-serif italic font-light">Available</p>
-                <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">{item.stock} <span className="text-xs text-white/30 font-sans font-light uppercase">{item.unit}</span></p>
+              <h4 className="text-sm font-bold text-amber-400">Low Raw Material Stock Detected</h4>
+              <p className="text-xs text-white/70 mt-1">
+                The required raw materials exceed your currently available inventory. Executing this batch will result in negative stock.
+              </p>
             </div>
-            <div className="text-right">
-                <p className="text-[9px] sm:text-base text-white/30 uppercase tracking-[0.3em] mb-2 font-serif italic font-light">Unit Cost</p>
-                <p className="text-sm sm:text-base font-black tracking-tight text-white mb-4 font-sans">${item.unitCost.toFixed(2)}</p>
-            </div>
+          </div>
+
+          <div className="bg-black/50 p-4 rounded-2xl border border-white/10 space-y-2">
+            <p className="text-xs font-bold text-white uppercase">Stock Deficiencies:</p>
+            <ul className="text-xs text-amber-300 space-y-1 list-disc pl-4">
+              {batchWarnings.map((w, idx) => (
+                <li key={idx}>{w}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex gap-3">
+            <Button variant="outline" className="flex-1 text-xs" onClick={() => setShowWarningModal(false)}>
+              Cancel Batch Run
+            </Button>
+            <Button className="flex-1 bg-amber-500 text-black font-bold text-xs" onClick={() => handleTriggerBatchRun(true)}>
+              Override & Run Batch
+            </Button>
+          </div>
         </div>
+      </Modal>
+
+      {/* DEPLOY ASSET MODAL */}
+      <Modal isOpen={showAddItem} onClose={() => setShowAddItem(false)} title="Deploy Asset to Inventory">
+        <div className="space-y-4 pt-4">
+          <Input placeholder="Asset Name (e.g. Lavender Oil)" value={newItem.name || ''} onChange={e => setNewItem({...newItem, name: e.target.value})} className="bg-black/50 text-white" />
+          <Input placeholder="SKU (e.g. RAW-LAV-01)" value={newItem.sku || ''} onChange={e => setNewItem({...newItem, sku: e.target.value})} className="bg-black/50 text-white" />
+          
+          <div className="grid grid-cols-2 gap-4">
+            <Select value={newItem.type || 'raw'} onChange={e => setNewItem({...newItem, type: e.target.value as any})} className="bg-black/50 text-white">
+              <option value="raw">Raw Material</option>
+              <option value="finished">Finished Product</option>
+            </Select>
+            <Input placeholder="Unit (e.g. oz, pcs)" value={newItem.unit || 'pcs'} onChange={e => setNewItem({...newItem, unit: e.target.value})} className="bg-black/50 text-white" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Input type="number" placeholder="Initial Stock" value={newItem.stock || ''} onChange={e => setNewItem({...newItem, stock: Number(e.target.value)})} className="bg-black/50 text-white" />
+            <Input type="number" placeholder="Unit Cost ($)" value={newItem.unitCost || ''} onChange={e => setNewItem({...newItem, unitCost: Number(e.target.value)})} className="bg-black/50 text-white" />
+          </div>
+
+          <Button className="w-full bg-[#6A2C91] text-white font-bold uppercase tracking-wider text-xs py-3 rounded-full mt-4" onClick={handleDeployAsset}>
+            Commit & Deploy Asset
+          </Button>
+        </div>
+      </Modal>
+
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        featureName="Inventory SKU Limit"
+        currentLimit={upgradeLimit}
+        requiredTier={requiredTier}
+      />
     </motion.div>
-);
-
-export default Inventory;
-
-
-
-
-
-
-
-
+  );
+};

@@ -295,6 +295,8 @@ interface DataContextType {
   deleteReport: (id: string) => void;
   importData: (files: File[]) => Promise<boolean>;
   addInventoryItem: (item: any) => Promise<void>;
+  bulkImportInventoryItems: (items: any[]) => Promise<{ imported: number; failed: number }>;
+  bulkImportRecipes: (recipes: any[]) => Promise<{ imported: number; failed: number }>;
   updateInventory: (id: string | number, updates: Partial<InventoryItem>) => void;
   deleteInventoryItem: (id: string | number) => void;
   addSupplier: (supplier: any) => void;
@@ -1076,6 +1078,91 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const saveReport = (r: any) => setReports(prev => [{ ...r, id: Date.now().toString() }, ...prev]);
   const deleteReport = (id: string) => setReports(prev => prev.filter(r => r.id !== id));
   const importData = async (files: File[]) => true;
+  const bulkImportInventoryItems = async (items: any[]): Promise<{ imported: number; failed: number }> => {
+    let imported = 0;
+    let failed = 0;
+    const newItems: InventoryItem[] = [];
+
+    for (const item of items) {
+      try {
+        const id = item.id || `inv-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+        const stockVal = Number(item.stock || item.quantity || 0);
+        const costVal = Number(item.unitCost || item.cost || 0);
+        const reorderVal = Number(item.reorderPoint || item.minStock || 5);
+        
+        const newItem: InventoryItem = {
+          id,
+          name: item.name || 'Unnamed Item',
+          sku: item.sku || `SKU-${Math.floor(Math.random()*10000)}`,
+          stock: stockVal,
+          unit: item.unit || 'units',
+          unitCost: costVal,
+          retailPrice: Number(item.retailPrice || item.price || 0),
+          stockValue: stockVal * costVal,
+          reorderPoint: reorderVal,
+          type: item.type === 'finished' ? 'finished' : 'raw',
+          category: item.category || 'General',
+          supplier: item.supplier || '',
+          description: item.description || '',
+          lowStock: stockVal <= reorderVal
+        };
+        newItems.push(newItem);
+        if (!isDemoMode && auth.currentUser) {
+          await setDoc(doc(db, 'users', auth.currentUser.uid, 'inventory', String(id)), newItem);
+        }
+        imported++;
+      } catch (err) {
+        console.error('Bulk inventory item import error:', err);
+        failed++;
+      }
+    }
+
+    if (newItems.length > 0) {
+      setInventory(prev => [...prev, ...newItems]);
+    }
+    return { imported, failed };
+  };
+
+  const bulkImportRecipes = async (rawRecipes: any[]): Promise<{ imported: number; failed: number }> => {
+    let imported = 0;
+    let failed = 0;
+    const newRecipes: Recipe[] = [];
+
+    for (const r of rawRecipes) {
+      try {
+        const id = r.id || `rec-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+        const newRec: Recipe = {
+          id,
+          name: r.name || 'Unnamed Recipe',
+          version: r.version || '1.0',
+          sku: r.sku || `REC-${Math.floor(Math.random()*10000)}`,
+          yield: r.yield || '1 Batch',
+          yieldValue: Number(r.yieldValue || r.yieldQty || 1),
+          materialCost: Number(r.materialCost || r.cost || 0),
+          laborCost: Number(r.laborCost || 0),
+          totalCost: Number(r.totalCost || r.cost || 0),
+          productionTime: Number(r.productionTime || 30),
+          ingredients: Array.isArray(r.ingredients) ? r.ingredients : [],
+          rawIngredients: Array.isArray(r.rawIngredients) ? r.rawIngredients : [],
+          finishedGoodsItemId: r.finishedGoodsItemId || undefined
+        };
+        newRecipes.push(newRec);
+        if (!isDemoMode && auth.currentUser) {
+          await setDoc(doc(db, 'users', auth.currentUser.uid, 'recipes', id), newRec);
+        }
+        imported++;
+      } catch (err) {
+        console.error('Bulk recipe import error:', err);
+        failed++;
+      }
+    }
+
+    if (newRecipes.length > 0) {
+      setRecipes(prev => [...prev, ...newRecipes]);
+    }
+    return { imported, failed };
+  };
+
   const addInventoryItem = async (item: any) => {
     try {
       const res = await fetch('/api/gating', {
@@ -1540,7 +1627,7 @@ export const ArtisanDataProvider: React.FC<{ children: React.ReactNode }> = ({ c
       isSessionVerifying, demandInsights, budgets, todos, isTutorialActive, tutorialStep, login, googleLogin, logout, signUp, updateTier, activateAccount, updateBusinessProfile,
       onboardingState, markHubVisited,
       getInventoryValue, getTotalRevenue, getMarginMetrics, saveReport, deleteReport,
-      importData, addInventoryItem, updateInventory, deleteInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, deleteManualCustomer, updateMarketingPost, 
+      importData, addInventoryItem, bulkImportInventoryItems, bulkImportRecipes, updateInventory, deleteInventoryItem, addSupplier, updateSupplier, deleteSupplier, addLocation, addCommunication, addQualityCheck, addMarketingPost, addAppointment, addManualCustomer, deleteManualCustomer, updateMarketingPost, 
       generateSchedule, produceBatch, processOrder, syncWooCommerce, addRecipe, updateRecipe, updateBudget, addTodo, toggleTodo, completeTodoByCategory,
       startTutorial, setTutorialStep, completeTutorial, toggleIntegrationStatus,
       systemUsers, updateSystemUser, deleteSystemUser, inviteSystemUser,
