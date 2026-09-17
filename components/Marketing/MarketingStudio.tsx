@@ -134,7 +134,7 @@ const SocialMediaIntegrationManager = () => {
     return (
         <div className="mb-12 animate-in fade-in slide-up duration-700">
             <DashboardBanner 
-                title="Connected Channels & Auto-Publishing Center" 
+                title="Marketing Hub" 
                 subtitle="Synchronize your brand across the digital ecosystem. Manage APIs and automated publishing pipelines."
                 badge="Integration Protocol Active"
             >
@@ -184,9 +184,8 @@ export const MarketingStudio = () => {
                 hubId="marketing_studio"
                 title="Marketing Hub"
                 description="Central command for all your marketing and branding efforts."
-                steps={["Access Visual Analysis to audit assets.","Use Marketing Creator for quick designs.","Generate your Brand Voice Profile."]}
+                steps={["Access Visual Analysis to audit assets.", "Use Marketing Creator for quick designs.", "Generate your Brand Voice Profile."]}
             />
-            <DashboardBanner title="Marketing Hub" subtitle="AI-powered content creation and marketing protocols." badge="Marketing Protocol Active" />
             
             <SocialMediaIntegrationManager />
             
@@ -202,6 +201,3 @@ export const MarketingStudio = () => {
 };
 
 // --- MARKETING HUB SUBPAGE ---
-
-
-
