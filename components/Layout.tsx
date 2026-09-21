@@ -147,9 +147,14 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                       <span className="flex-1 text-left">Dashboard</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
-                  <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
-                      <GlassHaloIcon icon={Sparkles} color="magenta" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">Marketing Studio</span>
+                  <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
+                      <GlassHaloIcon icon={User} color="purple" size="sm" className="mr-3" />
+                      <span className="flex-1 text-left">CRM Hub</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
+                  <button onClick={() => { navigate('/inventory'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/inventory' ? 'active' : ''}`}>
+                      <GlassHaloIcon icon={Package} color="cyan" size="sm" className="mr-3" />
+                      <span className="flex-1 text-left">Inventory Hub</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
                   <button onClick={() => { navigate('/recipes'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/recipes' ? 'active' : ''}`}>
@@ -157,26 +162,20 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
                       <span className="flex-1 text-left">Recipe Lab</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
-                  <button onClick={() => { navigate('/operations/crm'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/operations/crm' ? 'active' : ''}`}>
-                      <GlassHaloIcon icon={User} color="purple" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">CRM Hub</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                  </button>
                   <button onClick={() => { navigate('/finance'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/finance' ? 'active' : ''}`}>
                       <GlassHaloIcon icon={TrendingUp} color="gold" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Finance Hub</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </button>
-
+                  <button onClick={() => { navigate('/marketing'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/marketing' ? 'active' : ''}`}>
+                      <GlassHaloIcon icon={Sparkles} color="magenta" size="sm" className="mr-3" />
+                      <span className="flex-1 text-left">Marketing Studio</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                  </button>
               </div>
 
               <div className="nav-section-group">
                   <span className="nav-section-title">Supply Logistics</span>
-                  <button onClick={() => { navigate('/inventory'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/inventory' ? 'active' : ''}`}>
-                      <GlassHaloIcon icon={Package} color="cyan" size="sm" className="mr-3" />
-                      <span className="flex-1 text-left">Inventory Hub</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                  </button>
                   <button onClick={() => { navigate('/forecasting'); setIsMobileMenuOpen(false); }} className={`nav-item ${location.pathname === '/forecasting' ? 'active' : ''}`}>
                       <GlassHaloIcon icon={Activity} color="gold" size="sm" className="mr-3" />
                       <span className="flex-1 text-left">Forecasting</span>
