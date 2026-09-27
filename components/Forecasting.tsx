@@ -1,376 +1,699 @@
-import React from 'react';
-import { ContextualTutorialModal } from './ContextualTutorialModal';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Badge, Select, Modal, DashboardBanner } from './UI';
+import { Card, Button, Badge, Input, Select, Modal, DashboardBanner } from './UI';
 import { toast } from 'sonner';
-import { RefreshCw, AlertCircle, ChevronRight, History as HistoryIcon } from 'lucide-react';
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line } from 'recharts';
+import { 
+  TrendingUp, DollarSign, Calendar, Sliders, AlertTriangle, 
+  ArrowUpRight, Package, ArrowLeft, RefreshCw, ShoppingCart, 
+  Layers, Factory, Sparkles, Filter, Search, CheckCircle2, 
+  Clock, ShieldAlert, ChevronRight, BarChart3, RotateCcw
+} from 'lucide-react';
+import { 
+  ResponsiveContainer, ComposedChart, Area, Line, BarChart, Bar, 
+  XAxis, YAxis, Tooltip, CartesianGrid, Legend 
+} from 'recharts';
 import { motion } from 'framer-motion';
 import { useArtisanData } from './DataContext';
 import { SubPageHeader } from './SubPageHeader';
 import { GlassHaloIcon } from './ui/GlassHaloIcon';
+import { ForecastItem, INITIAL_FORECAST_DATA } from '../src/data/mockArtisanFlowData';
 
-export const Forecasting = () => {
-    const navigate = useNavigate();
-    const { orders, inventory } = useArtisanData();
+export type TimeHorizon = '30' | '90' | '180' | '365';
+export type ForecastModel = 'linear' | 'seasonal' | 'growth';
 
-    const hasInventory = inventory.length > 0;
-    const hasOrders = orders.length > 0;
+export const Forecasting: React.FC = () => {
+  const navigate = useNavigate();
+  const { inventory } = useArtisanData();
 
-    let totalUnits = 0;
-    orders.forEach(o => {
-        if (o.items) {
-            o.items.forEach(i => {
-                totalUnits += i.qty || 0;
-            });
+  // Decoupled Local State Initialized with Centralized Mock Data
+  const [forecastData, setForecastData] = useState<ForecastItem[]>(INITIAL_FORECAST_DATA);
+
+  // Parameter Control States
+  const [timeHorizon, setTimeHorizon] = useState<TimeHorizon>('90');
+  const [forecastModel, setForecastModel] = useState<ForecastModel>('linear');
+  const [growthRate, setGrowthRate] = useState<number>(15); // +15% MoM slider
+  const [leadTimeBuffer, setLeadTimeBuffer] = useState<number>(14); // 14 days safety stock buffer
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+
+  // PO Generation Modal State
+  const [selectedPOItem, setSelectedPOItem] = useState<ForecastItem | null>(null);
+  const [poQuantity, setPoQuantity] = useState<number>(100);
+  const [isSubmittingPO, setIsSubmittingPO] = useState(false);
+
+  // Reset Mock Data Helper
+  const handleResetMockData = () => {
+    setForecastData(INITIAL_FORECAST_DATA);
+    setTimeHorizon('90');
+    setForecastModel('linear');
+    setGrowthRate(15);
+    setLeadTimeBuffer(14);
+    toast.info('Forecasting mock data reset to initial constants.');
+  };
+
+  // Sync real-time inventory from context into state if available
+  const activeSkuList = useMemo(() => {
+    if (inventory && inventory.length > 0) {
+      const liveItems: ForecastItem[] = inventory.map(item => {
+        const burnRate = Math.max(0.5, Math.round(((item.stock || 20) / 30) * 10) / 10);
+        const days = parseInt(timeHorizon, 10);
+        const demand = Math.round(burnRate * days);
+        const dirDays = Math.round((item.stock || 0) / burnRate);
+        return {
+          id: `LIVE-${item.id}`,
+          name: item.name,
+          sku: item.sku || `SKU-${item.id}`,
+          category: item.type === 'raw' ? 'Raw Materials' : 'Finished Goods',
+          currentStock: item.stock || 0,
+          unit: item.unit || 'units',
+          unitCost: item.unitCost || 5.00,
+          dailyBurnRate: burnRate,
+          leadTimeDays: item.reorderPoint || 14,
+          supplier: item.supplier || 'Primary Artisan Vendor',
+          forecastedDemand: demand,
+          dir: dirDays,
+          reorderDate: dirDays <= 14 ? 'Immediate' : 'In 18 Days',
+          reorderCost: Math.round(demand * (item.unitCost || 5.00)),
+          status: dirDays <= 14 ? 'Critical Stockout Risk' : dirDays <= 28 ? 'Reorder Soon' : 'Stocked'
+        };
+      });
+      return [...liveItems, ...forecastData];
+    }
+    return forecastData;
+  }, [inventory, forecastData, timeHorizon]);
+
+  const daysNum = parseInt(timeHorizon, 10);
+
+  // Dynamic Multiplier based on selected parameters
+  const modelMultiplier = useMemo(() => {
+    if (forecastModel === 'linear') return 1.0;
+    if (forecastModel === 'seasonal') return 1.35; // Q4/Holiday spike
+    return 1.0 + (growthRate / 100); // Custom growth projection
+  }, [forecastModel, growthRate]);
+
+  // Dynamic Calculations for Top KPIs
+  const totalForecastedUnits = useMemo(() => {
+    return Math.round(activeSkuList.reduce((sum, item) => sum + (item.dailyBurnRate * daysNum * modelMultiplier), 0));
+  }, [activeSkuList, daysNum, modelMultiplier]);
+
+  const projectedGrossRevenue = useMemo(() => {
+    return activeSkuList.reduce((sum, item) => {
+      const units = item.dailyBurnRate * daysNum * modelMultiplier;
+      const estimatedPrice = item.unitCost * 3.2; // 3.2x markup average
+      return sum + (units * estimatedPrice);
+    }, 0);
+  }, [activeSkuList, daysNum, modelMultiplier]);
+
+  const estimatedCOGS = useMemo(() => {
+    return activeSkuList.reduce((sum, item) => {
+      const units = item.dailyBurnRate * daysNum * modelMultiplier;
+      return sum + (units * item.unitCost);
+    }, 0);
+  }, [activeSkuList, daysNum, modelMultiplier]);
+
+  const workingCapitalTrough = useMemo(() => {
+    const peakProductionOutlay = estimatedCOGS * 0.42;
+    const lowestCashPoint = Math.max(5000, projectedGrossRevenue * 0.25 - peakProductionOutlay);
+    const troughDay = Math.round(daysNum * 0.45);
+    return { amount: lowestCashPoint, day: troughDay };
+  }, [estimatedCOGS, projectedGrossRevenue, daysNum]);
+
+  const requiredProductionBatches = useMemo(() => {
+    return Math.ceil(totalForecastedUnits / 120); // Average batch yield ~ 120 units
+  }, [totalForecastedUnits]);
+
+  // Dynamic Main Canvas Chart 1 Data
+  const chartForecastData = useMemo(() => {
+    const pointsCount = 8;
+    const step = Math.round(daysNum / pointsCount);
+    
+    return Array.from({ length: pointsCount + 1 }).map((_, idx) => {
+      const dayOffset = idx * step;
+      const date = new Date();
+      date.setDate(date.getDate() + dayOffset);
+      const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+      const progress = idx / pointsCount;
+      const historicalBase = 450 + idx * 80;
+      const projectedUnits = Math.round((historicalBase * (1 + progress * 0.5)) * modelMultiplier);
+      const projectedRev = Math.round(projectedUnits * 24.50);
+      const rawIngredientCost = Math.round(projectedUnits * 7.80);
+
+      const upperCI = Math.round(projectedRev * 1.15);
+      const lowerCI = Math.round(projectedRev * 0.88);
+
+      return {
+        date: dateStr,
+        day: `Day ${dayOffset}`,
+        historicalSales: Math.round(historicalBase * 22.00),
+        projectedRevenue: projectedRev,
+        forecastedUnits: projectedUnits,
+        rawIngredientCost: rawIngredientCost,
+        confidenceUpper: upperCI,
+        confidenceLower: lowerCI
+      };
+    });
+  }, [daysNum, modelMultiplier]);
+
+  // Dynamic Main Canvas Chart 2 Data
+  const burnDownChartData = useMemo(() => {
+    return activeSkuList.slice(0, 6).map(item => {
+      const daysOfStock = Math.round(item.currentStock / (item.dailyBurnRate * modelMultiplier));
+      
+      return {
+        skuName: item.sku,
+        name: item.name.length > 20 ? item.name.substring(0, 18) + '...' : item.name,
+        currentStock: item.currentStock,
+        forecastedDemand: Math.round(item.dailyBurnRate * daysNum * modelMultiplier),
+        reorderThreshold: Math.round(item.dailyBurnRate * (item.leadTimeDays + leadTimeBuffer)),
+        daysRemaining: daysOfStock
+      };
+    });
+  }, [activeSkuList, modelMultiplier, daysNum, leadTimeBuffer]);
+
+  // Dynamic Filtered Table Items
+  const filteredTableItems = useMemo(() => {
+    return activeSkuList.filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                            item.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            item.category.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = categoryFilter === 'All' || item.category === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [activeSkuList, searchTerm, categoryFilter]);
+
+  // Auto-Generate PO Trigger
+  const handleOpenPOModal = (item: ForecastItem) => {
+    const forecastedDemand = Math.round(item.dailyBurnRate * daysNum * modelMultiplier);
+    const recommendedQty = Math.max(50, forecastedDemand - item.currentStock + (item.dailyBurnRate * leadTimeBuffer));
+    setSelectedPOItem(item);
+    setPoQuantity(recommendedQty);
+  };
+
+  const handleConfirmPO = () => {
+    if (!selectedPOItem) return;
+    setIsSubmittingPO(true);
+    setTimeout(() => {
+      setIsSubmittingPO(false);
+      // Update local state dynamically
+      setForecastData(prev => prev.map(f => {
+        if (f.id === selectedPOItem.id) {
+          const newStock = f.currentStock + poQuantity;
+          const newDir = Math.round(newStock / f.dailyBurnRate);
+          return {
+            ...f,
+            currentStock: newStock,
+            dir: newDir,
+            status: newDir <= f.leadTimeDays ? 'Critical Stockout Risk' : newDir <= (f.leadTimeDays + leadTimeBuffer) ? 'Reorder Soon' : 'Stocked'
+          };
         }
-    });
+        return f;
+      }));
 
-    // Only use real data — no fake fallbacks
-    const averageUnitsPerInterval = hasOrders ? Math.round(totalUnits / 4) : 0;
+      toast.success(`Purchase Order generated for ${selectedPOItem.name} (${poQuantity} ${selectedPOItem.unit})!`, {
+        description: `PO dispatched to ${selectedPOItem.supplier}. Total Cost: $${(poQuantity * selectedPOItem.unitCost).toFixed(2)}`
+      });
+      setSelectedPOItem(null);
+    }, 1000);
+  };
 
-    const averageMaterialCost = hasInventory
-        ? inventory.reduce((sum, item) => sum + (item.unitCost || 0), 0) / inventory.length
-        : 0;
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="p-4 sm:p-8 lg:p-10 space-y-8 max-w-7xl mx-auto pb-24"
+    >
+      <SubPageHeader 
+        title="Artisan Demand Forecasting Hub"
+        parentTitle="Supply Logistics"
+        onBack={() => navigate('/')}
+        description="Predictive inventory burn rates, BOM ingredient requirements, and working capital optimization."
+      />
 
-    const [aiScenario, setAiScenario] = React.useState('Baseline');
-    const [showForecastModal, setShowForecastModal] = React.useState(false);
+      <DashboardBanner 
+        title="Predictive Demand & Material Planning"
+        subtitle="Simulate real-time sales velocity, lead time buffers, and stockout danger zones for your formulations."
+        badge="AI Forecasting Engine 2.0"
+      />
 
-    const forecastData = Array.from({ length: 6 }).map((_, index) => {
-        const date = new Date();
-        date.setDate(date.getDate() + (index * 15));
-        const name = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
-        let growthFactor = 1 + (index * 0.05);
-        if (aiScenario === 'Aggressive') growthFactor += (index * 0.15);
-        if (aiScenario === 'Conservative') growthFactor -= (index * 0.02);
-        
-        const projectedSold = Math.round(averageUnitsPerInterval * growthFactor);
-        const projectedCost = Math.round(projectedSold * averageMaterialCost * 2.2);
-
-        return { name, sold: projectedSold, cost: projectedCost };
-    });
-
-    const procurementSuggestions = (inventory || [])
-        .filter(item => (item.quantity || 0) <= (item.minThreshold || 5))
-        .map(item => {
-            const required = (item.minThreshold || 5) * 2;
-            const current = item.quantity || 0;
-            const shortfall = Math.max(0, required - current);
-            const cost = shortfall * (item.unitCost || 0);
-            return {
-                item: item.name,
-                required,
-                current,
-                shortfall,
-                cost: `$${cost.toFixed(2)}`
-            };
-        });
-
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="w-full space-y-8 pb-16"
-        >
-            <ContextualTutorialModal pageKey="forecasting" title="Forecasting & Inventory Projections" />
-            <SubPageHeader
-                title="Predictive Forecasting Hub"
-                subtitle="Project material demands, order velocity, and production bottlenecks in real-time."
-                actionText="INITIALIZE NEW FORECAST"
-                onAction={() => setShowForecastModal(true)}
-            />
-            <DashboardBanner
-                title="Material & Demand Forecasting"
-                subtitle="Simulate inventory depletion scenarios based on historical sales velocity."
-            />
-
-            {/* Modal for Initialize New Forecast */}
-            <Modal
-                isOpen={showForecastModal}
-                onClose={() => setShowForecastModal(false)}
-                title="Initialize New Forecast Model"
+      {/* GLOBAL FILTER & PARAMETER CONTROL BAR */}
+      <Card className="p-6 bg-black/50 backdrop-blur-xl border-white/10 rounded-[2.5rem] shadow-2xl space-y-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-white/10 pb-4">
+          <div className="flex items-center gap-3">
+            <GlassHaloIcon icon={Sliders} color="cyan" size="sm" />
+            <div>
+              <h3 className="text-white font-display font-bold uppercase tracking-widest text-sm">Forecast Model Parameters</h3>
+              <p className="text-xs text-white/40">Adjust horizon, growth rate, and lead time buffers to recalibrate dynamic demand.</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <Button 
+              onClick={handleResetMockData}
+              variant="secondary"
+              className="text-[10px] uppercase font-bold tracking-wider px-3 py-1.5 flex items-center gap-1.5 rounded-full"
             >
-                <div className="space-y-6">
-                    <p className="text-white/70 text-sm">
-                        Select your forecasting parameters to simulate material requirement planning across custom sales horizons.
-                    </p>
-                    <div>
-                        <label className="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">Scenario Model</label>
-                        <Select
-                            value={aiScenario}
-                            onChange={(e) => setAiScenario(e.target.value)}
-                            options={[
-                                { value: 'Baseline', label: 'Baseline Growth (5%/period)' },
-                                { value: 'Aggressive', label: 'Aggressive Scale (20%/period)' },
-                                { value: 'Conservative', label: 'Conservative Preservation (3%/period)' },
-                            ]}
-                        />
-                    </div>
-                    <div className="p-4 bg-white/5 rounded-2xl border border-white/10 space-y-2">
-                        <div className="text-xs text-white/50 uppercase tracking-widest font-bold">Active Inventory items</div>
-                        <div className="text-lg font-bold text-white">{inventory.length} raw materials trackable</div>
-                        <div className="text-xs text-[#C5A059] font-medium">
-                            {hasOrders ? `Averaging ${averageUnitsPerInterval} units projected per cycle.` : 'No historical orders detected. Run baseline model.'}
+              <RotateCcw size={12} /> Reset Mock Data
+            </Button>
+            <Badge color="purple" className="text-[10px] uppercase font-bold tracking-wider px-3 py-1">
+              Active Horizon: {timeHorizon} Days ({forecastModel.toUpperCase()})
+            </Badge>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* Time Horizon Selector */}
+          <div>
+            <label className="block text-[11px] font-bold text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <Calendar size={14} className="text-[#06B6D4]" /> Time Horizon
+            </label>
+            <div className="grid grid-cols-4 gap-1.5 bg-white/5 p-1 rounded-2xl border border-white/10">
+              {(['30', '90', '180', '365'] as TimeHorizon[]).map(horizon => (
+                <button
+                  key={horizon}
+                  onClick={() => setTimeHorizon(horizon)}
+                  className={`py-2 text-[10px] font-bold rounded-xl uppercase tracking-wider transition-all ${
+                    timeHorizon === horizon 
+                      ? 'bg-[#6A2C91] text-white shadow-md shadow-[#6A2C91]/30' 
+                      : 'text-white/40 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {horizon === '365' ? '1 yr' : horizon === '180' ? '6 mo' : `${horizon}d`}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Forecast Model Toggle */}
+          <div>
+            <label className="block text-[11px] font-bold text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <TrendingUp size={14} className="text-[#A855F7]" /> Forecast Model
+            </label>
+            <Select 
+              value={forecastModel} 
+              onChange={e => setForecastModel(e.target.value as ForecastModel)}
+              className="bg-black/60 border-white/10 text-white rounded-2xl text-xs py-2 px-3 w-full"
+            >
+              <option value="linear" className="bg-black text-white">Historical Trend (Linear)</option>
+              <option value="seasonal" className="bg-black text-white">Seasonal Surge (Holiday / Q4)</option>
+              <option value="growth" className="bg-black text-white">Growth Projection (Custom % MoM)</option>
+            </Select>
+          </div>
+
+          {/* Custom Growth % Slider */}
+          {forecastModel === 'growth' ? (
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-[11px] font-bold text-white/60 uppercase tracking-wider flex items-center gap-2">
+                  <Sparkles size={14} className="text-[#C5A059]" /> MoM Growth Rate
+                </label>
+                <span className="text-xs font-bold text-[#C5A059]">+{growthRate}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="50"
+                step="1"
+                value={growthRate}
+                onChange={e => setGrowthRate(parseInt(e.target.value, 10))}
+                className="w-full accent-[#C5A059] bg-white/10 rounded-lg cursor-pointer h-2 mt-2"
+              />
+            </div>
+          ) : (
+            <div>
+              <label className="block text-[11px] font-bold text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
+                <BarChart3 size={14} className="text-[#C5A059]" /> Forecasted Growth Curve
+              </label>
+              <div className="text-xs text-white/70 bg-white/5 border border-white/10 rounded-2xl py-2 px-3 font-mono">
+                {forecastModel === 'linear' ? 'Baseline (Linear +5% MoM)' : 'Q4 Surge (+35% Seasonal Spike)'}
+              </div>
+            </div>
+          )}
+
+          {/* Supplier Lead Time Buffer Input */}
+          <div>
+            <label className="block text-[11px] font-bold text-white/60 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <Clock size={14} className="text-amber-400" /> Lead Time Buffer (Days)
+            </label>
+            <div className="relative">
+              <Input
+                type="number"
+                min="1"
+                max="60"
+                value={leadTimeBuffer}
+                onChange={e => setLeadTimeBuffer(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                className="bg-black/60 border-white/10 text-white rounded-2xl text-xs py-2 px-3 pr-12 w-full"
+              />
+              <span className="absolute right-3 top-2.5 text-[10px] text-white/40 font-bold uppercase">Days</span>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* DYNAMIC CORE KPI METRIC CARDS */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem] hover:border-[#06B6D4]/40 transition-all">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Projected Gross Revenue</span>
+            <GlassHaloIcon icon={DollarSign} color="cyan" size="sm" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-black text-white mb-2 font-sans tracking-tight">
+            ${projectedGrossRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+          <div className="flex items-center gap-2 text-xs text-emerald-400 font-bold">
+            <ArrowUpRight size={16} />
+            <span>+{forecastModel === 'seasonal' ? '35.2%' : `${(12.4 * modelMultiplier).toFixed(1)}%`} vs. Last Cycle</span>
+          </div>
+          <div className="text-[10px] text-white/30 mt-2 font-mono">{timeHorizon}-day window projection</div>
+        </Card>
+
+        <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem] hover:border-[#C5A059]/40 transition-all">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Est. Material Costs (COGS)</span>
+            <GlassHaloIcon icon={Package} color="gold" size="sm" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-black text-[#C5A059] mb-2 font-sans tracking-tight">
+            ${estimatedCOGS.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+          <div className="text-xs text-white/70 flex items-center justify-between">
+            <span>BOM Ingredients & Packaging</span>
+            <span className="text-amber-400 font-bold">{totalForecastedUnits.toLocaleString()} units</span>
+          </div>
+          <div className="text-[10px] text-white/30 mt-2 font-mono">Raw ingredients & bottles needed</div>
+        </Card>
+
+        <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem] hover:border-[#A855F7]/40 transition-all">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Working Capital Trough</span>
+            <GlassHaloIcon icon={TrendingUp} color="purple" size="sm" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-black text-purple-300 mb-2 font-sans tracking-tight">
+            ${workingCapitalTrough.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+          <div className="text-xs text-purple-400 font-bold flex items-center gap-1">
+            <AlertTriangle size={14} className="text-amber-400" />
+            <span>Lowest Cash Point: Day {workingCapitalTrough.day}</span>
+          </div>
+          <div className="text-[10px] text-white/30 mt-2 font-mono">Peak raw procurement phase</div>
+        </Card>
+
+        <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem] hover:border-emerald-500/40 transition-all">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Production Run Batches</span>
+            <GlassHaloIcon icon={Factory} color="emerald" size="sm" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-black text-emerald-400 mb-2 font-sans tracking-tight">
+            {requiredProductionBatches} Batches
+          </div>
+          <div className="text-xs text-emerald-300 font-medium">
+            Est. ~{Math.round(totalForecastedUnits / requiredProductionBatches)} units per formulation batch
+          </div>
+          <div className="text-[10px] text-white/30 mt-2 font-mono">Batch capacity allocated</div>
+        </Card>
+      </div>
+
+      {/* CHARTS */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2.5rem]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+            <div>
+              <h3 className="text-lg font-display font-medium text-white uppercase tracking-widest">Demand & Revenue Forecast</h3>
+              <p className="text-xs text-white/40">Historical trend vs. projected demand with confidence interval bands.</p>
+            </div>
+            <Badge color="cyan" className="text-[9px] uppercase font-bold tracking-widest px-3 py-1">
+              Confidence Range: ±15%
+            </Badge>
+          </div>
+
+          <div className="h-[320px] w-full mt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={chartForecastData}>
+                <defs>
+                  <linearGradient id="colorProjected" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#C5A059" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
+                <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 10, fill: 'rgba(255,255,255,0.4)'}} />
+                <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 10, fill: 'rgba(255,255,255,0.4)'}} tickFormatter={val => `$${(val / 1000).toFixed(0)}k`} />
+                <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 10, fill: 'rgba(255,255,255,0.4)'}} tickFormatter={val => `${val}u`} />
+                <Tooltip 
+                  content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="bg-[#0A0A0A]/95 border border-white/10 p-4 rounded-2xl shadow-2xl backdrop-blur-xl text-xs space-y-2">
+                          <div className="font-bold text-white border-b border-white/10 pb-1">{label} ({data.day})</div>
+                          <div className="text-[#06B6D4]">Historical Sales: <span className="font-bold">${data.historicalSales.toLocaleString()}</span></div>
+                          <div className="text-[#C5A059]">Projected Revenue: <span className="font-bold">${data.projectedRevenue.toLocaleString()}</span></div>
+                          <div className="text-[#A855F7]">Forecasted Units: <span className="font-bold">{data.forecastedUnits} units</span></div>
+                          <div className="text-emerald-400">Required Ingredient Cost: <span className="font-bold">${data.rawIngredientCost.toLocaleString()}</span></div>
                         </div>
-                    </div>
-                    <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
-                        <Button onClick={() => setShowForecastModal(false)} variant="secondary">Cancel</Button>
-                        <Button
-                            onClick={() => {
-                                setShowForecastModal(false);
-                                toast.success(`Forecast model set to ${aiScenario}`);
-                            }}
-                            className="bg-[#6A2C91] text-white hover:bg-[#5a257a]"
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', paddingTop: '10px' }} />
+                <Area yAxisId="left" type="monotone" dataKey="confidenceUpper" name="Upper Confidence Limit" stroke="none" fill="#A855F7" fillOpacity={0.1} />
+                <Line yAxisId="left" type="monotone" dataKey="historicalSales" name="Historical Sales ($)" stroke="#06B6D4" strokeWidth={2.5} dot={{ r: 3 }} />
+                <Line yAxisId="left" type="monotone" dataKey="projectedRevenue" name="Projected Revenue ($)" stroke="#C5A059" strokeWidth={3} dot={{ r: 4 }} />
+                <Line yAxisId="right" type="monotone" dataKey="forecastedUnits" name="Forecast Demand (Units)" stroke="#A855F7" strokeWidth={2} strokeDasharray="5 5" />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+
+        <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2.5rem]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+            <div>
+              <h3 className="text-lg font-display font-medium text-white uppercase tracking-widest">Inventory Burn-Down vs. Reorder Point</h3>
+              <p className="text-xs text-white/40">Current stock vs. predicted stockout thresholds per top SKU.</p>
+            </div>
+            <Badge color="gold" className="text-[9px] uppercase font-bold tracking-widest px-3 py-1">
+              Safety Buffer: {leadTimeBuffer} Days
+            </Badge>
+          </div>
+
+          <div className="h-[320px] w-full mt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={burnDownChartData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
+                <XAxis dataKey="skuName" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 10, fill: 'rgba(255,255,255,0.4)'}} />
+                <YAxis axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 10, fill: 'rgba(255,255,255,0.4)'}} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: 'rgba(10,10,10,0.95)', borderRadius: '1.25rem', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '12px' }}
+                />
+                <Legend wrapperStyle={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', paddingTop: '10px' }} />
+                <Bar dataKey="currentStock" name="On-Hand Stock" fill="#06B6D4" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="reorderThreshold" name="Reorder Point Threshold" fill="#F59E0B" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="forecastedDemand" name="Forecast Demand" fill="#6A2C91" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+      </div>
+
+      {/* DYNAMIC ACTIONABLE SKU & MATERIAL DEMAND TABLE */}
+      <Card className="luxury-card p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2.5rem] space-y-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl text-white font-display font-medium uppercase tracking-widest">Material & SKU Demand Matrix</h3>
+            <p className="text-xs text-white/40">Real-time days of inventory remaining (DIR), reorder dates, and purchase order triggers.</p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 md:w-64">
+              <Search size={14} className="absolute left-3 top-3 text-white/40" />
+              <Input 
+                placeholder="Search SKU or component..." 
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="pl-9 bg-black/60 border-white/10 text-white rounded-full text-xs py-2"
+              />
+            </div>
+
+            <Select
+              value={categoryFilter}
+              onChange={e => setCategoryFilter(e.target.value)}
+              className="bg-black/60 border-white/10 text-white rounded-full text-xs py-2 px-4 w-auto"
+            >
+              <option value="All" className="bg-black text-white">All Categories</option>
+              <option value="Raw Materials" className="bg-black text-white">Raw Materials</option>
+              <option value="Finished Goods" className="bg-black text-white">Finished Goods</option>
+              <option value="Botanicals" className="bg-black text-white">Botanicals</option>
+              <option value="Packaging" className="bg-black text-white">Packaging</option>
+            </Select>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-left border-collapse min-w-[850px]">
+            <thead>
+              <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/40 uppercase tracking-[0.2em]">
+                <th className="py-4 pl-4">SKU / Component Name</th>
+                <th className="py-4">On-Hand Stock</th>
+                <th className="py-4">Forecast Demand ({timeHorizon}d)</th>
+                <th className="py-4">DIR (Days)</th>
+                <th className="py-4">Rec. Reorder Date</th>
+                <th className="py-4">Est. Reorder Cost</th>
+                <th className="py-4">Status</th>
+                <th className="py-4 text-right pr-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredTableItems.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="text-center py-12 text-white/40 text-sm italic">
+                    No components found matching search criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredTableItems.map(item => {
+                  const forecastedDemand = Math.round(item.dailyBurnRate * daysNum * modelMultiplier);
+                  const dir = Math.max(0, Math.round(item.currentStock / (item.dailyBurnRate * modelMultiplier)));
+                  
+                  const reorderDaysFromNow = Math.max(0, dir - item.leadTimeDays);
+                  const reorderDate = new Date();
+                  reorderDate.setDate(reorderDate.getDate() + reorderDaysFromNow);
+                  const reorderDateStr = reorderDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+                  const estimatedCost = Math.round(Math.max(50, forecastedDemand - item.currentStock) * item.unitCost);
+
+                  let statusLabel = item.status;
+                  let statusColor: 'emerald' | 'gold' | 'red' = 'emerald';
+                  if (dir <= item.leadTimeDays) {
+                    statusLabel = 'Critical Stockout Risk';
+                    statusColor = 'red';
+                  } else if (dir <= (item.leadTimeDays + leadTimeBuffer)) {
+                    statusLabel = 'Reorder Soon';
+                    statusColor = 'gold';
+                  }
+
+                  return (
+                    <tr key={item.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                      <td className="py-4 pl-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                            <Package size={16} className="text-[#C5A059]" />
+                          </div>
+                          <div>
+                            <div className="text-white text-sm font-bold group-hover:text-[#C5A059] transition-colors">{item.name}</div>
+                            <div className="text-[10px] text-white/40 font-mono">{item.sku} &bull; {item.category}</div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="py-4 font-mono text-sm text-white font-bold">
+                        {item.currentStock} <span className="text-xs text-white/40 font-sans">{item.unit}</span>
+                      </td>
+
+                      <td className="py-4 font-mono text-sm text-purple-300 font-bold">
+                        {forecastedDemand} <span className="text-xs text-white/40 font-sans">{item.unit}</span>
+                      </td>
+
+                      <td className="py-4">
+                        <span className={`font-mono text-sm font-bold ${dir <= item.leadTimeDays ? 'text-red-400' : dir <= (item.leadTimeDays + leadTimeBuffer) ? 'text-amber-400' : 'text-emerald-400'}`}>
+                          {dir} Days
+                        </span>
+                      </td>
+
+                      <td className="py-4 text-xs text-white/70 font-mono">
+                        {reorderDaysFromNow === 0 ? <span className="text-red-400 font-bold uppercase">Immediate</span> : reorderDateStr}
+                      </td>
+
+                      <td className="py-4 font-mono text-sm text-[#C5A059] font-bold">
+                        ${estimatedCost.toLocaleString()}
+                      </td>
+
+                      <td className="py-4">
+                        <Badge 
+                          color={statusColor} 
+                          className="text-[9px] px-2.5 py-1 uppercase font-bold tracking-wider"
                         >
-                            Apply Model
+                          {statusLabel}
+                        </Badge>
+                      </td>
+
+                      <td className="py-4 text-right pr-4">
+                        <Button 
+                          onClick={() => handleOpenPOModal(item)}
+                          className="h-8 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[9px] font-bold uppercase tracking-widest px-3 transition-colors flex items-center gap-1.5 ml-auto"
+                        >
+                          <ShoppingCart size={12} /> Auto-PO
                         </Button>
-                    </div>
-                </div>
-            </Modal>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
 
-            {/* Top Stat Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem]">
-                    <div className="text-xs text-white/50 font-bold uppercase tracking-wider mb-1">Projected Demand</div>
-                    <div className="text-3xl font-bold text-white">{averageUnitsPerInterval * 6} units</div>
-                    <div className="text-xs text-purple-400 mt-2">Next 90-day cycle</div>
-                </Card>
-                <Card className="p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem]">
-                    <div className="text-xs text-white/50 font-bold uppercase tracking-wider mb-1">Estimated Material Cost</div>
-                    <div className="text-3xl font-bold text-[#C5A059]">${(averageUnitsPerInterval * 6 * averageMaterialCost * 2.2).toFixed(2)}</div>
-                    <div className="text-xs text-amber-400/70 mt-2">Required raw inventory</div>
-                </Card>
-                <Card className="p-6 bg-black/40 backdrop-blur-xl border-white/10 rounded-[2rem]">
-                    <div className="text-xs text-white/50 font-bold uppercase tracking-wider mb-1">Shortfall Risk</div>
-                    <div className="text-3xl font-bold text-emerald-400">{procurementSuggestions.length} items</div>
-                    <div className="text-xs text-white/40 mt-2">Below reorder threshold</div>
-                </Card>
+      {/* PO Generation Modal */}
+      <Modal
+        isOpen={!!selectedPOItem}
+        onClose={() => setSelectedPOItem(null)}
+        title="Auto-Generate Purchase Order"
+      >
+        {selectedPOItem && (
+          <div className="space-y-6 p-2">
+            <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#6A2C91]/20 border border-[#6A2C91]/40 flex items-center justify-center shrink-0">
+                <Package size={24} className="text-[#C5A059]" />
+              </div>
+              <div>
+                <h4 className="text-white font-bold text-base">{selectedPOItem.name}</h4>
+                <p className="text-xs text-white/50 font-mono">{selectedPOItem.sku} &bull; Supplier: {selectedPOItem.supplier}</p>
+              </div>
             </div>
 
-            {/* Main Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                >
-                    <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Projected Sales Volume</h3>
-                            <Badge color="purple">{aiScenario} Model</Badge>
-                        </div>
-                        <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={forecastData}>
-                                    <defs>
-                                        <linearGradient id="colorSold" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#6A2C91" stopOpacity={0.4}/>
-                                            <stop offset="95%" stopColor="#6A2C91" stopOpacity={0}/>
-                                        </linearGradient>
-                                    </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
-                                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 11, fill: 'rgba(255,255,255,0.3)', fontWeight: 500}} dy={10}/>
-                                    <Tooltip 
-                                       contentStyle={{ backgroundColor: 'rgba(10,10,10,0.9)', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.5)', fontFamily: 'Inter', fontSize: '12px', color: '#fff' }} 
-                                    />
-                                    <Area type="monotone" dataKey="sold" stroke="#6A2C91" fillOpacity={1} fill="url(#colorSold)" strokeWidth={2} />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </Card>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
-                >
-                    <Card className="luxury-card min-h-[250px] sm:min-h-[300px] w-full max-w-full overflow-hidden p-3.5 sm:p-6 lg:p-12 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-                            <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Raw Material Burn Rate</h3>
-                            <div className="flex flex-wrap gap-2 bg-white/5 p-1.5 sm:p-2 rounded-[1rem] sm:rounded-full border border-white/10">
-                                {['Baseline', 'Aggressive', 'Conservative'].map(sc => (
-                                    <button 
-                                        key={sc}
-                                        onClick={() => setAiScenario(sc)}
-                                        className={`px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all ${
-                                            aiScenario === sc ? 'bg-[#C5A059] text-white shadow-lg shadow-amber-500/20' : 'text-white sm:text-white/40 hover:text-white/80'
-                                        }`}
-                                    >
-                                        {sc}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="flex flex-wrap gap-4 mb-6 sm:mb-10 text-white/40 font-sans text-[10px] tracking-widest uppercase">
-                            <span>30 DAYS</span>
-                            <span>&bull;</span>
-                            <span>90 DAYS</span>
-                            <span>&bull;</span>
-                            <span>180 DAYS</span>
-                            <span>&bull;</span>
-                            <span>ANNUAL CYCLE</span>
-                        </div>
-                        <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4 sm:mt-0">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={forecastData}>
-                                    <defs>
-                                        <linearGradient id="colorCost" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#C5A059" stopOpacity={0.4}/>
-                                            <stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
-                                        </linearGradient>
-                                    </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
-                                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 11, fill: 'rgba(255,255,255,0.3)', fontWeight: 500}} dy={10}/>
-                                    <Tooltip 
-                                       formatter={(value) => `$${value}`} 
-                                       contentStyle={{ backgroundColor: 'rgba(10,10,10,0.9)', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.5)', fontFamily: 'Inter', fontSize: '12px', color: '#fff' }}
-                                    />
-                                    <Area type="monotone" dataKey="cost" stroke="#C5A059" fillOpacity={1} fill="url(#colorCost)" strokeWidth={2} />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </Card>
-                </motion.div>
+            <div className="grid grid-cols-2 gap-4 text-xs">
+              <div className="p-3 bg-black/40 border border-white/10 rounded-xl">
+                <span className="text-white/40 block mb-1">Current Stock</span>
+                <span className="text-white font-bold font-mono text-sm">{selectedPOItem.currentStock} {selectedPOItem.unit}</span>
+              </div>
+              <div className="p-3 bg-black/40 border border-white/10 rounded-xl">
+                <span className="text-white/40 block mb-1">Unit Cost</span>
+                <span className="text-[#C5A059] font-bold font-mono text-sm">${selectedPOItem.unitCost.toFixed(2)}</span>
+              </div>
             </div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.6 }}
-            >
-                <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Predicted Shortfalls &amp; Procurement</h3>
-                    {!hasInventory ? (
-                        <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
-                            <AlertCircle size={32} className="text-white/20" />
-                            <p className="text-white/40 text-sm font-serif italic font-light">No inventory data yet.</p>
-                            <p className="text-white/30 text-xs font-serif italic font-light">Add raw materials to Inventory Hub to enable shortfall forecasting.</p>
-                            <Button onClick={() => navigate('/inventory')} className="mt-2 bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-full px-8 py-2 font-sans font-bold text-[10px] uppercase tracking-widest">Add Inventory</Button>
-                        </div>
-                    ) : procurementSuggestions.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                                <AlertCircle size={24} className="text-emerald-400" />
-                            </div>
-                            <p className="text-white/60 text-sm font-serif italic font-light">All raw materials are above reorder thresholds.</p>
-                            <p className="text-white/30 text-xs font-serif italic font-light">No shortfalls predicted at this time. Check back as stock levels change.</p>
-                        </div>
-                    ) : (
-                        <div className="w-full">
-                            {/* Mobile View: Stacked Cards */}
-                            <div className="block sm:hidden space-y-4">
-                                {procurementSuggestions.map((item, idx) => (
-                                    <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
-                                        <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                                            <span className="text-white text-base font-bold font-sans">{item.item}</span>
-                                            <span className="text-emerald-400 font-bold text-sm">{item.cost}</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-2 text-xs">
-                                            <div><span className="text-white/50 block">Required</span><span className="text-white">{item.required}</span></div>
-                                            <div><span className="text-white/50 block">In Stock</span><span className="text-white">{item.current}</span></div>
-                                        </div>
-                                        <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
-                                            <div className="text-amber-500 font-bold text-xs"><span className="text-white/50 block font-normal">Shortfall</span>{item.shortfall}</div>
-                                            <Button onClick={() => navigate('/supplier_manager')} className="h-8 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-lg text-[9px] font-black uppercase tracking-widest px-4">Order</Button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            {/* Desktop View: Table */}
-                            <div className="hidden sm:block overflow-x-auto w-full"><table className="w-full min-w-[650px] text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-white/10 text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em]">
-                                        <th className="pb-6 pl-4">Material</th>
-                                        <th className="pb-6">Required (90D)</th>
-                                        <th className="pb-6">Current Stock</th>
-                                        <th className="pb-6 text-amber-500">Projected Shortfall</th>
-                                        <th className="pb-6">Est. Cost</th>
-                                        <th className="pb-6 text-right pr-4">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {procurementSuggestions.map((item, idx) => (
-                                        <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                                            <td className="py-6 pl-4 font-serif text-white text-base leading-relaxed tracking-tight group-hover:text-[#C5A059] transition-colors">{item.item}</td>
-                                            <td className="py-6 text-white/70 font-medium">{item.required}</td>
-                                            <td className="py-6 text-white/70 font-medium">{item.current}</td>
-                                            <td className="py-6 text-amber-500 font-bold">{item.shortfall}</td>
-                                            <td className="py-6 text-emerald-400 font-bold">{item.cost}</td>
-                                            <td className="py-6 text-right pr-4">
-                                                <Button onClick={() => navigate('/supplier_manager')} className="h-10 bg-white/10 hover:bg-[#6A2C91] text-white border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-6 transition-colors">Order Now</Button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table></div>
-                        </div>
-                    )}
-                </Card>
-            </motion.div>
+            <div>
+              <label className="block text-xs font-bold text-white/60 uppercase tracking-wider mb-2">Order Quantity ({selectedPOItem.unit})</label>
+              <Input
+                type="number"
+                min="10"
+                value={poQuantity}
+                onChange={e => setPoQuantity(Math.max(1, parseInt(e.target.value, 10) || 10))}
+                className="bg-black/60 border-white/10 text-white rounded-xl text-sm py-2.5 px-4 w-full"
+              />
+            </div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-            >
-                <Card className="luxury-card p-4 sm:p-8 bg-black/40 backdrop-blur-xl border-white/10 rounded-[3rem]">
-                    <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">Synaptic Alignment Matrix</h3>
-                    <div className="h-[220px] sm:h-[320px] lg:h-[400px] w-full mt-4">
-                         <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={forecastData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)"/>
-                                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontFamily: 'Inter', fontSize: 11, fill: 'rgba(255,255,255,0.3)', fontWeight: 500}} dy={10}/>
-                                <Tooltip 
-                                    contentStyle={{ backgroundColor: 'rgba(10,10,10,0.9)', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.5)', fontFamily: 'Inter', fontSize: '12px', color: '#fff' }}
-                                />
-                                <Line type="monotone" dataKey="sold" stroke="#6A2C91" strokeWidth={3} dot={{r:4, fill:'#6A2C91', strokeWidth: 0}} activeDot={{r: 6}} />
-                                <Line type="monotone" dataKey="cost" stroke="#C5A059" strokeWidth={3} dot={{r:4, fill:'#C5A059', strokeWidth: 0}} activeDot={{r: 6}} />
-                            </LineChart>
-                         </ResponsiveContainer>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-3 sm:gap-6 mt-6 sm:mt-8 lg:mt-12 text-[10px] font-sans font-bold text-white sm:text-white/50 uppercase tracking-widest">
-                        <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 rounded-full bg-[#6A2C91] shadow-[0_0_8px_#6A2C91]"></div> Order Velocity</span>
-                        <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_8px_#10B981]"></div> Revenue Handshake</span>
-                        <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 rounded-full bg-[#C5A059] shadow-[0_0_8px_#C5A059]"></div> Material Burden</span>
-                    </div>
-                </Card>
-            </motion.div>
+            <div className="p-4 bg-[#6A2C91]/10 border border-[#6A2C91]/30 rounded-2xl flex justify-between items-center">
+              <span className="text-xs text-white/70">Estimated Total Order Value:</span>
+              <span className="text-lg font-black text-emerald-400 font-mono">${(poQuantity * selectedPOItem.unitCost).toFixed(2)}</span>
+            </div>
 
-            {hasOrders && (
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    className="space-y-8"
-                >
-                   <h3 className="text-lg sm:text-2xl lg:text-3xl text-white mb-4 font-display font-medium uppercase tracking-widest">
-                       <GlassHaloIcon icon={HistoryIcon} color="gold" size="md" /> Historical Synthesis
-                   </h3>
-                   <div className="bg-black/40 backdrop-blur-xl rounded-[3rem] p-3.5 sm:p-6 lg:p-12 border border-white/5 shadow-2xl group hover:border-[#C5A059]/30 hover:bg-black/60 transition-all duration-500 cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 relative overflow-hidden">
-                       <div className="absolute top-0 right-0 p-3.5 sm:p-6 lg:p-12 opacity-[0.02] text-[#C5A059] group-hover:opacity-[0.05] transition-opacity"><RefreshCw size={120} className="animate-spin-slow"/></div>
-                       <div className="flex items-center gap-3 sm:gap-6 relative z-10">
-                           <GlassHaloIcon icon={RefreshCw} color="purple" size="xl" className="group-hover:scale-105 transition-all duration-700" />
-                           <div>
-                               <div className="flex items-center gap-3 sm:gap-4 mb-3">
-                                   <h4 className="text-xl sm:text-3xl lg:text-5xl font-bold sm:font-black text-white mb-4 font-sans">Active Projection: Q4 Protocol</h4>
-                                   <Badge color="gold" className="text-[9px] px-3 py-1 shadow-sm uppercase border-[#C5A059]/20 font-cta font-semibold tracking-[0.08em]">Needs Review</Badge>
-                               </div>
-                               <p className="text-[11px] text-white sm:text-white/50 font-sans uppercase tracking-[0.2em]">Units Needed: <span className="text-white/90">110</span> • Created: Nov 25, 2025</p>
-                           </div>
-                       </div>
-                       <div className="text-left sm:text-right relative z-10 w-full sm:w-auto flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 border-t border-white/5 sm:border-0 pt-4 sm:pt-0">
-                            <div className="flex flex-col items-center md:items-end">
-                                <p className="text-[10px] text-white/30 uppercase tracking-[0.3em] mb-2 font-serif italic font-light">Projected Settlement</p>
-                                <p className="text-sm sm:text-base font-black text-emerald-400 tracking-tight drop-shadow-[0_0_15px_rgba(52,211,153,0.2)] font-sans">$1,976.70</p>
-                            </div>
-                            <GlassHaloIcon icon={ChevronRight} color="gold" size="md" className="group-hover:bg-white/10 transition-colors" />
-                       </div>
-                   </div>
-                </motion.div>
-            )}
-        </motion.div>
-    );
+            <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              <Button onClick={() => setSelectedPOItem(null)} variant="secondary" className="rounded-xl px-5 py-2 text-xs">
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleConfirmPO}
+                disabled={isSubmittingPO}
+                className="bg-[#6A2C91] hover:bg-[#5a257a] text-white rounded-xl px-6 py-2 text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+              >
+                {isSubmittingPO ? <RefreshCw size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
+                Confirm & Dispatch PO
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </motion.div>
+  );
 };

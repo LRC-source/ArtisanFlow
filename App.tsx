@@ -401,6 +401,11 @@ const AppContent = () => {
                 <QualityControl />
             </LockedNode>
         } />
+        <Route path="/trapped-cash-audit" element={
+            <LockedNode isLocked={userTier === 'Free Trial'} requiredTier="Basic Artisan" onUpgrade={() => navigate('/settings/subscription')}>
+                <QualityControl />
+            </LockedNode>
+        } />
         
         <Route path="/operations" element={<OperationsDashboard />} />
         <Route path="/operations/warehouse" element={
